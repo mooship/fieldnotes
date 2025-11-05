@@ -2,7 +2,7 @@
 
 Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to tweak.
 
-> Based on the excellent Astro Biolink Kit by [Leif](https://grains.leifjerami.com). This is a customized personal fork.
+> Based on the excellent Astro Biolink Kit by [Leif](https://grains.leifjerami.com).
 
 ## 🚀 Quick Start
 
