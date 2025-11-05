@@ -29,9 +29,6 @@ export default defineConfig({
   site: "https://codeandhammer.theredsoil.co.za",
   trailingSlash: "never",
   output: "static",
-  prefetch: {
-    defaultStrategy: "hover",
-  },
   build: {
     assetsInlineLimit: 4096,
     cacheDir: "./.astro-cache",
