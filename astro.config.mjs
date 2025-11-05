@@ -6,15 +6,15 @@ import { FontaineTransform } from "fontaine";
 
 const fontaineOptions = {
   fallbacks: [
-    "Quicksand Variable",
-    "Quicksand",
+    "Work Sans Variable",
+    "Work Sans",
     "Inter Variable",
     "Inter",
     "Roboto",
     "Helvetica Neue",
     "Arial",
-    "sans-serif",
     "system-ui",
+    "sans-serif",
     "Segoe UI",
     "SFMono-Regular",
     "Monaco",

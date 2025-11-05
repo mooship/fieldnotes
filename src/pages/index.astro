@@ -16,20 +16,31 @@ import { Content as BioContent } from "./bio.md";
 <style>
   main {
     margin: auto;
-    padding: 1rem;
+    padding: 1.5rem;
     max-width: 500px;
+    background: var(--color-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 12px var(--shadow-card);
   }
 
   :global(h1) {
     text-align: center;
     color: var(--color-heading);
     margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 2.25rem;
+    text-shadow: 0 2px 4px var(--shadow-text);
   }
 
   :global(h2) {
     text-align: center;
-    color: var(--color-heading);
+    color: var(--color-link);
     margin: 2rem 2rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 0.5rem;
   }
 
   :global(ul) {
@@ -46,25 +57,27 @@ import { Content as BioContent } from "./bio.md";
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
-    background: color-mix(in srgb, var(--color-bg) 92%, var(--color-link) 8%);
-    border-radius: 10px;
+    background: var(--color-card-bg);
+    border-radius: 8px;
     text-decoration: none;
     color: var(--color-text);
-    border: 1.5px solid var(--color-link);
+    border: 2px solid var(--color-link);
     transition:
       background 0.25s ease,
       border-color 0.25s ease,
       color 0.25s ease,
       transform 0.25s ease,
       box-shadow 0.25s ease;
+    box-shadow: 0 2px 4px var(--shadow-primary);
   }
 
   :global(a:hover) {
-    background: #ffffff;
+    background: var(--color-bg);
     border-color: var(--color-link-hover);
     text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px var(--shadow-primary-hover);
+    color: var(--color-link-hover);
   }
 
   :global(a i) {
@@ -83,6 +96,15 @@ import { Content as BioContent } from "./bio.md";
 
   :global(a[href^="mailto:"]) {
     border-color: var(--color-accent);
+    background: color-mix(
+      in srgb,
+      var(--color-card-bg) 90%,
+      var(--color-accent) 10%
+    );
+  }
+  :global(a[href^="mailto:"]:hover) {
+    border-color: var(--color-accent);
+    box-shadow: 0 6px 16px var(--shadow-accent);
   }
   :global(a[href^="mailto:"]:hover) i.ri-mail-line {
     color: var(--color-accent);
@@ -91,17 +113,17 @@ import { Content as BioContent } from "./bio.md";
   :global(a:focus-visible) {
     outline: 3px solid var(--color-accent);
     outline-offset: 4px;
-    box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.18);
+    box-shadow: 0 0 0 4px var(--shadow-focus);
   }
 
   :global(a:hover i.ri-github-line) {
-    color: #24292f;
+    color: var(--color-link-hover);
   }
   :global(a:hover i.ri-instagram-line) {
-    color: #e1306c;
+    color: var(--color-accent);
   }
   :global(a:hover i.ri-threads-line) {
-    color: #000000;
+    color: var(--color-link-hover);
   }
   :global(a:hover i.ri-news-line) {
     color: var(--color-link-hover);
