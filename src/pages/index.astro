@@ -22,13 +22,13 @@ import { Content as BioContent } from "./bio.md";
 
   :global(h1) {
     text-align: center;
-    color: #333;
+    color: var(--color-heading);
     margin-bottom: 2rem;
   }
 
   :global(h2) {
     text-align: center;
-    color: #333;
+    color: var(--color-heading);
     margin: 2rem 2rem;
   }
 
@@ -38,32 +38,41 @@ import { Content as BioContent } from "./bio.md";
   }
 
   :global(li) {
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
   }
 
   :global(a) {
     display: flex;
     align-items: center;
-    padding: 1rem;
-    background-color: #d1d5db;
-    border-radius: 8px;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: color-mix(in srgb, var(--color-bg) 92%, var(--color-link) 8%);
+    border-radius: 10px;
     text-decoration: none;
-    color: #333;
-    transition: all 0.3s ease;
-    border: 3px solid #333;
+    color: var(--color-text);
+    border: 1.5px solid var(--color-link);
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
   }
 
   :global(a:hover) {
-    border-color: #3498db;
-    background-color: #ffffff;
+    background: #ffffff;
+    border-color: var(--color-link-hover);
     text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   }
 
   :global(a i) {
-    margin-right: 15px;
-    font-size: 1.2em;
-    width: 20px;
+    font-size: 1.35em;
+    flex: 0 0 1.4em;
+    line-height: 1;
     text-align: center;
+    color: var(--color-text-secondary);
     transition: color 0.3s ease;
   }
 
@@ -72,43 +81,32 @@ import { Content as BioContent } from "./bio.md";
     text-align: center;
   }
 
-  /* Email and TidyCal cards */
-  :global(a[href="mailto:example@email.com"]) {
-    background-color: #666;
-    border-color: #333;
-    color: white;
+  :global(a[href^="mailto:"]) {
+    border-color: var(--color-accent);
+  }
+  :global(a[href^="mailto:"]:hover) i.ri-mail-line {
+    color: var(--color-accent);
   }
 
-  :global(a[href="https://tidycal.com/leiflatiff/discovery"])
-  {
-    background-color: #0088ff;
-    border-color: #333;
+  :global(a:focus-visible) {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 4px;
+    box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.18);
   }
 
-  /* Hover state for cards */
-  :global(a:hover .fa-twitter) {
-    color: #1da1f2;
+  :global(a:hover i.ri-github-line) {
+    color: #24292f;
   }
-  :global(a:hover .fa-linkedin) {
-    color: #0077b5;
+  :global(a:hover i.ri-instagram-line) {
+    color: #e1306c;
   }
-  :global(a:hover .fa-github) {
-    color: #999;
+  :global(a:hover i.ri-threads-line) {
+    color: #000000;
   }
-  :global(a:hover .fa-youtube) {
-    color: #ff0000;
+  :global(a:hover i.ri-news-line) {
+    color: var(--color-link-hover);
   }
-
-  :global(a[href="mailto:example@email.com"]:hover) {
-    background-color: #999;
-    color: #333;
-    border-color: #3498db;
-  }
-
-  :global(a[href="https://tidycal.com/leiflatiff/discovery"]:hover)
-  {
-    background-color: #0056b3;
-    color: #ffffff;
-    border-color: #3498db;
+  :global(a:hover i.ri-mail-line) {
+    color: var(--color-accent);
   }
 </style>
