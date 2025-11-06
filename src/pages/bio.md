@@ -4,7 +4,7 @@ I'm an eco-socialist passionate about creating positive change through advocacy 
 
 ## Let's Connect!
 
-- [<i class="hand-heart-line" aria-hidden="true"></i><span>ShareTheMeal</span>](https://sharethemeal.org/campaigns)
+- [<i class="hand-heart-line" aria-hidden="true"></i><span>Green Peace Africa</span>](https://www.greenpeace.org/africa/en/)
 - [<i class="ri-news-line" aria-hidden="true"></i><span>The Red Soil</span>](https://theredsoil.co.za)
 - [<i class="ri-github-line" aria-hidden="true"></i><span>GitHub</span>](https://github.com/CodeAndHammer)
 - [<i class="ri-threads-line" aria-hidden="true"></i><span>Threads</span>](https://www.threads.com/@codeandhammer)
