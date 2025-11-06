@@ -6,7 +6,7 @@ Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to t
 
 ## 🚀 Quick Start
 
-Prerequisite: Node 24+ (recommend latest LTS) and npm.
+Prerequisite: Node 24.11.0 and npm.
 
 ```sh
 git clone <your-fork-url> ligaro
