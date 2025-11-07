@@ -4,7 +4,7 @@ I'm an eco-socialist passionate about creating positive change through advocacy 
 
 ## Let's Connect!
 
-- [<i class="ri-earth-line" aria-hidden="true"></i><span>350</span>](https://350.org/)
+- [<i class="ri-earth-line" aria-hidden="true"></i><span>350.org</span>](https://350.org/)
 - [<i class="ri-news-line" aria-hidden="true"></i><span>The Red Soil</span>](https://theredsoil.co.za)
 - [<i class="ri-github-line" aria-hidden="true"></i><span>GitHub</span>](https://github.com/CodeAndHammer)
 - [<i class="ri-threads-line" aria-hidden="true"></i><span>Threads</span>](https://www.threads.com/@codeandhammer)
