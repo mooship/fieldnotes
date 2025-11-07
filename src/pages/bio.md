@@ -1,6 +1,6 @@
 # Timothy Brits
 
-I'm an eco-socialist passionate about creating positive change through advocacy and critical thinking. As a developer, I explore the complex relationships between technology, society, and the environment. I'm also deeply committed to human rights work, believing in the power of collective action and systemic change to address our most pressing challenges. You can find my articles and thoughts on these topics at The Red Soil.
+I’m an eco-socialist and developer passionate about human rights, Palestine, and the struggles of the Global South. I write at The Red Soil about liberation, solidarity, and the fight for a just world.
 
 ## Let's Connect!
 
