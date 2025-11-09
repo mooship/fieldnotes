@@ -1,6 +1,6 @@
 # Timothy Brits
 
-I’m a South African eco-socialist and developer passionate about human rights, Palestine, and the struggles of the Global South. I write at The Red Soil about liberation, solidarity, and the fight for a just world.
+Eco-socialist. Developer. For people and planet over profit. 🌱✊🍉
 
 ## Let's Connect!
 
