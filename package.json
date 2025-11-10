@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "start": "astro dev"
   },
+  "dependencies": {},
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
     "@astrojs/mdx": "^4.3.10",
@@ -41,7 +42,8 @@
     "remixicon": "^4.7.0",
     "schema-dts": "^1.1.5",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3"
+    "typescript-eslint": "^8.46.3",
+    "astro-compressor": "^1.2.0"
   },
   "engines": {
     "node": ">=24.11.0"
