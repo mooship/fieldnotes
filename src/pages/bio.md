@@ -1,6 +1,6 @@
 # Timothy Brits
 
-Democratic socialist. For people and planet over profit. 🌱✊🍉
+For people and planet over profit 🌱✊🍉
 
 ## Let's Connect!
 
