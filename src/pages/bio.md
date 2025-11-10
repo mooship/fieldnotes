@@ -2,7 +2,7 @@
 
 For people and planet over profit 🌱✊🍉
 
-## Let's Connect!
+## Links
 
 - [<i class="ri-first-aid-kit-line" aria-hidden="true"></i><span>Medical Aid for Palestinians (MAP)</span>](https://www.map.org.uk)
 - [<i class="ri-news-line" aria-hidden="true"></i><span>The Red Soil</span>](https://theredsoil.co.za)
