@@ -1,6 +1,6 @@
 # Timothy
 
-For people and planet over profit 🌱✊🍉
+✊ For liberation, not domination 🌱 for people and planet 🍉🇵🇸
 
 ## Links
 
