@@ -1,4 +1,4 @@
-# Timothy Brits
+# Timothy
 
 For people and planet over profit 🌱✊🍉
 
