@@ -1,6 +1,6 @@
 # Timothy
 
-✊ For liberation, not domination 🌱 for people and planet 🍉🇵🇸
+✊ For liberation, not domination 🌱 people and planet first 🍉🇵🇸
 
 ## Links
 
