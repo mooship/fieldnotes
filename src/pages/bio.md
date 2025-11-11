@@ -1,6 +1,6 @@
 # Timothy Brits
 
-🇵🇸 For people and planet over profit 🌱✊🍉
+For people and planet over profit 🌱✊🍉
 
 ## Links
 
