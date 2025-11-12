@@ -27,7 +27,7 @@ const fontaineOptions = {
 };
 
 export default defineConfig({
-  site: "https://commonanvil.theredsoil.co.za",
+  site: "https://codeandhammer.theredsoil.co.za",
   trailingSlash: "never",
   output: "static",
   build: {
