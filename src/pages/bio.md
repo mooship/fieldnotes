@@ -1,7 +1,7 @@
 # Timothy
 
 ✊ Liberation over domination 🌱
-People and planet before profit 🍉🇵🇸
+People and planet before profit 🍉
 
 ## Links
 
