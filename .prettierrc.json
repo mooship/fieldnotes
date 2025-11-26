@@ -2,7 +2,7 @@
   "plugins": [
     "@prettier/plugin-oxc",
     "prettier-plugin-astro",
-    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-organize-imports",
     "prettier-plugin-packagejson"
   ],
   "arrowParens": "always",
@@ -22,7 +22,5 @@
   "singleQuote": false,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "useTabs": false,
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^[./]"],
-  "importOrderParserPlugins": ["typescript", "jsx"]
+  "useTabs": false
 }
