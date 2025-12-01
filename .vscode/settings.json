@@ -1,6 +1,6 @@
 {
   "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -28,5 +28,11 @@
   },
   "editor.formatOnSave": true,
   "files.eol": "\n",
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json, .npmrc, .nvmrc, .node-version, .eslintrc*, eslint.config.*, .prettierrc*, .prettierignore, vitest.config.*, astro.config.*",
+    "tsconfig.json": "tsconfig.*.json, env.d.ts"
+  }
 }
