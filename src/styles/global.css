@@ -29,6 +29,15 @@
   --shadow-focus-ring: rgba(255, 51, 51, 0.2);
   --shadow-card: rgba(0, 0, 0, 0.03);
   --shadow-text: rgba(0, 0, 0, 0.1);
+
+  --color-personal: #3b82f6;
+  --color-personal-light: #60a5fa;
+  --color-socialism: #b91c1c;
+  --color-socialism-light: #dc2626;
+  --color-mutual-aid: #d97706;
+  --color-mutual-aid-light: #f59e0b;
+  --color-ngos: #059669;
+  --color-ngos-light: #10b981;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,6 +59,15 @@
     --shadow-focus-ring: rgba(255, 51, 51, 0.3);
     --shadow-card: rgba(0, 0, 0, 0.1);
     --shadow-text: rgba(0, 0, 0, 0.3);
+
+    --color-personal: #60a5fa;
+    --color-personal-light: #93c5fd;
+    --color-socialism: #dc2626;
+    --color-socialism-light: #ef4444;
+    --color-mutual-aid: #f59e0b;
+    --color-mutual-aid-light: #fbbf24;
+    --color-ngos: #10b981;
+    --color-ngos-light: #34d399;
   }
 }
 
