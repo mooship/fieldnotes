@@ -1,3 +1,3 @@
-# Timothy
+# Timothy Brits
 
 I'm a South African eco-socialist focused on liberation ✊ climate justice 🌱 and the intersections of class, land, and ecology 🍉
