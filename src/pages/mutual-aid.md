@@ -4,6 +4,6 @@
 
 Solidarity campaigns for those in need.
 
-- [<i class="ri-first-aid-kit-line" aria-hidden="true"></i><span>Medical Aid for Palestinians</span>](https://www.map.org.uk/)
+- [<i class="ri-hand-heart-line" aria-hidden="true"></i><span>Help Malak and her family rebuild in Gaza</span>](https://chuffed.org/project/146999-help-me-learn-and-save-my-family)
 
 </div>
