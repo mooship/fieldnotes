@@ -6,24 +6,7 @@ import { defineConfig } from "astro/config";
 import { FontaineTransform } from "fontaine";
 
 const fontaineOptions = {
-  fallbacks: [
-    "Work Sans Variable",
-    "Work Sans",
-    "Inter Variable",
-    "Inter",
-    "Roboto",
-    "Helvetica Neue",
-    "Arial",
-    "system-ui",
-    "sans-serif",
-    "Segoe UI",
-    "SFMono-Regular",
-    "Monaco",
-    "Consolas",
-    "Liberation Mono",
-    "Courier New",
-    "monospace",
-  ],
+  fallbacks: ["Arial", "system-ui"],
 };
 
 export default defineConfig({

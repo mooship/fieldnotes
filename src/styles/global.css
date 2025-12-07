@@ -72,9 +72,7 @@
 }
 
 body {
-  font-family:
-    "Work Sans Variable", "Work Sans", "Inter Variable", "Inter", "Roboto",
-    "Helvetica Neue", "Arial", "system-ui", "sans-serif";
+  font-family: "Work Sans Variable";
   line-height: 1.6;
   background: var(--color-bg);
   color: var(--color-text);
