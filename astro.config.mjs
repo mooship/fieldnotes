@@ -27,7 +27,7 @@ const fontaineOptions = {
 };
 
 export default defineConfig({
-  site: "https://codeandhammer.theredsoil.co.za",
+  site: "https://greendegrowth.theredsoil.co.za",
   trailingSlash: "never",
   output: "static",
   build: {
