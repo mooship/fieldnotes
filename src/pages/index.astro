@@ -104,25 +104,60 @@ import { Content as NgosContent } from "./ngos.md";
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
-    background: var(--color-card-bg);
+    background: linear-gradient(
+      135deg,
+      var(--color-card-bg) 0%,
+      color-mix(in srgb, var(--color-card-bg) 95%, #ffffff 5%) 100%
+    );
     border-radius: 8px;
     text-decoration: none;
     color: var(--color-text);
     border: 1px solid var(--color-border);
     transition:
-      background 0.25s ease,
-      border-color 0.25s ease,
-      color 0.25s ease,
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
-    box-shadow: 0 2px 4px var(--shadow-primary);
+      background 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      border-color 0.3s ease,
+      color 0.3s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow:
+      0 2px 4px var(--shadow-primary),
+      0 0 0 0 transparent;
+    position: relative;
+  }
+
+  :global(a::before) {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
   }
 
   :global(a:hover) {
-    background: var(--color-bg);
+    background: linear-gradient(
+      135deg,
+      var(--color-bg) 0%,
+      color-mix(in srgb, var(--color-bg) 90%, #ffffff 10%) 100%
+    );
     text-decoration: none;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px var(--shadow-primary-hover);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+      0 8px 20px var(--shadow-primary-hover),
+      0 0 24px color-mix(in srgb, var(--color-accent) 15%, transparent);
+  }
+
+  :global(a:hover::before) {
+    opacity: 1;
   }
 
   :global(a i) {
@@ -141,11 +176,24 @@ import { Content as NgosContent } from "./ngos.md";
 
   :global(.section-personal a) {
     border-color: var(--color-personal);
+    background: linear-gradient(
+      135deg,
+      var(--color-card-bg) 0%,
+      color-mix(in srgb, var(--color-card-bg) 90%, var(--color-personal) 10%)
+        100%
+    );
   }
   :global(.section-personal a:hover) {
     border-color: var(--color-personal-light);
-    box-shadow: 0 6px 16px
-      color-mix(in srgb, var(--color-personal) 20%, transparent);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-bg) 95%, var(--color-personal) 5%) 0%,
+      color-mix(in srgb, var(--color-bg) 85%, var(--color-personal) 15%) 100%
+    );
+    box-shadow:
+      0 8px 20px var(--shadow-primary-hover),
+      0 0 32px color-mix(in srgb, var(--color-personal) 30%, transparent);
+    color: var(--color-personal);
   }
   :global(.section-personal a:hover i) {
     color: var(--color-personal);
@@ -154,11 +202,24 @@ import { Content as NgosContent } from "./ngos.md";
   :global(.section-socialism a) {
     border: 3px solid var(--color-socialism);
     padding: 0.65rem 0.95rem;
+    background: linear-gradient(
+      135deg,
+      var(--color-card-bg) 0%,
+      color-mix(in srgb, var(--color-card-bg) 85%, var(--color-socialism) 15%)
+        100%
+    );
   }
   :global(.section-socialism a:hover) {
     border-color: var(--color-socialism-light);
-    box-shadow: 0 6px 16px
-      color-mix(in srgb, var(--color-socialism) 25%, transparent);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-bg) 90%, var(--color-socialism) 10%) 0%,
+      color-mix(in srgb, var(--color-bg) 75%, var(--color-socialism) 25%) 100%
+    );
+    box-shadow:
+      0 8px 20px var(--shadow-primary-hover),
+      0 0 32px color-mix(in srgb, var(--color-socialism) 35%, transparent);
+    color: var(--color-socialism);
   }
   :global(.section-socialism a:hover i) {
     color: var(--color-socialism);
@@ -166,21 +227,25 @@ import { Content as NgosContent } from "./ngos.md";
 
   :global(.section-mutual-aid a) {
     border-color: var(--color-mutual-aid);
-    background: color-mix(
-      in srgb,
-      var(--color-card-bg) 85%,
-      var(--color-mutual-aid) 15%
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-card-bg) 85%, var(--color-mutual-aid) 15%)
+        0%,
+      color-mix(in srgb, var(--color-card-bg) 75%, var(--color-mutual-aid) 25%)
+        100%
     );
   }
   :global(.section-mutual-aid a:hover) {
     border-color: var(--color-mutual-aid-light);
-    background: color-mix(
-      in srgb,
-      var(--color-bg) 80%,
-      var(--color-mutual-aid) 20%
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-bg) 80%, var(--color-mutual-aid) 20%) 0%,
+      color-mix(in srgb, var(--color-bg) 65%, var(--color-mutual-aid) 35%) 100%
     );
-    box-shadow: 0 6px 16px
-      color-mix(in srgb, var(--color-mutual-aid) 25%, transparent);
+    box-shadow:
+      0 8px 20px var(--shadow-primary-hover),
+      0 0 32px color-mix(in srgb, var(--color-mutual-aid) 35%, transparent);
+    color: var(--color-mutual-aid);
   }
   :global(.section-mutual-aid a:hover i) {
     color: var(--color-mutual-aid);
@@ -188,14 +253,26 @@ import { Content as NgosContent } from "./ngos.md";
 
   :global(.section-ngos a) {
     border-color: var(--color-ngos);
+    background: linear-gradient(
+      135deg,
+      var(--color-card-bg) 0%,
+      color-mix(in srgb, var(--color-card-bg) 90%, var(--color-ngos) 10%) 100%
+    );
   }
   :global(.section-ngos a i) {
     color: var(--color-ngos);
   }
   :global(.section-ngos a:hover) {
     border-color: var(--color-ngos-light);
-    box-shadow: 0 6px 16px
-      color-mix(in srgb, var(--color-ngos) 25%, transparent);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-bg) 90%, var(--color-ngos) 10%) 0%,
+      color-mix(in srgb, var(--color-bg) 80%, var(--color-ngos) 20%) 100%
+    );
+    box-shadow:
+      0 8px 20px var(--shadow-primary-hover),
+      0 0 32px color-mix(in srgb, var(--color-ngos) 30%, transparent);
+    color: var(--color-ngos-light);
   }
   :global(.section-ngos a:hover i) {
     color: var(--color-ngos-light);
