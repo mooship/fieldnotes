@@ -22,22 +22,26 @@
   --color-border: #e5e7eb;
   --color-card-bg: #f9fafb;
 
-  --shadow-primary: rgba(0, 0, 0, 0.05);
-  --shadow-primary-hover: rgba(255, 51, 51, 0.15);
-  --shadow-accent: rgba(255, 51, 51, 0.2);
-  --shadow-focus: rgba(255, 51, 51, 0.25);
-  --shadow-focus-ring: rgba(255, 51, 51, 0.2);
-  --shadow-card: rgba(0, 0, 0, 0.03);
-  --shadow-text: rgba(0, 0, 0, 0.1);
+  --shadow-primary: rgba(0, 0, 0, 0.08);
+  --shadow-primary-hover: rgba(255, 51, 51, 0.2);
+  --shadow-accent: rgba(255, 51, 51, 0.25);
+  --shadow-focus: rgba(255, 51, 51, 0.3);
+  --shadow-focus-ring: rgba(255, 51, 51, 0.25);
+  --shadow-card: rgba(0, 0, 0, 0.06);
+  --shadow-text: rgba(0, 0, 0, 0.12);
 
-  --color-personal: #3b82f6;
-  --color-personal-light: #60a5fa;
+  --color-personal: #2563eb;
+  --color-personal-light: #3b82f6;
+  --color-personal-dark: #1e40af;
   --color-socialism: #b91c1c;
   --color-socialism-light: #dc2626;
+  --color-socialism-dark: #7f1d1d;
   --color-mutual-aid: #d97706;
   --color-mutual-aid-light: #f59e0b;
+  --color-mutual-aid-dark: #92400e;
   --color-ngos: #059669;
   --color-ngos-light: #10b981;
+  --color-ngos-dark: #065f46;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,22 +56,26 @@
     --color-border: #27272a;
     --color-card-bg: #1a1a1a;
 
-    --shadow-primary: rgba(0, 0, 0, 0.2);
-    --shadow-primary-hover: rgba(255, 68, 68, 0.2);
-    --shadow-accent: rgba(255, 51, 51, 0.3);
-    --shadow-focus: rgba(255, 51, 51, 0.4);
-    --shadow-focus-ring: rgba(255, 51, 51, 0.3);
-    --shadow-card: rgba(0, 0, 0, 0.1);
-    --shadow-text: rgba(0, 0, 0, 0.3);
+    --shadow-primary: rgba(0, 0, 0, 0.3);
+    --shadow-primary-hover: rgba(255, 68, 68, 0.25);
+    --shadow-accent: rgba(255, 51, 51, 0.35);
+    --shadow-focus: rgba(255, 51, 51, 0.45);
+    --shadow-focus-ring: rgba(255, 51, 51, 0.35);
+    --shadow-card: rgba(0, 0, 0, 0.15);
+    --shadow-text: rgba(0, 0, 0, 0.4);
 
     --color-personal: #60a5fa;
     --color-personal-light: #93c5fd;
+    --color-personal-dark: #1e3a8a;
     --color-socialism: #dc2626;
     --color-socialism-light: #ef4444;
+    --color-socialism-dark: #7f1d1d;
     --color-mutual-aid: #f59e0b;
     --color-mutual-aid-light: #fbbf24;
+    --color-mutual-aid-dark: #5a3a00;
     --color-ngos: #10b981;
     --color-ngos-light: #34d399;
+    --color-ngos-dark: #065f46;
   }
 }
 
@@ -100,13 +108,12 @@ a:focus-visible {
 }
 
 a {
-  color: var(--color-link);
+  color: var(--color-text);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-link-hover);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 ul {
