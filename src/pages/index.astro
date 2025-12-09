@@ -26,93 +26,32 @@ import { Content as NgosContent } from "./ngos.md";
     margin: auto;
     padding: 1.5rem;
     max-width: 512px;
-    background: linear-gradient(
-      135deg,
-      var(--color-card-bg) 0%,
-      color-mix(in srgb, var(--color-card-bg) 95%, var(--color-personal) 5%)
-        100%
-    );
-    border-radius: 16px;
-    border: 2px solid var(--color-border);
-    box-shadow: 0 8px 24px var(--shadow-card);
+    background: var(--color-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 12px var(--shadow-card);
   }
 
   :global(h1) {
     text-align: center;
     color: var(--color-heading);
-    margin-bottom: 0.5rem;
-    font-weight: 800;
-    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 2.25rem;
     text-shadow: 0 2px 4px var(--shadow-text);
-    letter-spacing: -0.02em;
   }
 
   :global(h1 + p) {
     text-align: center;
     color: var(--color-text);
-    margin-bottom: 2rem;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 3rem;
   }
 
   :global(.section-personal),
   :global(.section-socialism),
   :global(.section-mutual-aid),
   :global(.section-ngos) {
-    margin-top: 2.5rem;
-    padding-left: 1rem;
-    border-left: 4px solid transparent;
-  }
-
-  :global(.section-personal) {
-    border-left-color: var(--color-personal);
-    background: color-mix(
-      in srgb,
-      var(--color-card-bg) 98%,
-      var(--color-personal) 2%
-    );
-    padding: 1.25rem 1rem 1.25rem 1rem;
-    margin-left: -1rem;
-    border-radius: 0 8px 8px 0;
-  }
-
-  :global(.section-socialism) {
-    border-left-color: var(--color-socialism);
-    background: color-mix(
-      in srgb,
-      var(--color-card-bg) 98%,
-      var(--color-socialism) 2%
-    );
-    padding: 1.25rem 1rem 1.25rem 1rem;
-    margin-left: -1rem;
-    border-radius: 0 8px 8px 0;
-  }
-
-  :global(.section-mutual-aid) {
-    border-left-color: var(--color-mutual-aid);
-    background: color-mix(
-      in srgb,
-      var(--color-card-bg) 97%,
-      var(--color-mutual-aid) 3%
-    );
-    padding: 1.25rem 1rem 1.25rem 1rem;
-    margin-left: -1rem;
-    border-radius: 0 8px 8px 0;
-  }
-
-  :global(.section-ngos) {
-    border-left-color: var(--color-ngos);
-    background: color-mix(
-      in srgb,
-      var(--color-card-bg) 98%,
-      var(--color-ngos) 2%
-    );
-    padding: 1.25rem 1rem 1.25rem 1rem;
-    margin-left: -1rem;
-    border-radius: 0 8px 8px 0;
+    margin-top: 2rem;
   }
 
   :global(.section-personal:first-of-type) {
@@ -122,83 +61,77 @@ import { Content as NgosContent } from "./ngos.md";
   :global(h2) {
     text-align: left;
     color: var(--color-heading);
-    margin: 0 0 0.25rem 0;
-    font-weight: 700;
-    font-size: 1.35rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 3px solid;
-    letter-spacing: -0.01em;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid currentColor;
     position: relative;
   }
 
   :global(.section-personal h2) {
     color: var(--color-personal);
-    border-bottom-color: var(--color-personal-dark);
   }
   :global(.section-socialism h2) {
     color: var(--color-socialism);
-    border-bottom-color: var(--color-socialism-dark);
   }
   :global(.section-mutual-aid h2) {
     color: var(--color-mutual-aid);
-    border-bottom-color: var(--color-mutual-aid-dark);
   }
   :global(.section-ngos h2) {
     color: var(--color-ngos);
-    border-bottom-color: var(--color-ngos-dark);
   }
 
   :global(h2 + p) {
     text-align: left;
     color: var(--color-text-secondary);
     margin-bottom: 1.25rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   :global(ul) {
     list-style-type: none;
     padding: 0;
-    margin-bottom: 0;
+    margin-bottom: 2rem;
   }
 
   :global(li) {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
   }
 
   :global(a) {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.85rem 1.1rem;
-    background: transparent;
-    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    background: var(--color-card-bg);
+    border-radius: 8px;
     text-decoration: none;
     color: var(--color-text);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-border);
     transition:
-      background 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-    box-shadow: none;
-    font-weight: 500;
+      background 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+    box-shadow: 0 2px 4px var(--shadow-primary);
   }
 
   :global(a:hover) {
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--color-bg);
     text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px var(--shadow-primary-hover);
   }
 
   :global(a i) {
-    font-size: 1.25em;
-    flex: 0 0 1.25em;
+    font-size: 1.35em;
+    flex: 0 0 1.4em;
     line-height: 1;
     text-align: center;
     color: var(--color-text-secondary);
-    transition: color 0.2s ease;
+    transition: color 0.3s ease;
   }
 
   :global(a span) {
@@ -207,67 +140,70 @@ import { Content as NgosContent } from "./ngos.md";
   }
 
   :global(.section-personal a) {
-    border-color: rgba(37, 99, 235, 0.2);
-    background: transparent;
+    border-color: var(--color-personal);
   }
   :global(.section-personal a:hover) {
-    border-color: rgba(37, 99, 235, 0.5);
-    background: color-mix(in srgb, transparent 92%, var(--color-personal) 8%);
-    box-shadow: 0 4px 12px
-      color-mix(in srgb, var(--color-personal) 15%, transparent);
+    border-color: var(--color-personal-light);
+    box-shadow: 0 6px 16px
+      color-mix(in srgb, var(--color-personal) 20%, transparent);
   }
   :global(.section-personal a:hover i) {
-    color: var(--color-personal-dark);
+    color: var(--color-personal);
   }
 
   :global(.section-socialism a) {
-    border: 1px solid rgba(185, 28, 28, 0.2);
-    background: transparent;
+    border: 3px solid var(--color-socialism);
+    padding: 0.65rem 0.95rem;
   }
   :global(.section-socialism a:hover) {
-    border-color: rgba(185, 28, 28, 0.5);
-    background: color-mix(in srgb, transparent 92%, var(--color-socialism) 8%);
-    box-shadow: 0 4px 12px
-      color-mix(in srgb, var(--color-socialism) 15%, transparent);
+    border-color: var(--color-socialism-light);
+    box-shadow: 0 6px 16px
+      color-mix(in srgb, var(--color-socialism) 25%, transparent);
   }
   :global(.section-socialism a:hover i) {
-    color: var(--color-socialism-dark);
+    color: var(--color-socialism);
   }
 
   :global(.section-mutual-aid a) {
-    border-color: rgba(217, 119, 6, 0.2);
-    background: transparent;
+    border-color: var(--color-mutual-aid);
+    background: color-mix(
+      in srgb,
+      var(--color-card-bg) 85%,
+      var(--color-mutual-aid) 15%
+    );
   }
   :global(.section-mutual-aid a:hover) {
-    border-color: rgba(217, 119, 6, 0.5);
-    background: color-mix(in srgb, transparent 92%, var(--color-mutual-aid) 8%);
-    box-shadow: 0 4px 12px
-      color-mix(in srgb, var(--color-mutual-aid) 15%, transparent);
+    border-color: var(--color-mutual-aid-light);
+    background: color-mix(
+      in srgb,
+      var(--color-bg) 80%,
+      var(--color-mutual-aid) 20%
+    );
+    box-shadow: 0 6px 16px
+      color-mix(in srgb, var(--color-mutual-aid) 25%, transparent);
   }
   :global(.section-mutual-aid a:hover i) {
-    color: var(--color-mutual-aid-dark);
+    color: var(--color-mutual-aid);
   }
 
   :global(.section-ngos a) {
-    border-color: rgba(5, 150, 105, 0.2);
-    background: transparent;
+    border-color: var(--color-ngos);
   }
   :global(.section-ngos a i) {
     color: var(--color-ngos);
   }
   :global(.section-ngos a:hover) {
-    border-color: rgba(5, 150, 105, 0.5);
-    background: color-mix(in srgb, transparent 92%, var(--color-ngos) 8%);
-    box-shadow: 0 4px 12px
-      color-mix(in srgb, var(--color-ngos) 15%, transparent);
+    border-color: var(--color-ngos-light);
+    box-shadow: 0 6px 16px
+      color-mix(in srgb, var(--color-ngos) 25%, transparent);
   }
   :global(.section-ngos a:hover i) {
-    color: var(--color-ngos-dark);
+    color: var(--color-ngos-light);
   }
 
   :global(a:focus-visible) {
     outline: 3px solid var(--color-accent);
     outline-offset: 4px;
-    box-shadow: 0 0 0 5px var(--shadow-focus);
+    box-shadow: 0 0 0 4px var(--shadow-focus);
   }
 </style>
