@@ -5,6 +5,6 @@
 Solidarity campaigns for those in need.
 
 - [<i class="ri-hand-heart-line" aria-hidden="true"></i><span>Help Malak and her family rebuild in Gaza</span>](https://chuffed.org/project/146999-help-me-learn-and-save-my-family)
-- [<i class="ri-heart-2-line"></" aria-hidden="true"></i><span>Help Hisham's family recover</span>](https://chuffed.org/project/119539-hisham-osama-khwaiter-gaza-fundraiser)
+- [<i class="ri-heart-2-line" aria-hidden="true"></i><span>Help Hisham's family recover</span>](https://chuffed.org/project/119539-hisham-osama-khwaiter-gaza-fundraiser)
 
 </div>
