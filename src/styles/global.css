@@ -1,84 +1,35 @@
-@font-face {
-  font-family: "Work Sans Variable";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 100 900;
-  src: url(@fontsource-variable/work-sans/files/work-sans-latin-wght-normal.woff2)
-    format("woff2-variations");
-  unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
-    U+2215, U+FEFF, U+FFFD;
-}
-
 :root {
   --color-bg: #ffffff;
   --color-text: #1a1a1a;
   --color-text-secondary: #6b7280;
-  --color-heading: #111827;
-  --color-link: #ff3333;
-  --color-link-hover: #cc0000;
-  --color-accent: #ff3333;
+  --color-heading: #000000;
+  --color-link: #1a1a1a;
+  --color-link-hover: #4b5563;
+  --color-accent: #4b5563;
   --color-border: #e5e7eb;
-  --color-card-bg: #f9fafb;
-
-  --shadow-primary: rgba(0, 0, 0, 0.05);
-  --shadow-primary-hover: rgba(255, 51, 51, 0.15);
-  --shadow-accent: rgba(255, 51, 51, 0.2);
-  --shadow-focus: rgba(255, 51, 51, 0.25);
-  --shadow-focus-ring: rgba(255, 51, 51, 0.2);
-  --shadow-card: rgba(0, 0, 0, 0.03);
-  --shadow-text: rgba(0, 0, 0, 0.1);
-
-  --color-personal: #3b82f6;
-  --color-personal-light: #60a5fa;
-  --color-socialism: #b91c1c;
-  --color-socialism-light: #dc2626;
-  --color-mutual-aid: #d97706;
-  --color-mutual-aid-light: #f59e0b;
-  --color-ngos: #059669;
-  --color-ngos-light: #10b981;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0f0f0f;
-    --color-text: #f5f5f5;
-    --color-text-secondary: #a1a1aa;
+    --color-bg: #0a0a0a;
+    --color-text: #e5e5e5;
+    --color-text-secondary: #999fa8;
     --color-heading: #ffffff;
-    --color-link: #ff4444;
-    --color-link-hover: #ff6666;
-    --color-accent: #ff3333;
-    --color-border: #27272a;
-    --color-card-bg: #1a1a1a;
-
-    --shadow-primary: rgba(0, 0, 0, 0.2);
-    --shadow-primary-hover: rgba(255, 68, 68, 0.2);
-    --shadow-accent: rgba(255, 51, 51, 0.3);
-    --shadow-focus: rgba(255, 51, 51, 0.4);
-    --shadow-focus-ring: rgba(255, 51, 51, 0.3);
-    --shadow-card: rgba(0, 0, 0, 0.1);
-    --shadow-text: rgba(0, 0, 0, 0.3);
-
-    --color-personal: #60a5fa;
-    --color-personal-light: #93c5fd;
-    --color-socialism: #dc2626;
-    --color-socialism-light: #ef4444;
-    --color-mutual-aid: #f59e0b;
-    --color-mutual-aid-light: #fbbf24;
-    --color-ngos: #10b981;
-    --color-ngos-light: #34d399;
+    --color-link: #e5e5e5;
+    --color-link-hover: #b8bcc4;
+    --color-accent: #8b92a1;
+    --color-border: #2a2a2a;
   }
 }
 
 body {
-  font-family: "Work Sans Variable";
+  font-family: "Inter Variable", system-ui, sans-serif;
   line-height: 1.6;
   background: var(--color-bg);
   color: var(--color-text);
-  max-width: 512px;
+  max-width: 640px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px 20px;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;

@@ -1,3 +1,3 @@
-# Timothy
+# Timothy Brits
 
-South African eco-socialist and internationalist concerned with class power, land, ecology, and the climate crisis.
+Technologist focused on open-source, ecology, and social impact.
