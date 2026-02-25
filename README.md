@@ -24,7 +24,7 @@ Dev server runs at: http://localhost:4321
 | `npm run dev`     | Start local development server   |
 | `npm run build`   | Type check then production build |
 | `npm run preview` | Preview built site               |
-| `npm run lint`    | ESLint (auto-fix enabled)        |
+| `npm run lint`    | oxlint (auto-fix enabled)        |
 | `npm run format`  | Prettier + import sorting        |
 
 ## 🗂 Structure (essentials)
@@ -33,7 +33,10 @@ Dev server runs at: http://localhost:4321
 src/
 	pages/
 		index.astro      # Landing page layout
-		bio.md           # Link data (edit this for your links)
+		intro.md         # Introduction section
+		personal.md      # Personal links
+		writing.md       # Writing and projects
+		support.md       # Support section
 	layouts/
 		Layout.astro     # Base layout wrapper
 	styles/
@@ -41,9 +44,9 @@ src/
 public/              # Static assets (images, favicons, etc.)
 ```
 
-## ✏️ Customizing Your Links
+## ✏️ Customising Your Links
 
-1. Open `src/pages/bio.md`
+1. Open the relevant content file (`src/pages/intro.md`, `personal.md`, `writing.md`, or `support.md`)
 2. Add or edit Markdown list items / sections (each becomes part of the rendered link tree)
 3. Commit changes — no rebuild logic required beyond normal Astro refresh
 
@@ -60,7 +63,7 @@ Fonts are self‑hosted (variable font packages) for performance & privacy.
 - Astro 5.x
 - TypeScript enabled (`tsconfig.json`)
 - Import sorting + Prettier formatting
-- PurgeCSS + inlining for lean production builds
+- PurgeCSS + compressor + inlining for lean production builds
 
 ## 🔄 Updating
 
@@ -93,6 +96,6 @@ npm run lint
 npm run build
 ```
 
-That’s it — customize `bio.md`, tweak styles, deploy anywhere Astro supports (Netlify, Vercel, Cloudflare, etc.).
+That's it — customise your content files, tweak styles, deploy anywhere Astro supports (Netlify, Vercel, Cloudflare, etc.).
 
 Enjoy your lean, fast link hub.
