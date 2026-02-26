@@ -6,11 +6,16 @@ import { defineConfig } from "astro/config";
 import { FontaineTransform } from "fontaine";
 
 const fontaineOptions = {
-  fallbacks: ["Arial", "system-ui"],
+  fallbacks: {},
+  categoryFallbacks: {
+    "sans-serif": ["system-ui", "Arial"],
+    serif: ["Georgia", "Times New Roman"],
+  },
+  resolvePath: (id) => new URL(`./public${id}`, import.meta.url),
 };
 
 export default defineConfig({
-  site: "https://greendegrowth.theredsoil.co.za",
+  site: "https://timothy.theredsoil.co.za",
   trailingSlash: "never",
   output: "static",
   build: {
