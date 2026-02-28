@@ -23,7 +23,7 @@
     "astro-purgecss": "^5.5.0",
     "astro-seo-schema": "^5.2.0",
     "fontaine": "^0.8.0",
-    "oxlint": "^1.47.0",
+    "oxlint": "^1.50.0",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",
