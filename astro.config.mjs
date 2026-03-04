@@ -15,7 +15,7 @@ const fontaineOptions = {
 };
 
 export default defineConfig({
-  site: "https://timothy.theredsoil.co.za",
+  site: "https://timothybrits.co.za",
   trailingSlash: "never",
   output: "static",
   build: {
