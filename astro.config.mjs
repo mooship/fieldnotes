@@ -6,7 +6,10 @@ import { defineConfig } from "astro/config";
 import { FontaineTransform } from "fontaine";
 
 const fontaineOptions = {
-  fallbacks: {},
+  fallbacks: {
+    "DM Sans Variable": ["system-ui", "Arial"],
+    "Lora Variable": ["Georgia", "Times New Roman"],
+  },
   categoryFallbacks: {
     "sans-serif": ["system-ui", "Arial"],
     serif: ["Georgia", "Times New Roman"],

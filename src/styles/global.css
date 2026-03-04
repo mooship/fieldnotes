@@ -12,11 +12,11 @@
 }
 
 @font-face {
-  font-family: "Inter Variable";
+  font-family: "DM Sans Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 100 900;
-  src: url(@fontsource-variable/inter/files/inter-latin-wght-normal.woff2)
+  font-weight: 100 1000;
+  src: url(@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2)
     format("woff2-variations");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -25,31 +25,31 @@
 }
 
 :root {
-  --color-bg: #ffffff;
-  --color-text: #1a1a1a;
-  --color-text-secondary: #6b7280;
-  --color-heading: #000000;
-  --color-link: #1a1a1a;
-  --color-link-hover: #4b5563;
-  --color-accent: #4b5563;
-  --color-border: #e5e7eb;
+  --color-bg: #f4f3ef;
+  --color-text: #1b1b19;
+  --color-text-secondary: #6e6a60;
+  --color-heading: #0f0f0e;
+  --color-link: #2e6b4f;
+  --color-link-hover: #1d4f38;
+  --color-accent: #2e6b4f;
+  --color-border: #e0ddd5;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0a0a0a;
-    --color-text: #e5e5e5;
-    --color-text-secondary: #999fa8;
-    --color-heading: #ffffff;
-    --color-link: #e5e5e5;
-    --color-link-hover: #b8bcc4;
-    --color-accent: #8b92a1;
-    --color-border: #2a2a2a;
+    --color-bg: #121310;
+    --color-text: #e6e4dc;
+    --color-text-secondary: #998f7e;
+    --color-heading: #f0ede4;
+    --color-link: #60b082;
+    --color-link-hover: #78c498;
+    --color-accent: #60b082;
+    --color-border: #242620;
   }
 }
 
 body {
-  font-family: "Inter Variable", system-ui, sans-serif;
+  font-family: "DM Sans Variable", system-ui, sans-serif;
   line-height: 1.6;
   background: var(--color-bg);
   color: var(--color-text);

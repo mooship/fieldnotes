@@ -3,7 +3,7 @@ import "../styles/global.css";
 import "remixicon/fonts/remixicon.css";
 import { Schema } from "astro-seo-schema";
 import type { Thing, WithContext } from "schema-dts";
-import "@fontsource-variable/inter";
+import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/lora";
 
 export interface Props {
@@ -49,7 +49,7 @@ const jsonLd: WithContext<Thing> = {
     {description && <meta name="description" content={description} />}
     {canonical && <link rel="canonical" href={canonical} />}
     <meta name="robots" content={robots} />
-    <meta name="theme-color" content="#f9fafb " />
+    <meta name="theme-color" content="#f4f3ef" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta property="og:title" content={title} />
