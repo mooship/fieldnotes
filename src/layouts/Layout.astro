@@ -27,13 +27,11 @@ const {
 const url = Astro.url;
 const canonical =
   canonicalProp ?? (url ? url.origin + url.pathname : undefined);
-const siteName = title;
-
 const schemaType = type === "article" ? "Article" : "WebSite";
 const jsonLd: WithContext<Thing> = {
   "@context": "https://schema.org",
   "@type": schemaType,
-  name: siteName,
+  name: title,
   ...(canonical ? { url: canonical } : {}),
   ...(description ? { description } : {}),
   ...(image ? { image } : {}),
@@ -56,7 +54,7 @@ const jsonLd: WithContext<Thing> = {
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content={type} />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:site_name" content={siteName} />
+    <meta property="og:site_name" content={title} />
     {image && <meta property="og:image" content={image} />}
     <meta
       name="twitter:card"

@@ -75,7 +75,6 @@ a:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 6px;
-  box-shadow: 0 0 0 2px var(--shadow-focus-ring);
 }
 
 a {
