@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Content as IntroContent } from "../sections/intro.md";
 import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
+import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
 ---
 
@@ -14,6 +15,7 @@ import { Content as SupportContent } from "../sections/support.md";
   <main aria-label="Content">
     <IntroContent />
     <PersonalContent />
+    <OpenSourceContent />
     <WritingContent />
     <SupportContent />
   </main>
@@ -42,6 +44,7 @@ import { Content as SupportContent } from "../sections/support.md";
 
   :global(.section-personal),
   :global(.section-writing),
+  :global(.section-opensource),
   :global(.section-support) {
     margin-top: 2.5rem;
   }
