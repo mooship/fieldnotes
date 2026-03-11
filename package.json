@@ -11,6 +11,9 @@
     "preview": "astro preview",
     "start": "astro dev"
   },
+  "dependencies": {
+    "@astrojs/check": "^0.9.7"
+  },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource-variable/dm-sans": "^5.2.8",

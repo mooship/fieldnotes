@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Particles from "../components/Particles.astro";
 import { Content as IntroContent } from "../sections/intro.md";
 import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
@@ -12,6 +13,7 @@ import { Content as SupportContent } from "../sections/support.md";
   description="Links and ways to connect with Timothy Brits - social profiles, and more."
   type="website"
 >
+  <Particles />
   <main aria-label="Content">
     <IntroContent />
     <PersonalContent />
@@ -83,12 +85,19 @@ import { Content as SupportContent } from "../sections/support.md";
     gap: 0.5rem;
     color: var(--color-link);
     text-decoration: none;
-    transition: color 0.2s ease;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1.5px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition:
+      color 0.2s ease,
+      background-size 0.35s ease;
     font-size: 0.95rem;
   }
 
   :global(a:hover) {
     color: var(--color-link-hover);
+    background-size: 100% 1.5px;
   }
 
   :global(a i) {
@@ -105,5 +114,30 @@ import { Content as SupportContent } from "../sections/support.md";
     font-size: 0.82rem;
     color: var(--color-text-secondary);
     line-height: 1.5;
+  }
+
+  :global(h2::before) {
+    content: "✦";
+    margin-right: 0.4em;
+    display: inline-block;
+    animation: sway 4s ease-in-out infinite;
+    color: var(--color-link);
+    opacity: 0.7;
+  }
+
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-8deg);
+    }
+    50% {
+      transform: rotate(8deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(h2::before) {
+      animation: none;
+    }
   }
 </style>

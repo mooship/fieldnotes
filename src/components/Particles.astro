@@ -1,0 +1,114 @@
+---
+
+---
+
+<div class="particles" aria-hidden="true">
+  <span class="p p1"></span>
+  <span class="p p2"></span>
+  <span class="p p3"></span>
+  <span class="p p4"></span>
+  <span class="p p5"></span>
+  <span class="p p6"></span>
+  <span class="p p7"></span>
+  <span class="p p8"></span>
+</div>
+
+<style>
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .p {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--color-link);
+    opacity: 0;
+    animation: float linear infinite;
+  }
+
+  .p1 {
+    width: 3px;
+    height: 3px;
+    left: 12%;
+    animation-duration: 22s;
+    animation-delay: 0s;
+  }
+  .p2 {
+    width: 4px;
+    height: 4px;
+    left: 28%;
+    animation-duration: 30s;
+    animation-delay: -8s;
+  }
+  .p3 {
+    width: 2px;
+    height: 2px;
+    left: 48%;
+    animation-duration: 18s;
+    animation-delay: -3s;
+  }
+  .p4 {
+    width: 5px;
+    height: 5px;
+    left: 63%;
+    animation-duration: 34s;
+    animation-delay: -15s;
+  }
+  .p5 {
+    width: 3px;
+    height: 3px;
+    left: 79%;
+    animation-duration: 25s;
+    animation-delay: -6s;
+  }
+  .p6 {
+    width: 2px;
+    height: 2px;
+    left: 22%;
+    animation-duration: 36s;
+    animation-delay: -20s;
+  }
+  .p7 {
+    width: 4px;
+    height: 4px;
+    left: 55%;
+    animation-duration: 27s;
+    animation-delay: -12s;
+  }
+  .p8 {
+    width: 3px;
+    height: 3px;
+    left: 88%;
+    animation-duration: 20s;
+    animation-delay: -5s;
+  }
+
+  @keyframes float {
+    0% {
+      bottom: 5%;
+      opacity: 0;
+      transform: translateX(0);
+    }
+    10% {
+      opacity: 0.35;
+    }
+    90% {
+      opacity: 0.25;
+    }
+    100% {
+      bottom: 105%;
+      opacity: 0;
+      transform: translateX(18px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .p {
+      animation-play-state: paused;
+    }
+  }
+</style>
