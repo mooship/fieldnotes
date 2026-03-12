@@ -32,7 +32,7 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "package.json": "package-lock.json, .npmrc, .nvmrc, .node-version, .eslintrc*, eslint.config.*, .prettierrc*, .prettierignore, vitest.config.*, astro.config.*",
+    "package.json": "package-lock.json, .npmrc, .nvmrc, .node-version, .editorconfig, .vscode, .eslintrc*, eslint.config.*, .prettierrc*, .prettierignore, vitest.config.*, astro.config.*",
     "tsconfig.json": "tsconfig.*.json, env.d.ts"
   }
 }
