@@ -24,5 +24,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# claude code
+.claude/
+
 # eslint
 .eslintcache

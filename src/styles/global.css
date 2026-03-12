@@ -33,6 +33,7 @@
   --color-link-hover: #1d4f38;
   --color-accent: #2e6b4f;
   --color-border: #e0ddd5;
+  --color-moss: #5c7a47;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,6 +46,7 @@
     --color-link-hover: #78c498;
     --color-accent: #60b082;
     --color-border: #242620;
+    --color-moss: #7ab060;
   }
 }
 

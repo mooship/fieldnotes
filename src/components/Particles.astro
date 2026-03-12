@@ -11,6 +11,8 @@
   <span class="p p6"></span>
   <span class="p p7"></span>
   <span class="p p8"></span>
+  <span class="p p9"></span>
+  <span class="p p10"></span>
 </div>
 
 <style>
@@ -24,85 +26,112 @@
 
   .p {
     position: absolute;
-    border-radius: 50%;
     background: var(--color-link);
     opacity: 0;
-    animation: float linear infinite;
+    border-radius: 0 70% 0 70%;
+    animation: drift linear infinite;
   }
 
   .p1 {
-    width: 3px;
-    height: 3px;
+    width: 8px;
+    height: 12px;
     left: 12%;
     animation-duration: 22s;
     animation-delay: 0s;
+    --twist: 45deg;
   }
   .p2 {
-    width: 4px;
-    height: 4px;
+    width: 10px;
+    height: 14px;
     left: 28%;
     animation-duration: 30s;
     animation-delay: -8s;
+    --twist: -30deg;
   }
   .p3 {
-    width: 2px;
-    height: 2px;
+    width: 6px;
+    height: 9px;
     left: 48%;
     animation-duration: 18s;
     animation-delay: -3s;
+    --twist: 60deg;
   }
   .p4 {
-    width: 5px;
-    height: 5px;
+    width: 12px;
+    height: 16px;
     left: 63%;
     animation-duration: 34s;
     animation-delay: -15s;
+    --twist: -45deg;
   }
   .p5 {
-    width: 3px;
-    height: 3px;
+    width: 8px;
+    height: 11px;
     left: 79%;
     animation-duration: 25s;
     animation-delay: -6s;
+    --twist: 30deg;
   }
   .p6 {
-    width: 2px;
-    height: 2px;
+    width: 6px;
+    height: 8px;
     left: 22%;
     animation-duration: 36s;
     animation-delay: -20s;
+    --twist: -60deg;
   }
   .p7 {
-    width: 4px;
-    height: 4px;
+    width: 9px;
+    height: 13px;
     left: 55%;
     animation-duration: 27s;
     animation-delay: -12s;
+    --twist: 50deg;
   }
   .p8 {
-    width: 3px;
-    height: 3px;
+    width: 7px;
+    height: 10px;
     left: 88%;
     animation-duration: 20s;
     animation-delay: -5s;
+    --twist: -35deg;
+  }
+  .p9 {
+    width: 8px;
+    height: 11px;
+    left: 38%;
+    animation-duration: 29s;
+    animation-delay: -18s;
+    --twist: 25deg;
+  }
+  .p10 {
+    width: 10px;
+    height: 14px;
+    left: 72%;
+    animation-duration: 24s;
+    animation-delay: -9s;
+    --twist: -50deg;
   }
 
-  @keyframes float {
+  @keyframes drift {
     0% {
       bottom: 5%;
       opacity: 0;
-      transform: translateX(0);
+      transform: rotate(var(--twist)) translateX(0px);
     }
     10% {
-      opacity: 0.35;
+      opacity: 0.3;
+    }
+    50% {
+      transform: rotate(calc(var(--twist) + 20deg)) translateX(12px);
     }
     90% {
-      opacity: 0.25;
+      opacity: 0.2;
     }
     100% {
       bottom: 105%;
       opacity: 0;
-      transform: translateX(18px);
+      transform: rotate(calc(var(--twist) + 50deg)) translateX(22px);
     }
   }
 

@@ -36,6 +36,25 @@ import { Content as SupportContent } from "../sections/support.md";
     font-size: 1.75rem;
   }
 
+  :global(h1::after) {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 24px;
+    margin: 0.6rem auto 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' viewBox='0 0 120 24'%3E%3Cline x1='60' y1='22' x2='60' y2='8' stroke='%232e6b4f' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M60,18 C50,13 38,10 32,4' fill='none' stroke='%232e6b4f' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M60,14 C52,10 44,7 40,3' fill='none' stroke='%232e6b4f' stroke-width='0.7' stroke-linecap='round' opacity='0.6'/%3E%3Cpath d='M60,18 C70,13 82,10 88,4' fill='none' stroke='%232e6b4f' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M60,14 C68,10 76,7 80,3' fill='none' stroke='%232e6b4f' stroke-width='0.7' stroke-linecap='round' opacity='0.6'/%3E%3Ccircle cx='32' cy='4' r='2.2' fill='%232e6b4f' opacity='0.5'/%3E%3Ccircle cx='88' cy='4' r='2.2' fill='%232e6b4f' opacity='0.5'/%3E%3Ccircle cx='40' cy='3' r='1.5' fill='%232e6b4f' opacity='0.4'/%3E%3Ccircle cx='80' cy='3' r='1.5' fill='%232e6b4f' opacity='0.4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.8;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(h1::after) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' viewBox='0 0 120 24'%3E%3Cline x1='60' y1='22' x2='60' y2='8' stroke='%2360b082' stroke-width='1.2' stroke-linecap='round'/%3E%3Cpath d='M60,18 C50,13 38,10 32,4' fill='none' stroke='%2360b082' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M60,14 C52,10 44,7 40,3' fill='none' stroke='%2360b082' stroke-width='0.7' stroke-linecap='round' opacity='0.6'/%3E%3Cpath d='M60,18 C70,13 82,10 88,4' fill='none' stroke='%2360b082' stroke-width='1.1' stroke-linecap='round'/%3E%3Cpath d='M60,14 C68,10 76,7 80,3' fill='none' stroke='%2360b082' stroke-width='0.7' stroke-linecap='round' opacity='0.6'/%3E%3Ccircle cx='32' cy='4' r='2.2' fill='%2360b082' opacity='0.5'/%3E%3Ccircle cx='88' cy='4' r='2.2' fill='%2360b082' opacity='0.5'/%3E%3Ccircle cx='40' cy='3' r='1.5' fill='%2360b082' opacity='0.4'/%3E%3Ccircle cx='80' cy='3' r='1.5' fill='%2360b082' opacity='0.4'/%3E%3C/svg%3E");
+    }
+  }
+
   :global(h1 + p) {
     text-align: center;
     color: var(--color-text-secondary);
@@ -49,6 +68,55 @@ import { Content as SupportContent } from "../sections/support.md";
   :global(.section-opensource),
   :global(.section-support) {
     margin-top: 2.5rem;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  :global(.section-personal::before),
+  :global(.section-writing::before),
+  :global(.section-opensource::before),
+  :global(.section-support::before) {
+    content: "";
+    display: block;
+    height: 12px;
+    margin-bottom: 1rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='12'%3E%3Cpath d='M0,6 C80,1 160,11 240,6 S400,1 480,6 S640,11 640,6' fill='none' stroke='%232e6b4f' stroke-width='1.5' stroke-opacity='0.25'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(.section-personal::before),
+    :global(.section-writing::before),
+    :global(.section-opensource::before),
+    :global(.section-support::before) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='12'%3E%3Cpath d='M0,6 C80,1 160,11 240,6 S400,1 480,6 S640,11 640,6' fill='none' stroke='%2360b082' stroke-width='1.5' stroke-opacity='0.25'/%3E%3C/svg%3E");
+    }
+  }
+
+  :global(.section-personal::after),
+  :global(.section-writing::after),
+  :global(.section-opensource::after),
+  :global(.section-support::after) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='36'%3E%3Cpath d='M1.5,0 C0.3,9 2.7,18 1.5,27 C0.3,36 1.5,36 1.5,36' fill='none' stroke='%232e6b4f' stroke-width='1.2' stroke-opacity='0.3'/%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 3px auto;
+    pointer-events: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(.section-personal::after),
+    :global(.section-writing::after),
+    :global(.section-opensource::after),
+    :global(.section-support::after) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='36'%3E%3Cpath d='M1.5,0 C0.3,9 2.7,18 1.5,27 C0.3,36 1.5,36 1.5,36' fill='none' stroke='%2360b082' stroke-width='1.2' stroke-opacity='0.3'/%3E%3C/svg%3E");
+    }
   }
 
   :global(h2) {
@@ -86,18 +154,18 @@ import { Content as SupportContent } from "../sections/support.md";
     color: var(--color-link);
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1.5px;
+    background-size: 0 1px;
     background-repeat: no-repeat;
     background-position: 0 100%;
     transition:
       color 0.2s ease,
-      background-size 0.35s ease;
+      background-size 0.4s cubic-bezier(0, 0, 0.2, 1);
     font-size: 0.95rem;
   }
 
   :global(a:hover) {
     color: var(--color-link-hover);
-    background-size: 100% 1.5px;
+    background-size: 100% 2px;
   }
 
   :global(a i) {
@@ -116,28 +184,55 @@ import { Content as SupportContent } from "../sections/support.md";
     line-height: 1.5;
   }
 
-  :global(h2::before) {
-    content: "✦";
-    margin-right: 0.4em;
-    display: inline-block;
-    animation: sway 4s ease-in-out infinite;
-    color: var(--color-link);
-    opacity: 0.7;
-  }
-
-  @keyframes sway {
-    0%,
-    100% {
-      transform: rotate(-8deg);
-    }
-    50% {
-      transform: rotate(8deg);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     :global(h2::before) {
       animation: none;
     }
   }
 </style>
+
+<script>
+  const month = new Date().getMonth();
+  const root = document.documentElement;
+
+  const seasons: Record<
+    string,
+    {
+      light: { link: string; hover: string };
+      dark: { link: string; hover: string };
+    }
+  > = {
+    summer: {
+      light: { link: "#3a7a3a", hover: "#2a5c2a" },
+      dark: { link: "#6ab86a", hover: "#82ca82" },
+    },
+    autumn: {
+      light: { link: "#8b6b2e", hover: "#6b4f1e" },
+      dark: { link: "#c49550", hover: "#d4a862" },
+    },
+    winter: {
+      light: { link: "#2e4e6b", hover: "#1d3850" },
+      dark: { link: "#6090b0", hover: "#78a8c8" },
+    },
+  };
+
+  function getSeason(m: number): string | null {
+    if (m >= 2 && m <= 4) return null;
+    if (m >= 5 && m <= 7) return "summer";
+    if (m >= 8 && m <= 10) return "autumn";
+    return "winter";
+  }
+
+  function applyColors(isDark: boolean) {
+    const season = getSeason(month);
+    if (!season) return;
+    const colors = seasons[season][isDark ? "dark" : "light"];
+    root.style.setProperty("--color-link", colors.link);
+    root.style.setProperty("--color-link-hover", colors.hover);
+    root.style.setProperty("--color-accent", colors.link);
+  }
+
+  const darkMQ = window.matchMedia("(prefers-color-scheme: dark)");
+  applyColors(darkMQ.matches);
+  darkMQ.addEventListener("change", (e) => applyColors(e.matches));
+</script>
