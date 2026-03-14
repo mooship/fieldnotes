@@ -8,10 +8,6 @@
     <p class="project-desc">Political alignment quiz matching South African voters to parties.</p>
   </li>
   <li>
-    <a href="https://ironledger.timothybrits.co.za/"><i class="ri-gamepad-line" aria-hidden="true"></i><span>Iron Ledger</span></a>
-    <p class="project-desc">Govern a dying frontier star system. 15 years. No second chances.</p>
-  </li>
-  <li>
     <a href="https://github.com/mooship/jot"><i class="ri-terminal-line" aria-hidden="true"></i><span>jot</span></a>
     <p class="project-desc">Fast, minimal notes from your terminal. Written in Go.</p>
   </li>
