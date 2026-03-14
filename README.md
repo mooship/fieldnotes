@@ -60,10 +60,12 @@ Fonts are self‑hosted (variable font packages) for performance & privacy.
 
 ## 🛠 Tech Notes
 
-- Astro 5.x
+- Astro 6.x
 - TypeScript enabled (`tsconfig.json`)
+- Astro Font API (`Font` from `astro:assets`) with `fontProviders.fontsource()`
+- Experimental Rust compiler enabled (`experimental.rustCompiler: true`)
 - Import sorting + Prettier formatting
-- PurgeCSS + compressor + inlining for lean production builds
+- Sitemap integration (`@astrojs/sitemap`) and static output build
 
 ## 🔄 Updating
 
