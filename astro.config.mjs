@@ -1,7 +1,4 @@
 import sitemap from "@astrojs/sitemap";
-import playformInline from "@playform/inline";
-import compressor from "astro-compressor";
-import purgecss from "astro-purgecss";
 import { defineConfig } from "astro/config";
 import { FontaineTransform } from "fontaine";
 
@@ -30,7 +27,7 @@ export default defineConfig({
       },
     },
   },
-  integrations: [sitemap(), playformInline(), purgecss(), compressor()],
+  integrations: [sitemap()],
   vite: {
     plugins: [FontaineTransform.vite(fontaineOptions)],
   },

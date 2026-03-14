@@ -1,8 +1,6 @@
 ---
 import "../styles/global.css";
 import "remixicon/fonts/remixicon.css";
-import { Schema } from "astro-seo-schema";
-import type { Thing, WithContext } from "schema-dts";
 import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/lora";
 
@@ -28,7 +26,7 @@ const url = Astro.url;
 const canonical =
   canonicalProp ?? (url ? url.origin + url.pathname : undefined);
 const schemaType = type === "article" ? "Article" : "WebSite";
-const jsonLd: WithContext<Thing> = {
+const jsonLd = {
   "@context": "https://schema.org",
   "@type": schemaType,
   name: title,
@@ -77,7 +75,11 @@ const jsonLd: WithContext<Thing> = {
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     {image && <meta name="twitter:image" content={image} />}
-    {canonical && <Schema item={jsonLd} />}
+    {
+      canonical && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      )
+    }
   </head>
   <body>
     <slot />
