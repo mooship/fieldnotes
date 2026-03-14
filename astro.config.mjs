@@ -1,23 +1,22 @@
 import sitemap from "@astrojs/sitemap";
-import { defineConfig } from "astro/config";
-import { FontaineTransform } from "fontaine";
-
-const fontaineOptions = {
-  fallbacks: {
-    "DM Sans Variable": ["system-ui", "Arial"],
-    "Lora Variable": ["Georgia", "Times New Roman"],
-  },
-  categoryFallbacks: {
-    "sans-serif": ["system-ui", "Arial"],
-    serif: ["Georgia", "Times New Roman"],
-  },
-  resolvePath: (id) => new URL(`./public${id}`, import.meta.url),
-};
+import { defineConfig, fontProviders } from "astro/config";
 
 export default defineConfig({
   site: "https://timothybrits.co.za",
   trailingSlash: "never",
   output: "static",
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Lora",
+      cssVariable: "--font-lora",
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "DM Sans",
+      cssVariable: "--font-dm-sans",
+    },
+  ],
   build: {
     assetsInlineLimit: 4096,
     cacheDir: "./.astro-cache",
@@ -28,7 +27,7 @@ export default defineConfig({
     },
   },
   integrations: [sitemap()],
-  vite: {
-    plugins: [FontaineTransform.vite(fontaineOptions)],
+  experimental: {
+    rustCompiler: true,
   },
 });

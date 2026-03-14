@@ -13,11 +13,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.7",
+    "@astrojs/compiler-rs": "^0.1.4",
     "@astrojs/sitemap": "^3.7.1",
-    "@fontsource-variable/dm-sans": "^5.2.8",
-    "@fontsource-variable/lora": "^5.2.8",
     "astro": "^6.0.4",
-    "fontaine": "^0.8.0",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",

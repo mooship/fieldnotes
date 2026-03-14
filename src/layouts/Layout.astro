@@ -1,8 +1,7 @@
 ---
 import "../styles/global.css";
 import "remixicon/fonts/remixicon.css";
-import "@fontsource-variable/dm-sans";
-import "@fontsource-variable/lora";
+import { Font } from "astro:assets";
 
 export interface Props {
   title: string;
@@ -39,6 +38,8 @@ const jsonLd = {
 <!doctype html>
 <html lang="en">
   <head>
+    <Font cssVariable="--font-lora" preload />
+    <Font cssVariable="--font-dm-sans" preload />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
