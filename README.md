@@ -24,7 +24,6 @@ Dev server runs at: http://localhost:4321
 | `npm run dev`     | Start local development server   |
 | `npm run build`   | Type check then production build |
 | `npm run preview` | Preview built site               |
-| `npm run lint`    | oxlint (auto-fix enabled)        |
 | `npm run format`  | Prettier + import sorting        |
 
 ## 🗂 Structure (essentials)
@@ -94,7 +93,6 @@ Your personal content (links, descriptions) is yours — consider adding a note 
 Run before pushing major changes:
 
 ```sh
-npm run lint
 npm run build
 ```
 

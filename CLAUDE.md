@@ -8,7 +8,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev        # start dev server
 npm run build      # type-check (astro check) then build
 npm run preview    # preview production build
-npm run lint       # oxlint with auto-fix
 npm run format     # prettier with auto-fix
 ```
 
