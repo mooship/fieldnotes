@@ -84,7 +84,7 @@ Original project: Astro Biolink Kit by [Leif](https://grains.leifjerami.com).
 
 ## License
 
-This project is licensed under the **MIT License** — see [`LICENSE`](./LICENSE).
+[MIT License](LICENSE)
 
 Your personal content (links, descriptions) is yours — consider adding a note if you want to explicitly release it (e.g., CC0) or keep all-rights-reserved.
 
