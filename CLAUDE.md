@@ -22,7 +22,7 @@ This is a single-page personal/links site built with Astro (static output). The 
 
 **Styling:** All base styles and CSS custom properties (colors, fonts) live in `src/styles/global.css`. Page-level layout styles (section spacing, link styles, heading overrides) are in a `<style>` block in `index.astro` using `:global()` selectors to reach markdown-rendered elements. Light and dark modes are handled via `prefers-color-scheme`.
 
-**Fonts:** Lora Variable (headings) and DM Sans Variable (body), both self-hosted via `@fontsource-variable`. Font-face declarations are in `global.css`; imports are in `Layout.astro`. Fontaine is configured in `astro.config.mjs` with per-font fallback entries to minimise CLS.
+**Fonts:** Lora Variable (headings) and DM Sans Variable (body), configured via Astro's built-in font API (`astro/config` `fontProviders.fontsource()`) with CSS variables `--font-lora` and `--font-dm-sans`. Font-face declarations are injected automatically; the CSS variables are consumed in `global.css`.
 
 **Build pipeline:** Astro integrations run at build time — sitemap generation, CSS/JS inlining (`@playform/inline`), PurgeCSS (removes unused styles), and Brotli/gzip compression (`astro-compressor`). Fontaine runs as a Vite plugin to inject metric-matched fallback fonts.
 
