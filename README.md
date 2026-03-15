@@ -4,7 +4,7 @@ Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to t
 
 > Based on the excellent Astro Biolink Kit by [Leif](https://grains.leifjerami.com).
 
-## 🚀 Quick Start
+## Quick Start
 
 Prerequisite: Node 22.21.1 and npm.
 
@@ -17,7 +17,7 @@ npm run dev
 
 Dev server runs at: http://localhost:4321
 
-## 🧪 Common Scripts
+## Common Scripts
 
 | Script            | Purpose                          |
 | ----------------- | -------------------------------- |
@@ -26,7 +26,7 @@ Dev server runs at: http://localhost:4321
 | `npm run preview` | Preview built site               |
 | `npm run format`  | Prettier + import sorting        |
 
-## 🗂 Structure (essentials)
+## Structure (essentials)
 
 ```text
 src/
@@ -43,7 +43,7 @@ src/
 public/              # Static assets (images, favicons, etc.)
 ```
 
-## ✏️ Customising Your Links
+## Customising Your Links
 
 1. Open the relevant content file (`src/pages/intro.md`, `personal.md`, `writing.md`, or `support.md`)
 2. Add or edit Markdown list items / sections (each becomes part of the rendered link tree)
@@ -57,7 +57,7 @@ Layout changes: edit `src/layouts/Layout.astro` (semantic HTML + scoped styles).
 
 Fonts are self‑hosted (variable font packages) for performance & privacy.
 
-## 🛠 Tech Notes
+## Tech Notes
 
 - Astro 6.x
 - TypeScript enabled (`tsconfig.json`)
@@ -66,7 +66,7 @@ Fonts are self‑hosted (variable font packages) for performance & privacy.
 - Import sorting + Prettier formatting
 - Sitemap integration (`@astrojs/sitemap`) and static output build
 
-## 🔄 Updating
+## Updating
 
 Pull upstream improvements from the original template if desired:
 
@@ -78,17 +78,17 @@ git merge upstream/main
 
 Resolve any merge conflicts (usually README or minor style changes).
 
-## 🙌 Attribution
+## Attribution
 
 Original project: Astro Biolink Kit by [Leif](https://grains.leifjerami.com).
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** — see [`LICENSE`](./LICENSE).
 
 Your personal content (links, descriptions) is yours — consider adding a note if you want to explicitly release it (e.g., CC0) or keep all-rights-reserved.
 
-## ✅ Maintenance Checklist
+## Maintenance Checklist
 
 Run before pushing major changes:
 
