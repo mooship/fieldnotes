@@ -82,6 +82,10 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
     border-bottom: 1px solid var(--color-border);
   }
 
+  .post-list li:last-child {
+    border-bottom: none;
+  }
+
 .post-list a {
     display: block;
     font-size: 1rem;
