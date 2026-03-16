@@ -1,0 +1,159 @@
+---
+import Layout from "./Layout.astro";
+
+export interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  type?: "article";
+}
+
+const { title, description, date, type = "article" } = Astro.props;
+const formattedDate = date.toLocaleDateString("en-GB", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<Layout title={title} description={description} type={type}>
+  <main>
+    <nav class="post-nav">
+      <a href="/blog">
+        <i class="ri-arrow-left-line" aria-hidden="true"></i>
+        <span>All posts</span>
+      </a>
+    </nav>
+    <article>
+      <header class="post-header">
+        <h1>{title.replace(" — Timothy Brits", "")}</h1>
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+      </header>
+      <div class="post-body">
+        <slot />
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+  }
+
+  .post-nav {
+    margin-bottom: 2rem;
+  }
+
+  .post-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .post-nav a:hover {
+    color: var(--color-link-hover);
+  }
+
+  .post-header {
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-family: var(--font-lora), serif;
+    color: var(--color-heading);
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+  }
+
+  time {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .post-body :global(h2) {
+    font-family: var(--font-lora), serif;
+    color: var(--color-heading);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 2rem 0 0.75rem;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .post-body :global(h3) {
+    font-family: var(--font-lora), serif;
+    color: var(--color-heading);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .post-body :global(p) {
+    line-height: 1.75;
+    margin: 0 0 1.25rem;
+    color: var(--color-text);
+  }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .post-body :global(li) {
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+    line-height: 1.65;
+    list-style-type: disc;
+  }
+
+  .post-body :global(a) {
+    color: var(--color-link);
+  }
+
+  .post-body :global(a:hover) {
+    color: var(--color-link-hover);
+  }
+
+  .post-body :global(code) {
+    font-family: ui-monospace, "Cascadia Code", monospace;
+    font-size: 0.875em;
+    background: var(--color-border);
+    padding: 0.15em 0.35em;
+    border-radius: 4px;
+  }
+
+  .post-body :global(pre) {
+    background: var(--color-border);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .post-body :global(pre code) {
+    background: none;
+    padding: 0;
+    font-size: 0.875rem;
+  }
+
+  .post-body :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    margin: 0 0 1.25rem;
+    padding: 0.25rem 1rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+
+  .post-body :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
+</style>
