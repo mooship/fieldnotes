@@ -37,6 +37,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
         ))
       }
     </ol>
+    {posts.length === 0 && <p class="empty">Nothing here yet. Check back soon.</p>}
   </main>
 </Layout>
 
@@ -103,6 +104,12 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
     font-size: 0.8rem;
     color: var(--color-text-secondary);
     margin: 0.2rem 0 0.4rem;
+  }
+
+  .empty {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
   }
 
   .post-desc {
