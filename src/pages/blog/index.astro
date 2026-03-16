@@ -1,0 +1,121 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout
+  title="Blog — Timothy Brits"
+  description="Thoughts on technology, open-source, and building things."
+  type="website"
+>
+  <main>
+    <header class="blog-header">
+      <a href="/" class="back-link">
+        <i class="ri-arrow-left-line" aria-hidden="true"></i>
+        <span>timothybrits.co.za</span>
+      </a>
+      <h1>Blog</h1>
+    </header>
+    <ol class="post-list">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.id}`}>{post.data.title}</a>
+            <time datetime={post.data.date.toISOString()}>
+              {post.data.date.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            <p class="post-desc">{post.data.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+    {posts.length === 0 && <p class="empty">Nothing here yet. Check back soon.</p>}
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+  }
+
+  .blog-header {
+    margin-bottom: 2rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .back-link:hover {
+    color: var(--color-link-hover);
+  }
+
+  h1 {
+    font-family: var(--font-lora), serif;
+    color: var(--color-heading);
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .post-list li {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .post-list li:last-child {
+    border-bottom: none;
+  }
+
+.post-list a {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .post-list a:hover {
+    color: var(--color-link-hover);
+  }
+
+  time {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin: 0.2rem 0 0.4rem;
+  }
+
+  .empty {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .post-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>
