@@ -5,7 +5,7 @@
 <ul>
   <li>
     <a href="https://narvik.timothybrits.co.za"><i class="ri-book-line" aria-hidden="true"></i><span>The Last Man in Narvik</span></a>
-    <p class="project-desc">A chapter-based narrative of resistance and survival in WWII-occupied Norway.</p>
+    <p class="project-desc">A novella about resistance and survival in WWII-occupied Norway.</p>
   </li>
   <li>
     <a href="https://extraction.timothybrits.co.za"><i class="ri-funds-line" aria-hidden="true"></i><span>Extraction</span></a>
