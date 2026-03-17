@@ -4,10 +4,6 @@
 
 <ul>
   <li>
-    <a href="/blog"><i class="ri-article-line" aria-hidden="true"></i><span>Blog</span></a>
-    <p class="project-desc">Thoughts on technology, open-source, and building things.</p>
-  </li>
-  <li>
     <a href="https://narvik.timothybrits.co.za"><i class="ri-book-line" aria-hidden="true"></i><span>The Last Man in Narvik</span></a>
     <p class="project-desc">A chapter-based narrative of resistance and survival in WWII-occupied Norway.</p>
   </li>
