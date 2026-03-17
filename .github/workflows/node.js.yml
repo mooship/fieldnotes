@@ -25,5 +25,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
+      - name: Cache Vite cache
+        uses: actions/cache@v5
+        with:
+          path: node_modules/.vite
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-vite-${{ hashFiles('package-lock.json', 'vite.config.*', 'tsconfig*.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-vite-
       - run: npm run build --if-present
       - run: npm test --if-present
