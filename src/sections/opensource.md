@@ -11,6 +11,10 @@
     <a href="https://github.com/mooship/jot"><i class="ri-terminal-line" aria-hidden="true"></i><span>jot</span></a>
     <p class="project-desc">Fast, minimal notes from your terminal.</p>
   </li>
+  <li>
+    <a href="https://lede.timothybrits.co.za"><i class="ri-newspaper-line" aria-hidden="true"></i><span>Lede</span></a>
+    <p class="project-desc">A daily AI-curated news digest.</p>
+  </li>
 </ul>
 
 </div>
