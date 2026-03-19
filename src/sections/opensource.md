@@ -12,7 +12,7 @@
     <p class="project-desc">Fast, minimal notes from your terminal.</p>
   </li>
   <li>
-    <a href="https://elar.app"><i class="ri-newspaper-line" aria-hidden="true"></i><span>Elar</span></a>
+    <a href="https://tidel.app"><i class="ri-newspaper-line" aria-hidden="true"></i><span>Tidel</span></a>
     <p class="project-desc">A daily AI-curated news digest.</p>
   </li>
 </ul>
