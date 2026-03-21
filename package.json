@@ -12,10 +12,10 @@
     "start": "astro dev"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.7",
+    "@astrojs/check": "^0.9.8",
     "@astrojs/compiler-rs": "^0.1.4",
     "@astrojs/sitemap": "^3.7.1",
-    "astro": "^6.0.4",
+    "astro": "^6.0.8",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",
