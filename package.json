@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
-    "@astrojs/compiler-rs": "^0.1.4",
+    "@astrojs/compiler-rs": "^0.1.6",
     "@astrojs/sitemap": "^3.7.1",
     "astro": "^6.0.8",
     "prettier": "^3.8.1",
