@@ -40,11 +40,13 @@ body {
 h1 {
   font-family: var(--font-mono), monospace;
   color: var(--color-heading);
+  text-wrap: balance;
 }
 
 h2 {
   font-family: var(--font-mono), monospace;
   color: var(--color-heading);
+  text-wrap: balance;
 }
 
 a:focus-visible {
@@ -96,6 +98,7 @@ p {
 li {
   margin-bottom: 10px;
   color: var(--color-text-secondary);
+  text-wrap: pretty;
 }
 
 body::before {
