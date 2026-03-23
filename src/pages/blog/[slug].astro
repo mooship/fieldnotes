@@ -12,7 +12,8 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
+const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
 ---
 
 <Layout
@@ -37,6 +38,7 @@ const { Content } = await render(post);
             })
           }
         </time>
+        {readingTime && <span class="reading-time">{readingTime}</span>}
         {
           post.data.updatedDate && (
             <time
@@ -81,6 +83,12 @@ const { Content } = await render(post);
   }
 
   time {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .reading-time {
     display: block;
     font-size: 0.85rem;
     color: var(--color-text-secondary);
