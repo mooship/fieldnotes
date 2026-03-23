@@ -6,6 +6,9 @@ import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
+import { getBlogPosts, getPostSlug } from "../lib/blog";
+
+const recentPosts = (await getBlogPosts()).slice(0, 5);
 ---
 
 <Layout
@@ -20,6 +23,28 @@ import { Content as SupportContent } from "../sections/support.md";
     <OpenSourceContent />
     <WritingContent />
     <SupportContent />
+    {
+      recentPosts.length > 0 && (
+        <section class="section-blog">
+          <h2>Blog</h2>
+          <ul>
+            {recentPosts.map((post) => (
+              <li>
+                <a href={`/blog/${getPostSlug(post.id)}`}>
+                  <i class="ri-article-line" aria-hidden="true" />
+                  <span>{post.data.title}</span>
+                </a>
+                <p class="project-desc">{post.data.description}</p>
+              </li>
+            ))}
+          </ul>
+          <a href="/blog">
+            <i class="ri-arrow-right-line" aria-hidden="true" />
+            <span>All posts</span>
+          </a>
+        </section>
+      )
+    }
   </main>
 </Layout>
 
@@ -66,7 +91,8 @@ import { Content as SupportContent } from "../sections/support.md";
   :global(.section-personal),
   :global(.section-writing),
   :global(.section-opensource),
-  :global(.section-support) {
+  :global(.section-support),
+  :global(.section-blog) {
     margin-top: 2.5rem;
     position: relative;
     padding-left: 1rem;
@@ -75,7 +101,8 @@ import { Content as SupportContent } from "../sections/support.md";
   :global(.section-personal::before),
   :global(.section-writing::before),
   :global(.section-opensource::before),
-  :global(.section-support::before) {
+  :global(.section-support::before),
+  :global(.section-blog::before) {
     content: "";
     display: block;
     height: 12px;
@@ -89,7 +116,8 @@ import { Content as SupportContent } from "../sections/support.md";
     :global(.section-personal::before),
     :global(.section-writing::before),
     :global(.section-opensource::before),
-    :global(.section-support::before) {
+    :global(.section-support::before),
+    :global(.section-blog::before) {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='12'%3E%3Cpath d='M0,6 C80,1 160,11 240,6 S400,1 480,6 S640,11 640,6' fill='none' stroke='%2360b082' stroke-width='1.5' stroke-opacity='0.25'/%3E%3C/svg%3E");
     }
   }
@@ -97,7 +125,8 @@ import { Content as SupportContent } from "../sections/support.md";
   :global(.section-personal::after),
   :global(.section-writing::after),
   :global(.section-opensource::after),
-  :global(.section-support::after) {
+  :global(.section-support::after),
+  :global(.section-blog::after) {
     content: "";
     position: absolute;
     left: 0;
@@ -114,7 +143,8 @@ import { Content as SupportContent } from "../sections/support.md";
     :global(.section-personal::after),
     :global(.section-writing::after),
     :global(.section-opensource::after),
-    :global(.section-support::after) {
+    :global(.section-support::after),
+    :global(.section-blog::after) {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='36'%3E%3Cpath d='M1.5,0 C0.3,9 2.7,18 1.5,27 C0.3,36 1.5,36 1.5,36' fill='none' stroke='%2360b082' stroke-width='1.2' stroke-opacity='0.3'/%3E%3C/svg%3E");
     }
   }

@@ -1,0 +1,121 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug } from "../../lib/blog";
+
+const posts = await getBlogPosts();
+---
+
+<Layout title="Blog — Timothy Brits" description={BLOG_DESCRIPTION} type="website">
+  <main>
+    <h1>Blog</h1>
+    {
+      posts.length === 0 ? (
+        <p class="empty">No posts yet.</p>
+      ) : (
+        <ul>
+          {posts.map((post) => (
+            <li>
+              <a href={`/blog/${getPostSlug(post.id)}`}>
+                <i class="ri-article-line" aria-hidden="true" />
+                <span>{post.data.title}</span>
+              </a>
+              <time
+                class="post-date"
+                datetime={post.data.pubDate.toISOString()}
+              >
+                {post.data.pubDate.toLocaleDateString("en-ZA", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+              <p class="post-desc">{post.data.description}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <a href="/" class="back-link">
+      <i class="ri-arrow-left-line" aria-hidden="true" />
+      <span>Back</span>
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  h1 {
+    text-align: left;
+    color: var(--color-heading);
+    margin: 0 0 1.5rem 0;
+    font-weight: 500;
+    font-size: 1.75rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+  }
+
+  li {
+    margin-bottom: 1.5rem;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-link);
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition:
+      color 0.2s ease,
+      background-size 0.4s cubic-bezier(0, 0, 0.2, 1);
+    font-size: 0.95rem;
+  }
+
+  a:hover {
+    color: var(--color-link-hover);
+    background-size: 100% 2px;
+  }
+
+  a i {
+    font-size: 1.1em;
+    flex: 0 0 auto;
+  }
+
+  a span {
+    flex-grow: 1;
+  }
+
+  .post-date {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    margin: 0.2rem 0 0 1.6rem;
+  }
+
+  .post-desc {
+    margin: 0.15rem 0 0 1.6rem;
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .empty {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .back-link {
+    margin-top: 1rem;
+  }
+</style>
