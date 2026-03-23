@@ -39,7 +39,7 @@ export async function GET(context: APIContext) {
     <updated>${modified}</updated>
     <published>${published}</published>
     <summary>${xmlEscape(post.data.description)}</summary>
-    <content type="html"><![CDATA[${html}]]></content>
+    <content type="html">${xmlEscape(html)}</content>
     <link href="${url}" />
   </entry>`;
       })
