@@ -21,7 +21,13 @@ export async function GET(context: APIContext) {
 
   const updated =
     posts.length > 0
-      ? posts[0].data.pubDate.toISOString()
+      ? new Date(
+          Math.max(
+            ...posts.map((p) =>
+              (p.data.updatedDate ?? p.data.pubDate).getTime()
+            )
+          )
+        ).toISOString()
       : new Date().toISOString();
 
   const entries = (

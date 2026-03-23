@@ -1,5 +1,6 @@
 import { getCollection } from "astro:content";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkSmartypants from "remark-smartypants";
@@ -18,6 +19,7 @@ export function getSiteUrl(site: URL): string {
 
 const mdProcessor = unified()
   .use(remarkParse)
+  .use(remarkGfm)
   .use(remarkSmartypants)
   .use(remarkRehype)
   .use(rehypeStringify);

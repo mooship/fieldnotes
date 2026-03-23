@@ -7,14 +7,11 @@ export function remarkReadingTime() {
   return function (tree: Root, file: VFile) {
     const text = toString(tree);
     const readingTime = getReadingTime(text);
-    (
-      file.data as { astro?: { frontmatter?: Record<string, unknown> } }
-    ).astro ??= {};
-    (
-      file.data as { astro: { frontmatter?: Record<string, unknown> } }
-    ).astro.frontmatter ??= {};
-    (
-      file.data as { astro: { frontmatter: Record<string, unknown> } }
-    ).astro.frontmatter.readingTime = readingTime.text;
+    const data = file.data as {
+      astro?: { frontmatter?: Record<string, unknown> };
+    };
+    data.astro ??= {};
+    data.astro.frontmatter ??= {};
+    data.astro.frontmatter.readingTime = readingTime.text;
   };
 }
