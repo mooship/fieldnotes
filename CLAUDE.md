@@ -23,7 +23,9 @@ This is a personal/links site with a blog, built with Astro (static output). The
 
 **Styling:** All base styles and CSS custom properties (colors, fonts) live in `src/styles/global.css`. Page-level layout styles (section spacing, link styles, heading overrides) are in a `<style>` block in `index.astro` using `:global()` selectors to reach markdown-rendered elements. Light and dark modes are handled via `prefers-color-scheme`.
 
-**Fonts:** Lora Variable (headings) and DM Sans Variable (body), configured via Astro's built-in font API (`astro/config` `fontProviders.fontsource()`) with CSS variables `--font-lora` and `--font-dm-sans`. Font-face declarations are injected automatically; the CSS variables are consumed in `global.css`.
+**Fonts:** IBM Plex Mono (headings/mono) and DM Sans Variable (body), configured via Astro's built-in font API (`astro/config` `fontProviders.fontsource()`) with CSS variables `--font-mono` and `--font-dm-sans`. Font-face declarations are injected automatically; the CSS variables are consumed in `global.css`.
+
+**Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and a custom `remarkReadingTime` plugin (`src/lib/remark-reading-time.ts`) that injects estimated reading time into `remarkPluginFrontmatter.readingTime` for blog posts.
 
 **Build pipeline:** Astro integrations run at build time — sitemap generation (`@astrojs/sitemap`) and RSS feeds (`@astrojs/rss`).
 

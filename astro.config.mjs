@@ -1,5 +1,7 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, fontProviders } from "astro/config";
+import remarkSmartypants from "remark-smartypants";
+import { remarkReadingTime } from "./src/lib/remark-reading-time.ts";
 
 export default defineConfig({
   site: "https://timothybrits.co.za",
@@ -25,6 +27,9 @@ export default defineConfig({
         crossOrigin: "anonymous",
       },
     },
+  },
+  markdown: {
+    remarkPlugins: [remarkSmartypants, remarkReadingTime],
   },
   integrations: [sitemap()],
   experimental: {
