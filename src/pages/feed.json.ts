@@ -33,6 +33,6 @@ export async function GET(context: APIContext) {
   };
 
   return new Response(JSON.stringify(feed), {
-    headers: { "Content-Type": "application/feed+json" },
+    headers: { "Content-Type": "application/feed+json; charset=utf-8" },
   });
 }
