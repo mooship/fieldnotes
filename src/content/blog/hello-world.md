@@ -8,7 +8,7 @@ Hello. I'm Timothy, a software developer based in Pretoria, South Africa.
 
 I've been writing software since 2018. Web development is where I spend most of my time — my language of choice is TypeScript — yes, all of it, the weird parts included. When performance actually matters, I reach for Go. I work on a Mac and live in the terminal.
 
-Outside work I tinker — I'm the author of jot, a terminal notes app, and Tidel, an AI-curated daily news digest. I play video games. I listen to audiobooks — mostly sci-fi and historical fiction, the kind that makes a long walk feel short. I also have a dog who has no interest in any of this.
+Outside work I tinker — I'm the author of jot, a terminal notes app, and Tidel, an AI-curated daily news digest. I play video games — mostly RTS and grand strategy, the kind where you lose four hours before you notice. I listen to audiobooks — mostly sci-fi and historical fiction, the kind that makes a long walk feel short. I also have a dog who has no interest in any of this.
 
 I'm an eco-socialist and a Buddhist. Those two things inform how I think about technology, about work, and about what we're actually building and for whom.
 
