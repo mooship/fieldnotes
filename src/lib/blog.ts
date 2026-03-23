@@ -16,14 +16,14 @@ export function getSiteUrl(site: URL): string {
   return site.toString().replace(/\/$/, "");
 }
 
+const mdProcessor = unified()
+  .use(remarkParse)
+  .use(remarkSmartypants)
+  .use(remarkRehype)
+  .use(rehypeStringify);
+
 export async function renderMarkdownToHtml(markdown: string): Promise<string> {
-  const result = await unified()
-    .use(remarkParse)
-    .use(remarkSmartypants)
-    .use(remarkRehype)
-    .use(rehypeStringify)
-    .process(markdown);
-  return String(result);
+  return String(await mdProcessor.process(markdown));
 }
 
 export async function getBlogPosts() {
