@@ -8,7 +8,7 @@ import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
 import { getBlogPosts, getPostSlug } from "../lib/blog";
 
-const recentPosts = (await getBlogPosts()).slice(0, 5);
+const latestPost = (await getBlogPosts())[0];
 ---
 
 <Layout
@@ -20,31 +20,23 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
   <main aria-label="Content">
     <IntroContent />
     <PersonalContent />
+    {
+      latestPost && (
+        <div class="blog-latest">
+          <a href={`/blog/${getPostSlug(latestPost.id)}`}>
+            <i class="ri-pencil-line" aria-hidden="true" />
+            <span>{latestPost.data.title}</span>
+          </a>
+          <a href="/blog" class="all-posts">
+            <i class="ri-arrow-right-s-line" aria-hidden="true" />
+            <span>All posts</span>
+          </a>
+        </div>
+      )
+    }
     <OpenSourceContent />
     <WritingContent />
     <SupportContent />
-    {
-      recentPosts.length > 0 && (
-        <section class="section-blog">
-          <h2>Blog</h2>
-          <ul>
-            {recentPosts.map((post) => (
-              <li>
-                <a href={`/blog/${getPostSlug(post.id)}`}>
-                  <i class="ri-article-line" aria-hidden="true" />
-                  <span>{post.data.title}</span>
-                </a>
-                <p class="project-desc">{post.data.description}</p>
-              </li>
-            ))}
-          </ul>
-          <a href="/blog">
-            <i class="ri-arrow-right-line" aria-hidden="true" />
-            <span>All posts</span>
-          </a>
-        </section>
-      )
-    }
   </main>
 </Layout>
 
@@ -91,8 +83,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
   :global(.section-personal),
   :global(.section-writing),
   :global(.section-opensource),
-  :global(.section-support),
-  :global(.section-blog) {
+  :global(.section-support) {
     margin-top: 2.5rem;
     position: relative;
     padding-left: 1rem;
@@ -101,8 +92,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
   :global(.section-personal::before),
   :global(.section-writing::before),
   :global(.section-opensource::before),
-  :global(.section-support::before),
-  :global(.section-blog::before) {
+  :global(.section-support::before) {
     content: "";
     display: block;
     height: 12px;
@@ -116,8 +106,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
     :global(.section-personal::before),
     :global(.section-writing::before),
     :global(.section-opensource::before),
-    :global(.section-support::before),
-    :global(.section-blog::before) {
+    :global(.section-support::before) {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='12'%3E%3Cpath d='M0,6 C80,1 160,11 240,6 S400,1 480,6 S640,11 640,6' fill='none' stroke='%2360b082' stroke-width='1.5' stroke-opacity='0.25'/%3E%3C/svg%3E");
     }
   }
@@ -125,8 +114,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
   :global(.section-personal::after),
   :global(.section-writing::after),
   :global(.section-opensource::after),
-  :global(.section-support::after),
-  :global(.section-blog::after) {
+  :global(.section-support::after) {
     content: "";
     position: absolute;
     left: 0;
@@ -143,8 +131,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
     :global(.section-personal::after),
     :global(.section-writing::after),
     :global(.section-opensource::after),
-    :global(.section-support::after),
-    :global(.section-blog::after) {
+    :global(.section-support::after) {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='36'%3E%3Cpath d='M1.5,0 C0.3,9 2.7,18 1.5,27 C0.3,36 1.5,36 1.5,36' fill='none' stroke='%2360b082' stroke-width='1.2' stroke-opacity='0.3'/%3E%3C/svg%3E");
     }
   }
@@ -186,6 +173,19 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
     font-size: 0.82rem;
     color: var(--color-text-secondary);
     line-height: 1.5;
+  }
+
+  .blog-latest {
+    padding-left: 1rem;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .blog-latest .all-posts {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
   }
 
   @media (prefers-reduced-motion: reduce) {
