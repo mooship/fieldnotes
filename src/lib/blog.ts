@@ -1,9 +1,9 @@
+import { getCollection } from "astro:content";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkSmartypants from "remark-smartypants";
 import { unified } from "unified";
-import { getCollection } from "astro:content";
 
 export const BLOG_DESCRIPTION =
   "Writing by Timothy Brits on technology, open source, and related topics.";
