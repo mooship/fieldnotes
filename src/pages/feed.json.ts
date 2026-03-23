@@ -1,5 +1,10 @@
 import type { APIContext } from "astro";
-import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug, getSiteUrl } from "../lib/blog";
+import {
+  BLOG_DESCRIPTION,
+  getBlogPosts,
+  getPostSlug,
+  getSiteUrl,
+} from "../lib/blog";
 
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site!);
@@ -20,7 +25,9 @@ export async function GET(context: APIContext) {
         title: post.data.title,
         summary: post.data.description,
         date_published: post.data.pubDate.toISOString(),
-        date_modified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+        date_modified: (
+          post.data.updatedDate ?? post.data.pubDate
+        ).toISOString(),
       };
     }),
   };

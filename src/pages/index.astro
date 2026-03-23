@@ -178,33 +178,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 5);
   }
 
   :global(a) {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-link);
-    text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    transition:
-      color 0.2s ease,
-      background-size 0.4s cubic-bezier(0, 0, 0.2, 1);
     font-size: 0.95rem;
-  }
-
-  :global(a:hover) {
-    color: var(--color-link-hover);
-    background-size: 100% 2px;
-  }
-
-  :global(a i) {
-    font-size: 1.1em;
-    flex: 0 0 auto;
-  }
-
-  :global(a span) {
-    flex-grow: 1;
   }
 
   :global(.project-desc) {

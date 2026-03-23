@@ -22,7 +22,7 @@ const { Content } = await render(post);
 >
   <main>
     <a href="/blog" class="back-link">
-      <i class="ri-arrow-left-line" aria-hidden="true" />
+      <i class="ri-arrow-left-line" aria-hidden="true"></i>
       <span>All posts</span>
     </a>
     <article>
@@ -39,7 +39,10 @@ const { Content } = await render(post);
         </time>
         {
           post.data.updatedDate && (
-            <time class="updated" datetime={post.data.updatedDate.toISOString()}>
+            <time
+              class="updated"
+              datetime={post.data.updatedDate.toISOString()}
+            >
               Updated:{" "}
               {post.data.updatedDate.toLocaleDateString("en-ZA", {
                 year: "numeric",
@@ -62,30 +65,8 @@ const { Content } = await render(post);
   }
 
   .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-link);
-    text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    transition:
-      color 0.2s ease,
-      background-size 0.4s cubic-bezier(0, 0, 0.2, 1);
     font-size: 0.95rem;
     margin-bottom: 2rem;
-  }
-
-  .back-link:hover {
-    color: var(--color-link-hover);
-    background-size: 100% 2px;
-  }
-
-  .back-link i {
-    font-size: 1.1em;
-    flex: 0 0 auto;
   }
 
   header {
@@ -166,23 +147,6 @@ const { Content } = await render(post);
   article :global(li) {
     margin-bottom: 0.4rem;
     line-height: 1.6;
-  }
-
-  article :global(a) {
-    color: var(--color-link);
-    text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    transition:
-      color 0.2s ease,
-      background-size 0.4s cubic-bezier(0, 0, 0.2, 1);
-  }
-
-  article :global(a:hover) {
-    color: var(--color-link-hover);
-    background-size: 100% 2px;
   }
 
   article :global(hr) {

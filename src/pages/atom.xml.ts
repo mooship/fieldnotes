@@ -1,5 +1,10 @@
 import type { APIContext } from "astro";
-import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug, getSiteUrl } from "../lib/blog";
+import {
+  BLOG_DESCRIPTION,
+  getBlogPosts,
+  getPostSlug,
+  getSiteUrl,
+} from "../lib/blog";
 
 function xmlEscape(str: string): string {
   return str
@@ -14,13 +19,17 @@ export async function GET(context: APIContext) {
   const posts = await getBlogPosts();
 
   const updated =
-    posts.length > 0 ? posts[0].data.pubDate.toISOString() : new Date().toISOString();
+    posts.length > 0
+      ? posts[0].data.pubDate.toISOString()
+      : new Date().toISOString();
 
   const entries = posts
     .map((post) => {
       const url = `${site}/blog/${getPostSlug(post.id)}`;
       const published = post.data.pubDate.toISOString();
-      const modified = (post.data.updatedDate ?? post.data.pubDate).toISOString();
+      const modified = (
+        post.data.updatedDate ?? post.data.pubDate
+      ).toISOString();
       return `  <entry>
     <id>${url}</id>
     <title>${xmlEscape(post.data.title)}</title>

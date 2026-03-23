@@ -13,6 +13,6 @@ export function getSiteUrl(site: URL): string {
 
 export async function getBlogPosts() {
   return (await getCollection("blog", ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
 }
