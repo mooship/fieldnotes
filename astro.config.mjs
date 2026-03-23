@@ -8,8 +8,8 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: "Lora",
-      cssVariable: "--font-lora",
+      name: "IBM Plex Mono",
+      cssVariable: "--font-mono",
     },
     {
       provider: fontProviders.fontsource(),

@@ -1,3 +1,1 @@
-# Timothy Brits
-
-Technologist focused on open-source, eco-socialism, and collective liberation.
+Software developer from Pretoria, building open-source tools and thinking about who technology serves.

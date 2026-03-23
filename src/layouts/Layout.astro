@@ -38,7 +38,7 @@ const jsonLd = {
 <!doctype html>
 <html lang="en">
   <head>
-    <Font cssVariable="--font-lora" preload />
+    <Font cssVariable="--font-mono" preload />
     <Font cssVariable="--font-dm-sans" preload />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -101,6 +101,12 @@ const jsonLd = {
     }
   </head>
   <body>
+    <header>
+      <a href="/">Timothy Brits</a>
+      <nav>
+        <a href="/blog">Blog</a>
+      </nav>
+    </header>
     <slot />
     <footer>
       <a
@@ -116,6 +122,27 @@ const jsonLd = {
 </html>
 
 <style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  header a:first-child {
+    font-family: var(--font-mono), monospace;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--color-heading);
+  }
+
+  nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
   footer {
     margin-top: 2.5rem;
     padding-top: 1rem;

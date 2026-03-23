@@ -38,12 +38,12 @@ body {
 }
 
 h1 {
-  font-family: var(--font-lora), serif;
+  font-family: var(--font-mono), monospace;
   color: var(--color-heading);
 }
 
 h2 {
-  font-family: var(--font-lora), serif;
+  font-family: var(--font-mono), monospace;
   color: var(--color-heading);
 }
 
