@@ -101,6 +101,7 @@ const jsonLd = {
     }
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header>
       <a href="/">Timothy Brits</a>
       <nav>
@@ -120,6 +121,32 @@ const jsonLd = {
 </html>
 
 <style>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .skip-link:focus {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    padding: 0.5rem 1rem;
+    background: var(--color-bg);
+    color: var(--color-link);
+    border: 2px solid var(--color-link);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    z-index: 9999;
+    text-decoration: none;
+  }
+
   header {
     display: flex;
     justify-content: space-between;
