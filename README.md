@@ -19,25 +19,37 @@ Dev server runs at: http://localhost:4321
 
 ## Common Scripts
 
-| Script            | Purpose                          |
-| ----------------- | -------------------------------- |
-| `npm run dev`     | Start local development server   |
-| `npm run build`   | Type check then production build |
-| `npm run preview` | Preview built site               |
-| `npm run format`  | Prettier + import sorting        |
+| Script             | Purpose                           |
+| ------------------ | --------------------------------- |
+| `npm run dev`      | Start local development server    |
+| `npm run build`    | Type check then production build  |
+| `npm run lint`     | Lint Astro, TS, CSS, and Markdown |
+| `npm run lint:fix` | Auto-fix lint issues              |
+| `npm run preview`  | Preview built site                |
+| `npm run format`   | Prettier + import sorting         |
 
 ## Structure (essentials)
 
 ```text
 src/
 	pages/
-		index.astro      # Landing page layout
+		index.astro      # Home page (imports and renders sections)
+		blog/
+			index.astro    # Blog index
+			[slug].astro   # Blog post page
+	sections/
 		intro.md         # Introduction section
 		personal.md      # Personal links
-		writing.md       # Writing and projects
+		writing.md       # Writing intro section on home page
+		opensource.md    # Open source section
 		support.md       # Support section
+	content/
+		blog/            # Blog posts (.md)
 	layouts/
 		Layout.astro     # Base layout wrapper
+	lib/
+		blog.ts          # Blog helpers
+		remark-reading-time.ts
 	styles/
 		global.css       # Global styles / overrides
 public/              # Static assets (images, favicons, etc.)
@@ -45,9 +57,9 @@ public/              # Static assets (images, favicons, etc.)
 
 ## Customising Your Links
 
-1. Open the relevant content file (`src/pages/intro.md`, `personal.md`, `writing.md`, or `support.md`)
-2. Add or edit Markdown list items / sections (each becomes part of the rendered link tree)
-3. Commit changes — no rebuild logic required beyond normal Astro refresh
+1. Edit home page sections in `src/sections/intro.md`, `src/sections/personal.md`, `src/sections/writing.md`, `src/sections/opensource.md`, and `src/sections/support.md`.
+2. Add blog posts in `src/content/blog/` (do not edit `src/sections/writing.md` for post content).
+3. Run `npm run lint` and `npm run build` before pushing changes.
 
 ### Styling Tweaks
 
@@ -61,7 +73,8 @@ Fonts are self‑hosted (variable font packages) for performance & privacy.
 
 - Astro 6.x
 - TypeScript enabled (`tsconfig.json`)
-- Astro Font API (`Font` from `astro:assets`) with `fontProviders.fontsource()`
+- ESLint flat config for Astro, TS, CSS, and Markdown
+- Astro font provider setup via `fontProviders.fontsource()` in `astro.config.mjs`
 - Experimental Rust compiler enabled (`experimental.rustCompiler: true`)
 - Import sorting + Prettier formatting
 - Sitemap integration (`@astrojs/sitemap`) and static output build
@@ -93,6 +106,7 @@ Your personal content (links, descriptions) is yours — consider adding a note 
 Run before pushing major changes:
 
 ```sh
+npm run lint
 npm run build
 ```
 
