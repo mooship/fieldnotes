@@ -21,6 +21,8 @@ const latestPost = (await getBlogPosts())[0];
     <WorkContent />
     <OpenSourceContent />
     <WritingContent />
+    <SupportContent />
+    <PersonalContent />
     {
       latestPost && (
         <div class="blog-latest">
@@ -35,8 +37,6 @@ const latestPost = (await getBlogPosts())[0];
         </div>
       )
     }
-    <SupportContent />
-    <PersonalContent />
   </main>
 </Layout>
 
