@@ -7,11 +7,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 npm run dev        # start dev server
 npm run build      # type-check (astro check) then build
+npm run lint       # run ESLint across Astro, TS, CSS, and Markdown
+npm run lint:fix   # run ESLint with auto-fix
 npm run preview    # preview production build
 npm run format     # prettier with auto-fix
 ```
 
 There are no tests. `npm run build` is the verification step — it runs `astro check` (TypeScript + Astro type checking) before building.
+
+Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Markdown.
 
 ## Architecture
 

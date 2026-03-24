@@ -4,12 +4,14 @@ Personal link-tree + blog site. Astro 6, static output, TypeScript, no test suit
 
 ## Commands
 
-| Command           | Purpose                                                                |
-| ----------------- | ---------------------------------------------------------------------- |
-| `npm run dev`     | Dev server at `localhost:4321`                                         |
-| `npm run build`   | **Verification step** — runs `astro check` (type checking) then builds |
-| `npm run format`  | Prettier with import sorting (auto-fix)                                |
-| `npm run preview` | Preview production build                                               |
+| Command            | Purpose                                                                |
+| ------------------ | ---------------------------------------------------------------------- |
+| `npm run dev`      | Dev server at `localhost:4321`                                         |
+| `npm run build`    | **Verification step** — runs `astro check` (type checking) then builds |
+| `npm run lint`     | Run ESLint on Astro, TypeScript, CSS, and Markdown files               |
+| `npm run lint:fix` | Run ESLint with auto-fix                                               |
+| `npm run format`   | Prettier with import sorting (auto-fix)                                |
+| `npm run preview`  | Preview production build                                               |
 
 > There are no tests. Always run `npm run build` to verify changes.
 
