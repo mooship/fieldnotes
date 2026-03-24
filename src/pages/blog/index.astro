@@ -36,19 +36,16 @@ const postsWithMeta = posts.map((post) => {
                 <i class="ri-article-line" aria-hidden="true" />
                 <span>{post.data.title}</span>
               </a>
-              <time
-                class="post-date"
-                datetime={post.data.pubDate.toISOString()}
-              >
-                {post.data.pubDate.toLocaleDateString("en-ZA", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-              {readingTime && (
-                <span class="reading-time"> · {readingTime}</span>
-              )}
+              <p class="post-meta">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString("en-ZA", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+                {readingTime && <span> · {readingTime}</span>}
+              </p>
               <p class="post-desc">{post.data.description}</p>
             </li>
           ))}
@@ -90,16 +87,10 @@ const postsWithMeta = posts.map((post) => {
     font-size: 0.95rem;
   }
 
-  .post-date {
-    display: block;
+  .post-meta {
     font-size: 0.82rem;
     color: var(--color-text-secondary);
     margin: 0.2rem 0 0 1.6rem;
-  }
-
-  .reading-time {
-    font-size: 0.82rem;
-    color: var(--color-text-secondary);
   }
 
   .post-desc {
