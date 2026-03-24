@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Content as IntroContent } from "../sections/intro.md";
+import { Content as WorkContent } from "../sections/work.md";
 import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
@@ -17,7 +18,9 @@ const latestPost = (await getBlogPosts())[0];
 >
   <main aria-label="Content">
     <IntroContent />
-    <PersonalContent />
+    <WorkContent />
+    <OpenSourceContent />
+    <WritingContent />
     {
       latestPost && (
         <div class="blog-latest">
@@ -32,9 +35,8 @@ const latestPost = (await getBlogPosts())[0];
         </div>
       )
     }
-    <OpenSourceContent />
-    <WritingContent />
     <SupportContent />
+    <PersonalContent />
   </main>
 </Layout>
 
@@ -51,6 +53,7 @@ const latestPost = (await getBlogPosts())[0];
     text-wrap: balance;
   }
 
+  :global(.section-work),
   :global(.section-personal),
   :global(.section-writing),
   :global(.section-opensource),
@@ -88,6 +91,10 @@ const latestPost = (await getBlogPosts())[0];
 
   :global(a) {
     font-size: 0.95rem;
+  }
+
+  :global(li i) {
+    margin-right: 0.5rem;
   }
 
   :global(.project-desc) {
