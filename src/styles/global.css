@@ -7,7 +7,6 @@
   --color-link-hover: #0d5c57;
   --color-accent: #0f766e;
   --color-border: #e0ddd5;
-  --color-moss: #0f766e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +19,6 @@
     --color-link-hover: #5eead4;
     --color-accent: #2dd4bf;
     --color-border: #242620;
-    --color-moss: #2dd4bf;
   }
 }
 
@@ -35,7 +33,10 @@ body {
   color: var(--color-text);
   max-width: 640px;
   margin: 0 auto;
-  padding: calc(40px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
+  padding: calc(40px + env(safe-area-inset-top))
+    calc(20px + env(safe-area-inset-right))
+    calc(40px + env(safe-area-inset-bottom))
+    calc(20px + env(safe-area-inset-left));
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
