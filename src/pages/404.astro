@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Page not found — Timothy Brits"
+  robots="noindex"
+>
+  <main id="main-content">
+    <h1>404</h1>
+    <p>This page doesn't exist.</p>
+    <nav class="links">
+      <a href="/">
+        <i class="ri-home-line" aria-hidden="true"></i>
+        <span>Home</span>
+      </a>
+      <a href="/blog">
+        <i class="ri-article-line" aria-hidden="true"></i>
+        <span>Blog</span>
+      </a>
+    </nav>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  h1 {
+    color: var(--color-heading);
+    font-weight: 500;
+    font-size: 1.75rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .links a {
+    font-size: 0.95rem;
+  }
+
+  .links i {
+    margin-right: 0.5rem;
+  }
+</style>

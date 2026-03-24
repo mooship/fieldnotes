@@ -7,7 +7,7 @@ import remarkSmartypants from "remark-smartypants";
 import { unified } from "unified";
 
 export const BLOG_DESCRIPTION =
-  "Writing by Timothy Brits on technology, open source, and related topics.";
+  "Writing by Timothy Brits on software, open source, Buddhism, and eco-socialism.";
 
 export function getPostSlug(id: string): string {
   return id.replace(/\.mdx?$/, "");

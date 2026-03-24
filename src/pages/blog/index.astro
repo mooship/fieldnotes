@@ -1,8 +1,18 @@
 ---
+import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const posts = await getBlogPosts();
+const postsWithMeta = await Promise.all(
+  posts.map(async (post) => {
+    const { remarkPluginFrontmatter } = await render(post);
+    return {
+      post,
+      readingTime: remarkPluginFrontmatter?.readingTime as string | undefined,
+    };
+  })
+);
 ---
 
 <Layout
@@ -10,14 +20,14 @@ const posts = await getBlogPosts();
   description={BLOG_DESCRIPTION}
   type="website"
 >
-  <main>
+  <main id="main-content">
     <h1>Blog</h1>
     {
-      posts.length === 0 ? (
+      postsWithMeta.length === 0 ? (
         <p class="empty">No posts yet.</p>
       ) : (
         <ul>
-          {posts.map((post) => (
+          {postsWithMeta.map(({ post, readingTime }) => (
             <li>
               <a href={`/blog/${getPostSlug(post.id)}`}>
                 <i class="ri-article-line" aria-hidden="true" />
@@ -32,6 +42,7 @@ const posts = await getBlogPosts();
                   month: "long",
                   day: "numeric",
                 })}
+                {readingTime && <span class="reading-time">· {readingTime}</span>}
               </time>
               <p class="post-desc">{post.data.description}</p>
             </li>
@@ -79,6 +90,11 @@ const posts = await getBlogPosts();
     font-size: 0.82rem;
     color: var(--color-text-secondary);
     margin: 0.2rem 0 0 1.6rem;
+  }
+
+  .reading-time {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
   }
 
   .post-desc {
