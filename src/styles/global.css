@@ -24,6 +24,10 @@
   }
 }
 
+html {
+  background: var(--color-bg);
+}
+
 body {
   font-family: var(--font-dm-sans), system-ui, sans-serif;
   line-height: 1.6;
@@ -31,7 +35,7 @@ body {
   color: var(--color-text);
   max-width: 640px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: calc(40px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
