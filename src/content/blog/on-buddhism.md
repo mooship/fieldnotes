@@ -12,6 +12,6 @@ Buddhism asks you to live well — not in the sense of comfort or achievement, b
 
 The Eightfold Path is where most of that gets specific. Right speech, right action, right livelihood — not abstract ideals but things you can actually check yourself against. How did I speak to that person? What am I spending my time on? Does what I do for money cause harm to anyone?
 
-The part I keep returning to: your peace and the peace of the people around you are not separate. You can't really have one while ignoring the other. That's obvious when you say it out loud, but living like it's true takes real effort.
+The part I keep returning to: your peace and the peace of the people around you are not separate. You can't really have one while ignoring the other. Knowing that and actually treating it as true are different things.
 
-I don't have this figured out. I'm still at the beginning. But the direction feels right.
+I don't have this figured out. I'm still at the beginning. But the questions feel worth sitting with.
