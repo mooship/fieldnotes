@@ -1,14 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Content as IntroContent } from "../sections/intro.md";
-import { Content as WorkContent } from "../sections/work.md";
 import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
 import { getBlogPosts, getPostSlug } from "../lib/blog";
 
-const recentPosts = (await getBlogPosts()).slice(0, 3);
+const recentPosts = (await getBlogPosts()).slice(0, 5);
 ---
 
 <Layout
@@ -18,14 +17,10 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
 >
   <main id="main-content" aria-label="Content" tabindex="-1">
     <IntroContent />
-    <WorkContent />
-    <OpenSourceContent />
-    <WritingContent />
-    <SupportContent />
-    <PersonalContent />
     {
       recentPosts.length > 0 && (
-        <div class="blog-latest">
+        <div class="section-blog">
+          <h2>Blog</h2>
           <ul class="recent-posts">
             {recentPosts.map((post) => (
               <li>
@@ -53,6 +48,10 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
         </div>
       )
     }
+    <WritingContent />
+    <OpenSourceContent />
+    <SupportContent />
+    <PersonalContent />
   </main>
 </Layout>
 
@@ -69,7 +68,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
     text-wrap: balance;
   }
 
-  :global(.section-work),
+  :global(.section-blog),
   :global(.section-personal),
   :global(.section-writing),
   :global(.section-opensource),
@@ -120,8 +119,19 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
     line-height: 1.5;
   }
 
-  .blog-latest {
-    margin-top: 0.75rem;
+  .section-blog {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-blog h2 {
+    color: var(--color-heading);
+    margin: 0 0 0.75rem 0;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
   .recent-posts {
@@ -143,7 +153,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
     margin-left: 1.6rem;
   }
 
-  .blog-latest .all-posts {
+  .all-posts {
     font-size: 0.82rem;
     color: var(--color-text-secondary);
   }
