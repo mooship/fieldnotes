@@ -1,14 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Content as IntroContent } from "../sections/intro.md";
-import { Content as WorkContent } from "../sections/work.md";
 import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
 import { getBlogPosts, getPostSlug } from "../lib/blog";
 
-const recentPosts = (await getBlogPosts()).slice(0, 3);
+const recentPosts = (await getBlogPosts()).slice(0, 5);
 ---
 
 <Layout
@@ -16,16 +15,12 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
   description="Links and ways to connect with Timothy Brits - social profiles, and more."
   type="website"
 >
-  <main id="main-content" aria-label="Content">
+  <main id="main-content" aria-label="Content" tabindex="-1">
     <IntroContent />
-    <WorkContent />
-    <OpenSourceContent />
-    <WritingContent />
-    <SupportContent />
-    <PersonalContent />
     {
       recentPosts.length > 0 && (
-        <div class="blog-latest">
+        <div class="section-blog">
+          <h2>Blog</h2>
           <ul class="recent-posts">
             {recentPosts.map((post) => (
               <li>
@@ -53,6 +48,10 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
         </div>
       )
     }
+    <OpenSourceContent />
+    <WritingContent />
+    <SupportContent />
+    <PersonalContent />
   </main>
 </Layout>
 
@@ -69,7 +68,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
     text-wrap: balance;
   }
 
-  :global(.section-work),
+  :global(.section-blog),
   :global(.section-personal),
   :global(.section-writing),
   :global(.section-opensource),
@@ -120,10 +119,6 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
     line-height: 1.5;
   }
 
-  .blog-latest {
-    margin-top: 0.75rem;
-  }
-
   .recent-posts {
     list-style: none;
     padding: 0;
@@ -143,7 +138,7 @@ const recentPosts = (await getBlogPosts()).slice(0, 3);
     margin-left: 1.6rem;
   }
 
-  .blog-latest .all-posts {
+  .all-posts {
     font-size: 0.82rem;
     color: var(--color-text-secondary);
   }

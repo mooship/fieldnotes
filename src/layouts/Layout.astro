@@ -130,7 +130,7 @@ const jsonLd = {
     overflow: hidden;
   }
 
-  .skip-link:focus {
+  .skip-link:focus-visible {
     position: fixed;
     top: 1rem;
     left: 1rem;
@@ -145,6 +145,25 @@ const jsonLd = {
     font-size: 0.9rem;
     z-index: 9999;
     text-decoration: none;
+  }
+
+  @supports not selector(:focus-visible) {
+    .skip-link:focus {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      padding: 0.5rem 1rem;
+      background: var(--color-bg);
+      color: var(--color-link);
+      border: 2px solid var(--color-link);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      z-index: 9999;
+      text-decoration: none;
+    }
   }
 
   header {
