@@ -6,7 +6,7 @@ pubDate: 2026-03-22
 
 Hello. I'm Timothy, a software developer based in Pretoria, South Africa.
 
-I've been writing software since 2018. Web development is where I spend most of my time — my language of choice is TypeScript — yes, all of it, the weird parts included. When performance actually matters, I reach for Go. I work on a Mac and live in the terminal.
+I've been writing software since 2018. Web development is where I spend most of my time — my language of choice is TypeScript — yes, all of it, the weird parts included. When performance actually matters, I reach for Go or Rust. I work on a Mac and live in the terminal.
 
 Outside work I tinker — I'm the author of [scriv](https://crates.io/crates/scriv), a terminal notes app, and [Tidel](https://tidel.app), an AI-curated daily news digest. I play video games — mostly RTS and grand strategy, the kind where you lose four hours before you notice. I listen to audiobooks — mostly sci-fi and historical fiction, the kind that makes a long walk feel short. I also have a dog who has no interest in any of this.
 
