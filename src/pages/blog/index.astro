@@ -7,10 +7,9 @@ import Layout from "../../layouts/Layout.astro";
 import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const posts = await getBlogPosts();
+const mdParser = unified().use(remarkParse);
 const postsWithMeta = posts.map((post) => {
-  const tree = unified()
-    .use(remarkParse)
-    .parse(post.body ?? "");
+  const tree = mdParser.parse(post.body ?? "");
   const stats = readingTime(toString(tree));
   return {
     post,
