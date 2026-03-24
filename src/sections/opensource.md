@@ -8,7 +8,7 @@
     <p class="project-desc">Political alignment quiz matching South African voters to parties.</p>
   </li>
   <li>
-    <a href="https://github.com/mooship/jot"><i class="ri-terminal-line" aria-hidden="true"></i><span>jot</span></a>
+    <a href="https://github.com/mooship/scriv"><i class="ri-terminal-line" aria-hidden="true"></i><span>scriv</span></a>
     <p class="project-desc">Fast, minimal notes from your terminal.</p>
   </li>
   <li>
