@@ -29,7 +29,8 @@ export async function renderMarkdownToHtml(markdown: string): Promise<string> {
 }
 
 export async function getBlogPosts() {
-  return (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.toSorted(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
 }

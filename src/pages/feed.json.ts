@@ -38,7 +38,7 @@ export async function GET(context: APIContext) {
     items,
   };
 
-  return new Response(JSON.stringify(feed), {
+  return Response.json(feed, {
     headers: { "Content-Type": "application/feed+json; charset=utf-8" },
   });
 }
