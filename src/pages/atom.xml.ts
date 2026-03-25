@@ -20,15 +20,14 @@ export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site!);
   const posts = await getBlogPosts();
 
+  let latestMs = 0;
+  for (const p of posts) {
+    const t = (p.data.updatedDate ?? p.data.pubDate).getTime();
+    if (t > latestMs) latestMs = t;
+  }
   const updated =
     posts.length > 0
-      ? new Date(
-          Math.max(
-            ...posts.map((p) =>
-              (p.data.updatedDate ?? p.data.pubDate).getTime()
-            )
-          )
-        ).toISOString()
+      ? new Date(latestMs).toISOString()
       : new Date().toISOString();
 
   const entryList = await Promise.all(
@@ -38,7 +37,7 @@ export async function GET(context: APIContext) {
       const modified = (
         post.data.updatedDate ?? post.data.pubDate
       ).toISOString();
-      const html = await renderMarkdownToHtml(post.body ?? "");
+      const html = await renderMarkdownToHtml(post.body);
       return `  <entry>
     <id>${url}</id>
     <title>${xmlEscape(post.data.title)}</title>

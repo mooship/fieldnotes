@@ -1,21 +1,13 @@
 ---
-import { toString } from "mdast-util-to-string";
 import readingTime from "reading-time";
-import remarkParse from "remark-parse";
-import { unified } from "unified";
 import Layout from "../../layouts/Layout.astro";
 import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const posts = await getBlogPosts();
-const mdParser = unified().use(remarkParse);
-const postsWithMeta = posts.map((post) => {
-  const tree = mdParser.parse(post.body ?? "");
-  const stats = readingTime(toString(tree));
-  return {
-    post,
-    readingTime: stats.text,
-  };
-});
+const postsWithMeta = posts.map((post) => ({
+  post,
+  readingTime: readingTime(post.body ?? "").text,
+}));
 ---
 
 <Layout
