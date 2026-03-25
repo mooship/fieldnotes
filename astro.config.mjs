@@ -30,6 +30,12 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkSmartypants, remarkReadingTime],
+    shikiConfig: {
+      themes: {
+        light: "vitesse-light",
+        dark: "vitesse-dark",
+      },
+    },
   },
   integrations: [sitemap()],
   experimental: {
