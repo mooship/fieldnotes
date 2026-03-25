@@ -1,6 +1,6 @@
 # Copilot Instructions — Ligaro
 
-Personal link-tree + blog site. Astro 6, static output, TypeScript, no test suite.
+Personal link-tree + blog site. Astro 6, static output, TypeScript, Vitest unit tests.
 
 ## Commands
 
@@ -12,8 +12,13 @@ Personal link-tree + blog site. Astro 6, static output, TypeScript, no test suit
 | `npm run lint:fix` | Run ESLint with auto-fix                                               |
 | `npm run format`   | Prettier with import sorting (auto-fix)                                |
 | `npm run preview`  | Preview production build                                               |
+| `npm test`         | Run Vitest unit tests                                                  |
 
-> There are no tests. Always run `npm run build` to verify changes.
+> Always run both `npm run build` and `npm test` to verify changes.
+
+## Lefthook
+
+A pre-commit hook defined in `lefthook.yml` runs `lint:fix` and `format` in parallel on every commit. If the hook modifies files, re-stage them before the commit proceeds.
 
 ## Architecture
 
@@ -86,7 +91,15 @@ src/
   sections/               # Home page content (imported as Astro components)
   content/blog/           # Blog posts (.md)
   lib/
-    blog.ts               # Blog helpers
-    remark-reading-time.ts# Reading time remark plugin
+    blog.ts               # Blog helpers (getPostSlug, getSiteUrl, renderMarkdownToHtml, getBlogPosts)
+    blog.test.ts          # Tests for blog.ts
+    remark-reading-time.ts  # Reading time remark plugin
+    remark-reading-time.test.ts
+    xml.ts                # xmlEscape (shared by atom.xml.ts)
+    xml.test.ts
+  __mocks__/
+    astro-content.ts      # Stub for astro:content virtual module (used by Vitest)
   styles/global.css       # All base styles and CSS variables
+vitest.config.ts          # Vitest config (happy-dom environment, astro:content alias)
+lefthook.yml              # Pre-commit: lint:fix + format in parallel
 ```
