@@ -8,8 +8,7 @@
     "build": "astro check && astro build",
     "dev": "astro dev",
     "format": "prettier --write --experimental-cli src/ package.json",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint . --fix",
     "preview": "astro preview",
     "start": "astro dev",
     "test": "vitest run"

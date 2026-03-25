@@ -2,6 +2,6 @@ pre-commit:
   parallel: true
   jobs:
     - name: lint
-      run: npm run lint:fix
+      run: npm run lint
     - name: format
       run: npm run format

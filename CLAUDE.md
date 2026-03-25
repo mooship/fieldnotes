@@ -7,8 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 npm run dev        # start dev server
 npm run build      # type-check (astro check) then build
-npm run lint       # run ESLint across Astro, TS, CSS, and Markdown
-npm run lint:fix   # run ESLint with auto-fix
+npm run lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
 npm run preview    # preview production build
 npm run format     # prettier with auto-fix
 npm test           # run Vitest unit tests
@@ -30,7 +29,7 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook that executes `lint:fix` and `format` in parallel on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — if it changes files you need to re-stage them before the commit proceeds.
+Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — if it changes files you need to re-stage them before the commit proceeds.
 
 ## Architecture
 
