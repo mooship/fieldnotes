@@ -10,7 +10,7 @@ I've been writing software since 2018. Web development is where I spend most of 
 
 I live in the terminal — [Ghostty](https://ghostty.org), zsh, and [Starship](https://starship.rs) on macOS. I've tried heavier setups; this is the one that stuck.
 
-Outside work I tinker — I'm the author of [scriv](https://crates.io/crates/scriv), a terminal notes app, and [Tidel](https://tidel.app), an AI-curated daily news digest. I play video games — mostly RTS and grand strategy, the kind where you lose four hours before you notice. I listen to audiobooks — mostly sci-fi and historical fiction, the kind that makes a long walk feel short. I have a dog. She has no interest in any of this.
+Outside work I tinker — I'm the author of [scriv](https://crates.io/crates/scriv), a terminal notes app, and [Tidel](https://tidel.app), an AI-curated daily news digest. I play video games — mostly RTS and grand strategy, the kind where you lose four hours before you notice. I listen to audiobooks — mostly sci-fi and historical fiction, the kind that makes a long walk feel short. I have a dog. He has no interest in any of this.
 
 I'm an eco-socialist and a Buddhist. Those two things shape how I think about technology — who it serves, what it costs, and whether it's worth building at all.
 
