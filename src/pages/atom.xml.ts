@@ -9,10 +9,10 @@ import {
 
 function xmlEscape(str: string): string {
   return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }
 
 export async function GET(context: APIContext) {
@@ -30,16 +30,15 @@ export async function GET(context: APIContext) {
         ).toISOString()
       : new Date().toISOString();
 
-  const entries = (
-    await Promise.all(
-      posts.map(async (post) => {
-        const url = `${site}/blog/${getPostSlug(post.id)}`;
-        const published = post.data.pubDate.toISOString();
-        const modified = (
-          post.data.updatedDate ?? post.data.pubDate
-        ).toISOString();
-        const html = await renderMarkdownToHtml(post.body ?? "");
-        return `  <entry>
+  const entryList = await Promise.all(
+    posts.map(async (post) => {
+      const url = `${site}/blog/${getPostSlug(post.id)}`;
+      const published = post.data.pubDate.toISOString();
+      const modified = (
+        post.data.updatedDate ?? post.data.pubDate
+      ).toISOString();
+      const html = await renderMarkdownToHtml(post.body ?? "");
+      return `  <entry>
     <id>${url}</id>
     <title>${xmlEscape(post.data.title)}</title>
     <updated>${modified}</updated>
@@ -48,9 +47,9 @@ export async function GET(context: APIContext) {
     <content type="html">${xmlEscape(html)}</content>
     <link href="${url}" />
   </entry>`;
-      })
-    )
-  ).join("\n");
+    })
+  );
+  const entries = entryList.join("\n");
 
   const xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
