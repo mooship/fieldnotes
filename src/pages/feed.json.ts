@@ -19,7 +19,7 @@ export async function GET(context: APIContext) {
         url,
         title: post.data.title,
         summary: post.data.description,
-        content_html: await renderMarkdownToHtml(post.body ?? ""),
+        content_html: await renderMarkdownToHtml(post.body),
         date_published: post.data.pubDate.toISOString(),
         date_modified: (
           post.data.updatedDate ?? post.data.pubDate

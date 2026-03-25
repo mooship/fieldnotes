@@ -24,8 +24,10 @@ const mdProcessor = unified()
   .use(remarkRehype)
   .use(rehypeStringify);
 
-export async function renderMarkdownToHtml(markdown: string): Promise<string> {
-  return String(await mdProcessor.process(markdown));
+export async function renderMarkdownToHtml(
+  markdown: string | undefined
+): Promise<string> {
+  return String(await mdProcessor.process(markdown ?? ""));
 }
 
 export async function getBlogPosts() {
