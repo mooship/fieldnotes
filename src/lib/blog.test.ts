@@ -83,8 +83,14 @@ function setupPosts(posts: Post[]) {
 describe("getBlogPosts", () => {
   it("filters out draft posts", async () => {
     setupPosts([
-      { id: "published.md", data: { draft: false, pubDate: new Date("2024-01-01") } },
-      { id: "draft.md", data: { draft: true, pubDate: new Date("2024-02-01") } },
+      {
+        id: "published.md",
+        data: { draft: false, pubDate: new Date("2024-01-01") },
+      },
+      {
+        id: "draft.md",
+        data: { draft: true, pubDate: new Date("2024-02-01") },
+      },
     ]);
 
     const posts = await getBlogPosts();
@@ -94,12 +100,25 @@ describe("getBlogPosts", () => {
 
   it("sorts posts by pubDate descending", async () => {
     setupPosts([
-      { id: "older.md", data: { draft: false, pubDate: new Date("2024-01-01") } },
-      { id: "newer.md", data: { draft: false, pubDate: new Date("2024-06-01") } },
-      { id: "middle.md", data: { draft: false, pubDate: new Date("2024-03-01") } },
+      {
+        id: "older.md",
+        data: { draft: false, pubDate: new Date("2024-01-01") },
+      },
+      {
+        id: "newer.md",
+        data: { draft: false, pubDate: new Date("2024-06-01") },
+      },
+      {
+        id: "middle.md",
+        data: { draft: false, pubDate: new Date("2024-03-01") },
+      },
     ]);
 
     const posts = await getBlogPosts();
-    expect(posts.map((p) => p.id)).toEqual(["newer.md", "middle.md", "older.md"]);
+    expect(posts.map((p) => p.id)).toEqual([
+      "newer.md",
+      "middle.md",
+      "older.md",
+    ]);
   });
 });
