@@ -23,8 +23,7 @@ Dev server runs at: http://localhost:4321
 | ------------------ | --------------------------------- |
 | `npm run dev`      | Start local development server    |
 | `npm run build`    | Type check then production build  |
-| `npm run lint`     | Lint Astro, TS, CSS, and Markdown |
-| `npm run lint:fix` | Auto-fix lint issues              |
+| `npm run lint`     | Lint and auto-fix all file types  |
 | `npm run preview`  | Preview built site                |
 | `npm run format`   | Prettier + import sorting         |
 | `npm test`         | Run Vitest unit tests             |
@@ -82,7 +81,7 @@ Fonts are self‑hosted (variable font packages) for performance & privacy.
 - TypeScript enabled (`tsconfig.json`)
 - ESLint flat config for Astro, TS, CSS, and Markdown
 - Vitest unit tests with happy-dom (run with `npm test`)
-- Lefthook pre-commit hook: runs `lint:fix` + `format` in parallel on every commit
+- Lefthook pre-commit hook: runs `lint` + `format` in parallel on every commit
 - Astro font provider setup via `fontProviders.fontsource()` in `astro.config.mjs`
 - Experimental Rust compiler enabled (`experimental.rustCompiler: true`)
 - Import sorting + Prettier formatting
