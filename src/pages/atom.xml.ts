@@ -6,15 +6,7 @@ import {
   getSiteUrl,
   renderMarkdownToHtml,
 } from "../lib/blog";
-
-function xmlEscape(str: string): string {
-  return str
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
-}
+import { xmlEscape } from "../lib/xml";
 
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site!);
