@@ -39,14 +39,16 @@ This is a personal/links site with a blog, built with Astro (static output). The
 
 **Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json`. XML character escaping lives in `src/lib/xml.ts` and is shared by `atom.xml.ts`.
 
-**Styling:** All base styles and CSS custom properties (colors, fonts) live in `src/styles/global.css`. Page-level layout styles (section spacing, link styles, heading overrides) are in a `<style>` block in `index.astro` using `:global()` selectors to reach markdown-rendered elements. Light and dark modes are handled via `prefers-color-scheme`.
+**Design system:** Apple-inspired design language. The site uses the classic six Apple rainbow colors as accent colors, one per home page section (Blog=green, Open Source=yellow, Writing=orange, Support=red, Personal=purple, Blue=default links). A 2px rainbow gradient stripe runs across the header and footer. No icons — the design relies entirely on typography, color, and whitespace.
 
-**Fonts:** IBM Plex Mono (headings/mono) and DM Sans Variable (body), configured via Astro's built-in font API (`astro/config` `fontProviders.fontsource()`) with CSS variables `--font-mono` and `--font-dm-sans`. Font-face declarations are injected automatically; the CSS variables are consumed in `global.css`.
+**Styling:** All base styles and CSS custom properties (colors, fonts) live in `src/styles/global.css`. Apple color tokens: `--color-bg` (#fbfbfd light / #000000 dark), `--color-text` (#1d1d1f / #f5f5f7), `--color-link` (#0071e3 / #2997ff). Six rainbow accents as `--color-apple-{green,yellow,orange,red,purple,blue}` with dark mode variants. Page-level layout styles use `:global()` selectors in `<style>` blocks. Light/dark modes via `prefers-color-scheme`.
 
-**Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and a custom `remarkReadingTime` plugin (`src/lib/remark-reading-time.ts`) that injects estimated reading time into `remarkPluginFrontmatter.readingTime` for blog posts.
+**Typography:** Body is 17px with `-webkit-font-smoothing: antialiased`, `text-rendering: optimizeLegibility`, and `font-feature-settings: "kern" 1, "liga" 1`. Headings use tight negative letter-spacing (-0.02em to -0.04em) and bold weights (600–700). Blog post titles are 2.5rem/700. Line-height is 1.47 for body, 1.08–1.15 for headings.
+
+**Fonts:** Geist Sans (body) and Geist Mono (code/monospace), configured via Astro's font API (`fontProviders.fontsource()`) with CSS variables `--font-sans` and `--font-mono`. Font-face declarations are injected automatically.
+
+**Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and a custom `remarkReadingTime` plugin (`src/lib/remark-reading-time.ts`) that injects estimated reading time into `remarkPluginFrontmatter.readingTime` for blog posts. Syntax highlighting uses Shiki with `min-light`/`min-dark` themes.
 
 **Build pipeline:** Astro integrations run at build time — sitemap generation (`@astrojs/sitemap`) and RSS feeds (`@astrojs/rss`).
-
-**Icons:** Remix Icon via the `remixicon` npm package, imported in `Layout.astro`. Used inline in markdown as `<i class="ri-*">` HTML.
 
 **SEO:** `Layout.astro` accepts `title`, `description`, `image`, `canonical`, `robots`, and `type` props. It generates Open Graph tags, Twitter card tags, and JSON-LD schema (hand-built, no external package).

@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import "remixicon/fonts/remixicon.css";
 import { Font } from "astro:assets";
 
 export interface Props {
@@ -39,7 +38,7 @@ const jsonLd = {
 <html lang="en">
   <head>
     <Font cssVariable="--font-mono" preload />
-    <Font cssVariable="--font-dm-sans" preload />
+    <Font cssVariable="--font-sans" preload />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, viewport-fit=cover" />
     <title>{title}</title>
@@ -48,12 +47,12 @@ const jsonLd = {
     <meta name="robots" content={robots} />
     <meta
       name="theme-color"
-      content="#f4f3ef"
+      content="#fbfbfd"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#121310"
+      content="#000000"
       media="(prefers-color-scheme: dark)"
     />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -171,19 +170,36 @@ const jsonLd = {
     align-items: baseline;
     padding-bottom: 1.5rem;
     margin-bottom: 2rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: none;
+    background-image: linear-gradient(
+      to right,
+      var(--color-apple-green),
+      var(--color-apple-yellow),
+      var(--color-apple-orange),
+      var(--color-apple-red),
+      var(--color-apple-purple),
+      var(--color-apple-blue)
+    );
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: bottom;
   }
 
   header a:first-child {
-    font-family: var(--font-mono), monospace;
-    font-weight: 500;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
     color: var(--color-heading);
+    letter-spacing: -0.02em;
   }
 
   nav {
     display: flex;
     gap: 1.5rem;
+  }
+
+  nav a {
+    font-weight: 500;
+    font-size: 0.95rem;
   }
 
   footer {
@@ -194,7 +210,19 @@ const jsonLd = {
     gap: 0.75rem;
     margin-top: 2.5rem;
     padding-top: 1rem;
-    border-top: 1px solid var(--color-border);
+    border-top: none;
+    background-image: linear-gradient(
+      to right,
+      var(--color-apple-green),
+      var(--color-apple-yellow),
+      var(--color-apple-orange),
+      var(--color-apple-red),
+      var(--color-apple-purple),
+      var(--color-apple-blue)
+    );
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: top;
     font-size: 0.85rem;
     opacity: 0.7;
   }
