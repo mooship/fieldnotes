@@ -16,7 +16,7 @@ export default defineConfig({
     {
       provider: fontProviders.fontsource(),
       name: "Geist Sans",
-      cssVariable: "--font-dm-sans",
+      cssVariable: "--font-sans",
     },
   ],
   build: {

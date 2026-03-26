@@ -39,8 +39,15 @@ html {
 }
 
 body {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  line-height: 1.6;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.47;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1;
   background: var(--color-bg);
   color: var(--color-text);
   max-width: 640px;
@@ -55,19 +62,19 @@ body {
 }
 
 h1 {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-heading);
   text-wrap: balance;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 h2 {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
   font-weight: 600;
   color: var(--color-heading);
   text-wrap: balance;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 a:focus-visible {
