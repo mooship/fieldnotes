@@ -1,11 +1,11 @@
 :root {
-  --color-bg: #fbfbfd;
+  --color-bg: #f8f8f5;
   --color-text: #1d1d1f;
   --color-text-secondary: #6e6e73;
   --color-heading: #1d1d1f;
-  --color-link: #0071e3;
-  --color-link-hover: #0077ed;
-  --color-accent: #0071e3;
+  --color-link: #0066cc;
+  --color-link-hover: #004499;
+  --color-accent: #0066cc;
   --color-border: #d2d2d7;
   --color-apple-green: #61bb46;
   --color-apple-yellow: #fdb827;
@@ -13,6 +13,11 @@
   --color-apple-red: #e03a3e;
   --color-apple-purple: #963d97;
   --color-apple-blue: #009ddc;
+  --color-apple-green-tint: rgba(97, 187, 70, 0.04);
+  --color-apple-yellow-tint: rgba(253, 184, 39, 0.04);
+  --color-apple-orange-tint: rgba(245, 130, 31, 0.04);
+  --color-apple-red-tint: rgba(224, 58, 62, 0.04);
+  --color-apple-purple-tint: rgba(150, 61, 151, 0.04);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,6 +36,11 @@
     --color-apple-red: #e86366;
     --color-apple-purple: #b06ab1;
     --color-apple-blue: #4db8e8;
+    --color-apple-green-tint: rgba(126, 204, 102, 0.06);
+    --color-apple-yellow-tint: rgba(253, 201, 79, 0.06);
+    --color-apple-orange-tint: rgba(247, 154, 74, 0.06);
+    --color-apple-red-tint: rgba(232, 99, 102, 0.06);
+    --color-apple-purple-tint: rgba(176, 106, 177, 0.06);
   }
 }
 
@@ -62,6 +72,7 @@ body {
 }
 
 h1 {
+  font-family: Georgia, "Times New Roman", serif;
   font-weight: 700;
   color: var(--color-heading);
   text-wrap: balance;
@@ -70,7 +81,7 @@ h1 {
 }
 
 h2 {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-heading);
   text-wrap: balance;
   letter-spacing: -0.02em;
@@ -91,18 +102,9 @@ a {
 
 a:hover {
   color: var(--color-link-hover);
-}
-
-a span {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0 1px;
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  transition: background-size 0.4s cubic-bezier(0, 0, 0.2, 1);
-}
-
-a:hover span {
-  background-size: 100% 2px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
 
 ul {
