@@ -8,11 +8,9 @@ import Layout from "../layouts/Layout.astro";
     <p>This page doesn't exist.</p>
     <nav class="links">
       <a href="/">
-        <i class="ri-home-line" aria-hidden="true"></i>
         <span>Home</span>
       </a>
       <a href="/blog">
-        <i class="ri-article-line" aria-hidden="true"></i>
         <span>Blog</span>
       </a>
     </nav>
@@ -27,9 +25,11 @@ import Layout from "../layouts/Layout.astro";
 
   h1 {
     color: var(--color-heading);
-    font-weight: 500;
-    font-size: 1.75rem;
+    font-weight: 700;
+    font-size: 4rem;
     margin: 0 0 0.5rem 0;
+    letter-spacing: -0.04em;
+    line-height: 1;
   }
 
   p {
@@ -47,9 +47,5 @@ import Layout from "../layouts/Layout.astro";
 
   .links a {
     font-size: 0.95rem;
-  }
-
-  .links i {
-    margin-right: 0.5rem;
   }
 </style>

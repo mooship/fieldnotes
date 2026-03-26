@@ -10,13 +10,13 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: "IBM Plex Mono",
+      name: "Geist Mono",
       cssVariable: "--font-mono",
     },
     {
       provider: fontProviders.fontsource(),
-      name: "DM Sans",
-      cssVariable: "--font-dm-sans",
+      name: "Geist Sans",
+      cssVariable: "--font-sans",
     },
   ],
   build: {
@@ -32,8 +32,8 @@ export default defineConfig({
     remarkPlugins: [remarkSmartypants, remarkReadingTime],
     shikiConfig: {
       themes: {
-        light: "vitesse-light",
-        dark: "vitesse-dark",
+        light: "min-light",
+        dark: "min-dark",
       },
     },
   },
