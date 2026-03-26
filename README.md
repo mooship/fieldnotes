@@ -1,4 +1,4 @@
-# Ligaro
+# Fieldnotes
 
 Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to tweak.
 
@@ -9,8 +9,8 @@ Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to t
 Prerequisite: Node 22.21.1 and npm.
 
 ```sh
-git clone <your-fork-url> ligaro
-cd ligaro
+git clone <your-fork-url> fieldnotes
+cd fieldnotes
 npm install
 npm run dev
 ```
@@ -19,14 +19,14 @@ Dev server runs at: http://localhost:4321
 
 ## Common Scripts
 
-| Script             | Purpose                           |
-| ------------------ | --------------------------------- |
-| `npm run dev`      | Start local development server    |
-| `npm run build`    | Type check then production build  |
-| `npm run lint`     | Lint and auto-fix all file types  |
-| `npm run preview`  | Preview built site                |
-| `npm run format`   | Prettier + import sorting         |
-| `npm test`         | Run Vitest unit tests             |
+| Script            | Purpose                          |
+| ----------------- | -------------------------------- |
+| `npm run dev`     | Start local development server   |
+| `npm run build`   | Type check then production build |
+| `npm run lint`    | Lint and auto-fix all file types |
+| `npm run preview` | Preview built site               |
+| `npm run format`  | Prettier + import sorting        |
+| `npm test`        | Run Vitest unit tests            |
 
 ## Structure (essentials)
 
