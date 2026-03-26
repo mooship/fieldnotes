@@ -47,7 +47,7 @@ const jsonLd = {
     <meta name="robots" content={robots} />
     <meta
       name="theme-color"
-      content="#fbfbfd"
+      content="#f8f8f5"
       media="(prefers-color-scheme: light)"
     />
     <meta
@@ -180,12 +180,13 @@ const jsonLd = {
       var(--color-apple-purple),
       var(--color-apple-blue)
     );
-    background-size: 100% 2px;
+    background-size: 100% 4px;
     background-repeat: no-repeat;
     background-position: bottom;
   }
 
   header a:first-child {
+    font-family: Georgia, "Times New Roman", serif;
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--color-heading);
@@ -220,11 +221,11 @@ const jsonLd = {
       var(--color-apple-purple),
       var(--color-apple-blue)
     );
-    background-size: 100% 2px;
+    background-size: 100% 4px;
     background-repeat: no-repeat;
     background-position: top;
     font-size: 0.85rem;
-    opacity: 0.7;
+    color: var(--color-text-secondary);
   }
 
   .feed-links {
