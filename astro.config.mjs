@@ -10,12 +10,12 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: "IBM Plex Mono",
+      name: "Geist Mono",
       cssVariable: "--font-mono",
     },
     {
       provider: fontProviders.fontsource(),
-      name: "DM Sans",
+      name: "Geist Sans",
       cssVariable: "--font-dm-sans",
     },
   ],

@@ -23,8 +23,7 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
 >
   <main id="main-content" tabindex="-1">
     <a href="/blog" class="back-link">
-      <i class="ri-arrow-left-line" aria-hidden="true"></i>
-      <span>All posts</span>
+      <span>&larr; All posts</span>
     </a>
     <article>
       <header>
@@ -77,9 +76,11 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
 
   h1 {
     color: var(--color-heading);
-    font-weight: 500;
-    font-size: 1.75rem;
+    font-weight: 700;
+    font-size: 2rem;
     margin: 0 0 0.5rem 0;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
   }
 
   time {
@@ -107,9 +108,10 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
   article :global(h3),
   article :global(h4) {
     color: var(--color-heading);
-    font-weight: 500;
+    font-weight: 600;
     margin: 2rem 0 0.75rem 0;
     text-wrap: balance;
+    letter-spacing: -0.01em;
   }
 
   article :global(h2) {
@@ -121,13 +123,14 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
   }
 
   article :global(blockquote) {
-    border-left: 3px solid var(--color-border);
+    border-left: 3px solid var(--color-apple-blue);
     margin: 1rem 0;
     padding: 0.25rem 0 0.25rem 1rem;
     color: var(--color-text-secondary);
   }
 
   article :global(code) {
+    font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.88em;
     background: var(--color-border);
     padding: 0.15em 0.35em;
