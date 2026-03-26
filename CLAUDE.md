@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## About
+
+Fieldnotes is a personal site and blog built with Astro (static output). The home page renders at `/` and the blog lives at `/blog`.
+
 ## Commands
 
 ```bash
@@ -29,11 +33,13 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — if it changes files you need to re-stage them before the commit proceeds.
+Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. Run `npx lefthook install` after cloning to activate hooks.
+
+## Safety
+
+- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation.
 
 ## Architecture
-
-This is a personal/links site with a blog, built with Astro (static output). The home page renders at `/` and the blog lives at `/blog`.
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
 
@@ -43,12 +49,16 @@ This is a personal/links site with a blog, built with Astro (static output). The
 
 **Styling:** All base styles and CSS custom properties (colors, fonts) live in `src/styles/global.css`. Apple color tokens: `--color-bg` (#fbfbfd light / #000000 dark), `--color-text` (#1d1d1f / #f5f5f7), `--color-link` (#0071e3 / #2997ff). Six rainbow accents as `--color-apple-{green,yellow,orange,red,purple,blue}` with dark mode variants. Page-level layout styles use `:global()` selectors in `<style>` blocks. Light/dark modes via `prefers-color-scheme`.
 
-**Typography:** Body is 17px with `-webkit-font-smoothing: antialiased`, `text-rendering: optimizeLegibility`, and `font-feature-settings: "kern" 1, "liga" 1`. Headings use tight negative letter-spacing (-0.02em to -0.04em) and bold weights (600–700). Blog post titles are 2.5rem/700. Line-height is 1.47 for body, 1.08–1.15 for headings.
-
-**Fonts:** Geist Sans (body) and Geist Mono (code/monospace), configured via Astro's font API (`fontProviders.fontsource()`) with CSS variables `--font-sans` and `--font-mono`. Font-face declarations are injected automatically.
+**Fonts:** Geist Sans (body) and Geist Mono (code/monospace), configured via Astro's font API (`fontProviders.fontsource()`) with CSS variables `--font-sans` and `--font-mono`. Font-face declarations are injected automatically. Typography details (sizes, weights, letter-spacing) are in `src/styles/global.css`.
 
 **Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and a custom `remarkReadingTime` plugin (`src/lib/remark-reading-time.ts`) that injects estimated reading time into `remarkPluginFrontmatter.readingTime` for blog posts. Syntax highlighting uses Shiki with `min-light`/`min-dark` themes.
 
 **Build pipeline:** Astro integrations run at build time — sitemap generation (`@astrojs/sitemap`) and RSS feeds (`@astrojs/rss`).
 
 **SEO:** `Layout.astro` accepts `title`, `description`, `image`, `canonical`, `robots`, and `type` props. It generates Open Graph tags, Twitter card tags, and JSON-LD schema (hand-built, no external package).
+
+## Code style
+
+- **No inline comments** — never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
+- Prettier enforces: double quotes, semicolons, 80-char width
+- ESLint uses flat config with TypeScript, Astro, Unicorn, and Prettier integration
