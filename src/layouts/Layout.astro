@@ -38,7 +38,7 @@ const jsonLd = {
 <html lang="en">
   <head>
     <Font cssVariable="--font-mono" preload />
-    <Font cssVariable="--font-dm-sans" preload />
+    <Font cssVariable="--font-sans" preload />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, viewport-fit=cover" />
     <title>{title}</title>
@@ -186,16 +186,20 @@ const jsonLd = {
   }
 
   header a:first-child {
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
     color: var(--color-heading);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   nav {
     display: flex;
     gap: 1.5rem;
+  }
+
+  nav a {
+    font-weight: 500;
+    font-size: 0.95rem;
   }
 
   footer {
