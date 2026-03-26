@@ -26,7 +26,6 @@ const recentPosts = posts.slice(0, 5);
             {recentPosts.map((post) => (
               <li>
                 <a href={`/blog/${getPostSlug(post.id)}`}>
-                  <i class="ri-pencil-line" aria-hidden="true" />
                   <span>{post.data.title}</span>
                 </a>
                 <time
@@ -43,8 +42,7 @@ const recentPosts = posts.slice(0, 5);
             ))}
           </ul>
           <a href="/blog" class="all-posts">
-            <i class="ri-arrow-right-s-line" aria-hidden="true" />
-            <span>All posts</span>
+            <span>All posts &rarr;</span>
           </a>
         </div>
       )
@@ -69,23 +67,62 @@ const recentPosts = posts.slice(0, 5);
     text-wrap: balance;
   }
 
-  :global(.section-blog),
-  :global(.section-personal),
-  :global(.section-writing),
-  :global(.section-opensource),
+  :global(.section-blog) {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--color-apple-green);
+  }
+
+  :global(.section-opensource) {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--color-apple-yellow);
+  }
+
+  :global(.section-writing) {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--color-apple-orange);
+  }
+
   :global(.section-support) {
     margin-top: 2rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
+    border-top: 2px solid var(--color-apple-red);
+  }
+
+  :global(.section-personal) {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--color-apple-purple);
+  }
+
+  :global(.section-blog) :global(a:hover) {
+    color: var(--color-apple-green);
+  }
+
+  :global(.section-opensource) :global(a:hover) {
+    color: var(--color-apple-yellow);
+  }
+
+  :global(.section-writing) :global(a:hover) {
+    color: var(--color-apple-orange);
+  }
+
+  :global(.section-support) :global(a:hover) {
+    color: var(--color-apple-red);
+  }
+
+  :global(.section-personal) :global(a:hover) {
+    color: var(--color-apple-purple);
   }
 
   :global(h2) {
     color: var(--color-heading);
     margin: 0 0 0.75rem 0;
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
   }
 
   :global(h2 + p) {
@@ -109,12 +146,8 @@ const recentPosts = posts.slice(0, 5);
     font-size: 0.95rem;
   }
 
-  :global(li i) {
-    margin-right: 0.5rem;
-  }
-
   :global(.project-desc) {
-    margin: 0.15rem 0 0 1.6rem;
+    margin: 0.15rem 0 0 0;
     font-size: 0.82rem;
     color: var(--color-text-secondary);
     line-height: 1.5;
@@ -136,7 +169,7 @@ const recentPosts = posts.slice(0, 5);
   .post-date {
     font-size: 0.82rem;
     color: var(--color-text-secondary);
-    margin-left: 1.6rem;
+    margin-left: 0;
   }
 
   .all-posts {
