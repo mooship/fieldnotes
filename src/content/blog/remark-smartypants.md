@@ -8,18 +8,18 @@ If you write on the web, you are almost certainly publishing ugly punctuation. S
 
 [remark-smartypants](https://github.com/silvenon/remark-smartypants) fixes this automatically. It is a remark plugin — part of the unified ecosystem that powers Markdown processing in tools like Astro, Next.js, and Gatsby. Drop it into your remark pipeline and it transforms "dumb" ASCII punctuation into its typographically correct Unicode equivalent.
 
-Here is what it does:
+Here's what it does:
 
 - `"straight quotes"` become "curly quotes"
 - `'single quotes'` become 'single quotes'
 - `--` becomes an en dash, `---` becomes an em dash
 - `...` becomes a proper ellipsis
 
-That is the entire pitch. No configuration required, no decisions to make. It processes your Markdown at build time and outputs the right characters.
+That's the entire pitch. No configuration, no decisions. It processes your Markdown at build time and outputs the right characters.
 
 ### Why bother?
 
-Typography is one of those details that separates "looks fine" from "looks good." Curly quotes and proper dashes are the kind of thing you see in every printed book but almost never on the web. It is a small thing, but small things compound. Good defaults in your build pipeline mean you get better output without thinking about it — which is the best kind of tooling.
+Typography is one of those details that separates "looks fine" from "looks good." Curly quotes and proper dashes show up in every printed book but almost never on the web. It's a small thing. But small things compound — good defaults in your build pipeline mean better output without thinking about it.
 
 ### Using it in Astro
 
@@ -35,8 +35,8 @@ export default defineConfig({
 });
 ```
 
-That is it. Every Markdown file processed by Astro — blog posts, content collections, standalone pages — gets proper typographic punctuation for free.
+That's it. Every Markdown file Astro processes — blog posts, content collections, standalone pages — gets proper typographic punctuation for free.
 
-Under the hood, remark-smartypants uses [retext-smartypants](https://github.com/retextjs/retext-smartypants), which itself is a port of John Gruber's [SmartyPants](https://daringfireball.net/projects/smartypants/) — the same algorithm that has been cleaning up punctuation since 2003. It is battle-tested.
+Under the hood, remark-smartypants uses [retext-smartypants](https://github.com/retextjs/retext-smartypants), which itself is a port of John Gruber's [SmartyPants](https://daringfireball.net/projects/smartypants/) — the same algorithm that's been cleaning up punctuation since 2003. It's battle-tested.
 
-If you care about how your writing looks — and you should — this is one of the easiest wins available.
+One of the lowest-effort, highest-impact things you can add to a Markdown pipeline.
