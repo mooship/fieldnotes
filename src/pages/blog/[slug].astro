@@ -174,18 +174,6 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
     line-height: 1.47;
   }
 
-  article :global(a) {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    transition: background-size 0.4s cubic-bezier(0, 0, 0.2, 1);
-  }
-
-  article :global(a:hover) {
-    background-size: 100% 2px;
-    text-decoration: none;
-  }
 
   article :global(hr) {
     border: none;
