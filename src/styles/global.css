@@ -98,7 +98,6 @@ a:hover span {
   background-size: 100% 2px;
 }
 
-
 ul {
   list-style-type: none;
   padding: 0;
@@ -124,4 +123,3 @@ li {
     text-decoration: var(--shiki-dark-text-decoration) !important;
   }
 }
-
