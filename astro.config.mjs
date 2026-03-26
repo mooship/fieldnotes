@@ -32,8 +32,8 @@ export default defineConfig({
     remarkPlugins: [remarkSmartypants, remarkReadingTime],
     shikiConfig: {
       themes: {
-        light: "vitesse-light",
-        dark: "vitesse-dark",
+        light: "min-light",
+        dark: "min-dark",
       },
     },
   },
