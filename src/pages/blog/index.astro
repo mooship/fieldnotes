@@ -59,9 +59,9 @@ const postsWithMeta = posts.map((post) => ({
     text-align: left;
     color: var(--color-heading);
     margin: 0 0 1.5rem 0;
-    font-weight: 700;
-    font-size: 2.5rem;
-    letter-spacing: -0.035em;
+    font-weight: 400;
+    font-size: 3rem;
+    letter-spacing: -0.01em;
     line-height: 1.08;
   }
 
@@ -76,7 +76,8 @@ const postsWithMeta = posts.map((post) => ({
   }
 
   a {
-    font-size: 1rem;
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
     font-weight: 500;
   }
 
@@ -84,7 +85,8 @@ const postsWithMeta = posts.map((post) => ({
     font-size: 0.8rem;
     color: var(--color-text-secondary);
     margin: 0.25rem 0 0 0;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.05em;
+    font-variant: small-caps;
   }
 
   .post-desc {
