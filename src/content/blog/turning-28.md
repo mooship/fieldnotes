@@ -10,13 +10,13 @@ Matric was all-consuming at the time. The exams, the pressure, figuring out what
 
 The weird thing is I can barely place myself back there. I know it happened. I remember fragments — the smell of school textbooks, the stress of getting my driver's licence, the feeling of wanting it all to be over. But the person sitting in that chair doesn't feel like me anymore. It's more like remembering a story someone told me than something I actually lived through.
 
-But then I actually list it out and the decade was full. I went to university and graduated cum laude with a BSc in Information Technology. I got my first job as a software engineer — the thing I'd been working toward without fully understanding what it would feel like to arrive. I had my first relationship. I got my first dog. Those things alone would be enough to fill a life, and they all happened in the same ten years.
+But when I actually list it out, the decade was full. I went to university and graduated cum laude with a BSc in Information Technology. I got my first job as a software engineer — the thing I'd been working toward without fully understanding what it would feel like to arrive. I had my first relationship. I got my first dog. Those things alone would be enough to fill a life, and they all happened in the same ten years.
 
 Not all of it was good. I made many, many mistakes. The kind you can see coming and walk into anyway, and the kind that only reveal themselves long after the damage is done. I learned hard lessons — about trust, about priorities, about the difference between what I wanted and what was actually good for me. None of those lessons came cheap.
 
 I experienced heartbreak. That was painful, but it wasn't the darkest part. The darkest part was the depression — soul-crushing, can't-get-out-of-bed, can't-explain-it-to-anyone depression. And underneath it, undiagnosed ADHD that had been running the show my entire life without me knowing. Every system I tried to build would collapse. Every stretch of motivation would evaporate. I thought I was lazy. I thought something was fundamentally broken in me. Turns out my brain just works differently, and nobody had ever told me.
 
-Getting through that wasn't dramatic. There was no rock-bottom moment that made for a good story. It was just a long, grey stretch where I wasn't sure I would come out the other side. I don't say that for effect — it's just true. And surviving it didn't come with a fanfare. It was slow and unglamorous, the same way everything else in this decade has been.
+Getting through that wasn't dramatic. There was no rock-bottom moment that made for a good story. It was just a long, grey stretch where I wasn't sure I would come out the other side. I don't say that for effect — it's just true. And surviving it didn't come with a fanfare. It was slow and unglamorous.
 
 Maybe the most important thing I learned is how much family matters. That sounds obvious, the kind of thing you'd cross-stitch onto a cushion. But I didn't really understand it at eighteen. I thought independence was the whole point. Turns out the people who were there before you had any of the answers are usually the ones still there after you've run out of them.
 
@@ -24,4 +24,4 @@ I think that's what gets me about ten years. It's not that so much has changed. 
 
 Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time — felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. That's not a comfortable thought.
 
-I don't have a neat takeaway. I'm just sitting with the fact that a decade passed and it feels like both yesterday and a lifetime ago. Somehow both.
+I don't have a neat takeaway. A decade passed and it feels like both yesterday and a lifetime ago. Somehow both.
