@@ -12,7 +12,9 @@ The weird thing is I can barely place myself back there. I know it happened. I r
 
 But then I actually list it out and the decade was full. I went to university and graduated cum laude with a BSc in Information Technology. I got my first job as a software engineer — the thing I'd been working toward without fully understanding what it would feel like to arrive. I had my first relationship. I got my first dog. Those things alone would be enough to fill a life, and they all happened in the same ten years.
 
-Not all of it was good. I experienced heartbreak. I went through the darkest period of my life and somehow came out the other side. There were stretches where I wasn't sure I would. I don't say that for effect — it's just true. And surviving it didn't come with a fanfare. It was slow and unglamorous, the same way everything else in this decade has been.
+Not all of it was good. I made many, many mistakes. The kind you can see coming and walk into anyway, and the kind that only reveal themselves long after the damage is done. I learned hard lessons — about trust, about priorities, about the difference between what I wanted and what was actually good for me. None of those lessons came cheap.
+
+I experienced heartbreak. I went through the darkest period of my life and somehow came out the other side. There were stretches where I wasn't sure I would. I don't say that for effect — it's just true. And surviving it didn't come with a fanfare. It was slow and unglamorous, the same way everything else in this decade has been.
 
 Maybe the most important thing I learned is how much family matters. That sounds obvious, the kind of thing you'd cross-stitch onto a cushion. But I didn't really understand it at eighteen. I thought independence was the whole point. Turns out the people who were there before you had any of the answers are usually the ones still there after you've run out of them.
 
