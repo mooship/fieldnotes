@@ -60,11 +60,11 @@ const recentPosts = posts.slice(0, 5);
   }
 
   :global(main > p:first-child) {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
     color: var(--color-text);
     margin-bottom: 2.5rem;
-    font-size: 1.25rem;
-    font-weight: 500;
+    font-size: 1.35rem;
+    font-weight: 400;
     line-height: 1.4;
     letter-spacing: -0.01em;
     text-wrap: balance;
@@ -73,7 +73,7 @@ const recentPosts = posts.slice(0, 5);
   :global(.section-blog) {
     margin-top: 2rem;
     padding: 2rem 1rem 0.5rem 1rem;
-    border-top: 3px solid var(--color-apple-green);
+    border-top: 2px solid var(--color-apple-green);
     background-color: var(--color-apple-green-tint);
     margin-left: -1rem;
     margin-right: -1rem;
@@ -82,7 +82,7 @@ const recentPosts = posts.slice(0, 5);
   :global(.section-opensource) {
     margin-top: 2rem;
     padding: 2rem 1rem 0.5rem 1rem;
-    border-top: 3px solid var(--color-apple-yellow);
+    border-top: 2px solid var(--color-apple-yellow);
     background-color: var(--color-apple-yellow-tint);
     margin-left: -1rem;
     margin-right: -1rem;
@@ -91,7 +91,7 @@ const recentPosts = posts.slice(0, 5);
   :global(.section-writing) {
     margin-top: 2rem;
     padding: 2rem 1rem 0.5rem 1rem;
-    border-top: 3px solid var(--color-apple-orange);
+    border-top: 2px solid var(--color-apple-orange);
     background-color: var(--color-apple-orange-tint);
     margin-left: -1rem;
     margin-right: -1rem;
@@ -100,7 +100,7 @@ const recentPosts = posts.slice(0, 5);
   :global(.section-support) {
     margin-top: 2rem;
     padding: 2rem 1rem 0.5rem 1rem;
-    border-top: 3px solid var(--color-apple-red);
+    border-top: 2px solid var(--color-apple-red);
     background-color: var(--color-apple-red-tint);
     margin-left: -1rem;
     margin-right: -1rem;
@@ -109,7 +109,7 @@ const recentPosts = posts.slice(0, 5);
   :global(.section-personal) {
     margin-top: 2rem;
     padding: 2rem 1rem 0.5rem 1rem;
-    border-top: 3px solid var(--color-apple-purple);
+    border-top: 2px solid var(--color-apple-purple);
     background-color: var(--color-apple-purple-tint);
     margin-left: -1rem;
     margin-right: -1rem;
@@ -138,9 +138,9 @@ const recentPosts = posts.slice(0, 5);
   :global(h2) {
     color: var(--color-heading);
     margin: 0 0 0.75rem 0;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.35rem;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   :global(h2 + p) {
