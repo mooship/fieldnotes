@@ -8,7 +8,7 @@ I turned twenty-eight this year. Ten years ago I was in matric. That genuinely d
 
 Matric was all-consuming at the time. The exams, the pressure, figuring out what to study. I remember thinking those decisions would define everything. They didn't, really — but try telling that to eighteen-year-old me.
 
-The weird thing is I can barely place myself back there. I know it happened. I remember fragments — the classroom, the people, the feeling of wanting it to be over. But the person sitting in that chair doesn't feel like me anymore. It's more like remembering a story someone told me than something I actually lived through.
+The weird thing is I can barely place myself back there. I know it happened. I remember fragments — the smell of school textbooks, the stress of getting my driver's licence, the feeling of wanting it all to be over. But the person sitting in that chair doesn't feel like me anymore. It's more like remembering a story someone told me than something I actually lived through.
 
 I think that's what gets me about ten years. It's not that so much has changed. It's that it changed slowly enough that I didn't notice, and now when I look back the gap is enormous. There's no single moment I can point to. I just ended up here.
 
