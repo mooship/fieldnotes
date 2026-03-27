@@ -14,7 +14,9 @@ But then I actually list it out and the decade was full. I went to university an
 
 Not all of it was good. I made many, many mistakes. The kind you can see coming and walk into anyway, and the kind that only reveal themselves long after the damage is done. I learned hard lessons — about trust, about priorities, about the difference between what I wanted and what was actually good for me. None of those lessons came cheap.
 
-I experienced heartbreak. I went through the darkest period of my life and somehow came out the other side. There were stretches where I wasn't sure I would. I don't say that for effect — it's just true. And surviving it didn't come with a fanfare. It was slow and unglamorous, the same way everything else in this decade has been.
+I experienced heartbreak. That was painful, but it wasn't the darkest part. The darkest part was the depression — soul-crushing, can't-get-out-of-bed, can't-explain-it-to-anyone depression. And underneath it, undiagnosed ADHD that had been running the show my entire life without me knowing. Every system I tried to build would collapse. Every stretch of motivation would evaporate. I thought I was lazy. I thought something was fundamentally broken in me. Turns out my brain just works differently, and nobody had ever told me.
+
+Getting through that wasn't dramatic. There was no rock-bottom moment that made for a good story. It was just a long, grey stretch where I wasn't sure I would come out the other side. I don't say that for effect — it's just true. And surviving it didn't come with a fanfare. It was slow and unglamorous, the same way everything else in this decade has been.
 
 Maybe the most important thing I learned is how much family matters. That sounds obvious, the kind of thing you'd cross-stitch onto a cushion. But I didn't really understand it at eighteen. I thought independence was the whole point. Turns out the people who were there before you had any of the answers are usually the ones still there after you've run out of them.
 
