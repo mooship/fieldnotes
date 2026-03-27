@@ -51,7 +51,7 @@ html {
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 17px;
-  line-height: 1.47;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -72,19 +72,20 @@ body {
 }
 
 h1 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 700;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
   color: var(--color-heading);
   text-wrap: balance;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 h2 {
-  font-weight: 700;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
   color: var(--color-heading);
   text-wrap: balance;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1.15;
 }
 
@@ -102,9 +103,6 @@ a {
 
 a:hover {
   color: var(--color-link-hover);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
 }
 
 ul {
