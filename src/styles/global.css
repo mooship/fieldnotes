@@ -57,7 +57,8 @@ body {
   text-rendering: optimizeLegibility;
   font-feature-settings:
     "kern" 1,
-    "liga" 1;
+    "liga" 1,
+    "onum" 1;
   background: var(--color-bg);
   color: var(--color-text);
   max-width: 640px;
@@ -121,6 +122,13 @@ li {
 }
 
 @media (prefers-color-scheme: dark) {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+  }
+
   .astro-code,
   .astro-code span {
     color: var(--shiki-dark) !important;
