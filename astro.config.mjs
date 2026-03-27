@@ -10,6 +10,11 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
+      name: "EB Garamond",
+      cssVariable: "--font-serif",
+    },
+    {
+      provider: fontProviders.fontsource(),
       name: "Geist Mono",
       cssVariable: "--font-mono",
     },

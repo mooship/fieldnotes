@@ -51,13 +51,14 @@ html {
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 17px;
-  line-height: 1.47;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings:
     "kern" 1,
-    "liga" 1;
+    "liga" 1,
+    "onum" 1;
   background: var(--color-bg);
   color: var(--color-text);
   max-width: 640px;
@@ -72,19 +73,20 @@ body {
 }
 
 h1 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 700;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
   color: var(--color-heading);
   text-wrap: balance;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 h2 {
-  font-weight: 700;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
   color: var(--color-heading);
   text-wrap: balance;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1.15;
 }
 
@@ -102,9 +104,6 @@ a {
 
 a:hover {
   color: var(--color-link-hover);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
 }
 
 ul {
@@ -123,6 +122,13 @@ li {
 }
 
 @media (prefers-color-scheme: dark) {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+  }
+
   .astro-code,
   .astro-code span {
     color: var(--shiki-dark) !important;
