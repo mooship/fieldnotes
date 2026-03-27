@@ -37,6 +37,7 @@ const jsonLd = {
 <!doctype html>
 <html lang="en">
   <head>
+    <Font cssVariable="--font-serif" preload />
     <Font cssVariable="--font-mono" preload />
     <Font cssVariable="--font-sans" preload />
     <meta charset="UTF-8" />
@@ -180,17 +181,17 @@ const jsonLd = {
       var(--color-apple-purple),
       var(--color-apple-blue)
     );
-    background-size: 100% 4px;
+    background-size: 100% 6px;
     background-repeat: no-repeat;
     background-position: bottom;
   }
 
   header a:first-child {
-    font-family: Georgia, "Times New Roman", serif;
-    font-weight: 700;
-    font-size: 1.1rem;
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: 1.2rem;
     color: var(--color-heading);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
   }
 
   nav {
@@ -200,7 +201,9 @@ const jsonLd = {
 
   nav a {
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
   footer {
@@ -221,7 +224,7 @@ const jsonLd = {
       var(--color-apple-purple),
       var(--color-apple-blue)
     );
-    background-size: 100% 4px;
+    background-size: 100% 6px;
     background-repeat: no-repeat;
     background-position: top;
     font-size: 0.85rem;
@@ -232,6 +235,8 @@ const jsonLd = {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   footer a {
