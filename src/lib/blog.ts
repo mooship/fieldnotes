@@ -10,7 +10,7 @@ export const BLOG_DESCRIPTION =
   "Writing by Timothy Brits on software, open source, Buddhism, and eco-socialism.";
 
 export function getPostSlug(id: string): string {
-  return id.replace(/\.mdx?$/, "");
+  return id.replace(/\.md$/, "");
 }
 
 export function getSiteUrl(site: URL): string {
