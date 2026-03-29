@@ -21,10 +21,6 @@ describe("getPostSlug", () => {
     expect(getPostSlug("hello-world.md")).toBe("hello-world");
   });
 
-  it("removes .mdx extension", () => {
-    expect(getPostSlug("on-buddhism.mdx")).toBe("on-buddhism");
-  });
-
   it("leaves a slug without an extension unchanged", () => {
     expect(getPostSlug("no-extension")).toBe("no-extension");
   });

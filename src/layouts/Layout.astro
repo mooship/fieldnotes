@@ -38,7 +38,7 @@ const jsonLd = {
 <html lang="en">
   <head>
     <Font cssVariable="--font-serif" preload />
-    <Font cssVariable="--font-mono" preload />
+    <Font cssVariable="--font-mono" />
     <Font cssVariable="--font-sans" preload />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, viewport-fit=cover" />
@@ -84,7 +84,7 @@ const jsonLd = {
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content={type} />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:site_name" content={title} />
+    <meta property="og:site_name" content="Timothy Brits" />
     {image && <meta property="og:image" content={image} />}
     <meta
       name="twitter:card"

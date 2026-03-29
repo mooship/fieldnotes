@@ -24,13 +24,10 @@ export default defineConfig({
       cssVariable: "--font-sans",
     },
   ],
-  build: {
-    assetsInlineLimit: 4096,
-    cacheDir: "./.astro-cache",
-    rollupOptions: {
-      output: {
-        crossOrigin: "anonymous",
-      },
+  cacheDir: "./.astro-cache",
+  vite: {
+    build: {
+      assetsInlineLimit: 4096,
     },
   },
   markdown: {
