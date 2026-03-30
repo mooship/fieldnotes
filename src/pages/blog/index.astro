@@ -30,7 +30,7 @@ const postsWithMeta = await Promise.all(
           {postsWithMeta.map(({ post, readingTime }) => (
             <li>
               <a href={`/blog/${getPostSlug(post.id)}`}>
-                <span>{post.data.title}</span>
+                {post.data.title}
               </a>
               <p class="post-meta">
                 <time datetime={post.data.pubDate.toISOString()}>
@@ -49,7 +49,7 @@ const postsWithMeta = await Promise.all(
       )
     }
     <a href="/" class="back-link">
-      <span>&larr; Back</span>
+      <span aria-hidden="true">&larr;</span> Back
     </a>
   </main>
 </Layout>
