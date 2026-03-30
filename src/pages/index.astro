@@ -17,6 +17,7 @@ const recentPosts = posts.slice(0, 5);
   type="website"
 >
   <main id="main-content" aria-label="Content" tabindex="-1">
+    <h1 class="visually-hidden">Timothy Brits</h1>
     <IntroContent />
     {
       recentPosts.length > 0 && (
@@ -116,15 +117,15 @@ const recentPosts = posts.slice(0, 5);
   }
 
   :global(.section-blog) :global(a:hover) {
-    color: var(--color-apple-green);
+    color: var(--color-apple-green-hover);
   }
 
   :global(.section-opensource) :global(a:hover) {
-    color: var(--color-apple-yellow);
+    color: var(--color-apple-yellow-hover);
   }
 
   :global(.section-writing) :global(a:hover) {
-    color: var(--color-apple-orange);
+    color: var(--color-apple-orange-hover);
   }
 
   :global(.section-support) :global(a:hover) {
