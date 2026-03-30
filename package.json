@@ -13,9 +13,6 @@
     "start": "astro dev",
     "test": "vitest run"
   },
-  "dependencies": {
-    "rehype-external-links": "^3.0.0"
-  },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
     "@astrojs/compiler-rs": "^0.1.6",
@@ -36,6 +33,7 @@
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-packagejson": "^3.0.2",
     "reading-time": "^1.5.0",
+    "rehype-external-links": "^3.0.0",
     "rehype-stringify": "^10.0.1",
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
