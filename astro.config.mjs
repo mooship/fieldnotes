@@ -1,5 +1,6 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, fontProviders } from "astro/config";
+import rehypeExternalLinks from "rehype-external-links";
 import remarkSmartypants from "remark-smartypants";
 import { remarkReadingTime } from "./src/lib/remark-reading-time.ts";
 
@@ -32,6 +33,9 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkSmartypants, remarkReadingTime],
+    rehypePlugins: [
+      [rehypeExternalLinks, { rel: ["noopener", "noreferrer"] }],
+    ],
     shikiConfig: {
       themes: {
         light: "min-light",
