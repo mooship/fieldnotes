@@ -17,11 +17,11 @@ Here's what it does:
 
 That's the entire pitch. No configuration, no decisions. It processes your Markdown at build time and outputs the right characters.
 
-### Why bother?
+## Why bother?
 
 Typography is one of those details that separates "looks fine" from "looks good." Curly quotes and proper dashes show up in every printed book but almost never on the web. It's a small thing. But small things compound — good defaults in your build pipeline mean better output without thinking about it.
 
-### Using it in Astro
+## Using it in Astro
 
 In your Astro config, add it to the `remarkPlugins` array:
 

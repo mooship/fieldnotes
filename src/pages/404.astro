@@ -6,13 +6,11 @@ import Layout from "../layouts/Layout.astro";
   <main id="main-content" tabindex="-1">
     <h1>404</h1>
     <p>This page doesn't exist.</p>
-    <nav class="links">
-      <a href="/">
-        <span>Home</span>
-      </a>
-      <a href="/blog">
-        <span>Blog</span>
-      </a>
+    <nav class="links" aria-label="Suggested pages">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog">Blog</a></li>
+      </ul>
     </nav>
   </main>
 </Layout>
@@ -38,11 +36,14 @@ import Layout from "../layouts/Layout.astro";
     margin: 0 0 1.5rem 0;
   }
 
-  .links {
+  .links ul {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
   .links a {
