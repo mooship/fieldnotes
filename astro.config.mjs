@@ -9,17 +9,17 @@ export default defineConfig({
   output: "static",
   fonts: [
     {
-      provider: fontProviders.fontsource(),
+      provider: fontProviders.bunny(),
       name: "EB Garamond",
       cssVariable: "--font-serif",
     },
     {
-      provider: fontProviders.fontsource(),
+      provider: fontProviders.bunny(),
       name: "Geist Mono",
       cssVariable: "--font-mono",
     },
     {
-      provider: fontProviders.fontsource(),
+      provider: fontProviders.bunny(),
       name: "Geist Sans",
       cssVariable: "--font-sans",
     },
