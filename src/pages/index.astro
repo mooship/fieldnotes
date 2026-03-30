@@ -16,7 +16,7 @@ const recentPosts = posts.slice(0, 5);
   description="Links and ways to connect with Timothy Brits - social profiles, and more."
   type="website"
 >
-  <main id="main-content" aria-label="Content" tabindex="-1">
+  <main id="main-content" tabindex="-1">
     <h1 class="visually-hidden">Timothy Brits</h1>
     <IntroContent />
     {
@@ -26,9 +26,7 @@ const recentPosts = posts.slice(0, 5);
           <ul class="recent-posts">
             {recentPosts.map((post) => (
               <li>
-                <a href={`/blog/${getPostSlug(post.id)}`}>
-                  <span>{post.data.title}</span>
-                </a>
+                <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
                 <time
                   class="post-date"
                   datetime={post.data.pubDate.toISOString()}
@@ -43,7 +41,7 @@ const recentPosts = posts.slice(0, 5);
             ))}
           </ul>
           <a href="/blog" class="all-posts">
-            <span>All posts &rarr;</span>
+            All posts <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       )
@@ -133,6 +131,26 @@ const recentPosts = posts.slice(0, 5);
   }
 
   :global(.section-personal) :global(a:hover) {
+    color: var(--color-apple-purple);
+  }
+
+  :global(.section-blog) :global(a:focus-visible) {
+    color: var(--color-apple-green-hover);
+  }
+
+  :global(.section-opensource) :global(a:focus-visible) {
+    color: var(--color-apple-yellow-hover);
+  }
+
+  :global(.section-writing) :global(a:focus-visible) {
+    color: var(--color-apple-orange-hover);
+  }
+
+  :global(.section-support) :global(a:focus-visible) {
+    color: var(--color-apple-red);
+  }
+
+  :global(.section-personal) :global(a:focus-visible) {
     color: var(--color-apple-purple);
   }
 
