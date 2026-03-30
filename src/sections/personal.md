@@ -4,10 +4,10 @@
 
 Connect with me!
 
-- [<span>GitHub</span>](https://github.com/EcoSoviet)
-- [<span>Instagram</span>](https://www.instagram.com/greendegrowth/)
-- [<span>Threads</span>](https://www.threads.com/@greendegrowth/)
-- [<span>Mastodon</span>](https://hachyderm.io/@mooship)
-- [<span>Email</span>](mailto:contact@timothybrits.co.za)
+- [GitHub](https://github.com/EcoSoviet)
+- [Instagram](https://www.instagram.com/greendegrowth/)
+- [Threads](https://www.threads.com/@greendegrowth/)
+- [Mastodon](https://hachyderm.io/@mooship)
+- [Email](mailto:contact@timothybrits.co.za)
 
 </div>
