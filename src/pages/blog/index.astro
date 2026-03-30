@@ -29,9 +29,7 @@ const postsWithMeta = await Promise.all(
         <ul>
           {postsWithMeta.map(({ post, readingTime }) => (
             <li>
-              <a href={`/blog/${getPostSlug(post.id)}`}>
-                {post.data.title}
-              </a>
+              <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
               <p class="post-meta">
                 <time datetime={post.data.pubDate.toISOString()}>
                   {post.data.pubDate.toLocaleDateString("en-ZA", {

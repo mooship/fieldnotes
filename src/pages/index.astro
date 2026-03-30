@@ -26,9 +26,7 @@ const recentPosts = posts.slice(0, 5);
           <ul class="recent-posts">
             {recentPosts.map((post) => (
               <li>
-                <a href={`/blog/${getPostSlug(post.id)}`}>
-                  {post.data.title}
-                </a>
+                <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
                 <time
                   class="post-date"
                   datetime={post.data.pubDate.toISOString()}
