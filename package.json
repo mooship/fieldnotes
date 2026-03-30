@@ -13,6 +13,9 @@
     "start": "astro dev",
     "test": "vitest run"
   },
+  "dependencies": {
+    "rehype-external-links": "^3.0.0"
+  },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
     "@astrojs/compiler-rs": "^0.1.6",
@@ -45,8 +48,5 @@
   },
   "engines": {
     "node": ">=22.21.1"
-  },
-  "dependencies": {
-    "rehype-external-links": "^3.0.0"
   }
 }
