@@ -1,6 +1,6 @@
 ---
 title: "On Eco-Socialism"
-description: "Why fixing the climate means fixing the economy — and why technology alone won't do it."
+description: "Why fixing the climate means fixing the economy -- and why technology alone won't do it."
 pubDate: 2026-03-24
 ---
 

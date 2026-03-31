@@ -1,6 +1,6 @@
 ---
 title: "Sweat the Small Stuff: remark-smartypants"
-description: "How a tiny remark plugin turns dumb punctuation into proper typography — and why it matters."
+description: "How a tiny remark plugin turns dumb punctuation into proper typography -- and why it matters."
 pubDate: 2026-03-25
 ---
 
@@ -12,7 +12,7 @@ Here's what it does:
 
 - `"straight quotes"` become "curly quotes"
 - `'single quotes'` become 'single quotes'
-- `--` becomes an en dash, `---` becomes an em dash
+- `--` becomes an em dash, `---` becomes an en dash
 - `...` becomes a proper ellipsis
 
 That's the entire pitch. No configuration, no decisions. It processes your Markdown at build time and outputs the right characters.
@@ -30,7 +30,7 @@ import remarkSmartypants from "remark-smartypants";
 
 export default defineConfig({
   markdown: {
-    remarkPlugins: [remarkSmartypants],
+    remarkPlugins: [[remarkSmartypants, { dashes: "inverted" }]],
   },
 });
 ```
