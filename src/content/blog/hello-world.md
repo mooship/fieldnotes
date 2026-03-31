@@ -1,6 +1,6 @@
 ---
 title: "Hello, World"
-description: "An introduction — who I am, what I do, and what this blog will be."
+description: "An introduction -- who I am, what I do, and what this blog will be."
 pubDate: 2026-03-22
 ---
 

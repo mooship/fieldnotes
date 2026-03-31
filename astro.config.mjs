@@ -32,7 +32,10 @@ export default defineConfig({
     },
   },
   markdown: {
-    remarkPlugins: [remarkSmartypants, remarkReadingTime],
+    remarkPlugins: [
+      [remarkSmartypants, { dashes: "inverted" }],
+      remarkReadingTime,
+    ],
     rehypePlugins: [
       [rehypeExternalLinks, { rel: ["noopener", "noreferrer"] }],
     ],
