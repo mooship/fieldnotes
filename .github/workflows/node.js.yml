@@ -19,18 +19,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm ci
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
       - name: Cache Vite cache
         uses: actions/cache@v5
         with:
           path: node_modules/.vite
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-vite-${{ hashFiles('package-lock.json', 'vite.config.*', 'tsconfig*.json') }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-vite-${{ hashFiles('pnpm-lock.yaml', 'vite.config.*', 'tsconfig*.json') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-vite-
-      - run: npm run build --if-present
-      - run: npm test --if-present
+      - run: pnpm run build
+      - run: pnpm test
