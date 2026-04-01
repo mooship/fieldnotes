@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   getAdjacentPosts,
+  getAllTags,
   getBlogPosts,
+  getPostsByTag,
   getPostSlug,
   getSiteUrl,
   renderMarkdownToHtml,
@@ -97,6 +99,38 @@ describe("getAdjacentPosts", () => {
     const result = getAdjacentPosts(posts, "unknown");
     expect(result.prev).toBeUndefined();
     expect(result.next).toBeUndefined();
+  });
+});
+
+describe("getAllTags", () => {
+  it("returns sorted unique tags from all posts", () => {
+    const posts = [
+      { data: { tags: ["personal", "technology"] } },
+      { data: { tags: ["technology", "philosophy"] } },
+      { data: { tags: ["personal"] } },
+    ];
+    expect(getAllTags(posts)).toEqual(["personal", "philosophy", "technology"]);
+  });
+
+  it("returns empty array when no posts have tags", () => {
+    const posts = [{ data: { tags: [] } }, { data: { tags: [] } }];
+    expect(getAllTags(posts)).toEqual([]);
+  });
+});
+
+describe("getPostsByTag", () => {
+  const posts = [
+    { data: { tags: ["personal", "technology"] } },
+    { data: { tags: ["philosophy"] } },
+    { data: { tags: ["personal"] } },
+  ];
+
+  it("filters posts by tag", () => {
+    expect(getPostsByTag(posts, "personal")).toHaveLength(2);
+  });
+
+  it("returns empty array for unknown tag", () => {
+    expect(getPostsByTag(posts, "unknown")).toHaveLength(0);
   });
 });
 

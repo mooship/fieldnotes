@@ -2,6 +2,8 @@
 title: "Sweat the Small Stuff: remark-smartypants"
 description: "How a tiny remark plugin turns dumb punctuation into proper typography, and why it matters."
 pubDate: 2026-03-25
+tags:
+  - technology
 ---
 
 If you write on the web, you are almost certainly publishing ugly punctuation. Straight quotes instead of curly ones. Two hyphens instead of an em dash. Three dots instead of an ellipsis character. Most people never notice. The ones who do can't unsee it.
