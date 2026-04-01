@@ -1,0 +1,118 @@
+---
+import { render } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import {
+  getAllTags,
+  getBlogPosts,
+  getPostsByTag,
+  getPostSlug,
+} from "../../../lib/blog";
+
+export async function getStaticPaths() {
+  const posts = await getBlogPosts();
+  const tags = getAllTags(posts);
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { tag, posts: getPostsByTag(posts, tag) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+const postsWithMeta = await Promise.all(
+  posts.map(async (post: Awaited<ReturnType<typeof getBlogPosts>>[number]) => {
+    const { remarkPluginFrontmatter } = await render(post);
+    return {
+      post,
+      readingTime: remarkPluginFrontmatter?.readingTime as string | undefined,
+    };
+  })
+);
+---
+
+<Layout
+  title={`Posts tagged "${tag}" — Timothy Brits`}
+  description={`Blog posts tagged "${tag}".`}
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <a href="/blog" class="back-link">
+      <span aria-hidden="true">&larr;</span> All posts
+    </a>
+    <h1>Tagged &ldquo;{tag}&rdquo;</h1>
+    <ul>
+      {
+        postsWithMeta.map(({ post, readingTime }) => (
+          <li>
+            <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
+            <p class="post-meta">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString("en-ZA", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+              {readingTime && <span> · {readingTime}</span>}
+            </p>
+            <p class="post-desc">{post.data.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    text-align: left;
+    color: var(--color-heading);
+    margin: 0 0 1.5rem 0;
+    font-weight: 400;
+    font-size: 3rem;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+  }
+
+  li {
+    margin-bottom: 1.5rem;
+  }
+
+  a {
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .post-meta {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin: 0.25rem 0 0 0;
+    letter-spacing: 0.05em;
+    font-variant: small-caps;
+  }
+
+  .post-desc {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.47;
+  }
+</style>

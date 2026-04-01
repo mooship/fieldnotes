@@ -1,17 +1,22 @@
 ---
 import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import { getBlogPosts, getPostSlug } from "../../lib/blog";
+import { ArrowLeft, ArrowRight } from "@lucide/astro";
+import { getAdjacentPosts, getBlogPosts, getPostSlug } from "../../lib/blog";
 
 export async function getStaticPaths() {
   const posts = await getBlogPosts();
-  return posts.map((post) => ({
-    params: { slug: getPostSlug(post.id) },
-    props: { post },
-  }));
+  return posts.map((post) => {
+    const slug = getPostSlug(post.id);
+    const adjacent = getAdjacentPosts(posts, slug);
+    return {
+      params: { slug },
+      props: { post, adjacent },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, adjacent } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(post);
 const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
 ---
@@ -53,9 +58,42 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
             </time>
           )
         }
+        {
+          post.data.tags.length > 0 && (
+            <div class="post-tags">
+              {post.data.tags.map((tag: string) => (
+                <a href={`/blog/tags/${tag}`} class="tag">
+                  {tag}
+                </a>
+              ))}
+            </div>
+          )
+        }
       </header>
       <Content />
     </article>
+    {
+      (adjacent.prev || adjacent.next) && (
+        <nav class="post-nav" aria-label="Post navigation">
+          {adjacent.prev ? (
+            <a href={`/blog/${adjacent.prev.slug}`} class="post-nav-link prev">
+              <ArrowLeft size={16} aria-hidden="true" />
+              <span>{adjacent.prev.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {adjacent.next ? (
+            <a href={`/blog/${adjacent.next.slug}`} class="post-nav-link next">
+              <span>{adjacent.next.title}</span>
+              <ArrowRight size={16} aria-hidden="true" />
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )
+    }
   </main>
 </Layout>
 
@@ -106,6 +144,31 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
 
   .updated {
     margin-top: 0.25rem;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-apple-blue);
+    border: 1px solid var(--color-apple-blue);
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    text-decoration: none;
+  }
+
+  .tag:hover {
+    background: var(--color-apple-blue);
+    color: var(--color-bg);
+    text-decoration: none;
   }
 
   article :global(p) {
@@ -183,5 +246,27 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
     border: none;
     border-top: 1px solid var(--color-border);
     margin: 2rem 0;
+  }
+
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .post-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    max-width: 48%;
+  }
+
+  .post-nav-link.next {
+    margin-left: auto;
+    text-align: right;
   }
 </style>

@@ -1,0 +1,96 @@
+---
+import { Monitor, Moon, Sun } from "@lucide/astro";
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  aria-label="Toggle theme"
+  data-theme-toggle
+>
+  <Sun size={16} class="icon-light" aria-hidden="true" />
+  <Moon size={16} class="icon-dark" aria-hidden="true" />
+  <Monitor size={16} class="icon-system" aria-hidden="true" />
+</button>
+
+<script>
+  const THEMES = ["system", "light", "dark"] as const;
+  type Theme = (typeof THEMES)[number];
+
+  function getStoredTheme(): Theme {
+    const stored = localStorage.getItem("theme");
+    if (stored === "light" || stored === "dark") return stored;
+    return "system";
+  }
+
+  function applyTheme(theme: Theme) {
+    const root = document.documentElement;
+
+    if (theme === "system") {
+      delete root.dataset.theme;
+    } else {
+      root.dataset.theme = theme;
+    }
+
+    for (const button of document.querySelectorAll<HTMLButtonElement>(
+      "[data-theme-toggle]"
+    )) {
+      button.dataset.active = theme;
+    }
+  }
+
+  function cycleTheme() {
+    const current = getStoredTheme();
+    const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
+
+    if (next === "system") {
+      localStorage.removeItem("theme");
+    } else {
+      localStorage.setItem("theme", next);
+    }
+
+    applyTheme(next);
+  }
+
+  applyTheme(getStoredTheme());
+
+  for (const button of document.querySelectorAll("[data-theme-toggle]"))
+    button.addEventListener("click", cycleTheme);
+
+  document.addEventListener("astro:after-swap", () => {
+    applyTheme(getStoredTheme());
+    for (const button of document.querySelectorAll("[data-theme-toggle]"))
+      button.addEventListener("click", cycleTheme);
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: 0.5rem 0.25rem;
+    transition: color 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-text);
+  }
+
+  .icon-light,
+  .icon-dark,
+  .icon-system {
+    display: none;
+  }
+
+  .theme-toggle[data-active="light"] .icon-light,
+  .theme-toggle:not([data-active]) .icon-system,
+  .theme-toggle[data-active="system"] .icon-system,
+  .theme-toggle[data-active="dark"] .icon-dark {
+    display: block;
+  }
+</style>

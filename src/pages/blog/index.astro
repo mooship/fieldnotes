@@ -40,6 +40,15 @@ const postsWithMeta = await Promise.all(
                 </time>
                 {readingTime && <span> · {readingTime}</span>}
               </p>
+              {post.data.tags.length > 0 && (
+                <p class="post-tags">
+                  {post.data.tags.map((tag: string) => (
+                    <a href={`/blog/tags/${tag}`} class="tag">
+                      {tag}
+                    </a>
+                  ))}
+                </p>
+              )}
               <p class="post-desc">{post.data.description}</p>
             </li>
           ))}
@@ -90,6 +99,31 @@ const postsWithMeta = await Promise.all(
     margin: 0.25rem 0 0 0;
     letter-spacing: 0.05em;
     font-variant: small-caps;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin: 0.35rem 0 0 0;
+  }
+
+  .tag {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-apple-blue);
+    border: 1px solid var(--color-apple-blue);
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    text-decoration: none;
+  }
+
+  .tag:hover {
+    background: var(--color-apple-blue);
+    color: var(--color-bg);
+    text-decoration: none;
   }
 
   .post-desc {

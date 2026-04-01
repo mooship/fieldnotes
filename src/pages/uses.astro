@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Content as UsesContent } from "../sections/uses.md";
+---
+
+<Layout
+  title="Uses — Timothy Brits"
+  description="The tools, hardware, and software I use daily."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1>Uses</h1>
+    <UsesContent />
+    <a href="/" class="back-link">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  h1 {
+    color: var(--color-heading);
+    font-weight: 400;
+    font-size: 3rem;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+  }
+
+  main :global(h2) {
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    color: var(--color-heading);
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin: 2rem 0 0.75rem 0;
+    letter-spacing: 0;
+    line-height: 1.15;
+  }
+
+  main :global(ul) {
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+
+  main :global(li) {
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 2rem;
+  }
+</style>
