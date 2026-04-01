@@ -13,20 +13,20 @@
 
 ## Languages & Frameworks
 
-- TypeScript with [React](https://react.dev)
-- [Rust](https://www.rust-lang.org)
+- TypeScript with React
+- Rust
 
 ## Infrastructure
 
-- [PostgreSQL](https://www.postgresql.org/) via [Neon](https://neon.tech)
-- [Cloudflare Pages](https://pages.cloudflare.com/) and [Workers](https://workers.cloudflare.com/)
+- PostgreSQL via [Neon](https://neon.tech)
+- Cloudflare Pages and Workers
 
 ## AI
 
-- [Claude](https://claude.ai)
+- Claude
 
 ## This site
 
 - [Astro](https://astro.build) — static output
-- [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/) — privacy-first, no cookies
+- Cloudflare Web Analytics — privacy-first, no cookies
 - Geist Sans and EB Garamond typefaces
