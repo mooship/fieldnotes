@@ -27,6 +27,6 @@
 
 ## This site
 
-- [Astro](https://astro.build) — static output
+- [Astro](https://astro.build) — static output, love this framework
 - Cloudflare Web Analytics — privacy-first, no cookies
 - Geist Sans and EB Garamond typefaces
