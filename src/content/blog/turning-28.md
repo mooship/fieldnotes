@@ -2,6 +2,8 @@
 title: "Turning 28"
 description: "10 years since matric. It truly feels like a lifetime ago."
 pubDate: 2026-03-26
+tags:
+  - personal
 ---
 
 I turned twenty-eight this year. Ten years ago I was in matric. That genuinely doesn't feel possible.

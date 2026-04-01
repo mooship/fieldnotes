@@ -24,6 +24,7 @@ export async function GET(context: APIContext) {
         date_modified: (
           post.data.updatedDate ?? post.data.pubDate
         ).toISOString(),
+        tags: post.data.tags,
       };
     })
   );
