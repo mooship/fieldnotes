@@ -10,7 +10,7 @@ Matric was all-consuming at the time. The exams, the pressure, figuring out what
 
 The weird thing is I can barely place myself back there. I know it happened. I remember fragments: the smell of school textbooks, the stress of getting my driver's licence, the feeling of wanting it all to be over. But the person sitting in that chair doesn't feel like me anymore. It's more like remembering a story someone told me than something I actually lived through.
 
-But when I actually list it out, the decade was full. I went to university and graduated cum laude with a BSc in Information Technology. I got my first job as a software engineer, the thing I'd been working toward without fully understanding what it would feel like to arrive. I had my first relationship. I got my first dog. Those things alone would be enough to fill a life, and they all happened in the same ten years.
+But when I actually list it out, the decade was full. I went to university and graduated cum laude with a BSc in Information Technology. I got my first job as a software engineer -- the thing I'd been working toward without fully understanding what it would feel like to arrive. I had my first relationship. I got my first dog. Those things alone would be enough to fill a life, and they all happened in the same ten years.
 
 Not all of it was good. I made many, many mistakes. The kind you can see coming and walk into anyway, and the kind that only reveal themselves long after the damage is done. I learned hard lessons about trust, about priorities, about the difference between what I wanted and what was actually good for me. None of those lessons came cheap.
 
@@ -24,6 +24,6 @@ Maybe the most important thing I learned is how much family matters. That sounds
 
 I think that's what gets me about ten years. It's not that so much has changed. It's that it changed slowly enough that I didn't notice, and now when I look back the gap is enormous. There's no single moment I can point to. I just ended up here.
 
-Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time. Felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. That's not a comfortable thought.
+Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time -- felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. That's not a comfortable thought.
 
 I don't have a neat takeaway. A decade passed and it feels like both yesterday and a lifetime ago. Somehow both.
