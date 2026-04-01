@@ -1,19 +1,32 @@
+## Hardware
+
+- MacBook Air M4 (512GB, 16GB)
+
 ## Editor
 
-- VS Code
-- Neovim for quick edits
+- [Zed](https://zed.dev)
 
 ## Terminal
 
-- Ghostty
-- Zsh
+- [Ghostty](https://ghostty.org)
+- Zsh with [Starship](https://starship.rs) prompt
 
-## Hardware
+## Languages & Frameworks
 
-- MacBook Pro
+- TypeScript with [React](https://react.dev)
+- [Rust](https://www.rust-lang.org)
 
-## Software
+## Infrastructure
 
-- Firefox
-- Raycast
-- 1Password
+- [PostgreSQL](https://www.postgresql.org/) via [Neon](https://neon.tech)
+- [Cloudflare Pages](https://pages.cloudflare.com/) and [Workers](https://workers.cloudflare.com/)
+
+## AI
+
+- [Claude](https://claude.ai)
+
+## This site
+
+- [Astro](https://astro.build) — static output
+- Geist Sans and EB Garamond typefaces
+- No analytics, no tracking
