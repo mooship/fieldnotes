@@ -208,7 +208,8 @@ const jsonLd = {
 
   nav {
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 1rem;
   }
 
   nav a {
@@ -217,6 +218,13 @@ const jsonLd = {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     padding: 0.5rem 0.25rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  nav a:hover {
+    color: var(--color-text);
+    text-decoration: none;
   }
 
   footer {
