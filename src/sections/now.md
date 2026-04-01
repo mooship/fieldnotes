@@ -1,6 +1,6 @@
 ## What I'm doing
 
-Working as an intermediate software engineer at a consultancy, currently placed on a GIS project in the property industry. Outside of work, looking for an open-source project to contribute to.
+Working as a mid-level software engineer at a consultancy, currently placed on a GIS project in the property industry. Outside of work, looking for an open-source project to contribute to.
 
 ## What I'm reading
 
