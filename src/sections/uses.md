@@ -11,6 +11,11 @@
 - [Ghostty](https://ghostty.org) — native, GPU-accelerated, no Electron in sight
 - Zsh with [Starship](https://starship.rs) prompt — minimal and informative
 
+## Dev Tools
+
+- [pnpm](https://pnpm.io) — fast, disk-efficient, and strict about dependencies
+- [Lefthook](https://github.com/evilmartians/lefthook) — Git hooks that actually feel fast
+
 ## Languages & Frameworks
 
 - TypeScript with React — my daily driver for everything on the web
@@ -23,7 +28,7 @@
 
 ## AI
 
-- Claude — best reasoning I've found, and I've tried them all
+- [Claude Code](https://claude.ai/code) — best reasoning I've found, and I've tried them all
 
 ## This site
 
