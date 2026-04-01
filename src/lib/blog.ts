@@ -36,3 +36,35 @@ export async function getBlogPosts() {
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
 }
+
+export interface AdjacentPost {
+  slug: string;
+  title: string;
+}
+
+export interface AdjacentPosts {
+  prev: AdjacentPost | undefined;
+  next: AdjacentPost | undefined;
+}
+
+export function getAdjacentPosts(
+  posts: { id: string; data: { title: string } }[],
+  currentSlug: string
+): AdjacentPosts {
+  const index = posts.findIndex(
+    (post) => getPostSlug(post.id) === currentSlug
+  );
+  if (index === -1) return { prev: undefined, next: undefined };
+
+  const older = posts[index + 1];
+  const newer = posts[index - 1];
+
+  return {
+    prev: older
+      ? { slug: getPostSlug(older.id), title: older.data.title }
+      : undefined,
+    next: newer
+      ? { slug: getPostSlug(newer.id), title: newer.data.title }
+      : undefined,
+  };
+}
