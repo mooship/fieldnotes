@@ -1,6 +1,6 @@
 ---
 title: "On Buddhism"
-description: "Why I've been drawn to Buddhism. Not as a religion, but as a way of living."
+description: "Why I've been drawn to Buddhism, not as a religion, but as a way of living."
 pubDate: 2026-03-23
 ---
 

@@ -18,7 +18,7 @@ I experienced heartbreak. That was painful, but it wasn't the darkest part. The 
 
 There was a rock-bottom moment. I nearly lost my second job. I ended up in a mental health hospital. That part isn't easy to write, but it's true, and leaving it out would be dishonest about what this decade actually looked like.
 
-Getting through it wasn't a clear victory. There was no switch that flipped. It was months and years of learning to take care of myself. Bettering myself, protecting my peace, building a life I could actually sustain. That work is ongoing. I don't think it ever really stops.
+Getting through it wasn't a clear victory. There was no switch that flipped. It was months and years of learning to take care of myself -- bettering myself, protecting my peace, building a life I could actually sustain. That work is ongoing. I don't think it ever really stops.
 
 Maybe the most important thing I learned is how much family matters. That sounds obvious, the kind of thing you'd cross-stitch onto a cushion. But I didn't really understand it at eighteen. I thought independence was the whole point. Turns out the people who were there before you had any of the answers are usually the ones still there after you've run out of them.
 
