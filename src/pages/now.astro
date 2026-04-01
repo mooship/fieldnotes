@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Content as NowContent } from "../sections/now.md";
+---
+
+<Layout
+  title="Now — Timothy Brits"
+  description="What I'm currently working on, reading, and learning."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1>Now</h1>
+    <p class="updated">Last updated: April 2026</p>
+    <NowContent />
+    <p class="nownownow">
+      This is a <a href="https://nownownow.com/about">now page</a>.
+    </p>
+    <a href="/" class="back-link">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  h1 {
+    color: var(--color-heading);
+    font-weight: 400;
+    font-size: 3rem;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+  }
+
+  .updated {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
+    font-variant: small-caps;
+    margin: 0 0 2rem 0;
+  }
+
+  main :global(h2) {
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    color: var(--color-heading);
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin: 2rem 0 0.75rem 0;
+    letter-spacing: 0;
+    line-height: 1.15;
+  }
+
+  main :global(p) {
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+  }
+
+  main :global(ul) {
+    padding-left: 1.5rem;
+    list-style: disc;
+  }
+
+  main :global(li) {
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+  }
+
+  .nownownow {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin-top: 2rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 1rem;
+  }
+</style>

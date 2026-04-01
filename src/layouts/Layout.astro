@@ -83,7 +83,7 @@ const jsonLd = {
     <meta name="generator" content={Astro.generator} />
     <script is:inline>
       (function () {
-        var t = localStorage.getItem("theme");
+        const t = localStorage.getItem("theme");
         if (t === "dark" || t === "light") {
           document.documentElement.dataset.theme = t;
         }
@@ -114,6 +114,8 @@ const jsonLd = {
       <a href="/">Timothy Brits</a>
       <nav>
         <a href="/blog">Blog</a>
+        <a href="/now">Now</a>
+        <a href="/uses">Uses</a>
         <ThemeToggle />
       </nav>
     </header>
