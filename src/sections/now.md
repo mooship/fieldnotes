@@ -1,14 +1,14 @@
 ## What I'm doing
 
-Not much right now. Taking a breath. Sometimes the most honest answer is that nothing specific is happening, and that's fine.
+Not much right now. Looking for an open-source project to contribute to.
 
 ## What I'm reading
 
-Audiobooks, mostly. Sci-fi and historical fiction — the kind that makes a long walk feel short.
+The Expanse novels by James S. A. Corey — well, listening to the audiobooks.
 
 ## What I'm interested in
 
-Buddhist philosophy as a way of living, not a religion. Eco-socialist thought — why fixing the climate means fixing the economy. The intersection of technology and ethics: who it serves, what it costs, and whether it's worth building at all.
+Buddhist philosophy. Eco-socialist thought — why fixing the climate means fixing the economy. The intersection of technology and ethics: who it serves, what it costs, and whether it's worth building at all.
 
 ## Where I am
 
