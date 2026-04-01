@@ -28,5 +28,5 @@
 ## This site
 
 - [Astro](https://astro.build) — static output
+- [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/) — privacy-first, no cookies
 - Geist Sans and EB Garamond typefaces
-- No analytics, no tracking
