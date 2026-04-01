@@ -1,6 +1,6 @@
 ## Hardware
 
-- MacBook Air M4 (512GB, 16GB) — fanless and silent, exactly how I like it
+- MacBook Air M4 (512GB, 16GB) — beautiful machine, and macOS is a joy to develop on
 
 ## Editor
 
