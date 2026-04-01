@@ -25,12 +25,6 @@
 
 - [Claude](https://claude.ai)
 
-## Apps
-
-- Safari
-- Apple Notes
-- Apple Music
-
 ## This site
 
 - [Astro](https://astro.build) — static output
