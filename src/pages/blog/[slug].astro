@@ -58,6 +58,17 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
             </time>
           )
         }
+        {
+          post.data.tags.length > 0 && (
+            <div class="post-tags">
+              {post.data.tags.map((tag: string) => (
+                <a href={`/blog/tags/${tag}`} class="tag">
+                  {tag}
+                </a>
+              ))}
+            </div>
+          )
+        }
       </header>
       <Content />
     </article>
@@ -133,6 +144,31 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
 
   .updated {
     margin-top: 0.25rem;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-apple-blue);
+    border: 1px solid var(--color-apple-blue);
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    text-decoration: none;
+  }
+
+  .tag:hover {
+    background: var(--color-apple-blue);
+    color: var(--color-bg);
+    text-decoration: none;
   }
 
   article :global(p) {

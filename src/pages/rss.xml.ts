@@ -16,6 +16,7 @@ export async function GET(context: APIContext) {
       pubDate: post.data.pubDate,
       description: post.data.description,
       content: await renderMarkdownToHtml(post.body),
+      categories: post.data.tags,
       link: `/blog/${getPostSlug(post.id)}`,
     }))
   );

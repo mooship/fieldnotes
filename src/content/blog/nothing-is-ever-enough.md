@@ -2,6 +2,8 @@
 title: "Nothing Is Ever Enough"
 description: "AI was supposed to free up our time. Instead we just do more."
 pubDate: 2026-03-30
+tags:
+  - technology
 ---
 
 I've never been more productive than I am right now. The tools I use are better than they've ever been. I can write code faster, automate more, ship things in a fraction of the time it used to take. And yet I don't feel like I have more time. I feel like I have less. The bar moved. It always moves.

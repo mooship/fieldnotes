@@ -51,9 +51,7 @@ export function getAdjacentPosts(
   posts: { id: string; data: { title: string } }[],
   currentSlug: string
 ): AdjacentPosts {
-  const index = posts.findIndex(
-    (post) => getPostSlug(post.id) === currentSlug
-  );
+  const index = posts.findIndex((post) => getPostSlug(post.id) === currentSlug);
   if (index === -1) return { prev: undefined, next: undefined };
 
   const older = posts[index + 1];
@@ -67,4 +65,15 @@ export function getAdjacentPosts(
       ? { slug: getPostSlug(newer.id), title: newer.data.title }
       : undefined,
   };
+}
+
+export function getAllTags(posts: { data: { tags: string[] } }[]): string[] {
+  return [...new Set(posts.flatMap((post) => post.data.tags))].toSorted();
+}
+
+export function getPostsByTag(
+  posts: { data: { tags: string[] } }[],
+  tag: string
+) {
+  return posts.filter((post) => post.data.tags.includes(tag));
 }
