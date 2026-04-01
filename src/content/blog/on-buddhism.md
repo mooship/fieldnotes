@@ -4,7 +4,7 @@ description: "Why I've been drawn to Buddhism. Not as a religion, but as a way o
 pubDate: 2026-03-23
 ---
 
-I'm new to Buddhism. I want to be clear about that. I haven't been meditating for years, I don't have a teacher, I haven't sat in a temple. I came across it slowly, through books, until something clicked and I wanted to understand more.
+I'm new to Buddhism. I want to be clear about that -- I haven't been meditating for years, I don't have a teacher, I haven't sat in a temple. I came across it slowly, through books, until something clicked and I wanted to understand more.
 
 What drew me in wasn't ritual or religion. It was the ethics.
 
