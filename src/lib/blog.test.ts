@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import {
+  getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
   getSiteUrl,
@@ -64,6 +65,38 @@ describe("renderMarkdownToHtml", () => {
 
   it("returns empty string for empty input", async () => {
     expect(await renderMarkdownToHtml("")).toBe("");
+  });
+});
+
+describe("getAdjacentPosts", () => {
+  const posts = [
+    { id: "newest.md", data: { title: "Newest Post" } },
+    { id: "middle.md", data: { title: "Middle Post" } },
+    { id: "oldest.md", data: { title: "Oldest Post" } },
+  ];
+
+  it("returns both prev and next for a middle post", () => {
+    const result = getAdjacentPosts(posts, "middle");
+    expect(result.prev).toEqual({ slug: "oldest", title: "Oldest Post" });
+    expect(result.next).toEqual({ slug: "newest", title: "Newest Post" });
+  });
+
+  it("returns no next for the newest post", () => {
+    const result = getAdjacentPosts(posts, "newest");
+    expect(result.next).toBeUndefined();
+    expect(result.prev).toEqual({ slug: "middle", title: "Middle Post" });
+  });
+
+  it("returns no prev for the oldest post", () => {
+    const result = getAdjacentPosts(posts, "oldest");
+    expect(result.prev).toBeUndefined();
+    expect(result.next).toEqual({ slug: "middle", title: "Middle Post" });
+  });
+
+  it("returns both undefined for an unknown slug", () => {
+    const result = getAdjacentPosts(posts, "unknown");
+    expect(result.prev).toBeUndefined();
+    expect(result.next).toBeUndefined();
   });
 });
 

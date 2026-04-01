@@ -20,6 +20,7 @@
     "@astrojs/sitemap": "^3.7.1",
     "@eslint/css": "^1.0.0",
     "@eslint/markdown": "^8.0.1",
+    "@lucide/astro": "^1.7.0",
     "@types/mdast": "^4.0.4",
     "astro": "^6.0.8",
     "eslint": "^10.1.0",
