@@ -31,12 +31,6 @@
 - Apple Notes
 - Apple Music
 
-## Games
-
-- Age of Empires III: Definitive Edition
-- Dota 2
-- Stardew Valley
-
 ## This site
 
 - [Astro](https://astro.build) — static output
