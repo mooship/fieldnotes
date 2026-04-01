@@ -27,16 +27,16 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
     const root = document.documentElement;
 
     if (theme === "system") {
-      root.removeAttribute("data-theme");
+      delete root.dataset.theme;
     } else {
       root.dataset.theme = theme;
     }
 
-    document
-      .querySelectorAll<HTMLButtonElement>("[data-theme-toggle]")
-      .forEach((button) => {
-        button.dataset.active = theme;
-      });
+    for (const button of document.querySelectorAll<HTMLButtonElement>(
+      "[data-theme-toggle]"
+    )) {
+      button.dataset.active = theme;
+    }
   }
 
   function cycleTheme() {
@@ -54,15 +54,13 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
 
   applyTheme(getStoredTheme());
 
-  document
-    .querySelectorAll("[data-theme-toggle]")
-    .forEach((button) => button.addEventListener("click", cycleTheme));
+  for (const button of document.querySelectorAll("[data-theme-toggle]"))
+    button.addEventListener("click", cycleTheme);
 
   document.addEventListener("astro:after-swap", () => {
     applyTheme(getStoredTheme());
-    document
-      .querySelectorAll("[data-theme-toggle]")
-      .forEach((button) => button.addEventListener("click", cycleTheme));
+    for (const button of document.querySelectorAll("[data-theme-toggle]"))
+      button.addEventListener("click", cycleTheme);
   });
 </script>
 
