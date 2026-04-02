@@ -5,6 +5,8 @@ import {
   getBlogPosts,
   getPostsByTag,
   getPostSlug,
+  getRelatedPosts,
+  getSeriesPosts,
   getSiteUrl,
   renderMarkdownToHtml,
 } from "./blog";
@@ -142,6 +144,145 @@ function setupPosts(posts: Post[]) {
       filter ? posts.filter((p) => filter(p)) : posts
   );
 }
+
+describe("getSeriesPosts", () => {
+  const posts = [
+    {
+      id: "c.md",
+      data: {
+        title: "Part 3",
+        series: "my-series",
+        seriesOrder: 3,
+        pubDate: new Date("2024-03-01"),
+      },
+    },
+    {
+      id: "a.md",
+      data: {
+        title: "Part 1",
+        series: "my-series",
+        seriesOrder: 1,
+        pubDate: new Date("2024-01-01"),
+      },
+    },
+    {
+      id: "b.md",
+      data: {
+        title: "Part 2",
+        series: "my-series",
+        seriesOrder: 2,
+        pubDate: new Date("2024-02-01"),
+      },
+    },
+    {
+      id: "other.md",
+      data: {
+        title: "Other",
+        series: "other-series",
+        seriesOrder: 1,
+        pubDate: new Date("2024-01-15"),
+      },
+    },
+  ];
+
+  it("returns posts in a series sorted by seriesOrder", () => {
+    const result = getSeriesPosts(posts, "my-series");
+    expect(result.map((p) => p.data.title)).toEqual([
+      "Part 1",
+      "Part 2",
+      "Part 3",
+    ]);
+  });
+
+  it("excludes posts from other series", () => {
+    const result = getSeriesPosts(posts, "my-series");
+    expect(result).toHaveLength(3);
+  });
+
+  it("falls back to pubDate when seriesOrder is missing", () => {
+    const noPosts = [
+      {
+        id: "b.md",
+        data: {
+          title: "Second",
+          series: "s",
+          pubDate: new Date("2024-02-01"),
+        },
+      },
+      {
+        id: "a.md",
+        data: {
+          title: "First",
+          series: "s",
+          pubDate: new Date("2024-01-01"),
+        },
+      },
+    ];
+    const result = getSeriesPosts(noPosts, "s");
+    expect(result.map((p) => p.data.title)).toEqual(["First", "Second"]);
+  });
+});
+
+describe("getRelatedPosts", () => {
+  const posts = [
+    {
+      id: "a.md",
+      data: {
+        title: "Post A",
+        tags: ["tech", "personal"],
+        pubDate: new Date("2024-01-01"),
+      },
+    },
+    {
+      id: "b.md",
+      data: {
+        title: "Post B",
+        tags: ["tech", "philosophy"],
+        pubDate: new Date("2024-02-01"),
+      },
+    },
+    {
+      id: "c.md",
+      data: {
+        title: "Post C",
+        tags: ["personal", "philosophy"],
+        pubDate: new Date("2024-03-01"),
+      },
+    },
+    {
+      id: "d.md",
+      data: {
+        title: "Post D",
+        tags: ["unrelated"],
+        pubDate: new Date("2024-04-01"),
+      },
+    },
+  ];
+
+  it("returns posts sorted by shared tag count", () => {
+    const current = posts[0];
+    const result = getRelatedPosts(posts, current);
+    expect(result.map((p) => p.data.title)).toEqual(["Post C", "Post B"]);
+  });
+
+  it("excludes the current post", () => {
+    const current = posts[0];
+    const result = getRelatedPosts(posts, current);
+    expect(result.every((p) => p.id !== current.id)).toBe(true);
+  });
+
+  it("excludes posts with no shared tags", () => {
+    const current = posts[0];
+    const result = getRelatedPosts(posts, current);
+    expect(result.find((p) => p.data.title === "Post D")).toBeUndefined();
+  });
+
+  it("respects the limit parameter", () => {
+    const current = posts[0];
+    const result = getRelatedPosts(posts, current, 1);
+    expect(result).toHaveLength(1);
+  });
+});
 
 describe("getBlogPosts", () => {
   it("filters out draft posts", async () => {

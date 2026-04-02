@@ -77,3 +77,54 @@ export function getPostsByTag(
 ) {
   return posts.filter((post) => post.data.tags.includes(tag));
 }
+
+export function getSeriesPosts(
+  posts: {
+    id: string;
+    data: {
+      title: string;
+      series?: string;
+      seriesOrder?: number;
+      pubDate: Date;
+    };
+  }[],
+  seriesName: string
+) {
+  return posts
+    .filter((post) => post.data.series === seriesName)
+    .toSorted((a, b) => {
+      const orderA = a.data.seriesOrder ?? Infinity;
+      const orderB = b.data.seriesOrder ?? Infinity;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+    });
+}
+
+export function getRelatedPosts(
+  posts: {
+    id: string;
+    data: { title: string; tags: string[]; pubDate: Date };
+  }[],
+  currentPost: {
+    id: string;
+    data: { tags: string[] };
+  },
+  limit = 3
+) {
+  const currentTags = new Set(currentPost.data.tags);
+
+  return posts
+    .filter((post) => post.id !== currentPost.id)
+    .map((post) => ({
+      post,
+      score: post.data.tags.filter((tag) => currentTags.has(tag)).length,
+    }))
+    .filter(({ score }) => score > 0)
+    .toSorted(
+      (a, b) =>
+        b.score - a.score ||
+        b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf()
+    )
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
