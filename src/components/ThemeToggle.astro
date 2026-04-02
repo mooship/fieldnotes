@@ -23,6 +23,12 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
     return "system";
   }
 
+  const THEME_LABELS: Record<Theme, string> = {
+    system: "Theme: system. Click for light.",
+    light: "Theme: light. Click for dark.",
+    dark: "Theme: dark. Click for system.",
+  };
+
   function applyTheme(theme: Theme) {
     const root = document.documentElement;
 
@@ -36,6 +42,7 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
       "[data-theme-toggle]"
     )) {
       button.dataset.active = theme;
+      button.setAttribute("aria-label", THEME_LABELS[theme]);
     }
   }
 
@@ -80,6 +87,12 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
   .theme-toggle:hover,
   .theme-toggle:focus-visible {
     color: var(--color-text);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 
   .icon-light,

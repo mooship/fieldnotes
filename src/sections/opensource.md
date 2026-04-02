@@ -1,4 +1,4 @@
-<div class="section-opensource">
+<section class="section-opensource">
 
 ## Open Source
 
@@ -17,4 +17,4 @@
   </li>
 </ul>
 
-</div>
+</section>
