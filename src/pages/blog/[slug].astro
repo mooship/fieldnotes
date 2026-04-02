@@ -48,6 +48,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       <header>
         <h1>{post.data.title}</h1>
         <time datetime={post.data.pubDate.toISOString()}>
+          <span class="visually-hidden">Published: </span>
           {
             post.data.pubDate.toLocaleDateString("en-ZA", {
               year: "numeric",
@@ -74,13 +75,15 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         }
         {
           post.data.tags.length > 0 && (
-            <div class="post-tags">
+            <ul class="post-tags" aria-label="Tags">
               {post.data.tags.map((tag: string) => (
-                <a href={`/blog/tags/${tag}`} class="tag">
-                  {tag}
-                </a>
+                <li>
+                  <a href={`/blog/tags/${tag}`} class="tag">
+                    {tag}
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           )
         }
       </header>
@@ -98,7 +101,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
                   return (
                     <li class={isCurrent ? "current" : ""}>
                       {isCurrent ? (
-                        <span>{sp.data.title}</span>
+                        <span aria-current="page">{sp.data.title}</span>
                       ) : (
                         <a href={`/blog/${spSlug}`}>{sp.data.title}</a>
                       )}
@@ -284,8 +287,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .post-tags {
-    display: flex;
-    gap: 0.4rem;
     margin-top: 0.5rem;
   }
 
@@ -373,6 +374,11 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   article :global(pre:hover .copy-btn),
   article :global(.copy-btn:focus-visible) {
     opacity: 1;
+  }
+
+  article :global(.copy-btn:focus-visible) {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
   }
 
   article :global(.copy-btn:hover) {

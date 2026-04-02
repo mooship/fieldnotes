@@ -1,4 +1,4 @@
-<div class="section-personal">
+<section class="section-personal">
 
 ## Personal
 
@@ -10,4 +10,4 @@ Connect with me!
 - [Mastodon](https://hachyderm.io/@mooship)
 - [Email](mailto:contact@timothybrits.co.za)
 
-</div>
+</section>
