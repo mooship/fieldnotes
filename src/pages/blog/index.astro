@@ -49,13 +49,15 @@ const postsWithMeta = await Promise.all(
                 {readingTime && <span> · {readingTime}</span>}
               </p>
               {post.data.tags.length > 0 && (
-                <p class="post-tags">
+                <ul class="post-tags" aria-label="Tags">
                   {post.data.tags.map((tag: string) => (
-                    <a href={`/blog/tags/${tag}`} class="tag">
-                      {tag}
-                    </a>
+                    <li>
+                      <a href={`/blog/tags/${tag}`} class="tag">
+                        {tag}
+                      </a>
+                    </li>
                   ))}
-                </p>
+                </ul>
               )}
               <p class="post-desc">{post.data.description}</p>
             </li>
@@ -110,8 +112,6 @@ const postsWithMeta = await Promise.all(
   }
 
   .post-tags {
-    display: flex;
-    gap: 0.4rem;
     margin: 0.35rem 0 0 0;
   }
 

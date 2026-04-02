@@ -1,4 +1,4 @@
-<div class="section-support">
+<section class="section-support">
 
 ## Support
 
@@ -8,4 +8,4 @@ Causes and organisations doing important work.
 - [Help the Demasi family rebuild their home](https://chuffed.org/project/161401-help-demasi-family-in-gaza-rebuild-their-home)
 - [Centre for Environmental Rights](https://cer.org.za/)
 
-</div>
+</section>
