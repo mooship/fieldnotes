@@ -128,7 +128,8 @@ h2 {
   line-height: 1.15;
 }
 
-a:focus-visible {
+a:focus-visible,
+button:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 6px;
@@ -229,6 +230,17 @@ html[data-theme="dark"] .astro-code span {
   background: var(--color-apple-blue);
   color: var(--color-bg);
   text-decoration: none;
+}
+
+.post-tags {
+  display: flex;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+}
+
+.post-tags li {
+  margin: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
