@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import ThemeToggle from "../components/ThemeToggle.astro";
 
 export interface Props {
@@ -107,6 +108,7 @@ const jsonLd = {
         <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
       )
     }
+    <ClientRouter />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -119,7 +121,9 @@ const jsonLd = {
         <ThemeToggle />
       </nav>
     </header>
-    <slot />
+    <div transition:animate="fade">
+      <slot />
+    </div>
     <footer>
       <nav class="feed-links" aria-label="Feed subscriptions">
         <span>Subscribe:</span>
@@ -177,6 +181,15 @@ const jsonLd = {
     }
   }
 
+  @keyframes rainbow-shimmer {
+    from {
+      background-position-x: 0%;
+    }
+    to {
+      background-position-x: 200%;
+    }
+  }
+
   header {
     display: flex;
     justify-content: space-between;
@@ -191,11 +204,14 @@ const jsonLd = {
       var(--color-apple-orange),
       var(--color-apple-red),
       var(--color-apple-purple),
-      var(--color-apple-blue)
+      var(--color-apple-blue),
+      var(--color-apple-green),
+      var(--color-apple-yellow)
     );
-    background-size: 100% 6px;
+    background-size: 200% 6px;
     background-repeat: no-repeat;
-    background-position: bottom;
+    background-position: 0% bottom;
+    animation: rainbow-shimmer 8s linear infinite;
   }
 
   header a:first-child {
@@ -243,11 +259,14 @@ const jsonLd = {
       var(--color-apple-orange),
       var(--color-apple-red),
       var(--color-apple-purple),
-      var(--color-apple-blue)
+      var(--color-apple-blue),
+      var(--color-apple-green),
+      var(--color-apple-yellow)
     );
-    background-size: 100% 6px;
+    background-size: 200% 6px;
     background-repeat: no-repeat;
-    background-position: top;
+    background-position: 0% top;
+    animation: rainbow-shimmer 8s linear infinite;
     font-size: 0.85rem;
     color: var(--color-text-secondary);
   }

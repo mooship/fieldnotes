@@ -2,30 +2,44 @@
 import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { ArrowLeft, ArrowRight } from "@lucide/astro";
-import { getAdjacentPosts, getBlogPosts, getPostSlug } from "../../lib/blog";
+import {
+  getAdjacentPosts,
+  getBlogPosts,
+  getPostSlug,
+  getRelatedPosts,
+  getSeriesPosts,
+} from "../../lib/blog";
 
 export async function getStaticPaths() {
   const posts = await getBlogPosts();
   return posts.map((post) => {
     const slug = getPostSlug(post.id);
     const adjacent = getAdjacentPosts(posts, slug);
+    const related = getRelatedPosts(posts, post);
+    const seriesPosts = post.data.series
+      ? getSeriesPosts(posts, post.data.series)
+      : [];
     return {
       params: { slug },
-      props: { post, adjacent },
+      props: { post, adjacent, related, seriesPosts },
     };
   });
 }
 
-const { post, adjacent } = Astro.props;
+const { post, adjacent, related, seriesPosts } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(post);
 const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
+const slug = getPostSlug(post.id);
+const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 ---
 
 <Layout
   title={`${post.data.title} — Timothy Brits`}
   description={post.data.description}
+  image={ogImage}
   type="article"
 >
+  <div class="progress-bar" aria-hidden="true"></div>
   <main id="main-content" tabindex="-1">
     <a href="/blog" class="back-link">
       <span aria-hidden="true">&larr;</span> All posts
@@ -70,8 +84,50 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
           )
         }
       </header>
+      {
+        seriesPosts.length > 1 && (
+          <nav class="series-box" aria-label="Post series">
+            <p class="series-label">
+              Series: <strong>{post.data.series}</strong>
+            </p>
+            <ol>
+              {seriesPosts.map(
+                (sp: { id: string; data: { title: string } }) => {
+                  const spSlug = getPostSlug(sp.id);
+                  const isCurrent = sp.id === post.id;
+                  return (
+                    <li class={isCurrent ? "current" : ""}>
+                      {isCurrent ? (
+                        <span>{sp.data.title}</span>
+                      ) : (
+                        <a href={`/blog/${spSlug}`}>{sp.data.title}</a>
+                      )}
+                    </li>
+                  );
+                }
+              )}
+            </ol>
+          </nav>
+        )
+      }
       <Content />
     </article>
+    {
+      related.length > 0 && (
+        <aside class="related-posts">
+          <h2>Related posts</h2>
+          <ul>
+            {related.map(
+              (rp: { id: string; data: { title: string; pubDate: Date } }) => (
+                <li>
+                  <a href={`/blog/${getPostSlug(rp.id)}`}>{rp.data.title}</a>
+                </li>
+              )
+            )}
+          </ul>
+        </aside>
+      )
+    }
     {
       (adjacent.prev || adjacent.next) && (
         <nav class="post-nav" aria-label="Post navigation">
@@ -97,7 +153,96 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
   </main>
 </Layout>
 
+<script>
+  let scrollAbort: AbortController | undefined;
+
+  function initProgress() {
+    scrollAbort?.abort();
+    scrollAbort = new AbortController();
+
+    const bar = document.querySelector<HTMLElement>(".progress-bar");
+    if (!bar) return;
+
+    const prefersReducedMotion = globalThis.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) {
+      bar.style.display = "none";
+      return;
+    }
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      const progress = Math.min(scrollTop / (docHeight - winHeight), 1);
+      bar!.style.transform = `scaleX(${progress})`;
+    }
+
+    window.addEventListener("scroll", updateProgress, {
+      passive: true,
+      signal: scrollAbort.signal,
+    });
+    updateProgress();
+  }
+
+  initProgress();
+
+  document.addEventListener("astro:after-swap", initProgress);
+
+  function initCopyButtons() {
+    for (const pre of document.querySelectorAll("article pre")) {
+      if (pre.querySelector(".copy-btn")) continue;
+
+      const button = document.createElement("button");
+      button.className = "copy-btn";
+      button.type = "button";
+      button.setAttribute("aria-label", "Copy code");
+      button.textContent = "Copy";
+
+      button.addEventListener("click", async () => {
+        const code = pre.querySelector("code");
+        if (!code) return;
+
+        await navigator.clipboard.writeText(code.textContent ?? "");
+        button.textContent = "Copied!";
+        setTimeout(() => {
+          button.textContent = "Copy";
+        }, 2000);
+      });
+
+      (pre as HTMLElement).style.position = "relative";
+      pre.append(button);
+    }
+  }
+
+  initCopyButtons();
+  document.addEventListener("astro:after-swap", initCopyButtons);
+</script>
+
 <style>
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(
+      to right,
+      var(--color-apple-green),
+      var(--color-apple-yellow),
+      var(--color-apple-orange),
+      var(--color-apple-red),
+      var(--color-apple-purple),
+      var(--color-apple-blue)
+    );
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 9999;
+    pointer-events: none;
+  }
+
   main {
     margin: auto;
     padding-top: 2rem;
@@ -204,6 +349,36 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
     padding: 0;
   }
 
+  article :global(.copy-btn) {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    opacity: 0;
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease;
+  }
+
+  article :global(pre:hover .copy-btn),
+  article :global(.copy-btn:focus-visible) {
+    opacity: 1;
+  }
+
+  article :global(.copy-btn:hover) {
+    color: var(--color-text);
+  }
+
   article :global(ul),
   article :global(ol) {
     padding-left: 1.5rem;
@@ -219,6 +394,71 @@ const readingTime = remarkPluginFrontmatter?.readingTime as string | undefined;
     border: none;
     border-top: 1px solid var(--color-border);
     margin: 2rem 0;
+  }
+
+  .series-box {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    background: var(--color-apple-green-tint);
+  }
+
+  .series-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .series-box ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+
+  .series-box li {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-text-secondary);
+  }
+
+  .series-box li.current {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .related-posts {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .related-posts h2 {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .related-posts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .related-posts li {
+    margin-bottom: 0.4rem;
+  }
+
+  .related-posts a {
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
   }
 
   .post-nav {

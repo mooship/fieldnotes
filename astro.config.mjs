@@ -1,3 +1,4 @@
+import pagefind from "astro-pagefind";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, fontProviders } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
@@ -46,7 +47,7 @@ export default defineConfig({
       },
     },
   },
-  integrations: [sitemap()],
+  integrations: [sitemap(), pagefind()],
   experimental: {
     rustCompiler: true,
   },

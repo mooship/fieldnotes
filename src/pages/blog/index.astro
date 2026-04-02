@@ -1,4 +1,5 @@
 ---
+import Search from "astro-pagefind/components/Search";
 import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug } from "../../lib/blog";
@@ -22,6 +23,13 @@ const postsWithMeta = await Promise.all(
 >
   <main id="main-content" tabindex="-1">
     <h1>Blog</h1>
+    <div class="search-wrapper">
+      <Search
+        id="search"
+        className="pagefind-ui"
+        uiOptions={{ showImages: false, showSubResults: false }}
+      />
+    </div>
     {
       postsWithMeta.length === 0 ? (
         <p class="empty">No posts yet.</p>
@@ -87,7 +95,7 @@ const postsWithMeta = await Promise.all(
     margin-bottom: 1.5rem;
   }
 
-  a {
+  li > a {
     font-family: var(--font-serif), Georgia, "Times New Roman", serif;
     font-size: 1.05rem;
     font-weight: 500;
@@ -122,5 +130,20 @@ const postsWithMeta = await Promise.all(
   .back-link {
     display: inline-block;
     margin-top: 1rem;
+  }
+
+  .search-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .search-wrapper :global(.pagefind-ui) {
+    --pagefind-ui-scale: 0.85;
+    --pagefind-ui-primary: var(--color-link);
+    --pagefind-ui-text: var(--color-text);
+    --pagefind-ui-background: var(--color-bg);
+    --pagefind-ui-border: var(--color-border);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 6px;
+    --pagefind-ui-font: var(--font-sans), system-ui, sans-serif;
   }
 </style>
