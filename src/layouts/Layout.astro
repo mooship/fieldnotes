@@ -182,20 +182,11 @@ const jsonLd = {
   }
 
   @keyframes rainbow-shimmer {
-    0% {
-      background-position: 0% bottom;
+    from {
+      background-position-x: 0%;
     }
-    100% {
-      background-position: 200% bottom;
-    }
-  }
-
-  @keyframes rainbow-shimmer-top {
-    0% {
-      background-position: 0% top;
-    }
-    100% {
-      background-position: 200% top;
+    to {
+      background-position-x: 200%;
     }
   }
 
@@ -275,7 +266,7 @@ const jsonLd = {
     background-size: 200% 6px;
     background-repeat: no-repeat;
     background-position: 0% top;
-    animation: rainbow-shimmer-top 8s linear infinite;
+    animation: rainbow-shimmer 8s linear infinite;
     font-size: 0.85rem;
     color: var(--color-text-secondary);
   }
