@@ -7,6 +7,9 @@ import { getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const require = createRequire(import.meta.url);
 
+const RAINBOW_GRADIENT =
+  "linear-gradient(to right, #61bb46, #fdb827, #f5821f, #e03a3e, #963d97, #009ddc)";
+
 let fontData: Buffer | undefined;
 
 async function loadFont(): Promise<Buffer> {
@@ -54,8 +57,7 @@ export const GET: APIRoute = async ({ props }) => {
                 position: "absolute",
                 top: "0",
                 left: "0",
-                background:
-                  "linear-gradient(to right, #61bb46, #fdb827, #f5821f, #e03a3e, #963d97, #009ddc)",
+                background: RAINBOW_GRADIENT,
               },
             },
           },
@@ -92,8 +94,7 @@ export const GET: APIRoute = async ({ props }) => {
                 position: "absolute",
                 bottom: "0",
                 left: "0",
-                background:
-                  "linear-gradient(to right, #61bb46, #fdb827, #f5821f, #e03a3e, #963d97, #009ddc)",
+                background: RAINBOW_GRADIENT,
               },
             },
           },

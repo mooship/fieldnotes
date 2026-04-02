@@ -93,9 +93,9 @@ export function getSeriesPosts(
   return posts
     .filter((post) => post.data.series === seriesName)
     .toSorted((a, b) => {
-      if (a.data.seriesOrder != undefined && b.data.seriesOrder != undefined) {
-        return a.data.seriesOrder - b.data.seriesOrder;
-      }
+      const orderA = a.data.seriesOrder ?? Infinity;
+      const orderB = b.data.seriesOrder ?? Infinity;
+      if (orderA !== orderB) return orderA - orderB;
       return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
     });
 }

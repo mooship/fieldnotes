@@ -154,7 +154,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 </Layout>
 
 <script>
+  let scrollAbort: AbortController | undefined;
+
   function initProgress() {
+    scrollAbort?.abort();
+    scrollAbort = new AbortController();
+
     const bar = document.querySelector<HTMLElement>(".progress-bar");
     if (!bar) return;
 
@@ -175,7 +180,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       bar!.style.transform = `scaleX(${progress})`;
     }
 
-    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("scroll", updateProgress, {
+      passive: true,
+      signal: scrollAbort.signal,
+    });
     updateProgress();
   }
 
