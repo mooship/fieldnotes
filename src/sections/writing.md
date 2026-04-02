@@ -1,4 +1,4 @@
-<div class="section-writing">
+<section class="section-writing">
 
 ## Writing
 
@@ -17,4 +17,4 @@
   </li>
 </ul>
 
-</div>
+</section>
