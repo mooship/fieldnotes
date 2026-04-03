@@ -9,12 +9,15 @@
     width: 300px;
     padding: 1.25rem 1.5rem;
     border-radius: 12px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-border);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.18),
-      0 1px 4px rgba(0, 0, 0, 0.1);
+      0 4px 24px rgba(0, 0, 0, 0.06),
+      0 1px 4px rgba(0, 0, 0, 0.04);
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #fff;
+    color: var(--color-text);
     z-index: 9999;
     opacity: 0;
     transform: translateY(1rem);
@@ -31,16 +34,15 @@
   }
 
   #easter-egg-toast[data-egg="socialist"] {
-    background: var(--color-apple-red);
+    border-left-color: var(--color-apple-red);
   }
 
   #easter-egg-toast[data-egg="buddhist"] {
-    background: var(--color-apple-purple);
+    border-left-color: var(--color-apple-purple);
   }
 
   #easter-egg-toast[data-egg="antifascist"] {
-    background: #1a1a1a;
-    border-left: 3px solid var(--color-apple-red);
+    border-left-color: var(--color-text);
   }
 
   .easter-egg-icon {
@@ -56,7 +58,7 @@
 
   .easter-egg-attr {
     font-size: 0.8rem;
-    opacity: 0.85;
+    color: var(--color-text-secondary);
     margin: 0;
   }
 
