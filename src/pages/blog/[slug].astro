@@ -147,9 +147,9 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 </Layout>
 
 <script>
-  const prefersReducedMotion = globalThis
-    .matchMedia("(prefers-reduced-motion: reduce)")
-    .matches;
+  const prefersReducedMotion = globalThis.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
   let scrollAbort: AbortController | undefined;
 
