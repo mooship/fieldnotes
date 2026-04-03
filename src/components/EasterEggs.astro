@@ -71,6 +71,7 @@
 </style>
 
 <script>
+  const MARX = ["m", "a", "r", "x"];
   const ANTIFA = ["a", "n", "t", "i", "f", "a"];
 
   const KONAMI = [
@@ -251,6 +252,7 @@
     const headerEl = document.querySelector("header");
 
     let konamiProgress = 0;
+    let marxProgress = 0;
     let antifaProgress = 0;
 
     document.addEventListener(
@@ -273,6 +275,16 @@
         }
 
         const key = e.key.toLowerCase();
+        if (key === MARX[marxProgress]) {
+          marxProgress++;
+          if (marxProgress === MARX.length) {
+            marxProgress = 0;
+            showToast("socialist");
+          }
+        } else {
+          marxProgress = key === MARX[0] ? 1 : 0;
+        }
+
         if (key === ANTIFA[antifaProgress]) {
           antifaProgress++;
           if (antifaProgress === ANTIFA.length) {
