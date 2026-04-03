@@ -38,6 +38,11 @@
     background: var(--color-apple-purple);
   }
 
+  #easter-egg-toast[data-egg="antifascist"] {
+    background: #1a1a1a;
+    border-left: 3px solid var(--color-apple-red);
+  }
+
   .easter-egg-icon {
     font-size: 1.5rem;
     display: block;
@@ -64,6 +69,8 @@
 </style>
 
 <script>
+  const ANTIFA = ["a", "n", "t", "i", "f", "a"];
+
   const KONAMI = [
     "ArrowUp",
     "ArrowUp",
@@ -89,6 +96,11 @@
       quote: "Peace comes from within. Do not seek it without.",
       attr: "— attributed to the Buddha",
     },
+    antifascist: {
+      icon: "🏴",
+      quote: "Fascism is not to be debated, it is to be smashed.",
+      attr: "— Buenaventura Durruti",
+    },
   } as const;
 
   type EggKey = keyof typeof EGGS;
@@ -96,7 +108,7 @@
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
 
   function showToast(egg: EggKey) {
-    const toast = document.querySelector("#easter-egg-toast");
+    const toast = document.querySelector<HTMLElement>("#easter-egg-toast");
     if (!toast) return;
 
     if (hideTimer !== undefined) {
@@ -109,6 +121,29 @@
     toast.innerHTML = `<span class="easter-egg-icon">${icon}</span><p class="easter-egg-quote">${quote}</p><p class="easter-egg-attr">${attr}</p>`;
     toast.classList.add("visible");
 
+    if (egg === "buddhist") {
+      console.log(
+        "%c" +
+          [
+            "",
+            "  ☸  Dharmachakra — The Wheel of Dharma",
+            "",
+            "          ╷",
+            "     ╲  ╲ │ ╱  ╱",
+            "      ────(☸)────",
+            "     ╱  ╱ │ ╲  ╲",
+            "          ╵",
+            "",
+            "  The Noble Eightfold Path:",
+            "  Right View · Right Intention · Right Speech",
+            "  Right Action · Right Livelihood · Right Effort",
+            "  Right Mindfulness · Right Concentration",
+            "",
+          ].join("\n"),
+        "color: #963d97; font-family: monospace; line-height: 1.6;",
+      );
+    }
+
     hideTimer = setTimeout(() => {
       toast.classList.remove("visible");
       hideTimer = undefined;
@@ -117,8 +152,15 @@
 
   function init() {
     let konamiProgress = 0;
+    let antifaProgress = 0;
 
     function onKeydown(e: KeyboardEvent) {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
+
       if (e.code === KONAMI[konamiProgress]) {
         konamiProgress++;
         if (konamiProgress === KONAMI.length) {
@@ -127,6 +169,17 @@
         }
       } else {
         konamiProgress = e.code === KONAMI[0] ? 1 : 0;
+      }
+
+      const key = e.key.toLowerCase();
+      if (key === ANTIFA[antifaProgress]) {
+        antifaProgress++;
+        if (antifaProgress === ANTIFA.length) {
+          antifaProgress = 0;
+          showToast("antifascist");
+        }
+      } else {
+        antifaProgress = key === ANTIFA[0] ? 1 : 0;
       }
     }
 
