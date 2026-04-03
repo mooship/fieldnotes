@@ -57,6 +57,26 @@ Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on
 
 **SEO:** `Layout.astro` accepts `title`, `description`, `image`, `canonical`, `robots`, and `type` props. It generates Open Graph tags, Twitter card tags, and JSON-LD schema (hand-built, no external package).
 
+## Known Astro quirks
+
+**`:global()` multi-selector lists are silently dropped.** Astro's scoped style compiler discards rules where multiple selectors are listed inside a single `:global()`:
+
+```css
+/* ❌ silently dropped at build time — nothing is emitted */
+:global(.section-blog, .section-opensource, .section-writing) {
+  margin-top: 2.5rem;
+}
+
+/* ✅ correct — each selector gets its own :global() */
+:global(.section-blog),
+:global(.section-opensource),
+:global(.section-writing) {
+  margin-top: 2.5rem;
+}
+```
+
+Always use one `:global()` per selector when applying shared styles to multiple global classes.
+
 ## Code style
 
 - **No inline comments** — never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
