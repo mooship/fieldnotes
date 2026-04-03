@@ -151,7 +151,7 @@
     el: Element | null,
     onLongPress: () => void,
     signal: AbortSignal,
-    duration = 600,
+    duration = 600
   ) {
     if (!el) return;
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -171,7 +171,7 @@
           onLongPress();
         }, duration);
       },
-      { signal, passive: true },
+      { signal, passive: true }
     );
 
     el.addEventListener(
@@ -184,7 +184,7 @@
         )
           clearTimeout(timer);
       },
-      { signal, passive: true },
+      { signal, passive: true }
     );
 
     el.addEventListener(
@@ -193,14 +193,14 @@
         clearTimeout(timer);
         if (fired) ev.preventDefault();
       },
-      { signal },
+      { signal }
     );
   }
 
   function addTripleSwipeLeft(
     el: Element | null,
     onTripleSwipe: () => void,
-    signal: AbortSignal,
+    signal: AbortSignal
   ) {
     if (!el) return;
     let startX = 0;
@@ -212,7 +212,7 @@
       (ev) => {
         startX = (ev as TouchEvent).touches[0].clientX;
       },
-      { signal, passive: true },
+      { signal, passive: true }
     );
 
     el.addEventListener(
@@ -232,7 +232,7 @@
           }
         }
       },
-      { signal },
+      { signal }
     );
   }
 
@@ -274,7 +274,7 @@
           antifaProgress = key === ANTIFA[0] ? 1 : 0;
         }
       },
-      { signal },
+      { signal }
     );
 
     let clickCount = 0;
@@ -296,12 +296,20 @@
           clickCount = 0;
         }, 600);
       },
-      { signal },
+      { signal }
     );
 
     addLongPress(titleLink, () => showToast("buddhist"), signal);
-    addLongPress(document.querySelector("footer"), () => showToast("socialist"), signal);
-    addTripleSwipeLeft(document.querySelector("header"), () => showToast("antifascist"), signal);
+    addLongPress(
+      document.querySelector("footer"),
+      () => showToast("socialist"),
+      signal
+    );
+    addTripleSwipeLeft(
+      document.querySelector("header"),
+      () => showToast("antifascist"),
+      signal
+    );
   }
 
   document.addEventListener("DOMContentLoaded", init);
