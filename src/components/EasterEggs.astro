@@ -1,0 +1,314 @@
+<div id="easter-egg-toast" role="status" aria-live="polite" aria-atomic="true">
+</div>
+
+<style>
+  #easter-egg-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 300px;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.18),
+      0 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #fff;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(1rem);
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  #easter-egg-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  #easter-egg-toast[data-egg="socialist"] {
+    background: var(--color-apple-red);
+  }
+
+  #easter-egg-toast[data-egg="buddhist"] {
+    background: var(--color-apple-purple);
+  }
+
+  #easter-egg-toast[data-egg="antifascist"] {
+    background: #1a1a1a;
+    border-left: 3px solid var(--color-apple-red);
+  }
+
+  .easter-egg-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .easter-egg-quote {
+    font-style: italic;
+    margin: 0 0 0.4rem;
+  }
+
+  .easter-egg-attr {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #easter-egg-toast {
+      transition: opacity 0.15s ease;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const ANTIFA = ["a", "n", "t", "i", "f", "a"];
+
+  const KONAMI = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "KeyB",
+    "KeyA",
+  ];
+
+  const EGGS = {
+    socialist: {
+      icon: "✊",
+      quote:
+        "From each according to his ability, to each according to his needs.",
+      attr: "— Karl Marx",
+    },
+    buddhist: {
+      icon: "☸",
+      quote: "Peace comes from within. Do not seek it without.",
+      attr: "— attributed to the Buddha",
+    },
+    antifascist: {
+      icon: "🏴",
+      quote: "Fascism is not to be debated, it is to be smashed.",
+      attr: "— Buenaventura Durruti",
+    },
+  } as const;
+
+  type EggKey = keyof typeof EGGS;
+
+  const toast = document.querySelector<HTMLElement>("#easter-egg-toast");
+  const footerEl = document.querySelector("footer");
+  const headerEl = document.querySelector("header");
+  let hideTimer: ReturnType<typeof setTimeout> | undefined;
+  let controller: AbortController | undefined;
+
+  function showToast(egg: EggKey) {
+    if (!toast) return;
+
+    clearTimeout(hideTimer);
+
+    const { icon, quote, attr } = EGGS[egg];
+    toast.dataset.egg = egg;
+    toast.innerHTML = `<span class="easter-egg-icon">${icon}</span><p class="easter-egg-quote">${quote}</p><p class="easter-egg-attr">${attr}</p>`;
+    toast.classList.add("visible");
+
+    if (egg === "buddhist") {
+      console.log(
+        "%c" +
+          [
+            "",
+            "  ☸  Dharmachakra — The Wheel of Dharma",
+            "",
+            "          ╷",
+            "     ╲  ╲ │ ╱  ╱",
+            "      ────(☸)────",
+            "     ╱  ╱ │ ╲  ╲",
+            "          ╵",
+            "",
+            "  The Noble Eightfold Path:",
+            "  Right View · Right Intention · Right Speech",
+            "  Right Action · Right Livelihood · Right Effort",
+            "  Right Mindfulness · Right Concentration",
+            "",
+          ].join("\n"),
+        "color: #963d97; font-family: monospace; line-height: 1.6;"
+      );
+    }
+
+    hideTimer = setTimeout(() => {
+      toast.classList.remove("visible");
+    }, 4000);
+  }
+
+  function addLongPress(
+    el: Element | null,
+    onLongPress: () => void,
+    signal: AbortSignal,
+    duration = 600
+  ) {
+    if (!el) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let startX = 0;
+    let startY = 0;
+    let fired = false;
+
+    el.addEventListener(
+      "touchstart",
+      (ev) => {
+        const touch = (ev as TouchEvent).touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        fired = false;
+        timer = setTimeout(() => {
+          fired = true;
+          onLongPress();
+        }, duration);
+      },
+      { signal, passive: true }
+    );
+
+    el.addEventListener(
+      "touchmove",
+      (ev) => {
+        if (timer === undefined) return;
+        const touch = (ev as TouchEvent).touches[0];
+        if (
+          Math.abs(touch.clientX - startX) > 10 ||
+          Math.abs(touch.clientY - startY) > 10
+        ) {
+          clearTimeout(timer);
+          timer = undefined;
+        }
+      },
+      { signal, passive: true }
+    );
+
+    el.addEventListener(
+      "touchend",
+      (ev) => {
+        clearTimeout(timer);
+        if (fired) ev.preventDefault();
+      },
+      { signal }
+    );
+  }
+
+  function addTripleSwipeLeft(
+    el: Element | null,
+    onTripleSwipe: () => void,
+    signal: AbortSignal
+  ) {
+    if (!el) return;
+    let startX = 0;
+    let swipeCount = 0;
+    let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+    el.addEventListener(
+      "touchstart",
+      (ev) => {
+        startX = (ev as TouchEvent).touches[0].clientX;
+      },
+      { signal, passive: true }
+    );
+
+    el.addEventListener(
+      "touchend",
+      (ev) => {
+        const endX = (ev as TouchEvent).changedTouches[0].clientX;
+        if (startX - endX > 50) {
+          swipeCount++;
+          clearTimeout(resetTimer);
+          if (swipeCount === 3) {
+            swipeCount = 0;
+            onTripleSwipe();
+          } else {
+            resetTimer = setTimeout(() => {
+              swipeCount = 0;
+            }, 1500);
+          }
+        }
+      },
+      { signal }
+    );
+  }
+
+  function init() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    let konamiProgress = 0;
+    let antifaProgress = 0;
+
+    document.addEventListener(
+      "keydown",
+      (e: KeyboardEvent) => {
+        if (
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement
+        )
+          return;
+
+        if (e.code === KONAMI[konamiProgress]) {
+          konamiProgress++;
+          if (konamiProgress === KONAMI.length) {
+            konamiProgress = 0;
+            showToast("socialist");
+          }
+        } else {
+          konamiProgress = e.code === KONAMI[0] ? 1 : 0;
+        }
+
+        const key = e.key.toLowerCase();
+        if (key === ANTIFA[antifaProgress]) {
+          antifaProgress++;
+          if (antifaProgress === ANTIFA.length) {
+            antifaProgress = 0;
+            showToast("antifascist");
+          }
+        } else {
+          antifaProgress = key === ANTIFA[0] ? 1 : 0;
+        }
+      },
+      { signal }
+    );
+
+    let clickCount = 0;
+    let clickTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const titleLink = document.querySelector("header a:first-child");
+    titleLink?.addEventListener(
+      "click",
+      () => {
+        clickCount++;
+        if (clickCount === 3) {
+          clickCount = 0;
+          clearTimeout(clickTimer);
+          showToast("buddhist");
+          return;
+        }
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          clickCount = 0;
+        }, 600);
+      },
+      { signal }
+    );
+
+    addLongPress(titleLink, () => showToast("buddhist"), signal);
+    addLongPress(footerEl, () => showToast("socialist"), signal);
+    addTripleSwipeLeft(headerEl, () => showToast("antifascist"), signal);
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("astro:after-swap", init);
+</script>
