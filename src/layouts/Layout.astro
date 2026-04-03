@@ -24,7 +24,7 @@ const {
 } = Astro.props as Props;
 
 const url = Astro.url;
-const pathname = url?.pathname ?? "/";
+const pathname = url.pathname;
 const canonical =
   canonicalProp ?? (url ? url.origin + url.pathname : undefined);
 const schemaType = type === "article" ? "Article" : "WebSite";
@@ -225,7 +225,8 @@ const jsonLd = {
     text-decoration: none;
   }
 
-  nav a[aria-current="page"] {
+  nav a[aria-current="page"],
+  nav a[aria-current="page"]:hover {
     color: var(--color-text);
     text-decoration: underline;
     text-decoration-color: var(--color-apple-blue);
