@@ -276,8 +276,7 @@
           return;
 
         const key = e.key.toLowerCase();
-        for (let i = 0; i < SEQUENCES.length; i++) {
-          const [seq, egg, useCode] = SEQUENCES[i];
+        for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
           const input = useCode ? e.code : key;
           if (input === seq[progress[i]]) {
             progress[i]++;
