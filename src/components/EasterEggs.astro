@@ -1,0 +1,164 @@
+<div id="easter-egg-toast" role="status" aria-live="polite" aria-atomic="true">
+</div>
+
+<style>
+  #easter-egg-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 300px;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.18),
+      0 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #fff;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(1rem);
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  #easter-egg-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  #easter-egg-toast[data-egg="socialist"] {
+    background: var(--color-apple-red);
+  }
+
+  #easter-egg-toast[data-egg="buddhist"] {
+    background: var(--color-apple-purple);
+  }
+
+  .easter-egg-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .easter-egg-quote {
+    font-style: italic;
+    margin: 0 0 0.4rem;
+  }
+
+  .easter-egg-attr {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #easter-egg-toast {
+      transition: opacity 0.15s ease;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const KONAMI = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "KeyB",
+    "KeyA",
+  ];
+
+  const EGGS = {
+    socialist: {
+      icon: "✊",
+      quote:
+        "From each according to his ability, to each according to his needs.",
+      attr: "— Karl Marx",
+    },
+    buddhist: {
+      icon: "☸",
+      quote: "Peace comes from within. Do not seek it without.",
+      attr: "— attributed to the Buddha",
+    },
+  } as const;
+
+  type EggKey = keyof typeof EGGS;
+
+  let hideTimer: ReturnType<typeof setTimeout> | undefined;
+
+  function showToast(egg: EggKey) {
+    const toast = document.querySelector("#easter-egg-toast");
+    if (!toast) return;
+
+    if (hideTimer !== undefined) {
+      clearTimeout(hideTimer);
+      hideTimer = undefined;
+    }
+
+    const { icon, quote, attr } = EGGS[egg];
+    toast.dataset.egg = egg;
+    toast.innerHTML = `<span class="easter-egg-icon">${icon}</span><p class="easter-egg-quote">${quote}</p><p class="easter-egg-attr">${attr}</p>`;
+    toast.classList.add("visible");
+
+    hideTimer = setTimeout(() => {
+      toast.classList.remove("visible");
+      hideTimer = undefined;
+    }, 4000);
+  }
+
+  function init() {
+    let konamiProgress = 0;
+
+    function onKeydown(e: KeyboardEvent) {
+      if (e.code === KONAMI[konamiProgress]) {
+        konamiProgress++;
+        if (konamiProgress === KONAMI.length) {
+          konamiProgress = 0;
+          showToast("socialist");
+        }
+      } else {
+        konamiProgress = e.code === KONAMI[0] ? 1 : 0;
+      }
+    }
+
+    let clickCount = 0;
+    let clickTimer: ReturnType<typeof setTimeout> | undefined;
+
+    function onTitleClick() {
+      clickCount++;
+      if (clickCount === 3) {
+        clickCount = 0;
+        if (clickTimer !== undefined) {
+          clearTimeout(clickTimer);
+          clickTimer = undefined;
+        }
+        showToast("buddhist");
+        return;
+      }
+      if (clickTimer !== undefined) clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => {
+        clickCount = 0;
+        clickTimer = undefined;
+      }, 600);
+    }
+
+    document.addEventListener("keydown", onKeydown);
+
+    const titleLink = document.querySelector("header a:first-child");
+    if (titleLink) {
+      titleLink.addEventListener("click", onTitleClick);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("astro:after-swap", init);
+</script>

@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import ThemeToggle from "../components/ThemeToggle.astro";
+import EasterEggs from "../components/EasterEggs.astro";
 
 export interface Props {
   title: string;
@@ -124,6 +125,7 @@ const jsonLd = {
     <div transition:animate="fade">
       <slot />
     </div>
+    <EasterEggs />
     <footer>
       <nav class="feed-links" aria-label="Feed subscriptions">
         <span>Subscribe:</span>
