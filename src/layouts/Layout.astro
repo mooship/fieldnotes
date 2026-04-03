@@ -24,6 +24,7 @@ const {
 } = Astro.props as Props;
 
 const url = Astro.url;
+const pathname = url?.pathname ?? "/";
 const canonical =
   canonicalProp ?? (url ? url.origin + url.pathname : undefined);
 const schemaType = type === "article" ? "Article" : "WebSite";
@@ -116,9 +117,9 @@ const jsonLd = {
     <header>
       <a href="/">Timothy Brits</a>
       <nav aria-label="Main">
-        <a href="/blog">Blog</a>
-        <a href="/now">Now</a>
-        <a href="/uses">Uses</a>
+        <a href="/blog" aria-current={pathname.startsWith("/blog") ? "page" : undefined}>Blog</a>
+        <a href="/now" aria-current={pathname === "/now" ? "page" : undefined}>Now</a>
+        <a href="/uses" aria-current={pathname === "/uses" ? "page" : undefined}>Uses</a>
         <ThemeToggle />
       </nav>
     </header>
@@ -181,7 +182,7 @@ const jsonLd = {
     margin-bottom: 2rem;
     border-bottom: none;
     background-image: var(--rainbow-gradient);
-    background-size: 200% 6px;
+    background-size: 200% 8px;
     background-repeat: no-repeat;
     background-position: 0% bottom;
     animation: rainbow-shimmer 8s ease-in-out infinite alternate;
@@ -216,6 +217,14 @@ const jsonLd = {
     text-decoration: none;
   }
 
+  nav a[aria-current="page"] {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-apple-blue);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
   footer {
     display: flex;
     justify-content: space-between;
@@ -226,7 +235,7 @@ const jsonLd = {
     padding-top: 1rem;
     border-top: none;
     background-image: var(--rainbow-gradient);
-    background-size: 200% 6px;
+    background-size: 200% 8px;
     background-repeat: no-repeat;
     background-position: 0% top;
     animation: rainbow-shimmer 8s ease-in-out infinite alternate;
