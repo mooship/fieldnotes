@@ -147,6 +147,95 @@
     }, 4000);
   }
 
+  function addLongPress(
+    el: Element | null,
+    onLongPress: () => void,
+    signal: AbortSignal,
+    duration = 600,
+  ) {
+    if (!el) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let startX = 0;
+    let startY = 0;
+    let fired = false;
+
+    el.addEventListener(
+      "touchstart",
+      (ev) => {
+        const e = ev as TouchEvent;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        fired = false;
+        timer = setTimeout(() => {
+          fired = true;
+          onLongPress();
+        }, duration);
+      },
+      { signal, passive: true },
+    );
+
+    el.addEventListener(
+      "touchmove",
+      (ev) => {
+        const e = ev as TouchEvent;
+        if (
+          Math.abs(e.touches[0].clientX - startX) > 10 ||
+          Math.abs(e.touches[0].clientY - startY) > 10
+        )
+          clearTimeout(timer);
+      },
+      { signal, passive: true },
+    );
+
+    el.addEventListener(
+      "touchend",
+      (ev) => {
+        clearTimeout(timer);
+        if (fired) ev.preventDefault();
+      },
+      { signal },
+    );
+  }
+
+  function addTripleSwipeLeft(
+    el: Element | null,
+    onTripleSwipe: () => void,
+    signal: AbortSignal,
+  ) {
+    if (!el) return;
+    let startX = 0;
+    let swipeCount = 0;
+    let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+    el.addEventListener(
+      "touchstart",
+      (ev) => {
+        startX = (ev as TouchEvent).touches[0].clientX;
+      },
+      { signal, passive: true },
+    );
+
+    el.addEventListener(
+      "touchend",
+      (ev) => {
+        const endX = (ev as TouchEvent).changedTouches[0].clientX;
+        if (startX - endX > 50) {
+          swipeCount++;
+          clearTimeout(resetTimer);
+          if (swipeCount === 3) {
+            swipeCount = 0;
+            onTripleSwipe();
+          } else {
+            resetTimer = setTimeout(() => {
+              swipeCount = 0;
+            }, 1500);
+          }
+        }
+      },
+      { signal },
+    );
+  }
+
   function init() {
     controller?.abort();
     controller = new AbortController();
@@ -185,7 +274,7 @@
           antifaProgress = key === ANTIFA[0] ? 1 : 0;
         }
       },
-      { signal }
+      { signal },
     );
 
     let clickCount = 0;
@@ -207,8 +296,12 @@
           clickCount = 0;
         }, 600);
       },
-      { signal }
+      { signal },
     );
+
+    addLongPress(titleLink, () => showToast("buddhist"), signal);
+    addLongPress(document.querySelector("footer"), () => showToast("socialist"), signal);
+    addTripleSwipeLeft(document.querySelector("header"), () => showToast("antifascist"), signal);
   }
 
   document.addEventListener("DOMContentLoaded", init);
