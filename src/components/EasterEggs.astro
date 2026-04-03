@@ -110,6 +110,15 @@
 
   type EggKey = keyof typeof EGGS;
 
+  type Sequence = [keys: string[], egg: EggKey, useCode: boolean];
+  const SEQUENCES: Sequence[] = [
+    [KONAMI, "socialist", true],
+    [MARX, "socialist", false],
+    [BUDDHA, "buddhist", false],
+    [DHARMA, "buddhist", false],
+    [ANTIFA, "antifascist", false],
+  ];
+
   let toast: HTMLElement | undefined;
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
   let controller: AbortController | undefined;
@@ -255,11 +264,7 @@
     const footerEl = document.querySelector("footer");
     const headerEl = document.querySelector("header");
 
-    let konamiProgress = 0;
-    let marxProgress = 0;
-    let buddhaProgress = 0;
-    let dharmaProgress = 0;
-    let antifaProgress = 0;
+    const progress = SEQUENCES.map(() => 0);
 
     document.addEventListener(
       "keydown",
@@ -270,55 +275,18 @@
         )
           return;
 
-        if (e.code === KONAMI[konamiProgress]) {
-          konamiProgress++;
-          if (konamiProgress === KONAMI.length) {
-            konamiProgress = 0;
-            showToast("socialist");
-          }
-        } else {
-          konamiProgress = e.code === KONAMI[0] ? 1 : 0;
-        }
-
         const key = e.key.toLowerCase();
-        if (key === MARX[marxProgress]) {
-          marxProgress++;
-          if (marxProgress === MARX.length) {
-            marxProgress = 0;
-            showToast("socialist");
+        for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
+          const input = useCode ? e.code : key;
+          if (input === seq[progress[i]]) {
+            progress[i]++;
+            if (progress[i] === seq.length) {
+              progress[i] = 0;
+              showToast(egg);
+            }
+          } else {
+            progress[i] = input === seq[0] ? 1 : 0;
           }
-        } else {
-          marxProgress = key === MARX[0] ? 1 : 0;
-        }
-
-        if (key === BUDDHA[buddhaProgress]) {
-          buddhaProgress++;
-          if (buddhaProgress === BUDDHA.length) {
-            buddhaProgress = 0;
-            showToast("buddhist");
-          }
-        } else {
-          buddhaProgress = key === BUDDHA[0] ? 1 : 0;
-        }
-
-        if (key === DHARMA[dharmaProgress]) {
-          dharmaProgress++;
-          if (dharmaProgress === DHARMA.length) {
-            dharmaProgress = 0;
-            showToast("buddhist");
-          }
-        } else {
-          dharmaProgress = key === DHARMA[0] ? 1 : 0;
-        }
-
-        if (key === ANTIFA[antifaProgress]) {
-          antifaProgress++;
-          if (antifaProgress === ANTIFA.length) {
-            antifaProgress = 0;
-            showToast("antifascist");
-          }
-        } else {
-          antifaProgress = key === ANTIFA[0] ? 1 : 0;
         }
       },
       { signal }

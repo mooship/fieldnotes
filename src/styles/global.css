@@ -1,4 +1,15 @@
 :root {
+  --rainbow-gradient: linear-gradient(
+    to right,
+    var(--color-apple-green),
+    var(--color-apple-yellow),
+    var(--color-apple-orange),
+    var(--color-apple-red),
+    var(--color-apple-purple),
+    var(--color-apple-blue),
+    var(--color-apple-green),
+    var(--color-apple-yellow)
+  );
   --color-bg: #f8f8f5;
   --color-text: #1d1d1f;
   --color-text-secondary: #6e6e73;
@@ -156,7 +167,7 @@ p {
 }
 
 li {
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
   color: var(--color-text-secondary);
   text-wrap: pretty;
 }
