@@ -59,8 +59,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
               class="updated"
               datetime={post.data.updatedDate.toISOString()}
             >
-              Updated:{" "}
-              {formatDate(post.data.updatedDate)}
+              Updated: {formatDate(post.data.updatedDate)}
             </time>
           )
         }
