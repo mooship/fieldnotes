@@ -117,9 +117,17 @@ const jsonLd = {
     <header>
       <a href="/">Timothy Brits</a>
       <nav aria-label="Main">
-        <a href="/blog" aria-current={pathname.startsWith("/blog") ? "page" : undefined}>Blog</a>
-        <a href="/now" aria-current={pathname === "/now" ? "page" : undefined}>Now</a>
-        <a href="/uses" aria-current={pathname === "/uses" ? "page" : undefined}>Uses</a>
+        <a
+          href="/blog"
+          aria-current={pathname.startsWith("/blog") ? "page" : undefined}
+          >Blog</a
+        >
+        <a href="/now" aria-current={pathname === "/now" ? "page" : undefined}
+          >Now</a
+        >
+        <a href="/uses" aria-current={pathname === "/uses" ? "page" : undefined}
+          >Uses</a
+        >
         <ThemeToggle />
       </nav>
     </header>
