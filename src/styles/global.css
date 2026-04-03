@@ -248,57 +248,57 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   margin: 0;
 }
 
-.post-tags li:nth-child(5n+1) .tag {
+.post-tags li:nth-child(5n + 1) .tag {
   color: var(--color-apple-green);
   border-color: var(--color-apple-green);
 }
 
-.post-tags li:nth-child(5n+1) .tag:hover,
-.post-tags li:nth-child(5n+1) .tag:focus-visible {
+.post-tags li:nth-child(5n + 1) .tag:hover,
+.post-tags li:nth-child(5n + 1) .tag:focus-visible {
   background: var(--color-apple-green);
   color: var(--color-bg);
 }
 
-.post-tags li:nth-child(5n+2) .tag {
+.post-tags li:nth-child(5n + 2) .tag {
   color: var(--color-apple-yellow);
   border-color: var(--color-apple-yellow);
 }
 
-.post-tags li:nth-child(5n+2) .tag:hover,
-.post-tags li:nth-child(5n+2) .tag:focus-visible {
+.post-tags li:nth-child(5n + 2) .tag:hover,
+.post-tags li:nth-child(5n + 2) .tag:focus-visible {
   background: var(--color-apple-yellow);
   color: var(--color-bg);
 }
 
-.post-tags li:nth-child(5n+3) .tag {
+.post-tags li:nth-child(5n + 3) .tag {
   color: var(--color-apple-orange);
   border-color: var(--color-apple-orange);
 }
 
-.post-tags li:nth-child(5n+3) .tag:hover,
-.post-tags li:nth-child(5n+3) .tag:focus-visible {
+.post-tags li:nth-child(5n + 3) .tag:hover,
+.post-tags li:nth-child(5n + 3) .tag:focus-visible {
   background: var(--color-apple-orange);
   color: var(--color-bg);
 }
 
-.post-tags li:nth-child(5n+4) .tag {
+.post-tags li:nth-child(5n + 4) .tag {
   color: var(--color-apple-red);
   border-color: var(--color-apple-red);
 }
 
-.post-tags li:nth-child(5n+4) .tag:hover,
-.post-tags li:nth-child(5n+4) .tag:focus-visible {
+.post-tags li:nth-child(5n + 4) .tag:hover,
+.post-tags li:nth-child(5n + 4) .tag:focus-visible {
   background: var(--color-apple-red);
   color: var(--color-bg);
 }
 
-.post-tags li:nth-child(5n+5) .tag {
+.post-tags li:nth-child(5n + 5) .tag {
   color: var(--color-apple-purple);
   border-color: var(--color-apple-purple);
 }
 
-.post-tags li:nth-child(5n+5) .tag:hover,
-.post-tags li:nth-child(5n+5) .tag:focus-visible {
+.post-tags li:nth-child(5n + 5) .tag:hover,
+.post-tags li:nth-child(5n + 5) .tag:focus-visible {
   background: var(--color-apple-purple);
   color: var(--color-bg);
 }
