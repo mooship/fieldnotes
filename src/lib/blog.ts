@@ -6,6 +6,14 @@ import remarkRehype from "remark-rehype";
 import remarkSmartypants from "remark-smartypants";
 import { unified } from "unified";
 
+export function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-ZA", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export const BLOG_DESCRIPTION =
   "Writing by Timothy Brits on software, open source, Buddhism, and eco-socialism.";
 

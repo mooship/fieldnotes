@@ -3,6 +3,7 @@ import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { ArrowLeft, ArrowRight } from "@lucide/astro";
 import {
+  formatDate,
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
@@ -49,13 +50,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         <h1>{post.data.title}</h1>
         <time datetime={post.data.pubDate.toISOString()}>
           <span class="visually-hidden">Published: </span>
-          {
-            post.data.pubDate.toLocaleDateString("en-ZA", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
-          }
+          {formatDate(post.data.pubDate)}
         </time>
         {readingTime && <span class="reading-time">{readingTime}</span>}
         {
@@ -65,11 +60,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
               datetime={post.data.updatedDate.toISOString()}
             >
               Updated:{" "}
-              {post.data.updatedDate.toLocaleDateString("en-ZA", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {formatDate(post.data.updatedDate)}
             </time>
           )
         }
