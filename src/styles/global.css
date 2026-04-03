@@ -166,15 +166,11 @@ h4 {
   font-weight: 600;
 }
 
-html[data-theme="dark"] h1,
-html[data-theme="dark"] h2,
-html[data-theme="dark"] h3,
-html[data-theme="dark"] h4 {
+html[data-theme="dark"] :is(h1, h2, h3, h4) {
   font-weight: 500;
 }
 
-html[data-theme="dark"] .astro-code,
-html[data-theme="dark"] .astro-code span {
+html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;
@@ -183,15 +179,11 @@ html[data-theme="dark"] .astro-code span {
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) h1,
-  html:not([data-theme="light"]) h2,
-  html:not([data-theme="light"]) h3,
-  html:not([data-theme="light"]) h4 {
+  html:not([data-theme="light"]) :is(h1, h2, h3, h4) {
     font-weight: 500;
   }
 
-  html:not([data-theme="light"]) .astro-code,
-  html:not([data-theme="light"]) .astro-code span {
+  html:not([data-theme="light"]) :is(.astro-code, .astro-code span) {
     color: var(--shiki-dark) !important;
     background-color: var(--shiki-dark-bg) !important;
     font-style: var(--shiki-dark-font-style) !important;

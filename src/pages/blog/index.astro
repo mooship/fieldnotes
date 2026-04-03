@@ -2,7 +2,12 @@
 import Search from "astro-pagefind/components/Search";
 import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug } from "../../lib/blog";
+import {
+  BLOG_DESCRIPTION,
+  formatDate,
+  getBlogPosts,
+  getPostSlug,
+} from "../../lib/blog";
 
 const posts = await getBlogPosts();
 const postsWithMeta = await Promise.all(
@@ -40,11 +45,7 @@ const postsWithMeta = await Promise.all(
               <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
               <p class="post-meta">
                 <time datetime={post.data.pubDate.toISOString()}>
-                  {post.data.pubDate.toLocaleDateString("en-ZA", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {formatDate(post.data.pubDate)}
                 </time>
                 {readingTime && <span> · {readingTime}</span>}
               </p>

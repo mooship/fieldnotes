@@ -131,11 +131,13 @@
             "",
             "  ☸  Dharmachakra — The Wheel of Dharma",
             "",
-            "          ╷",
-            "     ╲  ╲ │ ╱  ╱",
-            "      ────(☸)────",
-            "     ╱  ╱ │ ╲  ╲",
-            "          ╵",
+            "            ╱ ┃ ╲",
+            "          ╱   ┃   ╲",
+            "        ╱     ┃     ╲",
+            "      ━━━━━━━(☸)━━━━━━━",
+            "        ╲     ┃     ╱",
+            "          ╲   ┃   ╱",
+            "            ╲ ┃ ╱",
             "",
             "  The Noble Eightfold Path:",
             "  Right View · Right Intention · Right Speech",
@@ -349,6 +351,6 @@
     addTripleSwipeLeft(headerEl, () => showToast("antifascist"), signal);
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  init();
   document.addEventListener("astro:after-swap", init);
 </script>
