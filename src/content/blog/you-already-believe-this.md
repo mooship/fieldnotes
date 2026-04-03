@@ -6,9 +6,7 @@ tags:
   - politics
 ---
 
-I went to the library last week. Nothing special about the trip -- I needed a book, I went and got it, I came home. But I've been thinking about what that trip actually is.
-
-The building is publicly funded. The books are publicly owned. Anyone can walk in and borrow them, no means test, no proof that you've earned it. The assumption behind the whole thing is that access to knowledge is something the collective provides to its members simply because they're members. That's the entire model.
+Think about the library. The building is publicly funded. The books are publicly owned. Anyone can walk in and borrow them, no means test, no proof that you've earned it. The assumption behind the whole thing is that access to knowledge is something the collective provides to its members simply because they're members. That's the entire model.
 
 We don't usually call this socialism. We call it the library.
 
