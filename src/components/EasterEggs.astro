@@ -105,16 +105,14 @@
 
   type EggKey = keyof typeof EGGS;
 
+  const toast = document.querySelector<HTMLElement>("#easter-egg-toast");
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
+  let controller: AbortController | undefined;
 
   function showToast(egg: EggKey) {
-    const toast = document.querySelector<HTMLElement>("#easter-egg-toast");
     if (!toast) return;
 
-    if (hideTimer !== undefined) {
-      clearTimeout(hideTimer);
-      hideTimer = undefined;
-    }
+    clearTimeout(hideTimer);
 
     const { icon, quote, attr } = EGGS[egg];
     toast.dataset.egg = egg;
@@ -146,70 +144,71 @@
 
     hideTimer = setTimeout(() => {
       toast.classList.remove("visible");
-      hideTimer = undefined;
     }, 4000);
   }
 
   function init() {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
     let konamiProgress = 0;
     let antifaProgress = 0;
 
-    function onKeydown(e: KeyboardEvent) {
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
-      )
-        return;
+    document.addEventListener(
+      "keydown",
+      (e: KeyboardEvent) => {
+        if (
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement
+        )
+          return;
 
-      if (e.code === KONAMI[konamiProgress]) {
-        konamiProgress++;
-        if (konamiProgress === KONAMI.length) {
-          konamiProgress = 0;
-          showToast("socialist");
+        if (e.code === KONAMI[konamiProgress]) {
+          konamiProgress++;
+          if (konamiProgress === KONAMI.length) {
+            konamiProgress = 0;
+            showToast("socialist");
+          }
+        } else {
+          konamiProgress = e.code === KONAMI[0] ? 1 : 0;
         }
-      } else {
-        konamiProgress = e.code === KONAMI[0] ? 1 : 0;
-      }
 
-      const key = e.key.toLowerCase();
-      if (key === ANTIFA[antifaProgress]) {
-        antifaProgress++;
-        if (antifaProgress === ANTIFA.length) {
-          antifaProgress = 0;
-          showToast("antifascist");
+        const key = e.key.toLowerCase();
+        if (key === ANTIFA[antifaProgress]) {
+          antifaProgress++;
+          if (antifaProgress === ANTIFA.length) {
+            antifaProgress = 0;
+            showToast("antifascist");
+          }
+        } else {
+          antifaProgress = key === ANTIFA[0] ? 1 : 0;
         }
-      } else {
-        antifaProgress = key === ANTIFA[0] ? 1 : 0;
-      }
-    }
+      },
+      { signal },
+    );
 
     let clickCount = 0;
     let clickTimer: ReturnType<typeof setTimeout> | undefined;
 
-    function onTitleClick() {
-      clickCount++;
-      if (clickCount === 3) {
-        clickCount = 0;
-        if (clickTimer !== undefined) {
-          clearTimeout(clickTimer);
-          clickTimer = undefined;
-        }
-        showToast("buddhist");
-        return;
-      }
-      if (clickTimer !== undefined) clearTimeout(clickTimer);
-      clickTimer = setTimeout(() => {
-        clickCount = 0;
-        clickTimer = undefined;
-      }, 600);
-    }
-
-    document.addEventListener("keydown", onKeydown);
-
     const titleLink = document.querySelector("header a:first-child");
-    if (titleLink) {
-      titleLink.addEventListener("click", onTitleClick);
-    }
+    titleLink?.addEventListener(
+      "click",
+      () => {
+        clickCount++;
+        if (clickCount === 3) {
+          clickCount = 0;
+          clearTimeout(clickTimer);
+          showToast("buddhist");
+          return;
+        }
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          clickCount = 0;
+        }, 600);
+      },
+      { signal },
+    );
   }
 
   document.addEventListener("DOMContentLoaded", init);
