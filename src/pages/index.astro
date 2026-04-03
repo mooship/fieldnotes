@@ -5,7 +5,7 @@ import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
-import { getBlogPosts, getPostSlug } from "../lib/blog";
+import { formatDate, getBlogPosts, getPostSlug } from "../lib/blog";
 
 const posts = await getBlogPosts();
 const recentPosts = posts.slice(0, 5);
@@ -31,11 +31,7 @@ const recentPosts = posts.slice(0, 5);
                   class="post-date"
                   datetime={post.data.pubDate.toISOString()}
                 >
-                  {post.data.pubDate.toLocaleDateString("en-ZA", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {formatDate(post.data.pubDate)}
                 </time>
               </li>
             ))}
@@ -69,87 +65,65 @@ const recentPosts = posts.slice(0, 5);
     text-wrap: balance;
   }
 
-  :global(.section-blog) {
+  :global(
+      .section-blog,
+      .section-opensource,
+      .section-writing,
+      .section-support,
+      .section-personal
+    ) {
     margin-top: 2rem;
     padding: 2rem 1rem 0.5rem 1rem;
-    border-top: 2px solid var(--color-apple-green);
-    background-color: var(--color-apple-green-tint);
     margin-left: -1rem;
     margin-right: -1rem;
+  }
+
+  :global(.section-blog) {
+    border-top: 2px solid var(--color-apple-green);
+    background-color: var(--color-apple-green-tint);
   }
 
   :global(.section-opensource) {
-    margin-top: 2rem;
-    padding: 2rem 1rem 0.5rem 1rem;
     border-top: 2px solid var(--color-apple-yellow);
     background-color: var(--color-apple-yellow-tint);
-    margin-left: -1rem;
-    margin-right: -1rem;
   }
 
   :global(.section-writing) {
-    margin-top: 2rem;
-    padding: 2rem 1rem 0.5rem 1rem;
     border-top: 2px solid var(--color-apple-orange);
     background-color: var(--color-apple-orange-tint);
-    margin-left: -1rem;
-    margin-right: -1rem;
   }
 
   :global(.section-support) {
-    margin-top: 2rem;
-    padding: 2rem 1rem 0.5rem 1rem;
     border-top: 2px solid var(--color-apple-red);
     background-color: var(--color-apple-red-tint);
-    margin-left: -1rem;
-    margin-right: -1rem;
   }
 
   :global(.section-personal) {
-    margin-top: 2rem;
-    padding: 2rem 1rem 0.5rem 1rem;
     border-top: 2px solid var(--color-apple-purple);
     background-color: var(--color-apple-purple-tint);
-    margin-left: -1rem;
-    margin-right: -1rem;
   }
 
-  :global(.section-blog) :global(a:hover) {
-    color: var(--color-apple-green-hover);
-  }
-
-  :global(.section-opensource) :global(a:hover) {
-    color: var(--color-apple-yellow-hover);
-  }
-
-  :global(.section-writing) :global(a:hover) {
-    color: var(--color-apple-orange-hover);
-  }
-
-  :global(.section-support) :global(a:hover) {
-    color: var(--color-apple-red-hover);
-  }
-
-  :global(.section-personal) :global(a:hover) {
-    color: var(--color-apple-purple-hover);
-  }
-
+  :global(.section-blog) :global(a:hover),
   :global(.section-blog) :global(a:focus-visible) {
     color: var(--color-apple-green-hover);
   }
 
+  :global(.section-opensource) :global(a:hover),
   :global(.section-opensource) :global(a:focus-visible) {
     color: var(--color-apple-yellow-hover);
   }
 
+  :global(.section-writing) :global(a:hover),
   :global(.section-writing) :global(a:focus-visible) {
     color: var(--color-apple-orange-hover);
   }
 
+  :global(.section-support) :global(a:hover),
   :global(.section-support) :global(a:focus-visible) {
     color: var(--color-apple-red-hover);
   }
 
+  :global(.section-personal) :global(a:hover),
   :global(.section-personal) :global(a:focus-visible) {
     color: var(--color-apple-purple-hover);
   }

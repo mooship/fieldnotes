@@ -2,6 +2,7 @@
 import { render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import {
+  formatDate,
   getAllTags,
   getBlogPosts,
   getPostsByTag,
@@ -47,11 +48,7 @@ const postsWithMeta = await Promise.all(
             <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
             <p class="post-meta">
               <time datetime={post.data.pubDate.toISOString()}>
-                {post.data.pubDate.toLocaleDateString("en-ZA", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {formatDate(post.data.pubDate)}
               </time>
               {readingTime && <span> · {readingTime}</span>}
             </p>
