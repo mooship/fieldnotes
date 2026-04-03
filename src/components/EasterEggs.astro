@@ -72,6 +72,8 @@
 
 <script>
   const MARX = ["m", "a", "r", "x"];
+  const BUDDHA = ["b", "u", "d", "d", "h", "a"];
+  const DHARMA = ["d", "h", "a", "r", "m", "a"];
   const ANTIFA = ["a", "n", "t", "i", "f", "a"];
 
   const KONAMI = [
@@ -253,6 +255,8 @@
 
     let konamiProgress = 0;
     let marxProgress = 0;
+    let buddhaProgress = 0;
+    let dharmaProgress = 0;
     let antifaProgress = 0;
 
     document.addEventListener(
@@ -283,6 +287,26 @@
           }
         } else {
           marxProgress = key === MARX[0] ? 1 : 0;
+        }
+
+        if (key === BUDDHA[buddhaProgress]) {
+          buddhaProgress++;
+          if (buddhaProgress === BUDDHA.length) {
+            buddhaProgress = 0;
+            showToast("buddhist");
+          }
+        } else {
+          buddhaProgress = key === BUDDHA[0] ? 1 : 0;
+        }
+
+        if (key === DHARMA[dharmaProgress]) {
+          dharmaProgress++;
+          if (dharmaProgress === DHARMA.length) {
+            dharmaProgress = 0;
+            showToast("buddhist");
+          }
+        } else {
+          dharmaProgress = key === DHARMA[0] ? 1 : 0;
         }
 
         if (key === ANTIFA[antifaProgress]) {
