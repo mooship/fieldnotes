@@ -164,25 +164,6 @@ const jsonLd = {
     text-decoration: none;
   }
 
-  @supports not selector(:focus-visible) {
-    .skip-link:focus {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      width: auto;
-      height: auto;
-      overflow: visible;
-      padding: 0.5rem 1rem;
-      background: var(--color-bg);
-      color: var(--color-link);
-      border: 2px solid var(--color-link);
-      border-radius: 4px;
-      font-size: 0.9rem;
-      z-index: 9999;
-      text-decoration: none;
-    }
-  }
-
   @keyframes rainbow-shimmer {
     from {
       background-position-x: 0%;
@@ -199,17 +180,7 @@ const jsonLd = {
     padding-bottom: 1.5rem;
     margin-bottom: 2rem;
     border-bottom: none;
-    background-image: linear-gradient(
-      to right,
-      var(--color-apple-green),
-      var(--color-apple-yellow),
-      var(--color-apple-orange),
-      var(--color-apple-red),
-      var(--color-apple-purple),
-      var(--color-apple-blue),
-      var(--color-apple-green),
-      var(--color-apple-yellow)
-    );
+    background-image: var(--rainbow-gradient);
     background-size: 200% 6px;
     background-repeat: no-repeat;
     background-position: 0% bottom;
@@ -254,17 +225,7 @@ const jsonLd = {
     margin-top: 2.5rem;
     padding-top: 1rem;
     border-top: none;
-    background-image: linear-gradient(
-      to right,
-      var(--color-apple-green),
-      var(--color-apple-yellow),
-      var(--color-apple-orange),
-      var(--color-apple-red),
-      var(--color-apple-purple),
-      var(--color-apple-blue),
-      var(--color-apple-green),
-      var(--color-apple-yellow)
-    );
+    background-image: var(--rainbow-gradient);
     background-size: 200% 6px;
     background-repeat: no-repeat;
     background-position: 0% top;
