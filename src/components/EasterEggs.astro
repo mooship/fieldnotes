@@ -105,9 +105,7 @@
 
   type EggKey = keyof typeof EGGS;
 
-  const toast = document.querySelector<HTMLElement>("#easter-egg-toast");
-  const footerEl = document.querySelector("footer");
-  const headerEl = document.querySelector("header");
+  let toast: HTMLElement | undefined;
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
   let controller: AbortController | undefined;
 
@@ -245,6 +243,10 @@
     controller?.abort();
     controller = new AbortController();
     const { signal } = controller;
+
+    toast = document.querySelector<HTMLElement>("#easter-egg-toast");
+    const footerEl = document.querySelector("footer");
+    const headerEl = document.querySelector("header");
 
     let konamiProgress = 0;
     let antifaProgress = 0;
