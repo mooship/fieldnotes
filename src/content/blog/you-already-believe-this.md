@@ -26,7 +26,7 @@ But the word precedes the Soviet Union by a long way. And the practice precedes 
 
 What happened in the twentieth century is that one particular, authoritarian expression of socialism failed visibly and catastrophically, and the entire tradition got collapsed into it. This was convenient for people who didn't want the tradition examined too carefully. But it's not honest.
 
-The NHS is not the Soviet Union. The library is not a gulag. The question "should some things be held in common?" is not the same question as "should the state control everything?" One of the tasks of clear thinking is keeping those questions separate.
+The NHS is not the Soviet Union. The library is not a gulag. The question "should some things be held in common?" is not the same question as "should the state control everything?" The point is to keep those questions separate.
 
 ---
 
