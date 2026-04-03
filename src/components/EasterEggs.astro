@@ -106,6 +106,8 @@
   type EggKey = keyof typeof EGGS;
 
   const toast = document.querySelector<HTMLElement>("#easter-egg-toast");
+  const footerEl = document.querySelector("footer");
+  const headerEl = document.querySelector("header");
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
   let controller: AbortController | undefined;
 
@@ -162,9 +164,9 @@
     el.addEventListener(
       "touchstart",
       (ev) => {
-        const e = ev as TouchEvent;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
+        const touch = (ev as TouchEvent).touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
         fired = false;
         timer = setTimeout(() => {
           fired = true;
@@ -177,12 +179,15 @@
     el.addEventListener(
       "touchmove",
       (ev) => {
-        const e = ev as TouchEvent;
+        if (timer === undefined) return;
+        const touch = (ev as TouchEvent).touches[0];
         if (
-          Math.abs(e.touches[0].clientX - startX) > 10 ||
-          Math.abs(e.touches[0].clientY - startY) > 10
-        )
+          Math.abs(touch.clientX - startX) > 10 ||
+          Math.abs(touch.clientY - startY) > 10
+        ) {
           clearTimeout(timer);
+          timer = undefined;
+        }
       },
       { signal, passive: true }
     );
@@ -300,16 +305,8 @@
     );
 
     addLongPress(titleLink, () => showToast("buddhist"), signal);
-    addLongPress(
-      document.querySelector("footer"),
-      () => showToast("socialist"),
-      signal
-    );
-    addTripleSwipeLeft(
-      document.querySelector("header"),
-      () => showToast("antifascist"),
-      signal
-    );
+    addLongPress(footerEl, () => showToast("socialist"), signal);
+    addTripleSwipeLeft(headerEl, () => showToast("antifascist"), signal);
   }
 
   document.addEventListener("DOMContentLoaded", init);
