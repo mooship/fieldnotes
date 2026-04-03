@@ -103,6 +103,26 @@ const recentPosts = posts.slice(0, 5);
     background-color: var(--color-apple-purple-tint);
   }
 
+  :global(.section-blog) :global(h2) {
+    color: var(--color-apple-green);
+  }
+
+  :global(.section-opensource) :global(h2) {
+    color: var(--color-apple-yellow);
+  }
+
+  :global(.section-writing) :global(h2) {
+    color: var(--color-apple-orange);
+  }
+
+  :global(.section-support) :global(h2) {
+    color: var(--color-apple-red);
+  }
+
+  :global(.section-personal) :global(h2) {
+    color: var(--color-apple-purple);
+  }
+
   :global(.section-blog) :global(a:hover),
   :global(.section-blog) :global(a:focus-visible) {
     color: var(--color-apple-green-hover);
@@ -133,7 +153,7 @@ const recentPosts = posts.slice(0, 5);
     margin: 0 0 1rem 0;
     font-weight: 600;
     font-size: 1.35rem;
-    letter-spacing: 0;
+    letter-spacing: -0.01em;
   }
 
   main :global(h2 + p) {
@@ -188,5 +208,15 @@ const recentPosts = posts.slice(0, 5);
   .all-posts {
     font-size: 0.82rem;
     color: var(--color-text-secondary);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .recent-posts li {
+      transition: transform 0.15s ease;
+    }
+
+    .recent-posts li:hover {
+      transform: translateX(2px);
+    }
   }
 </style>
