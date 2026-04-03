@@ -9,12 +9,15 @@
     width: 300px;
     padding: 1.25rem 1.5rem;
     border-radius: 12px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-border);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.18),
-      0 1px 4px rgba(0, 0, 0, 0.1);
+      0 4px 24px rgba(0, 0, 0, 0.06),
+      0 1px 4px rgba(0, 0, 0, 0.04);
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #fff;
+    color: var(--color-text);
     z-index: 9999;
     opacity: 0;
     transform: translateY(1rem);
@@ -31,16 +34,15 @@
   }
 
   #easter-egg-toast[data-egg="socialist"] {
-    background: var(--color-apple-red);
+    border-left-color: var(--color-apple-red);
   }
 
   #easter-egg-toast[data-egg="buddhist"] {
-    background: var(--color-apple-purple);
+    border-left-color: var(--color-apple-purple);
   }
 
   #easter-egg-toast[data-egg="antifascist"] {
-    background: #1a1a1a;
-    border-left: 3px solid var(--color-apple-red);
+    border-left-color: var(--color-text);
   }
 
   .easter-egg-icon {
@@ -56,7 +58,7 @@
 
   .easter-egg-attr {
     font-size: 0.8rem;
-    opacity: 0.85;
+    color: var(--color-text-secondary);
     margin: 0;
   }
 
@@ -69,6 +71,9 @@
 </style>
 
 <script>
+  const MARX = ["m", "a", "r", "x"];
+  const BUDDHA = ["b", "u", "d", "d", "h", "a"];
+  const DHARMA = ["d", "h", "a", "r", "m", "a"];
   const ANTIFA = ["a", "n", "t", "i", "f", "a"];
 
   const KONAMI = [
@@ -105,9 +110,7 @@
 
   type EggKey = keyof typeof EGGS;
 
-  const toast = document.querySelector<HTMLElement>("#easter-egg-toast");
-  const footerEl = document.querySelector("footer");
-  const headerEl = document.querySelector("header");
+  let toast: HTMLElement | undefined;
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
   let controller: AbortController | undefined;
 
@@ -246,7 +249,14 @@
     controller = new AbortController();
     const { signal } = controller;
 
+    toast = document.querySelector<HTMLElement>("#easter-egg-toast");
+    const footerEl = document.querySelector("footer");
+    const headerEl = document.querySelector("header");
+
     let konamiProgress = 0;
+    let marxProgress = 0;
+    let buddhaProgress = 0;
+    let dharmaProgress = 0;
     let antifaProgress = 0;
 
     document.addEventListener(
@@ -269,6 +279,36 @@
         }
 
         const key = e.key.toLowerCase();
+        if (key === MARX[marxProgress]) {
+          marxProgress++;
+          if (marxProgress === MARX.length) {
+            marxProgress = 0;
+            showToast("socialist");
+          }
+        } else {
+          marxProgress = key === MARX[0] ? 1 : 0;
+        }
+
+        if (key === BUDDHA[buddhaProgress]) {
+          buddhaProgress++;
+          if (buddhaProgress === BUDDHA.length) {
+            buddhaProgress = 0;
+            showToast("buddhist");
+          }
+        } else {
+          buddhaProgress = key === BUDDHA[0] ? 1 : 0;
+        }
+
+        if (key === DHARMA[dharmaProgress]) {
+          dharmaProgress++;
+          if (dharmaProgress === DHARMA.length) {
+            dharmaProgress = 0;
+            showToast("buddhist");
+          }
+        } else {
+          dharmaProgress = key === DHARMA[0] ? 1 : 0;
+        }
+
         if (key === ANTIFA[antifaProgress]) {
           antifaProgress++;
           if (antifaProgress === ANTIFA.length) {
