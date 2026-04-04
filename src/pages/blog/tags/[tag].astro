@@ -1,13 +1,8 @@
 ---
 import { render } from "astro:content";
+import PostListItem from "../../../components/PostListItem.astro";
 import Layout from "../../../layouts/Layout.astro";
-import {
-  formatDate,
-  getAllTags,
-  getBlogPosts,
-  getPostsByTag,
-  getPostSlug,
-} from "../../../lib/blog";
+import { getAllTags, getBlogPosts, getPostsByTag } from "../../../lib/blog";
 
 export async function getStaticPaths() {
   const posts = await getBlogPosts();
@@ -44,16 +39,7 @@ const postsWithMeta = await Promise.all(
     <ul>
       {
         postsWithMeta.map(({ post, readingTime }) => (
-          <li>
-            <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
-            <p class="post-meta">
-              <time datetime={post.data.pubDate.toISOString()}>
-                {formatDate(post.data.pubDate)}
-              </time>
-              {readingTime && <span> · {readingTime}</span>}
-            </p>
-            <p class="post-desc">{post.data.description}</p>
-          </li>
+          <PostListItem post={post} readingTime={readingTime} />
         ))
       }
     </ul>
@@ -86,30 +72,5 @@ const postsWithMeta = await Promise.all(
     list-style: none;
     padding: 0;
     margin: 0 0 2rem 0;
-  }
-
-  li {
-    margin-bottom: 1.5rem;
-  }
-
-  a {
-    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-    font-size: 1.05rem;
-    font-weight: 500;
-  }
-
-  .post-meta {
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    margin: 0.25rem 0 0 0;
-    letter-spacing: 0.05em;
-    font-variant: small-caps;
-  }
-
-  .post-desc {
-    margin: 0.25rem 0 0 0;
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-    line-height: 1.47;
   }
 </style>
