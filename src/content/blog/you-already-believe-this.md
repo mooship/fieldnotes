@@ -10,7 +10,7 @@ Think about the library. The building is publicly funded. The books are publicly
 
 We don't usually call this socialism. We call it the library.
 
-I want to sit with that for a moment. Because the same logic runs through a lot of what we take for granted. You walk through a public park: land held in common, available to anyone who wants to use it. You call an ambulance: someone comes, and the bill doesn't follow you home. Your street catches fire: nobody asks whether you can afford the truck. You need to know something: Wikipedia exists, built by thousands of contributors, given away freely, owned by no one.
+Because the same logic runs through a lot of what we take for granted. You walk through a public park: land held in common, available to anyone who wants to use it. You call an ambulance: someone comes, and the bill doesn't follow you home. Your street catches fire: nobody asks whether you can afford the truck. You need to know something: Wikipedia exists, built by thousands of contributors, given away freely, owned by no one.
 
 Each of these is a small argument for the same underlying idea -- that some things should be held in common and available to everyone, regardless of what they can pay. That the collective can absorb risk and cost in ways individuals cannot. That there are some questions you shouldn't have to answer alone.
 

@@ -28,4 +28,4 @@ I think that's what gets me about ten years. It's not that so much has changed. 
 
 Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time -- felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. That's not a comfortable thought.
 
-I don't have a neat takeaway. A decade passed and it feels like both yesterday and a lifetime ago. Somehow both.
+There's no neat takeaway. A decade passed and it feels like both yesterday and a lifetime ago. Somehow both.
