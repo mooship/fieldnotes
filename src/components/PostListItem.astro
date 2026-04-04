@@ -1,0 +1,72 @@
+---
+import { formatDate, getPostSlug } from "../lib/blog";
+
+interface Props {
+  post: {
+    id: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate: Date;
+      tags: string[];
+    };
+  };
+  readingTime?: string;
+  showTags?: boolean;
+}
+
+const { post, readingTime, showTags = false } = Astro.props;
+---
+
+<li>
+  <a class="post-title" href={`/blog/${getPostSlug(post.id)}`}
+    >{post.data.title}</a
+  >
+  <p class="post-meta">
+    <time datetime={post.data.pubDate.toISOString()}>
+      {formatDate(post.data.pubDate)}
+    </time>
+    {readingTime && <span> · {readingTime}</span>}
+  </p>
+  {
+    showTags && post.data.tags.length > 0 && (
+      <ul class="post-tags" aria-label="Tags">
+        {post.data.tags.map((tag: string) => (
+          <li>
+            <a href={`/blog/tags/${tag}`} class="tag">
+              {tag}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <p class="post-desc">{post.data.description}</p>
+</li>
+
+<style>
+  li {
+    margin-bottom: 1.5rem;
+  }
+
+  .post-title {
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .post-meta {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin: 0.25rem 0 0 0;
+    letter-spacing: 0.05em;
+    font-variant: small-caps;
+  }
+
+  .post-desc {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.47;
+  }
+</style>

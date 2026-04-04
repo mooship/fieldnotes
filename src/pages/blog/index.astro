@@ -1,13 +1,9 @@
 ---
 import Search from "astro-pagefind/components/Search";
 import { render } from "astro:content";
+import PostListItem from "../../components/PostListItem.astro";
 import Layout from "../../layouts/Layout.astro";
-import {
-  BLOG_DESCRIPTION,
-  formatDate,
-  getBlogPosts,
-  getPostSlug,
-} from "../../lib/blog";
+import { BLOG_DESCRIPTION, getBlogPosts } from "../../lib/blog";
 
 const posts = await getBlogPosts();
 const postsWithMeta = await Promise.all(
@@ -41,27 +37,7 @@ const postsWithMeta = await Promise.all(
       ) : (
         <ul>
           {postsWithMeta.map(({ post, readingTime }) => (
-            <li>
-              <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
-              <p class="post-meta">
-                <time datetime={post.data.pubDate.toISOString()}>
-                  {formatDate(post.data.pubDate)}
-                </time>
-                {readingTime && <span> · {readingTime}</span>}
-              </p>
-              {post.data.tags.length > 0 && (
-                <ul class="post-tags" aria-label="Tags">
-                  {post.data.tags.map((tag: string) => (
-                    <li>
-                      <a href={`/blog/tags/${tag}`} class="tag">
-                        {tag}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <p class="post-desc">{post.data.description}</p>
-            </li>
+            <PostListItem post={post} readingTime={readingTime} showTags />
           ))}
         </ul>
       )
@@ -92,35 +68,6 @@ const postsWithMeta = await Promise.all(
     list-style: none;
     padding: 0;
     margin: 0 0 2rem 0;
-  }
-
-  li {
-    margin-bottom: 1.5rem;
-  }
-
-  li > a {
-    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-    font-size: 1.05rem;
-    font-weight: 500;
-  }
-
-  .post-meta {
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    margin: 0.25rem 0 0 0;
-    letter-spacing: 0.05em;
-    font-variant: small-caps;
-  }
-
-  .post-tags {
-    margin: 0.35rem 0 0 0;
-  }
-
-  .post-desc {
-    margin: 0.25rem 0 0 0;
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-    line-height: 1.47;
   }
 
   .empty {
