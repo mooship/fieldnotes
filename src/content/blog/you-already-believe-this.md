@@ -1,7 +1,7 @@
 ---
 title: "You Already Believe This"
 description: "Libraries, parks, the NHS, mutual aid -- we live inside socialist infrastructure every day. We just don't call it that."
-pubDate: 2026-04-05
+pubDate: 2026-04-03
 tags:
   - politics
 ---
