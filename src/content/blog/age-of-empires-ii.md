@@ -6,7 +6,7 @@ tags:
   - gaming
 ---
 
-I've been playing Age of Empires II since around 2002, maybe 2003. It came on a demo disc -- the kind you'd get free with a magazine. Before I understood build orders or eco management or what a feudal rush was, I was building walls around my town centre and wondering why the AI kept showing up with thirty crossbowmen before I'd even clicked up to Castle Age. I lost constantly. I loved every second of it.
+I've been playing Age of Empires II since around 2002, maybe 2003. It came on a demo disc -- PC Format or NAG magazine, I can't quite remember which. Before I understood build orders or eco management or what a feudal rush was, I was building walls around my town centre and wondering why the AI kept showing up with thirty crossbowmen before I'd even clicked up to Castle Age. I lost constantly. I loved every second of it.
 
 There's something about AoE2 that no other RTS has managed to replicate. The design is deceptively simple: gather four resources, build an army, destroy the enemy. But underneath that simplicity is an extraordinary depth. Every civilisation plays differently -- not because they have wildly different mechanics, but because small bonuses compound in ways that change your entire approach. Britons get extra range on their archers. That one bonus reshapes how you fight, how you position, how you think about map control. Multiply that across forty-five civilisations and you have a game that's been out for over twenty-five years and still hasn't been solved.
 
