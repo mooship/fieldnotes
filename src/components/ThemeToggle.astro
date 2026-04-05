@@ -29,14 +29,15 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
     dark: "Theme: dark. Click for system.",
   };
 
+  function resolveSystemTheme(): "light" | "dark" {
+    return globalThis.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
   function applyTheme(theme: Theme) {
     const root = document.documentElement;
-
-    if (theme === "system") {
-      delete root.dataset.theme;
-    } else {
-      root.dataset.theme = theme;
-    }
+    root.dataset.theme = theme === "system" ? resolveSystemTheme() : theme;
 
     for (const button of document.querySelectorAll<HTMLButtonElement>(
       "[data-theme-toggle]"
@@ -67,6 +68,14 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
     const { signal } = controller;
 
     applyTheme(getStoredTheme());
+
+    globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener(
+      "change",
+      () => {
+        if (getStoredTheme() === "system") applyTheme("system");
+      },
+      { signal }
+    );
 
     for (const button of document.querySelectorAll("[data-theme-toggle]"))
       button.addEventListener("click", cycleTheme, { signal });

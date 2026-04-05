@@ -1,33 +1,9 @@
 import type { APIContext } from "astro";
-import {
-  BLOG_DESCRIPTION,
-  getBlogPosts,
-  getPostSlug,
-  getSiteUrl,
-  renderMarkdownToHtml,
-} from "../lib/blog";
+import { BLOG_DESCRIPTION, getFeedItems, getSiteUrl } from "../lib/blog";
 
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site!);
-  const posts = await getBlogPosts();
-
-  const items = await Promise.all(
-    posts.map(async (post) => {
-      const url = `${site}/blog/${getPostSlug(post.id)}`;
-      return {
-        id: url,
-        url,
-        title: post.data.title,
-        summary: post.data.description,
-        content_html: await renderMarkdownToHtml(post.body),
-        date_published: post.data.pubDate.toISOString(),
-        date_modified: (
-          post.data.updatedDate ?? post.data.pubDate
-        ).toISOString(),
-        tags: post.data.tags,
-      };
-    })
-  );
+  const items = await getFeedItems(site);
 
   const feed = {
     version: "https://jsonfeed.org/version/1.1",
@@ -36,7 +12,16 @@ export async function GET(context: APIContext) {
     feed_url: `${site}/feed.json`,
     description: BLOG_DESCRIPTION,
     authors: [{ name: "Timothy Brits", url: site }],
-    items,
+    items: items.map((item) => ({
+      id: item.url,
+      url: item.url,
+      title: item.title,
+      summary: item.description,
+      content_html: item.html,
+      date_published: item.pubDate.toISOString(),
+      date_modified: item.updatedDate.toISOString(),
+      tags: item.tags,
+    })),
   };
 
   return Response.json(feed, {

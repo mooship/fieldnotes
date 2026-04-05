@@ -270,6 +270,7 @@
       "keydown",
       (e: KeyboardEvent) => {
         if (
+          e.isComposing ||
           e.target instanceof HTMLInputElement ||
           e.target instanceof HTMLTextAreaElement
         )

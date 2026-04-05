@@ -1,48 +1,32 @@
 import type { APIContext } from "astro";
-import {
-  BLOG_DESCRIPTION,
-  getBlogPosts,
-  getPostSlug,
-  getSiteUrl,
-  renderMarkdownToHtml,
-} from "../lib/blog";
+import { BLOG_DESCRIPTION, getFeedItems, getSiteUrl } from "../lib/blog";
 import { xmlEscape } from "../lib/xml";
 
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site!);
-  const posts = await getBlogPosts();
+  const items = await getFeedItems(site);
 
-  let latestMs = 0;
-  for (const p of posts) {
-    const t = (p.data.updatedDate ?? p.data.pubDate).getTime();
-    if (t > latestMs) latestMs = t;
-  }
   const updated =
-    posts.length > 0
-      ? new Date(latestMs).toISOString()
+    items.length > 0
+      ? new Date(
+          Math.max(...items.map((i) => i.updatedDate.getTime()))
+        ).toISOString()
       : new Date().toISOString();
 
-  const entryList = await Promise.all(
-    posts.map(async (post) => {
-      const url = `${site}/blog/${getPostSlug(post.id)}`;
-      const published = post.data.pubDate.toISOString();
-      const modified = (
-        post.data.updatedDate ?? post.data.pubDate
-      ).toISOString();
-      const html = await renderMarkdownToHtml(post.body);
-      return `  <entry>
-    <id>${url}</id>
-    <title>${xmlEscape(post.data.title)}</title>
-    <updated>${modified}</updated>
-    <published>${published}</published>
-    <summary>${xmlEscape(post.data.description)}</summary>
-    <content type="html">${xmlEscape(html)}</content>
-    <link href="${url}" />
-${post.data.tags.map((tag) => `    <category term="${xmlEscape(tag)}" />`).join("\n")}
-  </entry>`;
-    })
-  );
-  const entries = entryList.join("\n");
+  const entries = items
+    .map(
+      (item) => `  <entry>
+    <id>${item.url}</id>
+    <title>${xmlEscape(item.title)}</title>
+    <updated>${item.updatedDate.toISOString()}</updated>
+    <published>${item.pubDate.toISOString()}</published>
+    <summary>${xmlEscape(item.description)}</summary>
+    <content type="html">${xmlEscape(item.html)}</content>
+    <link href="${item.url}" />
+${item.tags.map((tag) => `    <category term="${xmlEscape(tag)}" />`).join("\n")}
+  </entry>`
+    )
+    .join("\n");
 
   const xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
