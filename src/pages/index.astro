@@ -21,7 +21,10 @@ const recentPosts = posts.slice(0, 5);
     <IntroContent />
     {
       recentPosts.length > 0 && (
-        <div class="section-blog">
+        <div
+          class="section-colored"
+          style="--section-color: var(--color-apple-green); --section-tint: var(--color-apple-green-tint); --section-hover: var(--color-apple-green-hover);"
+        >
           <h2>Blog</h2>
           <ul class="recent-posts">
             {recentPosts.map((post) => (
@@ -65,85 +68,22 @@ const recentPosts = posts.slice(0, 5);
     text-wrap: balance;
   }
 
-  :global(.section-blog),
-  :global(.section-opensource),
-  :global(.section-writing),
-  :global(.section-support),
-  :global(.section-personal) {
+  :global(.section-colored) {
     margin-top: 2rem;
     padding: 1.5rem 1rem 1.25rem 1rem;
     margin-left: -1rem;
     margin-right: -1rem;
+    border-top: 2px solid var(--section-color);
+    background-color: var(--section-tint);
   }
 
-  :global(.section-blog) {
-    border-top: 2px solid var(--color-apple-green);
-    background-color: var(--color-apple-green-tint);
+  :global(.section-colored) :global(h2) {
+    color: var(--section-color);
   }
 
-  :global(.section-opensource) {
-    border-top: 2px solid var(--color-apple-yellow);
-    background-color: var(--color-apple-yellow-tint);
-  }
-
-  :global(.section-writing) {
-    border-top: 2px solid var(--color-apple-orange);
-    background-color: var(--color-apple-orange-tint);
-  }
-
-  :global(.section-support) {
-    border-top: 2px solid var(--color-apple-red);
-    background-color: var(--color-apple-red-tint);
-  }
-
-  :global(.section-personal) {
-    border-top: 2px solid var(--color-apple-purple);
-    background-color: var(--color-apple-purple-tint);
-  }
-
-  :global(.section-blog h2) {
-    color: var(--color-apple-green);
-  }
-
-  :global(.section-opensource h2) {
-    color: var(--color-apple-yellow);
-  }
-
-  :global(.section-writing h2) {
-    color: var(--color-apple-orange);
-  }
-
-  :global(.section-support h2) {
-    color: var(--color-apple-red);
-  }
-
-  :global(.section-personal h2) {
-    color: var(--color-apple-purple);
-  }
-
-  :global(.section-blog) :global(a:hover),
-  :global(.section-blog) :global(a:focus-visible) {
-    color: var(--color-apple-green-hover);
-  }
-
-  :global(.section-opensource) :global(a:hover),
-  :global(.section-opensource) :global(a:focus-visible) {
-    color: var(--color-apple-yellow-hover);
-  }
-
-  :global(.section-writing) :global(a:hover),
-  :global(.section-writing) :global(a:focus-visible) {
-    color: var(--color-apple-orange-hover);
-  }
-
-  :global(.section-support) :global(a:hover),
-  :global(.section-support) :global(a:focus-visible) {
-    color: var(--color-apple-red-hover);
-  }
-
-  :global(.section-personal) :global(a:hover),
-  :global(.section-personal) :global(a:focus-visible) {
-    color: var(--color-apple-purple-hover);
+  :global(.section-colored) :global(a:hover),
+  :global(.section-colored) :global(a:focus-visible) {
+    color: var(--section-hover);
   }
 
   main :global(h2) {

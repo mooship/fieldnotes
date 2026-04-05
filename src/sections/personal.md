@@ -1,4 +1,4 @@
-<section class="section-personal">
+<section class="section-colored" style="--section-color: var(--color-apple-purple); --section-tint: var(--color-apple-purple-tint); --section-hover: var(--color-apple-purple-hover);">
 
 ## Personal
 
