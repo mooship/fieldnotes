@@ -65,36 +65,6 @@ html[data-theme="dark"] {
   --color-apple-blue-hover: #4db8e8;
 }
 
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) {
-    --color-bg: #000000;
-    --color-text: #f5f5f7;
-    --color-text-secondary: #86868b;
-    --color-heading: #f5f5f7;
-    --color-link: #2997ff;
-    --color-link-hover: #64b5f6;
-    --color-accent: #2997ff;
-    --color-border: #424245;
-    --color-apple-green: #7ecc66;
-    --color-apple-yellow: #fdc94f;
-    --color-apple-orange: #f79a4a;
-    --color-apple-red: #e86366;
-    --color-apple-purple: #b06ab1;
-    --color-apple-blue: #4db8e8;
-    --color-apple-green-tint: rgba(126, 204, 102, 0.06);
-    --color-apple-yellow-tint: rgba(253, 201, 79, 0.06);
-    --color-apple-orange-tint: rgba(247, 154, 74, 0.06);
-    --color-apple-red-tint: rgba(232, 99, 102, 0.06);
-    --color-apple-purple-tint: rgba(176, 106, 177, 0.06);
-    --color-apple-green-hover: #7ecc66;
-    --color-apple-yellow-hover: #fdc94f;
-    --color-apple-orange-hover: #f79a4a;
-    --color-apple-red-hover: #e86366;
-    --color-apple-purple-hover: #b06ab1;
-    --color-apple-blue-hover: #4db8e8;
-  }
-}
-
 html {
   background: var(--color-bg);
 }
@@ -191,20 +161,6 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) :is(h1, h2, h3, h4) {
-    font-weight: 500;
-  }
-
-  html:not([data-theme="light"]) :is(.astro-code, .astro-code span) {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
-    font-style: var(--shiki-dark-font-style) !important;
-    font-weight: var(--shiki-dark-font-weight) !important;
-    text-decoration: var(--shiki-dark-text-decoration) !important;
-  }
-}
-
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -223,8 +179,8 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--color-apple-blue);
-  border: 1px solid var(--color-apple-blue);
+  color: var(--tag-color, var(--color-apple-blue));
+  border: 1px solid var(--tag-color, var(--color-apple-blue));
   border-radius: 3px;
   padding: 0.1rem 0.4rem;
   text-decoration: none;
@@ -232,7 +188,7 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
 
 .tag:hover,
 .tag:focus-visible {
-  background: var(--color-apple-blue);
+  background: var(--tag-color, var(--color-apple-blue));
   color: var(--color-bg);
   text-decoration: none;
 }
@@ -248,59 +204,24 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   margin: 0;
 }
 
-.post-tags li:nth-child(5n + 1) .tag {
-  color: var(--color-apple-green);
-  border-color: var(--color-apple-green);
+.post-tags li:nth-child(5n + 1) {
+  --tag-color: var(--color-apple-green);
 }
 
-.post-tags li:nth-child(5n + 1) .tag:hover,
-.post-tags li:nth-child(5n + 1) .tag:focus-visible {
-  background: var(--color-apple-green);
-  color: var(--color-bg);
+.post-tags li:nth-child(5n + 2) {
+  --tag-color: var(--color-apple-yellow-hover);
 }
 
-.post-tags li:nth-child(5n + 2) .tag {
-  color: var(--color-apple-yellow);
-  border-color: var(--color-apple-yellow);
+.post-tags li:nth-child(5n + 3) {
+  --tag-color: var(--color-apple-orange);
 }
 
-.post-tags li:nth-child(5n + 2) .tag:hover,
-.post-tags li:nth-child(5n + 2) .tag:focus-visible {
-  background: var(--color-apple-yellow);
-  color: var(--color-bg);
+.post-tags li:nth-child(5n + 4) {
+  --tag-color: var(--color-apple-red);
 }
 
-.post-tags li:nth-child(5n + 3) .tag {
-  color: var(--color-apple-orange);
-  border-color: var(--color-apple-orange);
-}
-
-.post-tags li:nth-child(5n + 3) .tag:hover,
-.post-tags li:nth-child(5n + 3) .tag:focus-visible {
-  background: var(--color-apple-orange);
-  color: var(--color-bg);
-}
-
-.post-tags li:nth-child(5n + 4) .tag {
-  color: var(--color-apple-red);
-  border-color: var(--color-apple-red);
-}
-
-.post-tags li:nth-child(5n + 4) .tag:hover,
-.post-tags li:nth-child(5n + 4) .tag:focus-visible {
-  background: var(--color-apple-red);
-  color: var(--color-bg);
-}
-
-.post-tags li:nth-child(5n + 5) .tag {
-  color: var(--color-apple-purple);
-  border-color: var(--color-apple-purple);
-}
-
-.post-tags li:nth-child(5n + 5) .tag:hover,
-.post-tags li:nth-child(5n + 5) .tag:focus-visible {
-  background: var(--color-apple-purple);
-  color: var(--color-bg);
+.post-tags li:nth-child(5n + 5) {
+  --tag-color: var(--color-apple-purple);
 }
 
 @media (prefers-reduced-motion: reduce) {

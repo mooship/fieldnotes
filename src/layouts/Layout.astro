@@ -12,6 +12,8 @@ export interface Props {
   canonical?: string;
   robots?: string;
   type?: "website" | "article";
+  datePublished?: Date;
+  dateModified?: Date;
 }
 
 const {
@@ -21,6 +23,8 @@ const {
   canonical: canonicalProp,
   robots = "index,follow",
   type = "website",
+  datePublished,
+  dateModified,
 } = Astro.props as Props;
 
 const url = Astro.url;
@@ -35,6 +39,15 @@ const jsonLd = {
   ...(canonical ? { url: canonical } : {}),
   ...(description ? { description } : {}),
   ...(image ? { image } : {}),
+  ...(type === "article"
+    ? {
+        author: { "@type": "Person", name: "Timothy Brits" },
+        ...(datePublished
+          ? { datePublished: datePublished.toISOString() }
+          : {}),
+        ...(dateModified ? { dateModified: dateModified.toISOString() } : {}),
+      }
+    : {}),
 };
 ---
 
@@ -89,6 +102,12 @@ const jsonLd = {
         const t = localStorage.getItem("theme");
         if (t === "dark" || t === "light") {
           document.documentElement.dataset.theme = t;
+        } else {
+          document.documentElement.dataset.theme = globalThis.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches
+            ? "dark"
+            : "light";
         }
       })();
     </script>
