@@ -3,7 +3,7 @@ import Search from "astro-pagefind/components/Search";
 import { render } from "astro:content";
 import PostListItem from "../../components/PostListItem.astro";
 import Layout from "../../layouts/Layout.astro";
-import { BLOG_DESCRIPTION, getBlogPosts } from "../../lib/blog";
+import { BLOG_DESCRIPTION, getBlogPosts, getReadingTime } from "../../lib/blog";
 
 const posts = await getBlogPosts();
 const postsWithMeta = await Promise.all(
@@ -11,7 +11,7 @@ const postsWithMeta = await Promise.all(
     const { remarkPluginFrontmatter } = await render(post);
     return {
       post,
-      readingTime: remarkPluginFrontmatter?.readingTime as string | undefined,
+      readingTime: getReadingTime(remarkPluginFrontmatter),
     };
   })
 );

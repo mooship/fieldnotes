@@ -2,7 +2,12 @@
 import { render } from "astro:content";
 import PostListItem from "../../../components/PostListItem.astro";
 import Layout from "../../../layouts/Layout.astro";
-import { getAllTags, getBlogPosts, getPostsByTag } from "../../../lib/blog";
+import {
+  getAllTags,
+  getBlogPosts,
+  getPostsByTag,
+  getReadingTime,
+} from "../../../lib/blog";
 
 export async function getStaticPaths() {
   const posts = await getBlogPosts();
@@ -20,7 +25,7 @@ const postsWithMeta = await Promise.all(
     const { remarkPluginFrontmatter } = await render(post);
     return {
       post,
-      readingTime: remarkPluginFrontmatter?.readingTime as string | undefined,
+      readingTime: getReadingTime(remarkPluginFrontmatter),
     };
   })
 );
