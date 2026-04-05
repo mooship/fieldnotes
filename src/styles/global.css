@@ -24,11 +24,11 @@
   --color-apple-red: #e03a3e;
   --color-apple-purple: #963d97;
   --color-apple-blue: #009ddc;
-  --color-apple-green-tint: rgba(97, 187, 70, 0.04);
-  --color-apple-yellow-tint: rgba(253, 184, 39, 0.04);
-  --color-apple-orange-tint: rgba(245, 130, 31, 0.04);
-  --color-apple-red-tint: rgba(224, 58, 62, 0.04);
-  --color-apple-purple-tint: rgba(150, 61, 151, 0.04);
+  --color-apple-green-tint: rgba(97, 187, 70, 0.07);
+  --color-apple-yellow-tint: rgba(253, 184, 39, 0.07);
+  --color-apple-orange-tint: rgba(245, 130, 31, 0.07);
+  --color-apple-red-tint: rgba(224, 58, 62, 0.07);
+  --color-apple-purple-tint: rgba(150, 61, 151, 0.07);
   --color-apple-green-hover: #3d8c27;
   --color-apple-yellow-hover: #8a6400;
   --color-apple-orange-hover: #b85d10;
@@ -52,17 +52,17 @@ html[data-theme="dark"] {
   --color-apple-red: #e86366;
   --color-apple-purple: #b06ab1;
   --color-apple-blue: #4db8e8;
-  --color-apple-green-tint: rgba(126, 204, 102, 0.06);
-  --color-apple-yellow-tint: rgba(253, 201, 79, 0.06);
-  --color-apple-orange-tint: rgba(247, 154, 74, 0.06);
-  --color-apple-red-tint: rgba(232, 99, 102, 0.06);
-  --color-apple-purple-tint: rgba(176, 106, 177, 0.06);
-  --color-apple-green-hover: #7ecc66;
-  --color-apple-yellow-hover: #fdc94f;
-  --color-apple-orange-hover: #f79a4a;
-  --color-apple-red-hover: #e86366;
-  --color-apple-purple-hover: #b06ab1;
-  --color-apple-blue-hover: #4db8e8;
+  --color-apple-green-tint: rgba(126, 204, 102, 0.1);
+  --color-apple-yellow-tint: rgba(253, 201, 79, 0.1);
+  --color-apple-orange-tint: rgba(247, 154, 74, 0.1);
+  --color-apple-red-tint: rgba(232, 99, 102, 0.1);
+  --color-apple-purple-tint: rgba(176, 106, 177, 0.1);
+  --color-apple-green-hover: #a0e088;
+  --color-apple-yellow-hover: #fedd88;
+  --color-apple-orange-hover: #f9b878;
+  --color-apple-red-hover: #f09092;
+  --color-apple-purple-hover: #ca90cb;
+  --color-apple-blue-hover: #80d0f0;
 }
 
 html {
@@ -127,6 +127,11 @@ a:hover {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-apple-blue);
+  color: #ffffff;
 }
 
 ul {
