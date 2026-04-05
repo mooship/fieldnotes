@@ -391,7 +391,9 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   article :global(hr) {
     border: none;
-    border-top: 1px solid var(--color-border);
+    height: 3px;
+    background: var(--rainbow-gradient);
+    background-size: 100% 100%;
     margin: 2rem 0;
   }
 
