@@ -17,7 +17,7 @@
   </li>
   <li>
     <a href="https://divvy.timothybrits.co.za">Divvy</a>
-    <p class="project-desc">A tool for splitting the bill at a restaurant or food delivery.</p>
+    <p class="project-desc">Split the bill without splitting friendships.</p>
   </li>
 </ul>
 
