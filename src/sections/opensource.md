@@ -15,6 +15,10 @@
     <a href="https://elekti.timothybrits.co.za/">Elekti</a>
     <p class="project-desc">Political alignment quiz matching South African voters to parties.</p>
   </li>
+  <li>
+    <a href="https://divvy.timothybrits.co.za">Divvy</a>
+    <p class="project-desc">Split the bill without splitting friendships.</p>
+  </li>
 </ul>
 
 </section>
