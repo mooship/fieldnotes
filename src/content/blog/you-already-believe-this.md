@@ -6,7 +6,7 @@ tags:
   - politics
 ---
 
-Think about the library. The building is publicly funded. The books are publicly owned. Anyone can walk in and borrow them, no means test, no proof that you've earned it. The assumption behind the whole thing is that access to knowledge is something the collective provides to its members simply because they're members. That's the entire model.
+Think about the library. The building is publicly funded. The books are publicly owned. Anyone can walk in and borrow them, no means test, no proof that you've earned it. The assumption behind the whole thing is that access to knowledge is something the collective provides to its members simply because they're members. The whole model, right there.
 
 We don't usually call this socialism. We call it the library.
 
@@ -14,7 +14,7 @@ Because the same logic runs through a lot of what we take for granted. You walk 
 
 Each of these is a small argument for the same underlying idea -- that some things should be held in common and available to everyone, regardless of what they can pay. That the collective can absorb risk and cost in ways individuals cannot. That there are some questions you shouldn't have to answer alone.
 
-That's not a radical position. That's the position most people already hold, in practice, every time they use these things. The library card is a socialist document. The park is socialist land.
+None of this is radical. It's the position most people already hold, in practice, every time they use these things. The library card is a socialist document. The park is socialist land.
 
 ---
 
@@ -28,9 +28,9 @@ The NHS is not the Soviet Union. The library is not a gulag. The question "shoul
 
 ---
 
-I've been drawn to Buddhism partly because of how it treats interdependence -- not as a political position but as a description of what's actually true. There is no separate self. My welfare depends on the welfare of the people around me, on the systems that sustain me, on choices made by people I'll never meet. That's not sentiment. It's structure.
+I've been drawn to Buddhism partly because of how it treats interdependence -- as a description of how things are, not a political position. There is no separate self. My welfare depends on the welfare of the people around me, on the systems that sustain me, on choices made by people I'll never meet. This isn't sentiment. It's structure.
 
-The Eightfold Path includes right livelihood: does what you do for work cause harm? Right action: is what you're doing honest? Those are individual questions, but the ground they stand on is collective. You can't answer them honestly while pretending you're alone.
+Buddhist ethics asks these questions at the individual level -- does your work cause harm? Are your actions honest? -- but the ground they stand on is collective. You can't answer them honestly while pretending you're alone.
 
 Mutual aid gets at this in practice. Not charity -- charity maintains a hierarchy between giver and recipient. Mutual aid is horizontal: we take care of each other because we're each other's context. Because the separation between your wellbeing and mine is less absolute than we've been taught to think.
 
@@ -38,10 +38,10 @@ Mutual aid gets at this in practice. Not charity -- charity maintains a hierarch
 
 I don't want to pretend that everything called socialism has worked, or that collective ownership is automatically better than private ownership in every case. It isn't. The left's record is complicated enough that anyone who ignores that isn't arguing honestly. The question isn't whether collective provision is always right. The question is whether we're willing to examine our own instincts about when it is.
 
-Because here's what I keep noticing: when someone proposes cutting the library, or privatising the NHS, or charging for the ambulance, most people resist. Not because they've worked through the political economy of public goods. But because they understand, without needing it articulated, that something important would be lost. That these things aren't just services. They're a way of saying: you're not alone in this.
+Because here's what I keep noticing: when someone proposes cutting the library, or privatising the NHS, or charging for the ambulance, most people resist. They haven't worked through the political economy of public goods. They just understand, without needing it articulated, that something important would be lost. That these things aren't just services. They're a way of saying: you're not alone in this.
 
-That instinct is worth trusting.
+Trust that instinct.
 
 Libraries and parks and emergency services are the easy cases -- the places where collective provision already won. But the same logic applies elsewhere: housing, childcare, energy, the digital infrastructure that an increasing part of life runs on. Each of those is a place where the collective-provision question is live and contested and usually losing.
 
-You don't have to call yourself a socialist to believe that some things belong to all of us. But it might be worth noticing that you already do.
+You don't have to call yourself a socialist to believe that some things belong to all of us. But you might notice that you already do.
