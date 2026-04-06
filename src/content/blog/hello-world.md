@@ -8,7 +8,7 @@ tags:
 
 Hello. I'm Timothy, a software developer based in Pretoria, South Africa.
 
-I've been writing software since 2018. Web development is where I spend most of my time, and my language of choice is TypeScript, the weird parts included. When performance actually matters, I reach for Rust.
+I've been writing software since 2018. Web development is where I spend most of my time, and my language of choice is TypeScript, the weird parts included. When performance matters, I reach for Rust.
 
 I live in the terminal: [Ghostty](https://ghostty.org), zsh, and [Starship](https://starship.rs) on macOS. I've tried heavier setups; this is the one that stuck.
 
