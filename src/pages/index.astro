@@ -23,7 +23,7 @@ const recentPosts = posts.slice(0, 5);
       recentPosts.length > 0 && (
         <div
           class="section-colored"
-          style="--section-color: var(--color-apple-green); --section-tint: var(--color-apple-green-tint); --section-hover: var(--color-apple-green-hover);"
+          style="--section-color: var(--color-apple-green-text); --section-border: var(--color-apple-green); --section-tint: var(--color-apple-green-tint); --section-hover: var(--color-apple-green-hover);"
         >
           <h2>Blog</h2>
           <ul class="recent-posts">
@@ -73,7 +73,7 @@ const recentPosts = posts.slice(0, 5);
     padding: 1.5rem 1rem 1.25rem 1rem;
     margin-left: -1rem;
     margin-right: -1rem;
-    border-top: 2px solid var(--section-color);
+    border-top: 2px solid var(--section-border, var(--section-color));
     background-color: var(--section-tint);
   }
 
