@@ -94,7 +94,16 @@
     "KeyA",
   ];
 
-  const EGGS = {
+  type EggKey = "socialist" | "buddhist" | "antifascist" | "artemis";
+  type EggData = {
+    icon: string;
+    quote: string;
+    attr: string;
+    consoleArt?: string[];
+    consoleColor?: string;
+  };
+
+  const EGGS: Record<EggKey, EggData> = {
     socialist: {
       icon: "✊",
       quote:
@@ -105,6 +114,25 @@
       icon: "☸",
       quote: "Peace comes from within. Do not seek it without.",
       attr: "— attributed to the Buddha",
+      consoleArt: [
+        "",
+        "  ☸  Dharmachakra — The Wheel of Dharma",
+        "",
+        "            ╱ ┃ ╲",
+        "          ╱   ┃   ╲",
+        "        ╱     ┃     ╲",
+        "      ━━━━━━━(☸)━━━━━━━",
+        "        ╲     ┃     ╱",
+        "          ╲   ┃   ╱",
+        "            ╲ ┃ ╱",
+        "",
+        "  The Noble Eightfold Path:",
+        "  Right View · Right Intention · Right Speech",
+        "  Right Action · Right Livelihood · Right Effort",
+        "  Right Mindfulness · Right Concentration",
+        "",
+      ],
+      consoleColor: "#963d97",
     },
     antifascist: {
       icon: "🏴",
@@ -116,10 +144,26 @@
       quote:
         "Earth is the cradle of humanity, but one cannot live in a cradle forever.",
       attr: "— Konstantin Tsiolkovsky",
+      consoleArt: [
+        "",
+        "  🌕  Artemis — Return to the Moon",
+        "",
+        "        *    .  *       .      ",
+        "    .       *      .        *  ",
+        "       .  ·  ☽  ·  .    .     ",
+        "    *      .    .      *       ",
+        "        .    *    .            ",
+        "",
+        "  Artemis II — First crewed lunar flyby",
+        "  since Apollo 17, 1972.",
+        "",
+        "  Reid Wiseman · Victor Glover",
+        "  Christina Koch · Jeremy Hansen",
+        "",
+      ],
+      consoleColor: "#009ddc",
     },
-  } as const;
-
-  type EggKey = keyof typeof EGGS;
+  };
 
   type Sequence = [keys: string[], egg: EggKey, useCode: boolean];
   const SEQUENCES: Sequence[] = [
@@ -145,52 +189,11 @@
     toast.innerHTML = `<span class="easter-egg-icon">${icon}</span><p class="easter-egg-quote">${quote}</p><p class="easter-egg-attr">${attr}</p>`;
     toast.classList.add("visible");
 
-    if (egg === "buddhist") {
+    const { consoleArt, consoleColor } = EGGS[egg];
+    if (consoleArt) {
       console.log(
-        "%c" +
-          [
-            "",
-            "  ☸  Dharmachakra — The Wheel of Dharma",
-            "",
-            "            ╱ ┃ ╲",
-            "          ╱   ┃   ╲",
-            "        ╱     ┃     ╲",
-            "      ━━━━━━━(☸)━━━━━━━",
-            "        ╲     ┃     ╱",
-            "          ╲   ┃   ╱",
-            "            ╲ ┃ ╱",
-            "",
-            "  The Noble Eightfold Path:",
-            "  Right View · Right Intention · Right Speech",
-            "  Right Action · Right Livelihood · Right Effort",
-            "  Right Mindfulness · Right Concentration",
-            "",
-          ].join("\n"),
-        "color: #963d97; font-family: monospace; line-height: 1.6;"
-      );
-    }
-
-    if (egg === "artemis") {
-      console.log(
-        "%c" +
-          [
-            "",
-            "  🌕  Artemis — Return to the Moon",
-            "",
-            "        *    .  *       .      ",
-            "    .       *      .        *  ",
-            "       .  ·  ☽  ·  .    .     ",
-            "    *      .    .      *       ",
-            "        .    *    .            ",
-            "",
-            "  Artemis II — First crewed lunar flyby",
-            "  since Apollo 17, 1972.",
-            "",
-            "  Reid Wiseman · Victor Glover",
-            "  Christina Koch · Jeremy Hansen",
-            "",
-          ].join("\n"),
-        "color: #009ddc; font-family: monospace; line-height: 1.6;"
+        "%c" + consoleArt.join("\n"),
+        `color: ${consoleColor}; font-family: monospace; line-height: 1.6;`
       );
     }
 
