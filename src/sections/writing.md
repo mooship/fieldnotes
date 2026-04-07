@@ -1,4 +1,4 @@
-<section class="section-colored" style="--section-color: var(--color-apple-orange); --section-tint: var(--color-apple-orange-tint); --section-hover: var(--color-apple-orange-hover);">
+<section class="section-colored" style="--section-color: var(--color-apple-orange-text); --section-border: var(--color-apple-orange); --section-tint: var(--color-apple-orange-tint); --section-hover: var(--color-apple-orange-hover);">
 
 ## Writing
 
