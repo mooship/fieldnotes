@@ -45,6 +45,10 @@
     border-left-color: var(--color-text);
   }
 
+  #easter-egg-toast[data-egg="artemis"] {
+    border-left-color: var(--color-apple-blue);
+  }
+
   .easter-egg-icon {
     font-size: 1.5rem;
     display: block;
@@ -75,6 +79,7 @@
   const BUDDHA = ["b", "u", "d", "d", "h", "a"];
   const DHARMA = ["d", "h", "a", "r", "m", "a"];
   const ANTIFA = ["a", "n", "t", "i", "f", "a"];
+  const ARTEMIS = ["a", "r", "t", "e", "m", "i", "s"];
 
   const KONAMI = [
     "ArrowUp",
@@ -106,6 +111,12 @@
       quote: "Fascism is not to be debated, it is to be smashed.",
       attr: "— Buenaventura Durruti",
     },
+    artemis: {
+      icon: "🌕",
+      quote:
+        "Earth is the cradle of humanity, but one cannot live in a cradle forever.",
+      attr: "— Konstantin Tsiolkovsky",
+    },
   } as const;
 
   type EggKey = keyof typeof EGGS;
@@ -117,6 +128,7 @@
     [BUDDHA, "buddhist", false],
     [DHARMA, "buddhist", false],
     [ANTIFA, "antifascist", false],
+    [ARTEMIS, "artemis", false],
   ];
 
   let toast: HTMLElement | undefined;
@@ -155,6 +167,30 @@
             "",
           ].join("\n"),
         "color: #963d97; font-family: monospace; line-height: 1.6;"
+      );
+    }
+
+    if (egg === "artemis") {
+      console.log(
+        "%c" +
+          [
+            "",
+            "  🌕  Artemis — Return to the Moon",
+            "",
+            "        *    .  *       .      ",
+            "    .       *      .        *  ",
+            "       .  ·  ☽  ·  .    .     ",
+            "    *      .    .      *       ",
+            "        .    *    .            ",
+            "",
+            "  Artemis II — First crewed lunar flyby",
+            "  since Apollo 17, 1972.",
+            "",
+            "  Reid Wiseman · Victor Glover",
+            "  Christina Koch · Jeremy Hansen",
+            "",
+          ].join("\n"),
+        "color: #009ddc; font-family: monospace; line-height: 1.6;"
       );
     }
 
@@ -318,6 +354,7 @@
     addLongPress(titleLink, () => showToast("buddhist"), signal);
     addLongPress(footerEl, () => showToast("socialist"), signal);
     addTripleSwipeLeft(headerEl, () => showToast("antifascist"), signal);
+    addTripleSwipeLeft(footerEl, () => showToast("artemis"), signal);
   }
 
   init();
