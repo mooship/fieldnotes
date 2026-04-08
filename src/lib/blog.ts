@@ -1,10 +1,10 @@
 import { getCollection } from "astro:content";
+import readingTime from "reading-time";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkSmartypants from "remark-smartypants";
-import readingTime from "reading-time";
 import { unified } from "unified";
 
 export function formatDate(date: Date): string {

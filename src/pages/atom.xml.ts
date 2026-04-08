@@ -1,5 +1,11 @@
 import type { APIContext } from "astro";
-import { BLOG_DESCRIPTION, getFeedItems, getSiteUrl, SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
+import {
+  BLOG_DESCRIPTION,
+  getFeedItems,
+  getSiteUrl,
+  SITE_AUTHOR,
+  SITE_TITLE,
+} from "../lib/blog";
 import { xmlEscape } from "../lib/xml";
 
 export async function GET(context: APIContext) {

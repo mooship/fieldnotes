@@ -7,5 +7,5 @@ const XML_ENTITIES: Record<string, string> = {
 };
 
 export function xmlEscape(str: string): string {
-  return str.replace(/[&<>"']/g, (ch) => XML_ENTITIES[ch]);
+  return str.replaceAll(/[&<>"']/g, (ch) => XML_ENTITIES[ch]);
 }
