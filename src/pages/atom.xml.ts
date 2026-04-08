@@ -44,7 +44,7 @@ ${item.tags.map((tag) => `    <category term="${xmlEscape(tag)}" />`).join("\n")
     <name>${xmlEscape(SITE_AUTHOR)}</name>
     <uri>${site}</uri>
   </author>
-  <link href="${site}" />
+  <link rel="alternate" href="${site}" type="text/html" />
   <link rel="self" href="${site}/atom.xml" />
 ${entries}
 </feed>`;
