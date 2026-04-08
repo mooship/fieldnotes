@@ -15,7 +15,7 @@ let fontData: Buffer | undefined;
 async function loadFont(): Promise<Buffer> {
   if (fontData) return fontData;
   const fontPath =
-    require.resolve("@fontsource/eb-garamond/files/eb-garamond-latin-400-normal.woff");
+    require.resolve("@fontsource/geist/files/geist-latin-400-normal.woff");
   fontData = await readFile(fontPath);
   return fontData;
 }
@@ -43,9 +43,9 @@ export const GET: APIRoute = async ({ props }) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-start",
-          backgroundColor: "#f8f8f5",
+          backgroundColor: "#ffffff",
           padding: "60px 80px",
-          fontFamily: "EB Garamond",
+          fontFamily: "Geist",
         },
         children: [
           {
@@ -67,7 +67,7 @@ export const GET: APIRoute = async ({ props }) => {
               style: {
                 fontSize: "56px",
                 lineHeight: 1.15,
-                color: "#1d1d1f",
+                color: "#000000",
                 letterSpacing: "-0.01em",
                 maxWidth: "90%",
               },
@@ -106,7 +106,7 @@ export const GET: APIRoute = async ({ props }) => {
       height: 630,
       fonts: [
         {
-          name: "EB Garamond",
+          name: "Geist",
           data: font,
           weight: 400,
           style: "normal",

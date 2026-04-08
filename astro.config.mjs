@@ -12,18 +12,8 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.bunny(),
-      name: "EB Garamond",
-      cssVariable: "--font-serif",
-    },
-    {
-      provider: fontProviders.bunny(),
       name: "Geist Mono",
       cssVariable: "--font-mono",
-    },
-    {
-      provider: fontProviders.bunny(),
-      name: "Geist Sans",
-      cssVariable: "--font-sans",
     },
   ],
   cacheDir: "./.astro-cache",
