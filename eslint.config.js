@@ -8,7 +8,14 @@ import tseslint from "typescript-eslint";
 /** @type {import("eslint").Linter.Config[]} */
 export default [
   {
-    ignores: ["dist/", ".astro/", ".astro-cache/", ".github/", ".claude/"],
+    ignores: [
+      "dist/",
+      ".astro/",
+      ".astro-cache/",
+      ".github/",
+      ".claude/",
+      "docs/superpowers/",
+    ],
   },
   ...tseslint.configs.recommended,
   ...astroPlugin.configs.recommended,
