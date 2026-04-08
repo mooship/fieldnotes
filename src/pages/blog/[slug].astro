@@ -257,8 +257,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   h1 {
-    color: var(--label);
-    font-weight: 400;
     font-size: 2.125rem;
     margin: 0 0 0.75rem 0;
     letter-spacing: -0.01em;
@@ -303,6 +301,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   article :global(h3) {
     font-size: 1.25rem;
     font-weight: 500;
+  }
+
+  article :global(h4) {
+    font-size: 1.125rem;
   }
 
   article :global(blockquote) {
