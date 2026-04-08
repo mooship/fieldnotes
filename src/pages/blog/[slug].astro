@@ -191,6 +191,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       button.className = "copy-btn";
       button.type = "button";
       button.setAttribute("aria-label", "Copy code");
+      button.setAttribute("aria-live", "polite");
       button.textContent = "Copy";
 
       button.addEventListener("click", async () => {
