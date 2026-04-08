@@ -82,11 +82,11 @@ html[data-theme="dark"] {
 }
 
 html {
-  background: var(--color-bg);
+  background: var(--system-background);
 }
 
 body {
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 1.0625rem;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -96,8 +96,8 @@ body {
     "kern" 1,
     "liga" 1,
     "onum" 1;
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--system-background);
+  color: var(--label);
   max-width: 640px;
   margin: 0 auto;
   padding: calc(40px + env(safe-area-inset-top))
@@ -108,18 +108,16 @@ body {
 }
 
 h1 {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-weight: 400;
-  color: var(--color-heading);
+  color: var(--label);
   text-wrap: balance;
   letter-spacing: -0.01em;
   line-height: 1.15;
 }
 
 h2 {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-weight: 400;
-  color: var(--color-heading);
+  color: var(--label);
   text-wrap: balance;
   letter-spacing: 0;
   line-height: 1.15;
@@ -127,19 +125,19 @@ h2 {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: 2px solid var(--tint);
+  outline-offset: 2px;
   border-radius: 6px;
 }
 
 a {
-  color: var(--color-link);
+  color: var(--link);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--color-link-hover);
+  color: var(--link-hover);
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
@@ -160,8 +158,8 @@ p {
 }
 
 li {
-  margin-bottom: 0.625rem;
-  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+  color: var(--secondary-label);
   text-wrap: pretty;
 }
 
@@ -196,27 +194,25 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
 
 .tag {
   font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: var(--tag-color, var(--color-apple-blue-text));
   border: 1px solid var(--tag-color, var(--color-apple-blue-text));
-  border-radius: 3px;
-  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
   text-decoration: none;
 }
 
 .tag:hover,
 .tag:focus-visible {
   background: var(--tag-color, var(--color-apple-blue-text));
-  color: var(--color-bg);
+  color: var(--system-background);
   text-decoration: none;
 }
 
 .post-tags {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.5rem;
   list-style: none;
   padding: 0;
 }
@@ -251,5 +247,21 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --secondary-label: #3a3a3c;
+    --separator: #aeaeb2;
+  }
+
+  html[data-theme="dark"] {
+    --secondary-label: #ebebf5;
+    --separator: #636366;
+  }
+
+  .tag {
+    border-width: 2px;
   }
 }
