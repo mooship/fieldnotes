@@ -30,4 +30,4 @@
 - [Astro](https://astro.build) — static output, love this framework
 - Cloudflare Pages — fast edge deploys, zero config
 - Cloudflare Web Analytics — privacy-first, no cookies
-- Geist Sans and EB Garamond typefaces — clean sans-serif meets classic serif
+- System font stack (SF Pro on Apple devices, Segoe UI on Windows) — native, fast, no web font download

@@ -193,7 +193,7 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
 }
 
 .tag {
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--tag-color, var(--color-apple-blue-text));
