@@ -63,7 +63,7 @@ const jsonLd = {
     <meta name="robots" content={robots} />
     <meta
       name="theme-color"
-      content="#f8f8f5"
+      content="#ffffff"
       media="(prefers-color-scheme: light)"
     />
     <meta
@@ -181,9 +181,9 @@ const jsonLd = {
     height: auto;
     overflow: visible;
     padding: 0.5rem 1rem;
-    background: var(--color-bg);
-    color: var(--color-link);
-    border: 2px solid var(--color-link);
+    background: var(--system-background);
+    color: var(--link);
+    border: 2px solid var(--link);
     border-radius: 4px;
     font-size: 0.9rem;
     z-index: 9999;
@@ -214,10 +214,9 @@ const jsonLd = {
   }
 
   header a:first-child {
-    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
     font-weight: 400;
     font-size: 1.2rem;
-    color: var(--color-heading);
+    color: var(--label);
     letter-spacing: -0.01em;
   }
 
@@ -229,22 +228,20 @@ const jsonLd = {
 
   nav a {
     font-weight: 500;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 0.9375rem;
     padding: 0.75rem 0.5rem;
-    color: var(--color-text-secondary);
+    color: var(--secondary-label);
     text-decoration: none;
   }
 
   nav a:hover {
-    color: var(--color-text);
+    color: var(--label);
     text-decoration: none;
   }
 
   nav a[aria-current="page"],
   nav a[aria-current="page"]:hover {
-    color: var(--color-text);
+    color: var(--label);
     text-decoration: underline;
     text-decoration-color: var(--color-apple-blue);
     text-decoration-thickness: 2px;
@@ -265,16 +262,14 @@ const jsonLd = {
     background-repeat: no-repeat;
     background-position: 0% top;
     animation: rainbow-shimmer 8s ease-in-out infinite alternate;
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
+    font-size: 0.8125rem;
+    color: var(--secondary-label);
   }
 
   .feed-links {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
   }
 
   .feed-links a {
@@ -282,10 +277,10 @@ const jsonLd = {
   }
 
   footer a {
-    color: var(--color-link);
+    color: var(--link);
   }
 
   footer a:hover {
-    color: var(--color-link-hover);
+    color: var(--link-hover);
   }
 </style>
