@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkSmartypants from "remark-smartypants";
+import readingTime from "reading-time";
 import { unified } from "unified";
 
 export function formatDate(date: Date): string {
@@ -14,6 +15,8 @@ export function formatDate(date: Date): string {
   });
 }
 
+export const SITE_TITLE = "Timothy Brits";
+export const SITE_AUTHOR = "Timothy Brits";
 export const BLOG_DESCRIPTION =
   "Writing by Timothy Brits on software, open source, Buddhism, and eco-socialism.";
 
@@ -73,8 +76,12 @@ export async function getFeedItems(siteUrl: string): Promise<FeedItem[]> {
 export function getReadingTime(
   remarkPluginFrontmatter: Record<string, unknown>
 ): string | undefined {
-  const value = remarkPluginFrontmatter?.readingTime;
+  const value = remarkPluginFrontmatter.readingTime;
   return typeof value === "string" ? value : undefined;
+}
+
+export function computeReadingTime(body: string | undefined): string {
+  return readingTime(body ?? "").text;
 }
 
 export interface AdjacentPost {

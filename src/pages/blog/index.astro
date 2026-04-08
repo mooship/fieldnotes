@@ -1,20 +1,14 @@
 ---
 import Search from "astro-pagefind/components/Search";
-import { render } from "astro:content";
 import PostListItem from "../../components/PostListItem.astro";
 import Layout from "../../layouts/Layout.astro";
-import { BLOG_DESCRIPTION, getBlogPosts, getReadingTime } from "../../lib/blog";
+import { BLOG_DESCRIPTION, computeReadingTime, getBlogPosts } from "../../lib/blog";
 
 const posts = await getBlogPosts();
-const postsWithMeta = await Promise.all(
-  posts.map(async (post) => {
-    const { remarkPluginFrontmatter } = await render(post);
-    return {
-      post,
-      readingTime: getReadingTime(remarkPluginFrontmatter),
-    };
-  })
-);
+const postsWithMeta = posts.map((post) => ({
+  post,
+  readingTime: computeReadingTime(post.body),
+}));
 ---
 
 <Layout

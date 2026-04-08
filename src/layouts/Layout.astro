@@ -29,8 +29,7 @@ const {
 
 const url = Astro.url;
 const pathname = url.pathname;
-const canonical =
-  canonicalProp ?? (url ? url.origin + url.pathname : undefined);
+const canonical = canonicalProp ?? url.origin + url.pathname;
 const schemaType = type === "article" ? "Article" : "WebSite";
 const jsonLd = {
   "@context": "https://schema.org",

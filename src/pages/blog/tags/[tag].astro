@@ -1,12 +1,11 @@
 ---
-import { render } from "astro:content";
 import PostListItem from "../../../components/PostListItem.astro";
 import Layout from "../../../layouts/Layout.astro";
 import {
+  computeReadingTime,
   getAllTags,
   getBlogPosts,
   getPostsByTag,
-  getReadingTime,
 } from "../../../lib/blog";
 
 export async function getStaticPaths() {
@@ -20,13 +19,10 @@ export async function getStaticPaths() {
 }
 
 const { tag, posts } = Astro.props;
-const postsWithMeta = await Promise.all(
-  posts.map(async (post: Awaited<ReturnType<typeof getBlogPosts>>[number]) => {
-    const { remarkPluginFrontmatter } = await render(post);
-    return {
-      post,
-      readingTime: getReadingTime(remarkPluginFrontmatter),
-    };
+const postsWithMeta = posts.map(
+  (post: Awaited<ReturnType<typeof getBlogPosts>>[number]) => ({
+    post,
+    readingTime: computeReadingTime(post.body),
   })
 );
 ---
