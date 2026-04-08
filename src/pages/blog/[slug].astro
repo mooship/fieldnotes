@@ -253,13 +253,13 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   header {
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--separator);
   }
 
   h1 {
-    color: var(--color-heading);
+    color: var(--label);
     font-weight: 400;
-    font-size: 2.75rem;
+    font-size: 2.125rem;
     margin: 0 0 0.75rem 0;
     letter-spacing: -0.01em;
     line-height: 1.08;
@@ -268,11 +268,8 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   time,
   .reading-time {
     display: block;
-    font-size: 0.82rem;
-    color: var(--color-text-secondary);
-    letter-spacing: 0.05em;
-    font-variant: small-caps;
-    text-transform: none;
+    font-size: 0.75rem;
+    color: var(--secondary-label);
   }
 
   .updated {
@@ -291,8 +288,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   article :global(h2),
   article :global(h3),
   article :global(h4) {
-    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-    color: var(--color-heading);
+    color: var(--label);
     font-weight: 600;
     margin: 2.5rem 0 0.75rem 0;
     text-wrap: balance;
@@ -301,11 +297,11 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   article :global(h2) {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
   }
 
   article :global(h3) {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 500;
   }
 
@@ -313,8 +309,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     border-left: 3px solid var(--color-apple-blue);
     margin: 1.5rem 0;
     padding: 0.25rem 0 0.25rem 1.25rem;
-    color: var(--color-text-secondary);
-    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    color: var(--secondary-label);
     font-size: 1.05rem;
     font-style: italic;
   }
@@ -322,14 +317,14 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   article :global(code) {
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.85em;
-    background: var(--color-border);
+    background: var(--secondary-system-background);
     padding: 0.2em 0.4em;
     border-radius: 6px;
   }
 
   article :global(pre) {
     font-family: var(--font-mono), ui-monospace, monospace;
-    background: var(--color-border);
+    background: var(--secondary-system-background);
     padding: 1.25rem;
     border-radius: 8px;
     overflow-x: auto;
@@ -347,16 +342,14 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
+    background: var(--system-background);
+    border: 1px solid var(--separator);
     border-radius: 4px;
     padding: 0.5rem 0.75rem;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
+    color: var(--secondary-label);
     cursor: pointer;
     opacity: 0.6;
     transition:
@@ -370,12 +363,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   article :global(.copy-btn:focus-visible) {
-    outline: 3px solid var(--color-accent);
+    outline: 2px solid var(--tint);
     outline-offset: 2px;
   }
 
   article :global(.copy-btn:hover) {
-    color: var(--color-text);
+    color: var(--label);
   }
 
   article :global(ul),
@@ -398,7 +391,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .series-box {
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--separator);
     border-radius: 8px;
     padding: 1rem 1.25rem;
     margin-bottom: 2rem;
@@ -410,7 +403,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     font-weight: 500;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-text-secondary);
+    color: var(--secondary-label);
     margin: 0 0 0.5rem 0;
   }
 
@@ -423,18 +416,18 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   .series-box li {
     font-size: 0.9rem;
     margin-bottom: 0.25rem;
-    color: var(--color-text-secondary);
+    color: var(--secondary-label);
   }
 
   .series-box li.current {
-    color: var(--color-text);
+    color: var(--label);
     font-weight: 600;
   }
 
   .related-posts {
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--separator);
   }
 
   .related-posts h2 {
@@ -443,7 +436,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--color-text-secondary);
+    color: var(--secondary-label);
     margin: 0 0 0.75rem 0;
   }
 
@@ -458,7 +451,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .related-posts a {
-    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.95rem;
   }
 
@@ -468,7 +461,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     gap: 1.5rem;
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--separator);
   }
 
   .post-nav-link {
