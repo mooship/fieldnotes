@@ -56,7 +56,7 @@ const postsWithMeta = await Promise.all(
 
   h1 {
     text-align: left;
-    color: var(--color-heading);
+    color: var(--label);
     margin: 0 0 1.5rem 0;
     font-weight: 400;
     font-size: 3rem;
@@ -87,10 +87,10 @@ const postsWithMeta = await Promise.all(
 
   .search-wrapper :global(.pagefind-ui) {
     --pagefind-ui-scale: 0.85;
-    --pagefind-ui-primary: var(--color-link);
-    --pagefind-ui-text: var(--color-text);
-    --pagefind-ui-background: var(--color-bg);
-    --pagefind-ui-border: var(--color-border);
+    --pagefind-ui-primary: var(--link);
+    --pagefind-ui-text: var(--label);
+    --pagefind-ui-background: var(--system-background);
+    --pagefind-ui-border: var(--separator);
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-border-radius: 6px;
     --pagefind-ui-font: var(--font-sans), system-ui, sans-serif;
