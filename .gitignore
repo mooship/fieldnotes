@@ -33,3 +33,4 @@ package-lock.json
 
 # eslint
 .eslintcache
+.worktrees/
