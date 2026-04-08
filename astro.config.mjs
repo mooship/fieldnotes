@@ -11,7 +11,7 @@ export default defineConfig({
   output: "static",
   fonts: [
     {
-      provider: fontProviders.bunny(),
+      provider: fontProviders.fontsource(),
       name: "Geist Mono",
       cssVariable: "--font-mono",
     },
