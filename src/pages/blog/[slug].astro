@@ -29,9 +29,9 @@ export async function getStaticPaths() {
 }
 
 const { post, adjacent, related, seriesPosts } = Astro.props;
+const { slug } = Astro.params;
 const { Content, remarkPluginFrontmatter } = await render(post);
 const readingTime = getReadingTime(remarkPluginFrontmatter);
-const slug = getPostSlug(post.id);
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 ---
 
@@ -150,10 +150,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 </Layout>
 
 <script>
-  const prefersReducedMotion = globalThis.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
   let scrollAbort: AbortController | undefined;
 
   function initProgress() {
@@ -163,7 +159,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     const bar = document.querySelector<HTMLElement>(".progress-bar");
     if (!bar) return;
 
-    if (prefersReducedMotion) {
+    if (globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       bar.style.display = "none";
       return;
     }

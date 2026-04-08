@@ -1,5 +1,5 @@
 import type { APIContext } from "astro";
-import { BLOG_DESCRIPTION, getFeedItems, getSiteUrl } from "../lib/blog";
+import { BLOG_DESCRIPTION, getFeedItems, getSiteUrl, SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 import { xmlEscape } from "../lib/xml";
 
 export async function GET(context: APIContext) {
@@ -31,11 +31,11 @@ ${item.tags.map((tag) => `    <category term="${xmlEscape(tag)}" />`).join("\n")
   const xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>${site}/atom.xml</id>
-  <title>Timothy Brits</title>
+  <title>${xmlEscape(SITE_TITLE)}</title>
   <subtitle>${xmlEscape(BLOG_DESCRIPTION)}</subtitle>
   <updated>${updated}</updated>
   <author>
-    <name>Timothy Brits</name>
+    <name>${xmlEscape(SITE_AUTHOR)}</name>
     <uri>${site}</uri>
   </author>
   <link href="${site}" />

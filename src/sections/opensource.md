@@ -1,4 +1,4 @@
-<section class="section-colored" style="--section-color: var(--color-apple-yellow-text); --section-border: var(--color-apple-yellow); --section-tint: var(--color-apple-yellow-tint); --section-hover: var(--color-apple-yellow-hover);">
+<section class="section-colored" style="--section-color: var(--color-apple-yellow-text); --section-border: var(--color-apple-yellow); --section-hover: var(--color-apple-yellow-hover);">
 
 ## Open Source
 
