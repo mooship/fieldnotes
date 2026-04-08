@@ -8,10 +8,6 @@
     <p class="project-desc">Fast, minimal notes from your terminal.</p>
   </li>
   <li>
-    <a href="https://tidel.app">Tidel</a>
-    <p class="project-desc">A daily AI-curated news digest.</p>
-  </li>
-  <li>
     <a href="https://divvy.timothybrits.co.za">Divvy</a>
     <p class="project-desc">Split the bill without splitting friendships.</p>
   </li>
