@@ -12,9 +12,9 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+bun-debug.log*
 
-# npm lockfile (this project uses pnpm)
+# npm lockfile
 package-lock.json
 
 
