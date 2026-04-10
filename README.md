@@ -6,7 +6,7 @@ Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to t
 
 ## Quick Start
 
-Prerequisite: Node 22.21.1 and Bun 1.3+.
+Prerequisite: Bun 1.3+.
 
 ```sh
 git clone <your-fork-url> fieldnotes
