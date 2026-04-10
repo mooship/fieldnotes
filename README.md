@@ -6,13 +6,13 @@ Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to t
 
 ## Quick Start
 
-Prerequisite: Node 22.21.1 and pnpm.
+Prerequisite: Node 22.21.1 and Bun 1.3+.
 
 ```sh
 git clone <your-fork-url> fieldnotes
 cd fieldnotes
-pnpm install
-pnpm run dev
+bun install
+bun run dev
 ```
 
 Dev server runs at: http://localhost:4321
@@ -21,12 +21,12 @@ Dev server runs at: http://localhost:4321
 
 | Script            | Purpose                          |
 | ----------------- | -------------------------------- |
-| `pnpm run dev`     | Start local development server   |
-| `pnpm run build`   | Type check then production build |
-| `pnpm run lint`    | Lint and auto-fix all file types |
-| `pnpm run preview` | Preview built site               |
-| `pnpm run format`  | Prettier + import sorting        |
-| `pnpm test`        | Run Vitest unit tests            |
+| `bun run dev`     | Start local development server   |
+| `bun run build`   | Type check then production build |
+| `bun run lint`    | Lint and auto-fix all file types |
+| `bun run preview` | Preview built site               |
+| `bun run format`  | Prettier + import sorting        |
+| `bun run test`        | Run Vitest unit tests            |
 
 ## Structure (essentials)
 
@@ -65,7 +65,7 @@ public/              # Static assets (images, favicons, etc.)
 
 1. Edit home page sections in `src/sections/intro.md`, `src/sections/personal.md`, `src/sections/writing.md`, `src/sections/opensource.md`, and `src/sections/support.md`.
 2. Add blog posts in `src/content/blog/` (do not edit `src/sections/writing.md` for post content).
-3. Run `pnpm run lint`, `pnpm test`, and `pnpm run build` before pushing changes.
+3. Run `bun run lint`, `bun run test`, and `bun run build` before pushing changes.
 
 ### Styling Tweaks
 
@@ -80,7 +80,7 @@ Fonts are self‑hosted (variable font packages) for performance & privacy.
 - Astro 6.x
 - TypeScript enabled (`tsconfig.json`)
 - ESLint flat config for Astro, TS, CSS, and Markdown
-- Vitest unit tests with happy-dom (run with `pnpm test`)
+- Vitest unit tests with happy-dom (run with `bun run test`)
 - Lefthook pre-commit hook: runs `lint` + `format` in parallel on every commit
 - Astro font provider setup via `fontProviders.fontsource()` in `astro.config.mjs`
 - Experimental Rust compiler enabled (`experimental.rustCompiler: true`)
@@ -114,9 +114,9 @@ Your personal content (links, descriptions) is yours — consider adding a note 
 Run before pushing major changes:
 
 ```sh
-pnpm run lint
-pnpm test
-pnpm run build
+bun run lint
+bun run test
+bun run build
 ```
 
 That's it — customise your content files, tweak styles, deploy anywhere Astro supports (Netlify, Vercel, Cloudflare, etc.).

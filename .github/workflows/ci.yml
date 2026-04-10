@@ -1,0 +1,32 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - name: Cache Astro
+        uses: actions/cache@v5
+        with:
+          path: node_modules/.astro
+          key: ${{ runner.os }}-astro-${{ hashFiles('bun.lock', 'astro.config.*', 'tsconfig*.json') }}
+          restore-keys: |
+            ${{ runner.os }}-astro-
+      - run: bun run build
+      - run: bun run test
