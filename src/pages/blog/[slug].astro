@@ -383,10 +383,20 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   article :global(hr) {
     border: none;
-    height: 3px;
-    background: var(--rainbow-gradient);
-    background-size: 100% 100%;
-    margin: 2rem 0;
+    height: auto;
+    margin: 2.5rem 0;
+    text-align: center;
+    overflow: visible;
+  }
+
+  article :global(hr)::before {
+    content: "* * *";
+    display: inline-block;
+    color: var(--secondary-label);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    padding-left: 0.5em;
   }
 
   .series-box {
