@@ -299,7 +299,8 @@
     controller = new AbortController();
     const { signal } = controller;
 
-    toast = document.querySelector<HTMLElement>("#easter-egg-toast") ?? undefined;
+    toast =
+      document.querySelector<HTMLElement>("#easter-egg-toast") ?? undefined;
     const footerEl = document.querySelector("footer");
     const headerEl = document.querySelector("header");
 
