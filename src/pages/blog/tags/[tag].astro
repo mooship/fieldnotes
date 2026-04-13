@@ -19,12 +19,10 @@ export async function getStaticPaths() {
 }
 
 const { tag, posts } = Astro.props;
-const postsWithMeta = posts.map(
-  (post: Awaited<ReturnType<typeof getBlogPosts>>[number]) => ({
-    post,
-    readingTime: computeReadingTime(post.body),
-  })
-);
+const postsWithMeta = posts.map((post) => ({
+  post,
+  readingTime: computeReadingTime(post.body),
+}));
 ---
 
 <Layout
