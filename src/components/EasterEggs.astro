@@ -198,7 +198,7 @@
     }
 
     hideTimer = setTimeout(() => {
-      toast.classList.remove("visible");
+      toast?.classList.remove("visible");
     }, 4000);
   }
 
@@ -299,7 +299,8 @@
     controller = new AbortController();
     const { signal } = controller;
 
-    toast = document.querySelector<HTMLElement>("#easter-egg-toast");
+    toast =
+      document.querySelector<HTMLElement>("#easter-egg-toast") ?? undefined;
     const footerEl = document.querySelector("footer");
     const headerEl = document.querySelector("header");
 

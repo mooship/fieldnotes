@@ -97,15 +97,8 @@ const jsonLd = {
     <script is:inline>
       (function () {
         const t = localStorage.getItem("theme");
-        if (t === "dark" || t === "light") {
-          document.documentElement.dataset.theme = t;
-        } else {
-          document.documentElement.dataset.theme = globalThis.matchMedia(
-            "(prefers-color-scheme: dark)"
-          ).matches
-            ? "dark"
-            : "light";
-        }
+        document.documentElement.dataset.theme =
+          t === "dark" ? "dark" : "light";
       })();
     </script>
     <meta property="og:title" content={title} />
