@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
-  "trustedDependencies": ["sharp", "esbuild", "lefthook"],
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build",
@@ -46,7 +45,7 @@
     "remark-smartypants": "^3.0.2",
     "satori": "^0.26.0",
     "sharp": "^0.34.5",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "typescript-eslint": "^8.57.2",
     "unified": "^11.0.5",
     "vfile": "^6.0.3",
@@ -56,5 +55,10 @@
   "packageManager": "bun@1.3.12",
   "engines": {
     "node": ">=22.21.1"
-  }
+  },
+  "trustedDependencies": [
+    "sharp",
+    "esbuild",
+    "lefthook"
+  ]
 }

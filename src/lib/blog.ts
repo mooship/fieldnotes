@@ -118,10 +118,10 @@ export function getAllTags(posts: { data: { tags: string[] } }[]): string[] {
   return [...new Set(posts.flatMap((post) => post.data.tags))].toSorted();
 }
 
-export function getPostsByTag(
-  posts: { data: { tags: string[] } }[],
+export function getPostsByTag<T extends { data: { tags: string[] } }>(
+  posts: T[],
   tag: string
-) {
+): T[] {
   return posts.filter((post) => post.data.tags.includes(tag));
 }
 

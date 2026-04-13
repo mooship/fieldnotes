@@ -1,5 +1,5 @@
 ---
-import { Monitor, Moon, Sun } from "@lucide/astro";
+import { Moon, Sun } from "@lucide/astro";
 ---
 
 <button
@@ -10,34 +10,26 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
 >
   <Sun size={16} class="icon-light" aria-hidden="true" />
   <Moon size={16} class="icon-dark" aria-hidden="true" />
-  <Monitor size={16} class="icon-system" aria-hidden="true" />
 </button>
 
 <script>
-  const THEMES = ["system", "light", "dark"] as const;
+  const THEMES = ["light", "dark"] as const;
   type Theme = (typeof THEMES)[number];
 
   function getStoredTheme(): Theme {
     const stored = localStorage.getItem("theme");
-    if (stored === "light" || stored === "dark") return stored;
-    return "system";
+    if (stored === "dark") return "dark";
+    return "light";
   }
 
   const THEME_LABELS: Record<Theme, string> = {
-    system: "Theme: system. Click for light.",
     light: "Theme: light. Click for dark.",
-    dark: "Theme: dark. Click for system.",
+    dark: "Theme: dark. Click for light.",
   };
-
-  function resolveSystemTheme(): "light" | "dark" {
-    return globalThis.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
 
   function applyTheme(theme: Theme) {
     const root = document.documentElement;
-    root.dataset.theme = theme === "system" ? resolveSystemTheme() : theme;
+    root.dataset.theme = theme;
 
     for (const button of document.querySelectorAll<HTMLButtonElement>(
       "[data-theme-toggle]"
@@ -50,13 +42,7 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
   function cycleTheme() {
     const current = getStoredTheme();
     const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
-
-    if (next === "system") {
-      localStorage.removeItem("theme");
-    } else {
-      localStorage.setItem("theme", next);
-    }
-
+    localStorage.setItem("theme", next);
     applyTheme(next);
   }
 
@@ -68,14 +54,6 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
     const { signal } = controller;
 
     applyTheme(getStoredTheme());
-
-    globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener(
-      "change",
-      () => {
-        if (getStoredTheme() === "system") applyTheme("system");
-      },
-      { signal }
-    );
 
     for (const button of document.querySelectorAll("[data-theme-toggle]"))
       button.addEventListener("click", cycleTheme, { signal });
@@ -104,14 +82,12 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
   }
 
   .icon-light,
-  .icon-dark,
-  .icon-system {
+  .icon-dark {
     display: none;
   }
 
   .theme-toggle[data-active="light"] .icon-light,
-  .theme-toggle:not([data-active]) .icon-system,
-  .theme-toggle[data-active="system"] .icon-system,
+  .theme-toggle:not([data-active]) .icon-light,
   .theme-toggle[data-active="dark"] .icon-dark {
     display: block;
   }
