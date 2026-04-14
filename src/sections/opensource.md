@@ -8,10 +8,6 @@
     <p class="project-desc">Fast, minimal notes from your terminal.</p>
   </li>
   <li>
-    <a href="https://divvy.timothybrits.co.za">Divvy</a>
-    <p class="project-desc">Split the bill without splitting friendships.</p>
-  </li>
-  <li>
     <a href="https://bitrot.timothybrits.co.za">Bitrot</a>
     <p class="project-desc">A digital graveyard of dead products, services, and software.</p>
   </li>
