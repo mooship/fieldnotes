@@ -17,16 +17,16 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run lint
+          node-version: "24"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
       - name: Cache Astro
         uses: actions/cache@v5
         with:
           path: node_modules/.astro
-          key: ${{ runner.os }}-astro-${{ hashFiles('bun.lock', 'astro.config.*', 'tsconfig*.json') }}
+          key: ${{ runner.os }}-astro-${{ hashFiles('package-lock.json', 'astro.config.*', 'tsconfig*.json') }}
           restore-keys: |
             ${{ runner.os }}-astro-
-      - run: bun run build
-      - run: bun run test
+      - run: npm run build
+      - run: npm run test
