@@ -21,12 +21,5 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run lint
-      - name: Cache Astro
-        uses: actions/cache@v5
-        with:
-          path: node_modules/.astro
-          key: ${{ runner.os }}-astro-${{ hashFiles('package-lock.json', 'astro.config.*', 'tsconfig*.json') }}
-          restore-keys: |
-            ${{ runner.os }}-astro-
       - run: npm run build
       - run: npm run test
