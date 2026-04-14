@@ -1,6 +1,6 @@
 pre-commit:
   jobs:
     - name: lint
-      run: bun run lint
+      run: npm run lint
     - name: format
-      run: bun run format
+      run: npm run format
