@@ -9,15 +9,15 @@ Fieldnotes is a personal site and blog built with Astro (static output). The hom
 ## Commands
 
 ```bash
-bun run dev        # start dev server
-bun run build      # type-check (astro check) then build
-bun run lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
-bun run preview    # preview production build
-bun run format     # prettier with auto-fix
-bun run test           # run Vitest unit tests
+npm run dev        # start dev server
+npm run build      # type-check (astro check) then build
+npm run lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
+npm run preview    # preview production build
+npm run format     # prettier with auto-fix
+npm run test       # run Vitest unit tests
 ```
 
-`bun run build` is the primary verification step — it runs `astro check` (TypeScript + Astro type checking) before building. Run `bun run test` to verify utility logic. Both must pass before committing.
+`npm run build` is the primary verification step — it runs `astro check` (TypeScript + Astro type checking) before building. Run `npm run test` to verify utility logic. Both must pass before committing.
 
 Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Markdown.
 
@@ -33,7 +33,7 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. Run `bunx lefthook install` after cloning to activate hooks.
+Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. Run `npx lefthook install` after cloning to activate hooks.
 
 ## Safety
 
