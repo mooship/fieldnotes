@@ -8,16 +8,16 @@
     right: 2rem;
     width: 300px;
     padding: 1.25rem 1.5rem;
-    border-radius: 12px;
-    background: var(--system-background);
-    border: 1px solid var(--separator);
-    border-left: 3px solid var(--separator);
+    border-radius: 2px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.06),
+      0 4px 24px rgba(0, 0, 0, 0.08),
       0 1px 4px rgba(0, 0, 0, 0.04);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--label);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink);
     z-index: 9999;
     opacity: 0;
     transform: translateY(1rem);
@@ -34,19 +34,19 @@
   }
 
   #easter-egg-toast[data-egg="socialist"] {
-    border-left-color: var(--color-apple-red);
+    border-left-color: var(--oxblood);
   }
 
   #easter-egg-toast[data-egg="buddhist"] {
-    border-left-color: var(--color-apple-purple);
+    border-left-color: var(--iris);
   }
 
   #easter-egg-toast[data-egg="antifascist"] {
-    border-left-color: var(--label);
+    border-left-color: var(--ink);
   }
 
   #easter-egg-toast[data-egg="artemis"] {
-    border-left-color: var(--color-apple-blue);
+    border-left-color: var(--link);
   }
 
   .easter-egg-icon {
@@ -56,13 +56,18 @@
   }
 
   .easter-egg-quote {
+    font-family: var(--font-serif);
     font-style: italic;
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.5rem;
+    line-height: 1.5;
   }
 
   .easter-egg-attr {
-    font-size: 0.8rem;
-    color: var(--secondary-label);
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
     margin: 0;
   }
 
@@ -132,7 +137,7 @@
         "  Right Mindfulness · Right Concentration",
         "",
       ],
-      consoleColor: "#963d97",
+      consoleColor: "#5d4f85",
     },
     antifascist: {
       icon: "🏴",
@@ -161,7 +166,7 @@
         "  Christina Koch · Jeremy Hansen",
         "",
       ],
-      consoleColor: "#009ddc",
+      consoleColor: "#2a4a6b",
     },
   };
 

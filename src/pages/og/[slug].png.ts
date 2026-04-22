@@ -7,17 +7,26 @@ import { getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const require = createRequire(import.meta.url);
 
-const RAINBOW_GRADIENT =
-  "linear-gradient(to right, #61bb46, #fdb827, #f5821f, #e03a3e, #963d97, #009ddc)";
+const PAPER = "#f5efe1";
+const INK = "#1f1a10";
+const INK_SOFT = "#6b5d47";
+const RULE = "#c9bfa8";
 
-let fontData: Buffer | undefined;
+let regularFont: Buffer | undefined;
+let italicFont: Buffer | undefined;
 
-async function loadFont(): Promise<Buffer> {
-  if (fontData) return fontData;
-  const fontPath =
-    require.resolve("@fontsource/geist/files/geist-latin-400-normal.woff");
-  fontData = await readFile(fontPath);
-  return fontData;
+async function loadFonts(): Promise<{ regular: Buffer; italic: Buffer }> {
+  if (!regularFont) {
+    const regularPath =
+      require.resolve("@fontsource/fraunces/files/fraunces-latin-700-normal.woff");
+    regularFont = await readFile(regularPath);
+  }
+  if (!italicFont) {
+    const italicPath =
+      require.resolve("@fontsource/fraunces/files/fraunces-latin-400-italic.woff");
+    italicFont = await readFile(italicPath);
+  }
+  return { regular: regularFont, italic: italicFont };
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -30,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const GET: APIRoute = async ({ props }) => {
   const { title } = props as { title: string };
-  const font = await loadFont();
+  const { regular, italic } = await loadFonts();
 
   const svg = await satori(
     {
@@ -41,61 +50,87 @@ export const GET: APIRoute = async ({ props }) => {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          backgroundColor: "#ffffff",
-          padding: "60px 80px",
-          fontFamily: "Geist",
+          justifyContent: "space-between",
+          backgroundColor: PAPER,
+          padding: "70px 90px",
+          fontFamily: "Fraunces",
         },
         children: [
           {
             type: "div",
             props: {
               style: {
-                width: "100%",
-                height: "6px",
-                position: "absolute",
-                top: "0",
-                left: "0",
-                background: RAINBOW_GRADIENT,
+                display: "flex",
+                fontSize: "22px",
+                fontStyle: "italic",
+                color: INK_SOFT,
+                letterSpacing: "0.02em",
               },
+              children: "Timothy Brits — fieldnotes",
             },
           },
           {
             type: "div",
             props: {
               style: {
-                fontSize: "56px",
-                lineHeight: 1.15,
-                color: "#000000",
-                letterSpacing: "-0.01em",
-                maxWidth: "90%",
+                display: "flex",
+                flexDirection: "column",
               },
-              children: title,
+              children: [
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      fontSize: "60px",
+                      fontWeight: 700,
+                      lineHeight: 1.12,
+                      color: INK,
+                      letterSpacing: "-0.015em",
+                      maxWidth: "95%",
+                    },
+                    children: title,
+                  },
+                },
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      width: "60px",
+                      height: "2px",
+                      backgroundColor: INK_SOFT,
+                      marginTop: "28px",
+                    },
+                  },
+                },
+              ],
             },
           },
           {
             type: "div",
             props: {
               style: {
-                fontSize: "24px",
-                color: "#6e6e73",
-                marginTop: "32px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontSize: "20px",
+                fontStyle: "italic",
+                color: INK_SOFT,
+                borderTop: `1px solid ${RULE}`,
+                paddingTop: "22px",
               },
-              children: "timothybrits.co.za",
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                width: "100%",
-                height: "6px",
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                background: RAINBOW_GRADIENT,
-              },
+              children: [
+                {
+                  type: "div",
+                  props: { children: "timothybrits.co.za" },
+                },
+                {
+                  type: "div",
+                  props: {
+                    style: { fontSize: "28px" },
+                    children: "❦",
+                  },
+                },
+              ],
             },
           },
         ],
@@ -106,10 +141,16 @@ export const GET: APIRoute = async ({ props }) => {
       height: 630,
       fonts: [
         {
-          name: "Geist",
-          data: font,
-          weight: 400,
+          name: "Fraunces",
+          data: regular,
+          weight: 700,
           style: "normal",
+        },
+        {
+          name: "Fraunces",
+          data: italic,
+          weight: 400,
+          style: "italic",
         },
       ],
     }

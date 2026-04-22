@@ -1,4 +1,6 @@
-<section class="section-colored" style="--section-color: var(--color-apple-red-text); --section-border: var(--color-apple-red); --section-hover: var(--color-apple-red-hover);">
+<section class="section-colored" style="--section-color: var(--oxblood); --section-border: var(--oxblood); --section-hover: var(--oxblood-hover);">
+
+<p class="section-kicker" aria-hidden="true">IV.</p>
 
 ## Support
 

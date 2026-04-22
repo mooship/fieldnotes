@@ -220,16 +220,8 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     top: 0;
     left: 0;
     width: 100%;
-    height: 3px;
-    background: linear-gradient(
-      to right,
-      var(--color-apple-green),
-      var(--color-apple-yellow),
-      var(--color-apple-orange),
-      var(--color-apple-red),
-      var(--color-apple-purple),
-      var(--color-apple-blue)
-    );
+    height: 2px;
+    background: var(--ink-soft);
     transform-origin: left;
     transform: scaleX(0);
     z-index: 9999;
@@ -243,28 +235,45 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   .back-link {
     display: inline-block;
-    font-size: 0.95rem;
-    margin-bottom: 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 
   header {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--separator);
+    border-bottom: 1px solid var(--rule);
   }
 
   h1 {
-    font-size: 2.125rem;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 2.375rem;
     margin: 0 0 0.75rem 0;
-    letter-spacing: -0.01em;
-    line-height: 1.08;
+    letter-spacing: -0.015em;
+    line-height: 1.12;
   }
 
   time,
   .reading-time {
     display: block;
-    font-size: 0.75rem;
-    color: var(--secondary-label);
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
   }
 
   .updated {
@@ -272,32 +281,44 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .post-tags {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
   }
 
   article :global(p) {
     margin: 0 0 1.25rem 0;
-    line-height: 1.6;
+    line-height: 1.65;
+  }
+
+  article :global(p:first-of-type)::first-letter {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 3.5rem;
+    line-height: 0.9;
+    float: left;
+    padding: 0.35rem 0.5rem 0 0;
+    color: var(--ink);
   }
 
   article :global(h2),
   article :global(h3),
   article :global(h4) {
-    color: var(--label);
-    font-weight: 600;
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-weight: 500;
     margin: 2.5rem 0 0.75rem 0;
     text-wrap: balance;
-    letter-spacing: 0;
-    line-height: 1.15;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
   }
 
   article :global(h2) {
-    font-size: 1.375rem;
+    font-size: 1.5rem;
   }
 
   article :global(h3) {
     font-size: 1.25rem;
-    font-weight: 500;
+    font-style: italic;
+    font-weight: 400;
   }
 
   article :global(h4) {
@@ -305,27 +326,46 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   article :global(blockquote) {
-    border-left: 3px solid var(--color-apple-blue);
-    margin: 1.5rem 0;
-    padding: 0.25rem 0 0.25rem 1.25rem;
-    color: var(--secondary-label);
+    margin: 1.75rem 0 1.75rem 1.5rem;
+    padding: 0;
+    color: var(--ink-soft);
     font-size: 1.05rem;
     font-style: italic;
+    position: relative;
+    quotes: "\201C" "\201D";
+  }
+
+  article :global(blockquote)::before {
+    content: open-quote;
+    font-family: var(--font-serif);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3.5rem;
+    color: var(--rule);
+    position: absolute;
+    left: -1.5rem;
+    top: -0.5rem;
+    line-height: 1;
+  }
+
+  article :global(blockquote) :global(p:last-child) {
+    margin-bottom: 0;
   }
 
   article :global(code) {
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.85em;
-    background: var(--secondary-system-background);
-    padding: 0.2em 0.4em;
-    border-radius: 6px;
+    background: var(--paper-deep);
+    padding: 0.15em 0.4em;
+    border-radius: 2px;
   }
 
   article :global(pre) {
     font-family: var(--font-mono), ui-monospace, monospace;
-    background: var(--secondary-system-background);
+    background: var(--paper-deep);
     padding: 1.25rem;
-    border-radius: 8px;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
     overflow-x: auto;
     margin: 1.5rem 0;
     font-size: 0.9rem;
@@ -341,14 +381,16 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    background: var(--system-background);
-    border: 1px solid var(--separator);
-    border-radius: 4px;
-    padding: 0.5rem 0.75rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.4rem 0.6rem;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     font-weight: 500;
-    color: var(--secondary-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
     cursor: pointer;
     opacity: 0.6;
     transition:
@@ -390,29 +432,29 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   article :global(hr)::before {
-    content: "* * *";
+    content: "\2766";
     display: inline-block;
-    color: var(--secondary-label);
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    letter-spacing: 0.5em;
-    padding-left: 0.5em;
+    color: var(--ink-soft);
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1;
   }
 
   .series-box {
-    border: 1px solid var(--separator);
-    border-radius: 8px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
     padding: 1rem 1.25rem;
     margin-bottom: 2rem;
-    background: var(--color-apple-green-tint);
+    background: var(--paper-deep);
   }
 
   .series-label {
-    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
     font-weight: 500;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--secondary-label);
+    color: var(--ink-soft);
     margin: 0 0 0.5rem 0;
   }
 
@@ -423,29 +465,30 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .series-box li {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     margin-bottom: 0.25rem;
-    color: var(--secondary-label);
+    color: var(--ink-soft);
   }
 
   .series-box li.current {
-    color: var(--label);
-    font-weight: 600;
+    color: var(--ink);
+    font-weight: 500;
+    font-style: italic;
   }
 
   .related-posts {
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--separator);
+    border-top: 1px solid var(--rule);
   }
 
   .related-posts h2 {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--secondary-label);
+    color: var(--ink-soft);
     margin: 0 0 0.75rem 0;
   }
 
@@ -460,8 +503,8 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .related-posts a {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.95rem;
+    font-family: var(--font-serif);
+    font-size: 1rem;
   }
 
   .post-nav {
@@ -470,14 +513,15 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     gap: 1.5rem;
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--separator);
+    border-top: 1px solid var(--rule);
   }
 
   .post-nav-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-style: italic;
     max-width: 48%;
   }
 
