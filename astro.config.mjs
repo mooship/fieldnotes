@@ -43,6 +43,7 @@ export default defineConfig({
         light: "rose-pine-dawn",
         dark: "rose-pine-moon",
       },
+      defaultColor: false,
     },
   },
   integrations: [sitemap(), pagefind()],
