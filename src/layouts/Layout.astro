@@ -53,6 +53,7 @@ const jsonLd = {
 <!doctype html>
 <html lang="en">
   <head>
+    <Font cssVariable="--font-serif" preload />
     <Font cssVariable="--font-mono" preload />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, viewport-fit=cover" />
@@ -62,12 +63,12 @@ const jsonLd = {
     <meta name="robots" content={robots} />
     <meta
       name="theme-color"
-      content="#ffffff"
+      content="#f5efe1"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#000000"
+      content="#1a1813"
       media="(prefers-color-scheme: dark)"
     />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -120,21 +121,27 @@ const jsonLd = {
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <header>
-      <a href="/">Timothy Brits</a>
-      <nav aria-label="Main">
-        <a
-          href="/blog"
-          aria-current={pathname.startsWith("/blog") ? "page" : undefined}
-          >Blog</a
-        >
-        <a href="/now" aria-current={pathname === "/now" ? "page" : undefined}
-          >Now</a
-        >
-        <a href="/uses" aria-current={pathname === "/uses" ? "page" : undefined}
-          >Uses</a
-        >
-        <ThemeToggle />
-      </nav>
+      <div class="masthead">
+        <a href="/" class="wordmark">Timothy Brits</a>
+        <nav aria-label="Main">
+          <a
+            href="/blog"
+            aria-current={pathname.startsWith("/blog") ? "page" : undefined}
+            >Blog</a
+          >
+          <a href="/now" aria-current={pathname === "/now" ? "page" : undefined}
+            >Now</a
+          >
+          <a
+            href="/uses"
+            aria-current={pathname === "/uses" ? "page" : undefined}>Uses</a
+          >
+          <ThemeToggle />
+        </nav>
+      </div>
+      <div class="fleuron" aria-hidden="true">
+        <span class="fleuron-mark">&#10086;</span>
+      </div>
     </header>
     <div transition:animate="fade">
       <slot />
@@ -169,71 +176,91 @@ const jsonLd = {
     height: auto;
     overflow: visible;
     padding: 0.5rem 1rem;
-    background: var(--system-background);
+    background: var(--paper);
     color: var(--link);
     border: 2px solid var(--link);
-    border-radius: 4px;
+    border-radius: 2px;
     font-size: 0.9rem;
     z-index: 9999;
     text-decoration: none;
   }
 
-  @keyframes rainbow-shimmer {
-    from {
-      background-position-x: 0%;
-    }
-    to {
-      background-position-x: 200%;
-    }
+  header {
+    margin-bottom: 2.5rem;
   }
 
-  header {
+  .masthead {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding-bottom: 1.5rem;
-    margin-bottom: 2rem;
-    border-bottom: none;
-    background-image: var(--rainbow-gradient);
-    background-size: 200% 4px;
-    background-repeat: no-repeat;
-    background-position: 0% bottom;
-    animation: rainbow-shimmer 8s ease-in-out infinite alternate;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
   }
 
-  header a:first-child {
-    font-weight: 400;
-    font-size: 1.2rem;
-    color: var(--label);
-    letter-spacing: -0.01em;
+  .fleuron {
+    position: relative;
+    height: 1px;
+    background: var(--rule);
+    margin-top: 3px;
+    text-align: center;
+  }
+
+  .fleuron-mark {
+    position: relative;
+    top: -0.75rem;
+    display: inline-block;
+    padding: 0 0.5rem;
+    background: var(--paper);
+    color: var(--ink-soft);
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--ink);
+    letter-spacing: 0;
+    text-decoration: none;
+  }
+
+  .wordmark:hover {
+    color: var(--ink);
+    text-decoration: none;
   }
 
   nav {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
   nav a {
+    font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 0.9375rem;
-    padding: 0.75rem 0.5rem;
-    color: var(--secondary-label);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+    color: var(--ink-soft);
     text-decoration: none;
   }
 
   nav a:hover {
-    color: var(--label);
+    color: var(--ink);
     text-decoration: none;
   }
 
   nav a[aria-current="page"],
   nav a[aria-current="page"]:hover {
-    color: var(--label);
+    color: var(--ink);
     text-decoration: underline;
-    text-decoration-color: var(--color-apple-blue);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 3px;
+    text-decoration-color: var(--ink);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
   }
 
   footer {
@@ -242,33 +269,36 @@ const jsonLd = {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 2.5rem;
-    padding-top: 1rem;
-    border-top: none;
-    background-image: var(--rainbow-gradient);
-    background-size: 200% 4px;
-    background-repeat: no-repeat;
-    background-position: 0% top;
-    animation: rainbow-shimmer 8s ease-in-out infinite alternate;
-    font-size: 0.8125rem;
-    color: var(--secondary-label);
+    margin-top: 3.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
   }
 
   .feed-links {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
 
   .feed-links a {
-    padding: 0.75rem 0.5rem;
+    padding: 0.25rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
   footer a {
-    color: var(--link);
+    color: var(--ink-soft);
+    text-decoration: none;
   }
 
   footer a:hover {
-    color: var(--link-hover);
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 </style>
