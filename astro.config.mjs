@@ -40,8 +40,8 @@ export default defineConfig({
     ],
     shikiConfig: {
       themes: {
-        light: "min-light",
-        dark: "min-dark",
+        light: "rose-pine-dawn",
+        dark: "rose-pine-moon",
       },
     },
   },
