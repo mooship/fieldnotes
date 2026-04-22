@@ -21,10 +21,13 @@ const recentPosts = posts.slice(0, 5);
     <IntroContent />
     {
       recentPosts.length > 0 && (
-        <div
+        <section
           class="section-colored"
-          style="--section-color: var(--color-apple-green-text); --section-border: var(--color-apple-green); --section-hover: var(--color-apple-green-hover);"
+          style="--section-color: var(--moss); --section-border: var(--moss); --section-hover: var(--moss-hover);"
         >
+          <p class="section-kicker" aria-hidden="true">
+            I.
+          </p>
           <h2>Blog</h2>
           <ul class="recent-posts">
             {recentPosts.map((post) => (
@@ -42,7 +45,7 @@ const recentPosts = posts.slice(0, 5);
           <a href="/blog" class="all-posts">
             All posts <span aria-hidden="true">&rarr;</span>
           </a>
-        </div>
+        </section>
       )
     }
     <OpenSourceContent />
@@ -58,52 +61,65 @@ const recentPosts = posts.slice(0, 5);
   }
 
   :global(main > p:first-child) {
-    color: var(--label);
-    margin-bottom: 2.5rem;
-    font-size: 1.25rem;
+    color: var(--ink);
+    margin-bottom: 3rem;
+    font-size: 1.3125rem;
     font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
+    font-style: italic;
+    line-height: 1.5;
+    letter-spacing: 0;
     text-wrap: balance;
   }
 
   :global(.section-colored) {
-    margin-top: 2rem;
-    padding: 1.5rem 1rem 1.25rem 1rem;
-    margin-left: -1rem;
-    margin-right: -1rem;
-    border-top: 2px solid var(--section-border, var(--section-color));
-    background-color: var(--secondary-system-background);
+    margin-top: 3.5rem;
+  }
+
+  :global(.section-colored) :global(.section-kicker) {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    color: var(--section-color);
+    margin: 0 0 0.25rem 0;
   }
 
   :global(.section-colored) :global(h2) {
-    color: var(--section-color);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.625rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.25rem 0;
+  }
+
+  :global(.section-colored) :global(h2)::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--section-border);
+    margin-top: 0.75rem;
+  }
+
+  :global(.section-colored) :global(h2) + :global(p) {
+    color: var(--ink-soft);
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: 1rem;
   }
 
   :global(.section-colored) :global(a:hover),
   :global(.section-colored) :global(a:focus-visible) {
     color: var(--section-hover);
-  }
-
-  main :global(h2) {
-    color: var(--label);
-    margin: 0 0 1rem 0;
-    font-weight: 600;
-    font-size: 1.375rem;
-    letter-spacing: -0.01em;
-  }
-
-  main :global(h2 + p) {
-    color: var(--secondary-label);
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    margin-top: -0.5rem;
+    text-decoration-color: var(--section-hover);
   }
 
   main :global(ul) {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 1rem 0 0 0;
   }
 
   main :global(li) {
@@ -111,38 +127,51 @@ const recentPosts = posts.slice(0, 5);
   }
 
   main :global(a) {
-    font-size: 0.9375rem;
+    font-size: 1.0625rem;
   }
 
   main :global(.project-desc) {
-    margin: 0.15rem 0 0 0;
-    font-size: 0.8125rem;
-    color: var(--secondary-label);
+    margin: 0.1rem 0 0 0;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--ink-soft);
     line-height: 1.5;
   }
 
   .recent-posts {
     list-style: none;
     padding: 0;
-    margin: 0 0 0.5rem 0;
+    margin: 1rem 0 1rem 0;
   }
 
   .recent-posts li {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.2rem;
   }
 
   .post-date {
-    font-size: 0.75rem;
-    color: var(--secondary-label);
-    margin-left: 0;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
   }
 
   .all-posts {
-    font-size: 0.8125rem;
-    color: var(--secondary-label);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  .all-posts:hover {
+    color: var(--moss-hover);
+    text-decoration: none;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -156,8 +185,8 @@ const recentPosts = posts.slice(0, 5);
   }
 
   @media (prefers-contrast: more) {
-    :global(.section-colored) {
-      border-top-width: 3px;
+    :global(.section-colored) :global(h2)::after {
+      height: 2px;
     }
   }
 </style>

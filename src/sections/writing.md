@@ -1,4 +1,6 @@
-<section class="section-colored" style="--section-color: var(--color-apple-orange-text); --section-border: var(--color-apple-orange); --section-hover: var(--color-apple-orange-hover);">
+<section class="section-colored" style="--section-color: var(--rust); --section-border: var(--rust); --section-hover: var(--rust-hover);">
+
+<p class="section-kicker" aria-hidden="true">III.</p>
 
 ## Writing
 
