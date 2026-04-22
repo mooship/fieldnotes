@@ -12,21 +12,20 @@ const INK = "#1f1a10";
 const INK_SOFT = "#6b5d47";
 const RULE = "#c9bfa8";
 
-let regularFont: Buffer | undefined;
-let italicFont: Buffer | undefined;
+let fontsPromise: Promise<{ regular: Buffer; italic: Buffer }> | undefined;
 
 async function loadFonts(): Promise<{ regular: Buffer; italic: Buffer }> {
-  if (!regularFont) {
+  if (!fontsPromise) {
     const regularPath =
       require.resolve("@fontsource/fraunces/files/fraunces-latin-700-normal.woff");
-    regularFont = await readFile(regularPath);
-  }
-  if (!italicFont) {
     const italicPath =
       require.resolve("@fontsource/fraunces/files/fraunces-latin-400-italic.woff");
-    italicFont = await readFile(italicPath);
+    fontsPromise = Promise.all([
+      readFile(regularPath),
+      readFile(italicPath),
+    ]).then(([regular, italic]) => ({ regular, italic }));
   }
-  return { regular: regularFont, italic: italicFont };
+  return fontsPromise;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
