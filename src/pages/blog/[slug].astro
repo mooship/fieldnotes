@@ -289,16 +289,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     line-height: 1.65;
   }
 
-  article :global(p:first-of-type)::first-letter {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 3.5rem;
-    line-height: 0.9;
-    float: left;
-    padding: 0.35rem 0.5rem 0 0;
-    color: var(--ink);
-  }
-
   article :global(h2),
   article :global(h3),
   article :global(h4) {
@@ -331,21 +321,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     color: var(--ink-soft);
     font-size: 1.05rem;
     font-style: italic;
-    position: relative;
-    quotes: "\201C" "\201D";
-  }
-
-  article :global(blockquote)::before {
-    content: open-quote;
-    font-family: var(--font-serif);
-    font-style: normal;
-    font-weight: 700;
-    font-size: 3.5rem;
-    color: var(--rule);
-    position: absolute;
-    left: -1.5rem;
-    top: -0.5rem;
-    line-height: 1;
   }
 
   article :global(blockquote) :global(p:last-child) {
