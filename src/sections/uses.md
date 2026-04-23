@@ -30,4 +30,5 @@
 - [Astro](https://astro.build) — static output, love this framework
 - Cloudflare Pages — fast edge deploys, zero config
 - Cloudflare Web Analytics — privacy-first, no cookies
-- System font stack (SF Pro on Apple devices, Segoe UI on Windows) — native, fast, no web font download
+- [Fraunces](https://fonts.google.com/specimen/Fraunces) for body and headings — warm humanist serif
+- System sans (SF Pro on Apple, Segoe UI on Windows) for nav, dates, and tags
