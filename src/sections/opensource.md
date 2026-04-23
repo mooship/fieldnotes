@@ -1,7 +1,3 @@
-<section class="section-colored" style="--section-color: var(--ochre); --section-border: var(--ochre); --section-hover: var(--ochre-hover);">
-
-<p class="section-kicker" aria-hidden="true">II.</p>
-
 ## Open Source
 
 <ul>
@@ -14,5 +10,3 @@
     <p class="project-desc">A digital graveyard of dead products, services, and software.</p>
   </li>
 </ul>
-
-</section>

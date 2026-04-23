@@ -139,9 +139,6 @@ const jsonLd = {
           <ThemeToggle />
         </nav>
       </div>
-      <div class="fleuron" aria-hidden="true">
-        <span class="fleuron-mark">&#10086;</span>
-      </div>
     </header>
     <div transition:animate="fade">
       <slot />
@@ -195,26 +192,6 @@ const jsonLd = {
     align-items: baseline;
     padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--rule);
-  }
-
-  .fleuron {
-    position: relative;
-    height: 1px;
-    background: var(--rule);
-    margin-top: 3px;
-    text-align: center;
-  }
-
-  .fleuron-mark {
-    position: relative;
-    top: -0.75rem;
-    display: inline-block;
-    padding: 0 0.5rem;
-    background: var(--paper);
-    color: var(--ink-soft);
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    line-height: 1;
   }
 
   .wordmark {
