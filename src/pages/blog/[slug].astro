@@ -43,7 +43,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   datePublished={post.data.pubDate}
   dateModified={post.data.updatedDate ?? post.data.pubDate}
 >
-  <div class="progress-bar" aria-hidden="true"></div>
   <main id="main-content" tabindex="-1">
     <a href="/blog" class="back-link">
       <span aria-hidden="true">&larr;</span> All posts
@@ -150,39 +149,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 </Layout>
 
 <script>
-  let scrollAbort: AbortController | undefined;
-
-  function initProgress() {
-    scrollAbort?.abort();
-    scrollAbort = new AbortController();
-
-    const bar = document.querySelector<HTMLElement>(".progress-bar");
-    if (!bar) return;
-
-    if (globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      bar.style.display = "none";
-      return;
-    }
-
-    function updateProgress() {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const progress = Math.min(scrollTop / (docHeight - winHeight), 1);
-      bar!.style.transform = `scaleX(${progress})`;
-    }
-
-    window.addEventListener("scroll", updateProgress, {
-      passive: true,
-      signal: scrollAbort.signal,
-    });
-    updateProgress();
-  }
-
-  initProgress();
-
-  document.addEventListener("astro:after-swap", initProgress);
-
   function initCopyButtons() {
     for (const pre of document.querySelectorAll("article pre")) {
       if (pre.querySelector(".copy-btn")) continue;
@@ -215,19 +181,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 </script>
 
 <style>
-  .progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--ink-soft);
-    transform-origin: left;
-    transform: scaleX(0);
-    z-index: 9999;
-    pointer-events: none;
-  }
-
   main {
     margin: auto;
     padding-top: 2rem;
@@ -289,16 +242,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     line-height: 1.65;
   }
 
-  article :global(p:first-of-type)::first-letter {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 3.5rem;
-    line-height: 0.9;
-    float: left;
-    padding: 0.35rem 0.5rem 0 0;
-    color: var(--ink);
-  }
-
   article :global(h2),
   article :global(h3),
   article :global(h4) {
@@ -331,21 +274,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     color: var(--ink-soft);
     font-size: 1.05rem;
     font-style: italic;
-    position: relative;
-    quotes: "\201C" "\201D";
-  }
-
-  article :global(blockquote)::before {
-    content: open-quote;
-    font-family: var(--font-serif);
-    font-style: normal;
-    font-weight: 700;
-    font-size: 3.5rem;
-    color: var(--rule);
-    position: absolute;
-    left: -1.5rem;
-    top: -0.5rem;
-    line-height: 1;
   }
 
   article :global(blockquote) :global(p:last-child) {
@@ -425,19 +353,8 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   article :global(hr) {
     border: none;
-    height: auto;
+    border-top: 1px solid var(--rule);
     margin: 2.5rem 0;
-    text-align: center;
-    overflow: visible;
-  }
-
-  article :global(hr)::before {
-    content: "\2766";
-    display: inline-block;
-    color: var(--ink-soft);
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    line-height: 1;
   }
 
   .series-box {
