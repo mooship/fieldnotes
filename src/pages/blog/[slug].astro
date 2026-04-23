@@ -425,19 +425,8 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   article :global(hr) {
     border: none;
-    height: auto;
+    border-top: 1px solid var(--rule);
     margin: 2.5rem 0;
-    text-align: center;
-    overflow: visible;
-  }
-
-  article :global(hr)::before {
-    content: "\2766";
-    display: inline-block;
-    color: var(--ink-soft);
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    line-height: 1;
   }
 
   .series-box {
