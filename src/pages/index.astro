@@ -21,7 +21,7 @@ const recentPosts = posts.slice(0, 5);
     <IntroContent />
     {
       recentPosts.length > 0 && (
-        <section class="recent">
+        <>
           <h2>Blog</h2>
           <ul class="recent-posts">
             {recentPosts.map((post) => (
@@ -39,7 +39,7 @@ const recentPosts = posts.slice(0, 5);
           <a href="/blog" class="all-posts">
             All posts <span aria-hidden="true">&rarr;</span>
           </a>
-        </section>
+        </>
       )
     }
     <OpenSourceContent />

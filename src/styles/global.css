@@ -173,8 +173,8 @@ li {
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--moss);
-  border: 1px solid var(--moss);
+  color: var(--link);
+  border: 1px solid var(--link);
   border-radius: 2px;
   padding: 0.4rem 0.65rem;
   text-decoration: none;
@@ -182,7 +182,7 @@ li {
 
 .tag:hover,
 .tag:focus-visible {
-  background: var(--moss);
+  background: var(--link);
   color: var(--paper);
   text-decoration: none;
 }
