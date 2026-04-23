@@ -1,7 +1,3 @@
-<section class="section-colored" style="--section-color: var(--rust); --section-border: var(--rust); --section-hover: var(--rust-hover);">
-
-<p class="section-kicker" aria-hidden="true">III.</p>
-
 ## Writing
 
 <ul>
@@ -14,5 +10,3 @@
     <p class="project-desc">Eco-socialist and decolonial analysis from Africa and the Global South.</p>
   </li>
 </ul>
-
-</section>
