@@ -21,13 +21,7 @@ const recentPosts = posts.slice(0, 5);
     <IntroContent />
     {
       recentPosts.length > 0 && (
-        <section
-          class="section-colored"
-          style="--section-color: var(--moss); --section-border: var(--moss); --section-hover: var(--moss-hover);"
-        >
-          <p class="section-kicker" aria-hidden="true">
-            I.
-          </p>
+        <>
           <h2>Blog</h2>
           <ul class="recent-posts">
             {recentPosts.map((post) => (
@@ -45,7 +39,7 @@ const recentPosts = posts.slice(0, 5);
           <a href="/blog" class="all-posts">
             All posts <span aria-hidden="true">&rarr;</span>
           </a>
-        </section>
+        </>
       )
     }
     <OpenSourceContent />
@@ -71,49 +65,20 @@ const recentPosts = posts.slice(0, 5);
     text-wrap: balance;
   }
 
-  :global(.section-colored) {
-    margin-top: 3.5rem;
-  }
-
-  :global(.section-colored) :global(.section-kicker) {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-    color: var(--section-color);
-    margin: 0 0 0.25rem 0;
-  }
-
-  :global(.section-colored) :global(h2) {
-    color: var(--ink);
+  main :global(h2) {
     font-family: var(--font-serif);
     font-weight: 500;
     font-size: 1.625rem;
     letter-spacing: -0.01em;
-    margin: 0 0 0.25rem 0;
+    color: var(--ink);
+    margin: 3.5rem 0 0.75rem 0;
   }
 
-  :global(.section-colored) :global(h2)::after {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 1px;
-    background: var(--section-border);
-    margin-top: 0.75rem;
-  }
-
-  :global(.section-colored) :global(h2) + :global(p) {
+  main :global(h2) + :global(p) {
     color: var(--ink-soft);
-    margin-top: 1rem;
+    margin-top: 0;
     margin-bottom: 0;
     font-size: 1rem;
-  }
-
-  :global(.section-colored) :global(a:hover),
-  :global(.section-colored) :global(a:focus-visible) {
-    color: var(--section-hover);
-    text-decoration-color: var(--section-hover);
   }
 
   main :global(ul) {
@@ -170,23 +135,7 @@ const recentPosts = posts.slice(0, 5);
   }
 
   .all-posts:hover {
-    color: var(--moss-hover);
+    color: var(--link-hover);
     text-decoration: none;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .recent-posts li {
-      transition: transform 0.15s ease;
-    }
-
-    .recent-posts li:hover {
-      transform: translateX(2px);
-    }
-  }
-
-  @media (prefers-contrast: more) {
-    :global(.section-colored) :global(h2)::after {
-      height: 2px;
-    }
   }
 </style>
