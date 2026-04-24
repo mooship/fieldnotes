@@ -193,7 +193,6 @@
 
     const { icon, quote, attr } = EGGS[egg];
     toast.dataset.egg = egg;
-    toast.textContent = "";
     const iconEl = document.createElement("span");
     iconEl.className = "easter-egg-icon";
     iconEl.textContent = icon;
@@ -203,7 +202,7 @@
     const attrEl = document.createElement("p");
     attrEl.className = "easter-egg-attr";
     attrEl.textContent = attr;
-    toast.append(iconEl, quoteEl, attrEl);
+    toast.replaceChildren(iconEl, quoteEl, attrEl);
     toast.classList.add("visible");
 
     const { consoleArt, consoleColor } = EGGS[egg];
