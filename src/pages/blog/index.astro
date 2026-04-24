@@ -21,7 +21,7 @@ const postsWithMeta = posts.map((post) => ({
   type="website"
 >
   <main id="main-content" tabindex="-1">
-    <h1>Blog</h1>
+    <h1 class="page-title">Blog</h1>
     <div class="search-wrapper">
       <Search
         id="search"
@@ -40,7 +40,7 @@ const postsWithMeta = posts.map((post) => ({
         </ul>
       )
     }
-    <a href="/" class="back-link">
+    <a href="/" class="nav-link back-link">
       <span aria-hidden="true">&larr;</span> Back
     </a>
   </main>
@@ -50,16 +50,6 @@ const postsWithMeta = posts.map((post) => ({
   main {
     margin: auto;
     padding-top: 2rem;
-  }
-
-  h1 {
-    text-align: left;
-    color: var(--label);
-    margin: 0 0 1.5rem 0;
-    font-weight: 400;
-    font-size: 3rem;
-    letter-spacing: -0.01em;
-    line-height: 1.08;
   }
 
   ul {
@@ -74,8 +64,6 @@ const postsWithMeta = posts.map((post) => ({
   }
 
   .back-link {
-    display: inline-block;
-    font-size: 0.95rem;
     margin-top: 1rem;
   }
 
@@ -90,7 +78,7 @@ const postsWithMeta = posts.map((post) => ({
     --pagefind-ui-background: var(--system-background);
     --pagefind-ui-border: var(--separator);
     --pagefind-ui-border-width: 1px;
-    --pagefind-ui-border-radius: 6px;
+    --pagefind-ui-border-radius: var(--radius-input);
     --pagefind-ui-font: var(--font-sans), system-ui, sans-serif;
   }
 </style>

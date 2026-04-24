@@ -9,9 +9,9 @@ import { Content as UsesContent } from "../sections/uses.md";
   type="website"
 >
   <main id="main-content" tabindex="-1">
-    <h1>Uses</h1>
+    <h1 class="page-title">Uses</h1>
     <UsesContent />
-    <a href="/" class="back-link">
+    <a href="/" class="nav-link back-link">
       <span aria-hidden="true">&larr;</span> Back
     </a>
   </main>
@@ -21,25 +21,6 @@ import { Content as UsesContent } from "../sections/uses.md";
   main {
     margin: auto;
     padding-top: 2rem;
-  }
-
-  h1 {
-    color: var(--label);
-    font-weight: 400;
-    font-size: 3rem;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: -0.01em;
-    line-height: 1.08;
-  }
-
-  main :global(h2) {
-    font-family: var(--font-serif);
-    color: var(--ink);
-    font-weight: 500;
-    font-size: 1.5rem;
-    margin: 2rem 0 0.75rem 0;
-    letter-spacing: -0.005em;
-    line-height: 1.2;
   }
 
   main :global(ul) {
@@ -54,8 +35,6 @@ import { Content as UsesContent } from "../sections/uses.md";
   }
 
   .back-link {
-    display: inline-block;
-    font-size: 0.95rem;
     margin-top: 2rem;
   }
 </style>
