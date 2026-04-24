@@ -164,13 +164,19 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       button.setAttribute("aria-live", "polite");
       button.textContent = "Copy";
 
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
       button.addEventListener("click", async () => {
         const code = pre.querySelector("code");
         if (!code) return;
 
-        await navigator.clipboard.writeText(code.textContent ?? "");
-        button.textContent = "Copied!";
-        setTimeout(() => {
+        clearTimeout(resetTimer);
+        try {
+          await navigator.clipboard.writeText(code.textContent ?? "");
+          button.textContent = "Copied!";
+        } catch {
+          button.textContent = "Failed";
+        }
+        resetTimer = setTimeout(() => {
           button.textContent = "Copy";
         }, 2000);
       });

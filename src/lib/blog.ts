@@ -80,7 +80,7 @@ export function getReadingTime(
   return typeof value === "string" ? value : undefined;
 }
 
-export function computeReadingTime(body: string | undefined): string {
+export function computeReadingTime(body?: string): string {
   return readingTime(body ?? "").text;
 }
 

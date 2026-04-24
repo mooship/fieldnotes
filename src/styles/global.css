@@ -24,8 +24,6 @@
   --z-skip-link: 9999;
 
   --system-background: var(--paper);
-  --secondary-system-background: var(--paper-deep);
-  --tertiary-system-background: var(--paper);
   --label: var(--ink);
   --secondary-label: var(--ink-soft);
   --tint: var(--link);
