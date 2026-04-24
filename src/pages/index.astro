@@ -28,7 +28,7 @@ const recentPosts = posts.slice(0, 5);
               <li>
                 <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
                 <time
-                  class="post-date"
+                  class="meta-label post-date"
                   datetime={post.data.pubDate.toISOString()}
                 >
                   {formatDate(post.data.pubDate)}
@@ -36,7 +36,7 @@ const recentPosts = posts.slice(0, 5);
               </li>
             ))}
           </ul>
-          <a href="/blog" class="all-posts">
+          <a href="/blog" class="nav-link all-posts">
             All posts <span aria-hidden="true">&rarr;</span>
           </a>
         </>
@@ -66,12 +66,9 @@ const recentPosts = posts.slice(0, 5);
   }
 
   main :global(h2) {
-    font-family: var(--font-serif);
-    font-weight: 500;
     font-size: 1.625rem;
     letter-spacing: -0.01em;
-    color: var(--ink);
-    margin: 3.5rem 0 0.75rem 0;
+    margin-top: 3.5rem;
   }
 
   main :global(h2) + :global(p) {
@@ -114,28 +111,5 @@ const recentPosts = posts.slice(0, 5);
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
-  }
-
-  .post-date {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-
-  .all-posts {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    text-decoration: none;
-  }
-
-  .all-posts:hover {
-    color: var(--link-hover);
-    text-decoration: none;
   }
 </style>

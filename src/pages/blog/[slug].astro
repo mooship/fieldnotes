@@ -44,21 +44,25 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   dateModified={post.data.updatedDate ?? post.data.pubDate}
 >
   <main id="main-content" tabindex="-1">
-    <a href="/blog" class="back-link">
+    <a href="/blog" class="nav-link back-link">
       <span aria-hidden="true">&larr;</span> All posts
     </a>
     <article>
       <header>
         <h1>{post.data.title}</h1>
-        <time datetime={post.data.pubDate.toISOString()}>
+        <time class="meta-label" datetime={post.data.pubDate.toISOString()}>
           <span class="visually-hidden">Published: </span>
           {formatDate(post.data.pubDate)}
         </time>
-        {readingTime && <span class="reading-time">{readingTime}</span>}
+        {
+          readingTime && (
+            <span class="meta-label reading-time">{readingTime}</span>
+          )
+        }
         {
           post.data.updatedDate && (
             <time
-              class="updated"
+              class="meta-label updated"
               datetime={post.data.updatedDate.toISOString()}
             >
               Updated: {formatDate(post.data.updatedDate)}
@@ -82,7 +86,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       {
         seriesPosts.length > 1 && (
           <nav class="series-box" aria-label="Post series">
-            <p class="series-label">
+            <p class="meta-label series-label">
               Series: <strong>{post.data.series}</strong>
             </p>
             <ol>
@@ -110,7 +114,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     {
       related.length > 0 && (
         <aside class="related-posts">
-          <h2>Related posts</h2>
+          <h2 class="meta-label">Related posts</h2>
           <ul>
             {related.map(
               (rp: { id: string; data: { title: string; pubDate: Date } }) => (
@@ -187,21 +191,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .back-link {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
     margin-bottom: 2.5rem;
-    color: var(--ink-soft);
-    text-decoration: none;
-  }
-
-  .back-link:hover {
-    color: var(--ink);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
   }
 
   header {
@@ -217,16 +207,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     margin: 0 0 0.75rem 0;
     letter-spacing: -0.015em;
     line-height: 1.12;
-  }
-
-  time,
-  .reading-time {
-    display: block;
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
   }
 
   .updated {
@@ -285,14 +265,14 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     font-size: 0.85em;
     background: var(--paper-deep);
     padding: 0.15em 0.4em;
-    border-radius: 2px;
+    border-radius: var(--radius);
   }
 
   article :global(pre) {
     font-family: var(--font-mono), ui-monospace, monospace;
     background: var(--paper-deep);
     padding: 1.25rem;
-    border-radius: 2px;
+    border-radius: var(--radius);
     border: 1px solid var(--rule);
     overflow-x: auto;
     margin: 1.5rem 0;
@@ -311,7 +291,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     right: 0.5rem;
     background: var(--paper);
     border: 1px solid var(--rule);
-    border-radius: 2px;
+    border-radius: var(--radius);
     padding: 0.4rem 0.6rem;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.65rem;
@@ -340,6 +320,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     color: var(--label);
   }
 
+  @media (pointer: coarse) {
+    article :global(.copy-btn) {
+      opacity: 1;
+    }
+  }
+
   article :global(ul),
   article :global(ol) {
     padding-left: 1.5rem;
@@ -359,19 +345,13 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   .series-box {
     border: 1px solid var(--rule);
-    border-radius: 2px;
+    border-radius: var(--radius);
     padding: 1rem 1.25rem;
     margin-bottom: 2rem;
     background: var(--paper-deep);
   }
 
   .series-label {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
     margin: 0 0 0.5rem 0;
   }
 
@@ -400,12 +380,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .related-posts h2 {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
     margin: 0 0 0.75rem 0;
   }
 
