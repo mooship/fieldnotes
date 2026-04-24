@@ -16,6 +16,13 @@
   --selection-bg: #d6c88a;
   --selection-fg: #1f1a10;
 
+  --radius: 2px;
+  --radius-input: 6px;
+  --shadow-elevated:
+    0 4px 16px rgba(20, 15, 5, 0.06), 0 1px 3px rgba(20, 15, 5, 0.04);
+  --z-toast: 100;
+  --z-skip-link: 9999;
+
   --system-background: var(--paper);
   --secondary-system-background: var(--paper-deep);
   --tertiary-system-background: var(--paper);
@@ -38,6 +45,8 @@ html[data-theme="dark"] {
   --link-hover: var(--moss-hover);
   --selection-bg: #4a3e1f;
   --selection-fg: #f5efe1;
+  --shadow-elevated:
+    0 4px 24px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 html {
@@ -91,6 +100,52 @@ h3,
 h4 {
   font-family: var(--font-serif);
   font-weight: 500;
+}
+
+.page-title {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--label);
+  margin: 0 0 1.5rem 0;
+}
+
+main h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  text-wrap: balance;
+  margin: 2.5rem 0 0.75rem 0;
+}
+
+.meta-label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.nav-link {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  text-decoration: none;
 }
 
 .astro-code {
@@ -175,7 +230,7 @@ li {
   text-transform: uppercase;
   color: var(--link);
   border: 1px solid var(--link);
-  border-radius: 2px;
+  border-radius: var(--radius);
   padding: 0.4rem 0.65rem;
   text-decoration: none;
 }
@@ -212,11 +267,15 @@ li {
   :root {
     --ink-soft: #4a3f2a;
     --rule: #8a7f68;
+    --moss: #3d5a2a;
+    --moss-hover: #263916;
   }
 
   html[data-theme="dark"] {
     --ink-soft: #d4cab5;
     --rule: #6b6658;
+    --moss: #b8d49a;
+    --moss-hover: #d2e6b5;
   }
 
   .tag {
