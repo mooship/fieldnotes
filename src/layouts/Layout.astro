@@ -96,11 +96,13 @@ const jsonLd = {
     />
     <meta name="generator" content={Astro.generator} />
     <script is:inline>
-      (function () {
+      function applyStoredTheme() {
         const t = localStorage.getItem("theme");
         document.documentElement.dataset.theme =
           t === "dark" ? "dark" : "light";
-      })();
+      }
+      applyStoredTheme();
+      document.addEventListener("astro:after-swap", applyStoredTheme);
     </script>
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
