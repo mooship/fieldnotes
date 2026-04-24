@@ -9,13 +9,13 @@ import { Content as NowContent } from "../sections/now.md";
   type="website"
 >
   <main id="main-content" tabindex="-1">
-    <h1>Now</h1>
-    <p class="updated">Last updated: April 2026</p>
+    <h1 class="page-title">Now</h1>
+    <p class="meta-label updated">Last updated: April 2026</p>
     <NowContent />
     <p class="nownownow">
       This is a <a href="https://nownownow.com/about">now page</a>.
     </p>
-    <a href="/" class="back-link">
+    <a href="/" class="nav-link back-link">
       <span aria-hidden="true">&larr;</span> Back
     </a>
   </main>
@@ -27,31 +27,12 @@ import { Content as NowContent } from "../sections/now.md";
     padding-top: 2rem;
   }
 
-  h1 {
-    color: var(--label);
-    font-weight: 400;
-    font-size: 3rem;
-    margin: 0 0 0.5rem 0;
-    letter-spacing: -0.01em;
-    line-height: 1.08;
+  .page-title {
+    margin-bottom: 0.5rem;
   }
 
   .updated {
-    font-size: 0.82rem;
-    color: var(--secondary-label);
-    letter-spacing: 0.05em;
-    font-variant: small-caps;
     margin: 0 0 2rem 0;
-  }
-
-  main :global(h2) {
-    font-family: var(--font-serif);
-    color: var(--ink);
-    font-weight: 500;
-    font-size: 1.5rem;
-    margin: 2rem 0 0.75rem 0;
-    letter-spacing: -0.005em;
-    line-height: 1.2;
   }
 
   main :global(p) {
@@ -77,8 +58,6 @@ import { Content as NowContent } from "../sections/now.md";
   }
 
   .back-link {
-    display: inline-block;
-    font-size: 0.95rem;
     margin-top: 1rem;
   }
 </style>

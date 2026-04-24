@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Page not found — Timothy Brits" robots="noindex">
   <main id="main-content" tabindex="-1">
-    <h1>404</h1>
+    <h1 class="page-title">404</h1>
     <p>This page doesn't exist.</p>
     <nav class="links" aria-label="Suggested pages">
       <ul>
@@ -23,13 +23,10 @@ import Layout from "../layouts/Layout.astro";
     padding-top: 2rem;
   }
 
-  h1 {
-    color: var(--label);
-    font-weight: 400;
+  .page-title {
     font-size: 4rem;
-    margin: 0 0 0.5rem 0;
-    letter-spacing: -0.01em;
     line-height: 1;
+    margin-bottom: 0.5rem;
   }
 
   p {

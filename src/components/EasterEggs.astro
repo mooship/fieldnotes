@@ -4,21 +4,20 @@
 <style>
   #easter-egg-toast {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 300px;
+    bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    right: calc(1.5rem + env(safe-area-inset-right));
+    width: 320px;
+    max-width: calc(100vw - 3rem);
     padding: 1.25rem 1.5rem;
-    border-radius: 2px;
+    border-radius: var(--radius);
     background: var(--paper);
     border: 1px solid var(--rule);
     border-left: 3px solid var(--rule);
-    box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.08),
-      0 1px 4px rgba(0, 0, 0, 0.04);
-    font-size: 0.95rem;
-    line-height: 1.55;
+    box-shadow: var(--shadow-elevated);
+    font-size: 1rem;
+    line-height: 1.5;
     color: var(--ink);
-    z-index: 9999;
+    z-index: var(--z-toast);
     opacity: 0;
     transform: translateY(1rem);
     pointer-events: none;
@@ -42,30 +41,34 @@
   }
 
   #easter-egg-toast[data-egg="antifascist"] {
+    border-left-width: 5px;
     border-left-color: var(--ink);
   }
 
   #easter-egg-toast[data-egg="artemis"] {
-    border-left-color: var(--link);
+    border-left-color: var(--moss);
   }
 
   .easter-egg-icon {
     font-size: 1.5rem;
+    line-height: 1;
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.65rem;
   }
 
   .easter-egg-quote {
     font-family: var(--font-serif);
     font-style: italic;
-    margin: 0 0 0.5rem;
-    line-height: 1.5;
+    margin: 0 0 0.65rem;
+    line-height: 1.45;
+    text-wrap: pretty;
   }
 
   .easter-egg-attr {
     font-family: var(--font-sans);
     font-size: 0.7rem;
-    letter-spacing: 0.08em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-soft);
     margin: 0;
