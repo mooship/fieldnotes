@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
+  computeReadingTime,
+  formatDate,
   getAdjacentPosts,
   getAllTags,
   getBlogPosts,
@@ -389,5 +391,35 @@ describe("getBlogPosts", () => {
       "middle.md",
       "older.md",
     ]);
+  });
+});
+
+describe("formatDate", () => {
+  it("formats a known date in en-ZA locale", () => {
+    expect(formatDate(new Date("2024-03-15"))).toBe("15 March 2024");
+  });
+
+  it("formats the first day of a month correctly", () => {
+    expect(formatDate(new Date("2024-01-01"))).toBe("1 January 2024");
+  });
+
+  it("formats a leap-year date correctly", () => {
+    expect(formatDate(new Date("2024-02-29"))).toBe("29 February 2024");
+  });
+});
+
+describe("computeReadingTime", () => {
+  it("returns a non-empty string for a short body", () => {
+    expect(computeReadingTime("Hello world")).toMatch(/\d+ min read/);
+  });
+
+  it("returns a non-empty string for a long body", () => {
+    const long = "word ".repeat(500);
+    expect(computeReadingTime(long)).toMatch(/\d+ min read/);
+  });
+
+  it("handles undefined input without throwing", () => {
+    expect(() => computeReadingTime()).not.toThrow();
+    expect(computeReadingTime()).toMatch(/\d+ min read/);
   });
 });

@@ -22,13 +22,13 @@ export async function GET(context: APIContext) {
   const entries = items
     .map(
       (item) => `  <entry>
-    <id>${item.url}</id>
+    <id>${xmlEscape(item.url)}</id>
     <title>${xmlEscape(item.title)}</title>
     <updated>${item.updatedDate.toISOString()}</updated>
     <published>${item.pubDate.toISOString()}</published>
     <summary>${xmlEscape(item.description)}</summary>
     <content type="html">${xmlEscape(item.html)}</content>
-    <link href="${item.url}" />
+    <link href="${xmlEscape(item.url)}" />
 ${item.tags.map((tag) => `    <category term="${xmlEscape(tag)}" />`).join("\n")}
   </entry>`
     )
@@ -36,16 +36,16 @@ ${item.tags.map((tag) => `    <category term="${xmlEscape(tag)}" />`).join("\n")
 
   const xml = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <id>${site}/atom.xml</id>
+  <id>${xmlEscape(site)}/atom.xml</id>
   <title>${xmlEscape(SITE_TITLE)}</title>
   <subtitle>${xmlEscape(BLOG_DESCRIPTION)}</subtitle>
   <updated>${updated}</updated>
   <author>
     <name>${xmlEscape(SITE_AUTHOR)}</name>
-    <uri>${site}</uri>
+    <uri>${xmlEscape(site)}</uri>
   </author>
-  <link rel="alternate" href="${site}" type="text/html" />
-  <link rel="self" href="${site}/atom.xml" />
+  <link rel="alternate" href="${xmlEscape(site)}" type="text/html" />
+  <link rel="self" href="${xmlEscape(site)}/atom.xml" />
 ${entries}
 </feed>`;
 
