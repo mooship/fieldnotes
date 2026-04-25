@@ -1,13 +1,17 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { getAllTags, getBlogPosts, getPostsByTag } from "../../../lib/blog";
+import { getBlogPosts } from "../../../lib/blog";
 
 const posts = await getBlogPosts();
-const tags = getAllTags(posts);
-const tagsWithCount = tags.map((tag) => ({
-  tag,
-  count: getPostsByTag(posts, tag).length,
-}));
+const countByTag = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    countByTag.set(tag, (countByTag.get(tag) ?? 0) + 1);
+  }
+}
+const tagsWithCount = [...countByTag.entries()]
+  .map(([tag, count]) => ({ tag, count }))
+  .toSorted((a, b) => a.tag.localeCompare(b.tag));
 ---
 
 <Layout

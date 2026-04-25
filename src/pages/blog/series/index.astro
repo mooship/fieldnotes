@@ -1,21 +1,26 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import {
-  formatDate,
-  getBlogPosts,
-  getPostSlug,
-  getSeriesPosts,
-} from "../../../lib/blog";
+import { formatDate, getBlogPosts, getPostSlug } from "../../../lib/blog";
 
 const posts = await getBlogPosts();
-const allSeriesNames = [
-  ...new Set(posts.filter((p) => p.data.series).map((p) => p.data.series!)),
-].toSorted();
-
-const series = allSeriesNames.map((name) => ({
-  name,
-  posts: getSeriesPosts(posts, name),
-}));
+const grouped = new Map<string, typeof posts>();
+for (const post of posts) {
+  if (!post.data.series) continue;
+  const bucket = grouped.get(post.data.series) ?? [];
+  bucket.push(post);
+  grouped.set(post.data.series, bucket);
+}
+const series = [...grouped.entries()]
+  .toSorted(([a], [b]) => a.localeCompare(b))
+  .map(([name, seriesPosts]) => ({
+    name,
+    posts: seriesPosts.toSorted((a, b) => {
+      const orderA = a.data.seriesOrder ?? Infinity;
+      const orderB = b.data.seriesOrder ?? Infinity;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+    }),
+  }));
 ---
 
 <Layout
