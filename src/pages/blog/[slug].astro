@@ -117,6 +117,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         type="button"
         aria-live="polite"
         aria-label="Share this post"
+        data-title={post.data.title}
       >
         Share
       </button>
@@ -207,22 +208,25 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       return;
     }
 
+    const shareData = {
+      title: btn.dataset.title ?? document.title,
+      url: globalThis.location.href,
+    };
+
     let resetTimer: ReturnType<typeof setTimeout> | undefined;
     btn.addEventListener("click", async () => {
-      clearTimeout(resetTimer);
-      if (canShare) {
+      if (canShare && navigator.canShare?.(shareData)) {
         try {
-          await navigator.share({
-            title: document.title,
-            url: globalThis.location.href,
-          });
-        } catch {
-          // user cancelled or share failed — no feedback needed
+          await navigator.share(shareData);
+          return;
+        } catch (e) {
+          if (e instanceof DOMException && e.name === "AbortError") return;
+          // share failed for another reason — fall through to clipboard
         }
-        return;
       }
+      clearTimeout(resetTimer);
       try {
-        await navigator.clipboard.writeText(globalThis.location.href);
+        await navigator.clipboard.writeText(shareData.url);
         btn.textContent = "Copied!";
       } catch {
         btn.textContent = "Failed";
