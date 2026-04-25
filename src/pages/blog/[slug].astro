@@ -69,27 +69,27 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             </time>
           )
         }
-        {
-          post.data.tags.length > 0 && (
-            <ul class="post-tags" aria-label="Tags">
-              {post.data.tags.map((tag: string) => (
-                <li>
-                  <a href={`/blog/tags/${tag}`} class="tag">
-                    {tag}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )
-        }
-        <button
-          class="share-btn"
-          type="button"
-          aria-live="polite"
-          aria-label="Copy link to this post"
-        >
-          Copy link
-        </button>
+        <ul class="post-tags" aria-label="Tags">
+          {
+            post.data.tags.map((tag: string) => (
+              <li>
+                <a href={`/blog/tags/${tag}`} class="tag">
+                  {tag}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <button
+              class="share-btn"
+              type="button"
+              aria-live="polite"
+              aria-label="Copy link to this post"
+            >
+              Copy link
+            </button>
+          </li>
+        </ul>
       </header>
       {
         seriesPosts.length > 1 && (
@@ -258,27 +258,29 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .share-btn {
-    margin-top: 0.875rem;
+    margin-top: 0;
     background: none;
     border: 1px solid var(--rule);
     border-radius: var(--radius);
-    padding: 0.3rem 0.65rem;
+    padding: 0.25rem 0.55rem;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
+    font-weight: 400;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-soft);
     cursor: pointer;
     transition:
       color 0.15s ease,
       border-color 0.15s ease;
-    display: block;
+    display: inline-block;
+    opacity: 0.7;
   }
 
   .share-btn:hover {
     color: var(--ink);
     border-color: var(--ink-soft);
+    opacity: 1;
   }
 
   .share-btn:focus-visible {
