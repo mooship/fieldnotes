@@ -1,0 +1,127 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import {
+  formatDate,
+  getBlogPosts,
+  getPostSlug,
+  getSeriesPosts,
+} from "../../../lib/blog";
+
+const posts = await getBlogPosts();
+const allSeriesNames = [
+  ...new Set(
+    posts
+      .filter((p) => p.data.series)
+      .map((p) => p.data.series!)
+  ),
+].toSorted();
+
+const series = allSeriesNames.map((name) => ({
+  name,
+  posts: getSeriesPosts(posts, name),
+}));
+---
+
+<Layout
+  title="Series — Timothy Brits"
+  description="Multi-part blog post series."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <a href="/blog" class="nav-link back-link">
+      <span aria-hidden="true">&larr;</span> All posts
+    </a>
+    <h1 class="page-title">Series</h1>
+    {
+      series.length === 0 ? (
+        <p class="empty">No series yet.</p>
+      ) : (
+        <div class="series-list">
+          {series.map(({ name, posts: seriesPosts }) => (
+            <section class="series-section">
+              <h2>{name}</h2>
+              <ol>
+                {seriesPosts.map((post) => (
+                  <li>
+                    <a href={`/blog/${getPostSlug(post.id)}`}>
+                      {post.data.title}
+                    </a>
+                    <time
+                      class="meta-label post-date"
+                      datetime={post.data.pubDate.toISOString()}
+                    >
+                      {formatDate(post.data.pubDate)}
+                    </time>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))}
+        </div>
+      )
+    }
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  .back-link {
+    margin-bottom: 2rem;
+  }
+
+  .empty {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .series-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .series-section {
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .series-section:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .series-section h2 {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    margin: 0 0 0.875rem 0;
+    letter-spacing: -0.01em;
+  }
+
+  .series-section ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+
+  .series-section li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .series-section a {
+    font-family: var(--font-serif);
+  }
+
+  .post-date {
+    flex-shrink: 0;
+    color: var(--ink-soft);
+  }
+</style>

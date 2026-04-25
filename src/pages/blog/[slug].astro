@@ -82,6 +82,9 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             </ul>
           )
         }
+        <button class="share-btn" type="button" aria-live="polite" aria-label="Copy link to this post">
+          Copy link
+        </button>
       </header>
       {
         seriesPosts.length > 1 && (
@@ -186,8 +189,34 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     }
   }
 
+  function initShareButton() {
+    const btn = document.querySelector<HTMLButtonElement>(".share-btn");
+    if (!btn) return;
+
+    if (!navigator.clipboard) {
+      btn.hidden = true;
+      return;
+    }
+
+    let resetTimer: ReturnType<typeof setTimeout> | undefined;
+    btn.addEventListener("click", async () => {
+      clearTimeout(resetTimer);
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        btn.textContent = "Copied!";
+      } catch {
+        btn.textContent = "Failed";
+      }
+      resetTimer = setTimeout(() => {
+        btn.textContent = "Copy link";
+      }, 2000);
+    });
+  }
+
   initCopyButtons();
+  initShareButton();
   document.addEventListener("astro:after-swap", initCopyButtons);
+  document.addEventListener("astro:after-swap", initShareButton);
 </script>
 
 <style>
@@ -221,6 +250,35 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   .post-tags {
     margin-top: 0.75rem;
+  }
+
+  .share-btn {
+    margin-top: 0.875rem;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.3rem 0.65rem;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+    display: block;
+  }
+
+  .share-btn:hover {
+    color: var(--ink);
+    border-color: var(--ink-soft);
+  }
+
+  .share-btn:focus-visible {
+    outline: 2px solid var(--moss);
+    outline-offset: 2px;
   }
 
   article :global(p) {
