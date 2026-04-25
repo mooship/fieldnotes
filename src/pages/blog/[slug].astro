@@ -84,9 +84,9 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
               class="share-btn"
               type="button"
               aria-live="polite"
-              aria-label="Copy link to this post"
+              aria-label="Share this post"
             >
-              Copy link
+              Share
             </button>
           </li>
         </ul>
@@ -198,7 +198,9 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     const btn = document.querySelector<HTMLButtonElement>(".share-btn");
     if (!btn) return;
 
-    if (!navigator.clipboard) {
+    const canShare = "share" in navigator;
+    const canCopy = "clipboard" in navigator;
+    if (!canShare && !canCopy) {
       btn.hidden = true;
       return;
     }
@@ -206,6 +208,17 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     let resetTimer: ReturnType<typeof setTimeout> | undefined;
     btn.addEventListener("click", async () => {
       clearTimeout(resetTimer);
+      if (canShare) {
+        try {
+          await navigator.share({
+            title: document.title,
+            url: globalThis.location.href,
+          });
+        } catch {
+          // user cancelled or share failed — no feedback needed
+        }
+        return;
+      }
       try {
         await navigator.clipboard.writeText(globalThis.location.href);
         btn.textContent = "Copied!";
@@ -213,7 +226,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         btn.textContent = "Failed";
       }
       resetTimer = setTimeout(() => {
-        btn.textContent = "Copy link";
+        btn.textContent = "Share";
       }, 2000);
     });
   }
@@ -258,29 +271,22 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .share-btn {
-    margin-top: 0;
     background: none;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
-    padding: 0.25rem 0.55rem;
+    border: none;
+    padding: 0;
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 0.7rem;
     font-weight: 400;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-soft);
     cursor: pointer;
-    transition:
-      color 0.15s ease,
-      border-color 0.15s ease;
+    transition: color 0.15s ease;
     display: inline-block;
-    opacity: 0.7;
   }
 
   .share-btn:hover {
-    color: var(--ink);
-    border-color: var(--ink-soft);
-    opacity: 1;
+    color: var(--moss);
   }
 
   .share-btn:focus-visible {
