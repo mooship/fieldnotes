@@ -111,6 +111,17 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       }
       <Content />
     </article>
+    <div class="post-footer">
+      <button
+        class="share-btn"
+        type="button"
+        aria-live="polite"
+        aria-label="Share this post"
+        data-title={post.data.title}
+      >
+        Share
+      </button>
+    </div>
     {
       related.length > 0 && (
         <aside class="related-posts">
@@ -186,8 +197,51 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     }
   }
 
+  function initShareButton() {
+    const btn = document.querySelector<HTMLButtonElement>(".share-btn");
+    if (!btn) return;
+
+    const canShare = "share" in navigator;
+    const canCopy = "clipboard" in navigator;
+    if (!canShare && !canCopy) {
+      btn.hidden = true;
+      return;
+    }
+
+    const shareData = {
+      title: btn.dataset.title ?? document.title,
+      url: globalThis.location.href,
+    };
+
+    let resetTimer: ReturnType<typeof setTimeout> | undefined;
+    btn.addEventListener("click", async () => {
+      if (canShare && navigator.canShare?.(shareData)) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (error) {
+          if (error instanceof DOMException && error.name === "AbortError")
+            return;
+          // share failed for another reason — fall through to clipboard
+        }
+      }
+      clearTimeout(resetTimer);
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        btn.textContent = "Copied!";
+      } catch {
+        btn.textContent = "Failed";
+      }
+      resetTimer = setTimeout(() => {
+        btn.textContent = "Share";
+      }, 2000);
+    });
+  }
+
   initCopyButtons();
+  initShareButton();
   document.addEventListener("astro:after-swap", initCopyButtons);
+  document.addEventListener("astro:after-swap", initShareButton);
 </script>
 
 <style>
@@ -221,6 +275,37 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   .post-tags {
     margin-top: 0.75rem;
+  }
+
+  .post-footer {
+    margin-top: 2.5rem;
+  }
+
+  .share-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.45rem 1rem;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .share-btn:hover {
+    color: var(--moss);
+    border-color: var(--moss);
+  }
+
+  .share-btn:focus-visible {
+    outline: 2px solid var(--moss);
+    outline-offset: 2px;
   }
 
   article :global(p) {
