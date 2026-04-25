@@ -69,27 +69,19 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             </time>
           )
         }
-        <ul class="post-tags" aria-label="Tags">
-          {
-            post.data.tags.map((tag: string) => (
-              <li>
-                <a href={`/blog/tags/${tag}`} class="tag">
-                  {tag}
-                </a>
-              </li>
-            ))
-          }
-          <li>
-            <button
-              class="share-btn"
-              type="button"
-              aria-live="polite"
-              aria-label="Share this post"
-            >
-              Share
-            </button>
-          </li>
-        </ul>
+        {
+          post.data.tags.length > 0 && (
+            <ul class="post-tags" aria-label="Tags">
+              {post.data.tags.map((tag: string) => (
+                <li>
+                  <a href={`/blog/tags/${tag}`} class="tag">
+                    {tag}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </header>
       {
         seriesPosts.length > 1 && (
@@ -119,6 +111,16 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       }
       <Content />
     </article>
+    <div class="post-footer">
+      <button
+        class="share-btn"
+        type="button"
+        aria-live="polite"
+        aria-label="Share this post"
+      >
+        Share
+      </button>
+    </div>
     {
       related.length > 0 && (
         <aside class="related-posts">
@@ -270,6 +272,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     margin-top: 0.75rem;
   }
 
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
   .share-btn {
     background: none;
     border: none;
@@ -282,7 +290,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     color: var(--ink-soft);
     cursor: pointer;
     transition: color 0.15s ease;
-    display: inline-block;
   }
 
   .share-btn:hover {
