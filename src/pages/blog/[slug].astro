@@ -82,7 +82,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             </ul>
           )
         }
-        <button class="share-btn" type="button" aria-live="polite" aria-label="Copy link to this post">
+        <button
+          class="share-btn"
+          type="button"
+          aria-live="polite"
+          aria-label="Copy link to this post"
+        >
           Copy link
         </button>
       </header>
@@ -202,7 +207,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     btn.addEventListener("click", async () => {
       clearTimeout(resetTimer);
       try {
-        await navigator.clipboard.writeText(window.location.href);
+        await navigator.clipboard.writeText(globalThis.location.href);
         btn.textContent = "Copied!";
       } catch {
         btn.textContent = "Failed";
