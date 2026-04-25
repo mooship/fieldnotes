@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
-    "@astrojs/compiler-rs": "^0.1.7",
+    "@astrojs/compiler-rs": "^0.1.10",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.1",
     "@eslint/css": "^1.0.0",
