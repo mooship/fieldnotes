@@ -219,8 +219,9 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         try {
           await navigator.share(shareData);
           return;
-        } catch (e) {
-          if (e instanceof DOMException && e.name === "AbortError") return;
+        } catch (error) {
+          if (error instanceof DOMException && error.name === "AbortError")
+            return;
           // share failed for another reason — fall through to clipboard
         }
       }
