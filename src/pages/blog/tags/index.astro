@@ -1,10 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import {
-  getAllTags,
-  getBlogPosts,
-  getPostsByTag,
-} from "../../../lib/blog";
+import { getAllTags, getBlogPosts, getPostsByTag } from "../../../lib/blog";
 
 const posts = await getBlogPosts();
 const tags = getAllTags(posts);

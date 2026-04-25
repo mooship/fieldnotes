@@ -9,11 +9,7 @@ import {
 
 const posts = await getBlogPosts();
 const allSeriesNames = [
-  ...new Set(
-    posts
-      .filter((p) => p.data.series)
-      .map((p) => p.data.series!)
-  ),
+  ...new Set(posts.filter((p) => p.data.series).map((p) => p.data.series!)),
 ].toSorted();
 
 const series = allSeriesNames.map((name) => ({
