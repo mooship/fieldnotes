@@ -49,6 +49,7 @@ html[data-theme="dark"] {
 
 html {
   background: var(--paper);
+  overflow-x: clip;
 }
 
 body {
