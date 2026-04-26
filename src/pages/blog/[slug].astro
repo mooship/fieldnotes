@@ -240,8 +240,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   initCopyButtons();
   initShareButton();
-  document.addEventListener("astro:after-swap", initCopyButtons);
-  document.addEventListener("astro:after-swap", initShareButton);
 </script>
 
 <style>

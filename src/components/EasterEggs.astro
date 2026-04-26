@@ -184,7 +184,6 @@
 
   let toast: HTMLElement | undefined;
   let hideTimer: ReturnType<typeof setTimeout> | undefined;
-  let controller: AbortController | undefined;
 
   function showToast(egg: EggKey) {
     if (!toast) return;
@@ -221,7 +220,6 @@
   function addLongPress(
     el: Element | null,
     onLongPress: () => void,
-    signal: AbortSignal,
     duration = 600
   ) {
     if (!el) return;
@@ -242,7 +240,7 @@
           onLongPress();
         }, duration);
       },
-      { signal, passive: true }
+      { passive: true }
     );
 
     el.addEventListener(
@@ -258,24 +256,16 @@
           timer = undefined;
         }
       },
-      { signal, passive: true }
+      { passive: true }
     );
 
-    el.addEventListener(
-      "touchend",
-      (ev) => {
-        clearTimeout(timer);
-        if (fired) ev.preventDefault();
-      },
-      { signal }
-    );
+    el.addEventListener("touchend", (ev) => {
+      clearTimeout(timer);
+      if (fired) ev.preventDefault();
+    });
   }
 
-  function addTripleSwipeLeft(
-    el: Element | null,
-    onTripleSwipe: () => void,
-    signal: AbortSignal
-  ) {
+  function addTripleSwipeLeft(el: Element | null, onTripleSwipe: () => void) {
     if (!el) return;
     let startX = 0;
     let swipeCount = 0;
@@ -286,35 +276,27 @@
       (ev) => {
         startX = (ev as TouchEvent).touches[0].clientX;
       },
-      { signal, passive: true }
+      { passive: true }
     );
 
-    el.addEventListener(
-      "touchend",
-      (ev) => {
-        const endX = (ev as TouchEvent).changedTouches[0].clientX;
-        if (startX - endX > 50) {
-          swipeCount++;
-          clearTimeout(resetTimer);
-          if (swipeCount === 3) {
+    el.addEventListener("touchend", (ev) => {
+      const endX = (ev as TouchEvent).changedTouches[0].clientX;
+      if (startX - endX > 50) {
+        swipeCount++;
+        clearTimeout(resetTimer);
+        if (swipeCount === 3) {
+          swipeCount = 0;
+          onTripleSwipe();
+        } else {
+          resetTimer = setTimeout(() => {
             swipeCount = 0;
-            onTripleSwipe();
-          } else {
-            resetTimer = setTimeout(() => {
-              swipeCount = 0;
-            }, 1500);
-          }
+          }, 1500);
         }
-      },
-      { signal }
-    );
+      }
+    });
   }
 
   function init() {
-    controller?.abort();
-    controller = new AbortController();
-    const { signal } = controller;
-
     toast =
       document.querySelector<HTMLElement>("#easter-egg-toast") ?? undefined;
     const footerEl = document.querySelector("footer");
@@ -322,61 +304,52 @@
 
     const progress = SEQUENCES.map(() => 0);
 
-    document.addEventListener(
-      "keydown",
-      (e: KeyboardEvent) => {
-        if (
-          e.isComposing ||
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement
-        )
-          return;
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (
+        e.isComposing ||
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
 
-        const key = e.key.toLowerCase();
-        for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
-          const input = useCode ? e.code : key;
-          if (input === seq[progress[i]]) {
-            progress[i]++;
-            if (progress[i] === seq.length) {
-              progress[i] = 0;
-              showToast(egg);
-            }
-          } else {
-            progress[i] = input === seq[0] ? 1 : 0;
+      const key = e.key.toLowerCase();
+      for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
+        const input = useCode ? e.code : key;
+        if (input === seq[progress[i]]) {
+          progress[i]++;
+          if (progress[i] === seq.length) {
+            progress[i] = 0;
+            showToast(egg);
           }
+        } else {
+          progress[i] = input === seq[0] ? 1 : 0;
         }
-      },
-      { signal }
-    );
+      }
+    });
 
     let clickCount = 0;
     let clickTimer: ReturnType<typeof setTimeout> | undefined;
 
     const titleLink = document.querySelector("header a:first-child");
-    titleLink?.addEventListener(
-      "click",
-      () => {
-        clickCount++;
-        if (clickCount === 3) {
-          clickCount = 0;
-          clearTimeout(clickTimer);
-          showToast("buddhist");
-          return;
-        }
+    titleLink?.addEventListener("click", () => {
+      clickCount++;
+      if (clickCount === 3) {
+        clickCount = 0;
         clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => {
-          clickCount = 0;
-        }, 600);
-      },
-      { signal }
-    );
+        showToast("buddhist");
+        return;
+      }
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => {
+        clickCount = 0;
+      }, 600);
+    });
 
-    addLongPress(titleLink, () => showToast("buddhist"), signal);
-    addLongPress(footerEl, () => showToast("socialist"), signal);
-    addTripleSwipeLeft(headerEl, () => showToast("antifascist"), signal);
-    addTripleSwipeLeft(footerEl, () => showToast("artemis"), signal);
+    addLongPress(titleLink, () => showToast("buddhist"));
+    addLongPress(footerEl, () => showToast("socialist"));
+    addTripleSwipeLeft(headerEl, () => showToast("antifascist"));
+    addTripleSwipeLeft(footerEl, () => showToast("artemis"));
   }
 
   init();
-  document.addEventListener("astro:after-swap", init);
 </script>
