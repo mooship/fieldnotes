@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets";
-import { ClientRouter } from "astro:transitions";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import EasterEggs from "../components/EasterEggs.astro";
 
@@ -102,7 +101,6 @@ const jsonLd = {
           t === "dark" ? "dark" : "light";
       }
       applyStoredTheme();
-      document.addEventListener("astro:after-swap", applyStoredTheme);
     </script>
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
@@ -118,7 +116,6 @@ const jsonLd = {
     {description && <meta name="twitter:description" content={description} />}
     {image && <meta name="twitter:image" content={image} />}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    <ClientRouter />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -145,9 +142,7 @@ const jsonLd = {
         </nav>
       </div>
     </header>
-    <div transition:animate="fade">
-      <slot />
-    </div>
+    <slot />
     <EasterEggs />
     <footer>
       <nav class="feed-links" aria-label="Feed subscriptions">
