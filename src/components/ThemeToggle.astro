@@ -46,21 +46,10 @@ import { Moon, Sun } from "@lucide/astro";
     applyTheme(next);
   }
 
-  let controller: AbortController | undefined;
+  applyTheme(getStoredTheme());
 
-  function initThemeToggle() {
-    controller?.abort();
-    controller = new AbortController();
-    const { signal } = controller;
-
-    applyTheme(getStoredTheme());
-
-    for (const button of document.querySelectorAll("[data-theme-toggle]"))
-      button.addEventListener("click", cycleTheme, { signal });
-  }
-
-  initThemeToggle();
-  document.addEventListener("astro:after-swap", initThemeToggle);
+  for (const button of document.querySelectorAll("[data-theme-toggle]"))
+    button.addEventListener("click", cycleTheme);
 </script>
 
 <style>
