@@ -108,7 +108,7 @@ const jsonLd = {
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content={type} />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:site_name" content="Timothy Brits" />
+    <meta property="og:site_name" content="Fieldnotes" />
     {image && <meta property="og:image" content={image} />}
     <meta
       name="twitter:card"
@@ -124,7 +124,10 @@ const jsonLd = {
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <header>
       <div class="masthead">
-        <a href="/" class="wordmark">Timothy Brits</a>
+        <a href="/" class="wordmark">
+          <span class="wordmark-title">Fieldnotes</span>
+          <span class="wordmark-byline">by Timothy Brits</span>
+        </a>
         <nav aria-label="Main">
           <a
             href="/blog"
@@ -200,18 +203,34 @@ const jsonLd = {
   }
 
   .wordmark {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 500;
-    font-size: 1.25rem;
-    color: var(--ink);
-    letter-spacing: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
     text-decoration: none;
   }
 
   .wordmark:hover {
-    color: var(--ink);
     text-decoration: none;
+  }
+
+  .wordmark-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--ink);
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .wordmark-byline {
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    line-height: 1;
   }
 
   nav {
