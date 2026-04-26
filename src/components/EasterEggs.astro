@@ -265,10 +265,7 @@
     });
   }
 
-  function addTripleSwipeLeft(
-    el: Element | null,
-    onTripleSwipe: () => void
-  ) {
+  function addTripleSwipeLeft(el: Element | null, onTripleSwipe: () => void) {
     if (!el) return;
     let startX = 0;
     let swipeCount = 0;
@@ -307,31 +304,28 @@
 
     const progress = SEQUENCES.map(() => 0);
 
-    document.addEventListener(
-      "keydown",
-      (e: KeyboardEvent) => {
-        if (
-          e.isComposing ||
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement
-        )
-          return;
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (
+        e.isComposing ||
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      )
+        return;
 
-        const key = e.key.toLowerCase();
-        for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
-          const input = useCode ? e.code : key;
-          if (input === seq[progress[i]]) {
-            progress[i]++;
-            if (progress[i] === seq.length) {
-              progress[i] = 0;
-              showToast(egg);
-            }
-          } else {
-            progress[i] = input === seq[0] ? 1 : 0;
+      const key = e.key.toLowerCase();
+      for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
+        const input = useCode ? e.code : key;
+        if (input === seq[progress[i]]) {
+          progress[i]++;
+          if (progress[i] === seq.length) {
+            progress[i] = 0;
+            showToast(egg);
           }
+        } else {
+          progress[i] = input === seq[0] ? 1 : 0;
         }
-      },
-    );
+      }
+    });
 
     let clickCount = 0;
     let clickTimer: ReturnType<typeof setTimeout> | undefined;
