@@ -66,6 +66,12 @@ html[data-theme="dark"] {
   }
 }
 
+html.no-transition *,
+html.no-transition *::before,
+html.no-transition *::after {
+  transition: none !important;
+}
+
 html {
   background: var(--paper);
   overflow-x: clip;
