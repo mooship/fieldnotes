@@ -1,15 +1,15 @@
 import type { APIContext } from "astro";
 import {
   BLOG_DESCRIPTION,
-  getFeedItems,
   getSiteUrl,
   SITE_AUTHOR,
   SITE_TITLE,
 } from "../lib/blog";
+import { getFeedItems } from "../lib/feed";
 import { xmlEscape } from "../lib/xml";
 
 export async function GET(context: APIContext) {
-  const site = getSiteUrl(context.site!);
+  const site = getSiteUrl(context.site);
   const items = await getFeedItems(site);
 
   const updated =
