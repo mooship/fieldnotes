@@ -1,6 +1,11 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { formatDate, getBlogPosts, getPostSlug, SITE_TITLE } from "../../../lib/blog";
+import {
+  formatDate,
+  getBlogPosts,
+  getPostSlug,
+  SITE_TITLE,
+} from "../../../lib/blog";
 
 const posts = await getBlogPosts();
 const grouped = new Map<string, typeof posts>();
