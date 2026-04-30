@@ -1,6 +1,11 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { formatDate, getBlogPosts, getPostSlug } from "../../../lib/blog";
+import {
+  formatDate,
+  getBlogPosts,
+  getPostSlug,
+  SITE_TITLE,
+} from "../../../lib/blog";
 
 const posts = await getBlogPosts();
 const grouped = new Map<string, typeof posts>();
@@ -24,7 +29,7 @@ const series = [...grouped.entries()]
 ---
 
 <Layout
-  title="Series — Timothy Brits"
+  title={`Series — ${SITE_TITLE}`}
   description="Multi-part blog post series."
   type="website"
 >

@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Content as UsesContent } from "../sections/uses.md";
+import { SITE_TITLE } from "../lib/blog";
 ---
 
 <Layout
-  title="Uses — Timothy Brits"
+  title={`Uses — ${SITE_TITLE}`}
   description="The tools, hardware, and software I use daily."
   type="website"
 >

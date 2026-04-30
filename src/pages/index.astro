@@ -5,19 +5,19 @@ import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
-import { formatDate, getBlogPosts, getPostSlug } from "../lib/blog";
+import { formatDate, getBlogPosts, getPostSlug, SITE_TITLE } from "../lib/blog";
 
 const posts = await getBlogPosts();
 const recentPosts = posts.slice(0, 5);
 ---
 
 <Layout
-  title="Timothy Brits"
+  title={SITE_TITLE}
   description="Links and ways to connect with Timothy Brits - social profiles, and more."
   type="website"
 >
   <main id="main-content" tabindex="-1">
-    <h1 class="visually-hidden">Timothy Brits</h1>
+    <h1 class="visually-hidden">{SITE_TITLE}</h1>
     <IntroContent />
     {
       recentPosts.length > 0 && (
