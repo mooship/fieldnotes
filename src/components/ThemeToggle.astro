@@ -19,7 +19,10 @@ import { Moon, Sun } from "@lucide/astro";
   function getStoredTheme(): Theme {
     const stored = localStorage.getItem("theme");
     if (stored === "dark") return "dark";
-    return "light";
+    if (stored === "light") return "light";
+    return globalThis.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   }
 
   const THEME_LABELS: Record<Theme, string> = {
