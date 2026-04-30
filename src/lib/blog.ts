@@ -24,20 +24,20 @@ export function getPostSlug(id: string): string {
   return id.replace(/\.md$/, "");
 }
 
-export function getSiteUrl(site: URL): string {
+export function getSiteUrl(site?: URL): string {
+  if (!site) throw new Error("site must be set in astro.config.mjs");
   return site.toString().replace(/\/$/, "");
 }
 
+// Must stay in sync with the remarkSmartypants config in astro.config.mjs.
 const mdProcessor = unified()
   .use(remarkParse)
   .use(remarkGfm)
-  .use(remarkSmartypants)
+  .use(remarkSmartypants, { dashes: "inverted" })
   .use(remarkRehype)
   .use(rehypeStringify);
 
-export async function renderMarkdownToHtml(
-  markdown: string | undefined
-): Promise<string> {
+export async function renderMarkdownToHtml(markdown?: string): Promise<string> {
   return String(await mdProcessor.process(markdown ?? ""));
 }
 
@@ -45,31 +45,6 @@ export async function getBlogPosts() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
   return posts.toSorted(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  );
-}
-
-export interface FeedItem {
-  url: string;
-  title: string;
-  description: string;
-  html: string;
-  pubDate: Date;
-  updatedDate: Date;
-  tags: string[];
-}
-
-export async function getFeedItems(siteUrl: string): Promise<FeedItem[]> {
-  const posts = await getBlogPosts();
-  return Promise.all(
-    posts.map(async (post) => ({
-      url: `${siteUrl}/blog/${getPostSlug(post.id)}`,
-      title: post.data.title,
-      description: post.data.description,
-      html: await renderMarkdownToHtml(post.body),
-      pubDate: post.data.pubDate,
-      updatedDate: post.data.updatedDate ?? post.data.pubDate,
-      tags: post.data.tags,
-    }))
   );
 }
 
@@ -94,8 +69,13 @@ export interface AdjacentPosts {
   next: AdjacentPost | undefined;
 }
 
+interface NavigablePost {
+  id: string;
+  data: { title: string };
+}
+
 export function getAdjacentPosts(
-  posts: { id: string; data: { title: string } }[],
+  posts: NavigablePost[],
   currentSlug: string
 ): AdjacentPosts {
   const index = posts.findIndex((post) => getPostSlug(post.id) === currentSlug);
@@ -114,29 +94,32 @@ export function getAdjacentPosts(
   };
 }
 
-export function getAllTags(posts: { data: { tags: string[] } }[]): string[] {
+interface TaggedPost {
+  data: { tags: string[] };
+}
+
+export function getAllTags(posts: TaggedPost[]): string[] {
   return [...new Set(posts.flatMap((post) => post.data.tags))].toSorted();
 }
 
-export function getPostsByTag<T extends { data: { tags: string[] } }>(
+export function getPostsByTag<T extends TaggedPost>(
   posts: T[],
   tag: string
 ): T[] {
   return posts.filter((post) => post.data.tags.includes(tag));
 }
 
-export function getSeriesPosts(
-  posts: {
-    id: string;
-    data: {
-      title: string;
-      series?: string;
-      seriesOrder?: number;
-      pubDate: Date;
-    };
-  }[],
-  seriesName: string
-) {
+interface SeriesPost {
+  id: string;
+  data: {
+    title: string;
+    series?: string;
+    seriesOrder?: number;
+    pubDate: Date;
+  };
+}
+
+export function getSeriesPosts(posts: SeriesPost[], seriesName: string) {
   return posts
     .filter((post) => post.data.series === seriesName)
     .toSorted((a, b) => {
@@ -147,15 +130,19 @@ export function getSeriesPosts(
     });
 }
 
+interface RelatedPost {
+  id: string;
+  data: { title: string; tags: string[]; pubDate: Date };
+}
+
+interface CurrentPost {
+  id: string;
+  data: { tags: string[] };
+}
+
 export function getRelatedPosts(
-  posts: {
-    id: string;
-    data: { title: string; tags: string[]; pubDate: Date };
-  }[],
-  currentPost: {
-    id: string;
-    data: { tags: string[] };
-  },
+  posts: RelatedPost[],
+  currentPost: CurrentPost,
   limit = 3
 ) {
   const currentTags = new Set(currentPost.data.tags);
