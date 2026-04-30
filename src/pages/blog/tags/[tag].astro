@@ -6,6 +6,7 @@ import {
   getAllTags,
   getBlogPosts,
   getPostsByTag,
+  SITE_TITLE,
 } from "../../../lib/blog";
 
 export async function getStaticPaths() {
@@ -26,7 +27,7 @@ const postsWithMeta = posts.map((post) => ({
 ---
 
 <Layout
-  title={`Posts tagged "${tag}" — Fieldnotes`}
+  title={`Posts tagged "${tag}" — ${SITE_TITLE}`}
   description={`Blog posts tagged "${tag}".`}
   type="website"
 >

@@ -7,6 +7,7 @@ import "../styles/code.css";
 import { Font } from "astro:assets";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import EasterEggs from "../components/EasterEggs.astro";
+import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
 export interface Props {
   title: string;
@@ -43,7 +44,7 @@ const jsonLd = {
   ...(image ? { image } : {}),
   ...(type === "article"
     ? {
-        author: { "@type": "Person", name: "Timothy Brits" },
+        author: { "@type": "Person", name: SITE_AUTHOR },
         ...(datePublished
           ? { datePublished: datePublished.toISOString() }
           : {}),
@@ -100,19 +101,19 @@ const jsonLd = {
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="Fieldnotes — RSS"
+      title={`${SITE_TITLE} — RSS`}
       href="/rss.xml"
     />
     <link
       rel="alternate"
       type="application/atom+xml"
-      title="Fieldnotes — Atom"
+      title={`${SITE_TITLE} — Atom`}
       href="/atom.xml"
     />
     <link
       rel="alternate"
       type="application/feed+json"
-      title="Fieldnotes — JSON Feed"
+      title={`${SITE_TITLE} — JSON Feed`}
       href="/feed.json"
     />
     <meta name="generator" content={Astro.generator} />
@@ -120,7 +121,7 @@ const jsonLd = {
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content={type} />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:site_name" content="Fieldnotes" />
+    <meta property="og:site_name" content={SITE_TITLE} />
     {image && <meta property="og:image" content={image} />}
     <meta
       name="twitter:card"
@@ -138,8 +139,8 @@ const jsonLd = {
     <header>
       <div class="masthead">
         <a href="/" class="wordmark">
-          <span class="wordmark-title">Fieldnotes</span>
-          <span class="wordmark-byline">by Timothy Brits</span>
+          <span class="wordmark-title">{SITE_TITLE}</span>
+          <span class="wordmark-byline">by {SITE_AUTHOR}</span>
         </a>
         <nav aria-label="Main">
           <a

@@ -1,6 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { getBlogPosts } from "../../../lib/blog";
+import { getBlogPosts, SITE_TITLE } from "../../../lib/blog";
 
 const posts = await getBlogPosts();
 const countByTag = new Map<string, number>();
@@ -15,7 +15,7 @@ const tagsWithCount = [...countByTag.entries()]
 ---
 
 <Layout
-  title="Tags — Fieldnotes"
+  title={`Tags — ${SITE_TITLE}`}
   description="Browse blog posts by tag."
   type="website"
 >
