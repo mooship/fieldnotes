@@ -1,0 +1,37 @@
+.tag {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--link);
+  border: 1px solid var(--link);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.65rem;
+  text-decoration: none;
+}
+
+.tag:hover,
+.tag:focus-visible {
+  background: var(--link);
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+.post-tags li {
+  margin: 0;
+}
+
+@media (prefers-contrast: more) {
+  .tag {
+    border-width: 2px;
+  }
+}
