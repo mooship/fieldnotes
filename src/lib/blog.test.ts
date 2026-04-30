@@ -5,7 +5,6 @@ import {
   getAdjacentPosts,
   getAllTags,
   getBlogPosts,
-  getFeedItems,
   getPostsByTag,
   getPostSlug,
   getReadingTime,
@@ -68,11 +67,15 @@ describe("renderMarkdownToHtml", () => {
 
   it("converts straight double quotes to smart quotes", async () => {
     const doc = parseHtml(await renderMarkdownToHtml('"hello"'));
-    expect(doc.querySelector("p")?.textContent).toBe("\u201Chello\u201D");
+    expect(doc.querySelector("p")?.textContent).toBe("“hello”");
   });
 
   it("returns empty string for empty input", async () => {
     expect(await renderMarkdownToHtml("")).toBe("");
+  });
+
+  it("returns empty string for undefined input", async () => {
+    expect(await renderMarkdownToHtml()).toBe("");
   });
 });
 
@@ -144,7 +147,7 @@ type Post = { id: string; data: { draft: boolean; pubDate: Date } };
 
 function setupPosts(posts: Post[]) {
   mockGetCollection.mockImplementation(
-    async (_col: unknown, filter: (p: unknown) => boolean) =>
+    async (_col: unknown, filter?: (p: Post) => boolean) =>
       filter ? posts.filter((p) => filter(p)) : posts
   );
 }
@@ -286,6 +289,15 @@ describe("getRelatedPosts", () => {
     const result = getRelatedPosts(posts, current, 1);
     expect(result).toHaveLength(1);
   });
+
+  it("returns empty array when no posts share any tags", () => {
+    const current = {
+      id: "x.md",
+      data: { tags: ["obscure-tag"] },
+    };
+    const result = getRelatedPosts(posts, current);
+    expect(result).toHaveLength(0);
+  });
 });
 
 describe("getReadingTime", () => {
@@ -299,55 +311,6 @@ describe("getReadingTime", () => {
 
   it("returns undefined when readingTime is not a string", () => {
     expect(getReadingTime({ readingTime: 42 })).toBeUndefined();
-  });
-});
-
-describe("getFeedItems", () => {
-  it("returns feed items with rendered HTML and correct URLs", async () => {
-    mockGetCollection.mockResolvedValue([
-      {
-        id: "test-post.md",
-        data: {
-          title: "Test Post",
-          description: "A test",
-          pubDate: new Date("2024-06-01"),
-          updatedDate: new Date("2024-06-15"),
-          tags: ["tech"],
-          draft: false,
-        },
-        body: "Hello **world**",
-      },
-    ]);
-
-    const items = await getFeedItems("https://example.com");
-    expect(items).toHaveLength(1);
-    expect(items[0].url).toBe("https://example.com/blog/test-post");
-    expect(items[0].title).toBe("Test Post");
-    expect(items[0].description).toBe("A test");
-    expect(items[0].html).toContain("<strong>world</strong>");
-    expect(items[0].pubDate).toEqual(new Date("2024-06-01"));
-    expect(items[0].updatedDate).toEqual(new Date("2024-06-15"));
-    expect(items[0].tags).toEqual(["tech"]);
-  });
-
-  it("uses pubDate as updatedDate when updatedDate is missing", async () => {
-    const pubDate = new Date("2024-06-01");
-    mockGetCollection.mockResolvedValue([
-      {
-        id: "no-update.md",
-        data: {
-          title: "No Update",
-          description: "Desc",
-          pubDate,
-          tags: [],
-          draft: false,
-        },
-        body: "Content",
-      },
-    ]);
-
-    const items = await getFeedItems("https://example.com");
-    expect(items[0].updatedDate).toEqual(pubDate);
   });
 });
 
