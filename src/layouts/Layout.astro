@@ -95,8 +95,9 @@ const jsonLd = {
     />
     <meta name="generator" content={Astro.generator} />
     <script is:inline>
-      if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.dataset.theme = "dark";
+      const theme = localStorage.getItem("theme");
+      if (theme === "dark" || theme === "light") {
+        document.documentElement.dataset.theme = theme;
       }
     </script>
     <meta property="og:title" content={title} />
