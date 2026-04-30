@@ -54,9 +54,7 @@ describe("getSiteUrl", () => {
   });
 
   it("throws when site is undefined", () => {
-    expect(() => getSiteUrl()).toThrow(
-      "site must be set in astro.config.mjs"
-    );
+    expect(() => getSiteUrl()).toThrow("site must be set in astro.config.mjs");
   });
 });
 
