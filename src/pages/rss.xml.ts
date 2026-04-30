@@ -4,7 +4,6 @@ import { BLOG_DESCRIPTION, getSiteUrl, SITE_TITLE } from "../lib/blog";
 import { getFeedItems } from "../lib/feed";
 
 export async function GET(context: APIContext) {
-  if (!context.site) throw new Error("site must be set in astro.config.mjs");
   const site = getSiteUrl(context.site);
   const items = await getFeedItems(site);
 
