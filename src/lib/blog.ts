@@ -15,7 +15,7 @@ export function formatDate(date: Date): string {
   });
 }
 
-export const SITE_TITLE = "Timothy Brits";
+export const SITE_TITLE = "Fieldnotes";
 export const SITE_AUTHOR = "Timothy Brits";
 export const BLOG_DESCRIPTION =
   "Writing by Timothy Brits on software, open source, Buddhism, and eco-socialism.";

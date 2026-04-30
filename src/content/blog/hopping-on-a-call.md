@@ -40,4 +40,4 @@ Preferring async isn't really about productivity, either, at least not for me. I
 
 I'm not anti-meeting. Hard conversations need voices. Early brainstorming, when the problem is still mushy and nobody is sure what they're even trying to answer, sometimes needs a room. Occasionally a team needs to hear each other and remember they're working on the same thing. I've been in meetings that mattered. I know the difference.
 
-What I'm tired of is the default. The "quick sync," the "jump on a call," the afternoon eaten by half-hours from people who never had to decide whether their question was worth asking. Write it down first. Read what you wrote. See if it still holds up. If it does, send the message. If it doesn't, you just saved both of us thirty minutes.
+What I'm tired of is the default. The "quick sync," the "jump on a call," the afternoon eaten by half-hours from people who never had to decide whether their question was worth asking. Write it down first, read it back, and see whether it still holds up. Most of the time that process answers the question on its own.
