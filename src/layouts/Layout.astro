@@ -1,5 +1,9 @@
 ---
-import "../styles/global.css";
+import "../styles/tokens.css";
+import "../styles/base.css";
+import "../styles/typography.css";
+import "../styles/tags.css";
+import "../styles/code.css";
 import { Font } from "astro:assets";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import EasterEggs from "../components/EasterEggs.astro";
@@ -52,6 +56,24 @@ const jsonLd = {
 <!doctype html>
 <html lang="en">
   <head>
+    <script is:inline>
+      document.documentElement.classList.add("no-transition");
+      const theme = localStorage.getItem("theme");
+      if (theme === "dark" || theme === "light") {
+        document.documentElement.dataset.theme = theme;
+      } else if (
+        globalThis.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        document.documentElement.dataset.theme = "dark";
+      } else {
+        document.documentElement.dataset.theme = "light";
+      }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.documentElement.classList.remove("no-transition");
+        });
+      });
+    </script>
     <Font cssVariable="--font-serif" preload />
     <Font cssVariable="--font-mono" preload />
     <meta charset="UTF-8" />
@@ -94,12 +116,6 @@ const jsonLd = {
       href="/feed.json"
     />
     <meta name="generator" content={Astro.generator} />
-    <script is:inline>
-      const theme = localStorage.getItem("theme");
-      if (theme === "dark" || theme === "light") {
-        document.documentElement.dataset.theme = theme;
-      }
-    </script>
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content={type} />
