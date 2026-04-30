@@ -10,6 +10,7 @@ import {
   getReadingTime,
   getRelatedPosts,
   getSeriesPosts,
+  SITE_TITLE,
 } from "../../lib/blog";
 
 export async function getStaticPaths() {
@@ -36,7 +37,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 ---
 
 <Layout
-  title={`${post.data.title} — Timothy Brits`}
+  title={`${post.data.title} — ${SITE_TITLE}`}
   description={post.data.description}
   image={ogImage}
   type="article"
