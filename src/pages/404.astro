@@ -1,8 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { SITE_TITLE } from "../lib/blog";
 ---
 
-<Layout title="Page not found — Timothy Brits" robots="noindex">
+<Layout title={`Page not found — ${SITE_TITLE}`} robots="noindex">
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">404</h1>
     <p>This page doesn't exist.</p>

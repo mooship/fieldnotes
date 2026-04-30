@@ -6,6 +6,7 @@ import {
   BLOG_DESCRIPTION,
   computeReadingTime,
   getBlogPosts,
+  SITE_TITLE,
 } from "../../lib/blog";
 
 const posts = await getBlogPosts();
@@ -16,7 +17,7 @@ const postsWithMeta = posts.map((post) => ({
 ---
 
 <Layout
-  title="Blog — Timothy Brits"
+  title={`Blog — ${SITE_TITLE}`}
   description={BLOG_DESCRIPTION}
   type="website"
 >
