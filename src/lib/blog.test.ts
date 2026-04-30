@@ -52,6 +52,12 @@ describe("getSiteUrl", () => {
       "https://example.com/path"
     );
   });
+
+  it("throws when site is undefined", () => {
+    expect(() => getSiteUrl()).toThrow(
+      "site must be set in astro.config.mjs"
+    );
+  });
 });
 
 describe("renderMarkdownToHtml", () => {

@@ -24,7 +24,8 @@ export function getPostSlug(id: string): string {
   return id.replace(/\.md$/, "");
 }
 
-export function getSiteUrl(site: URL): string {
+export function getSiteUrl(site?: URL): string {
+  if (!site) throw new Error("site must be set in astro.config.mjs");
   return site.toString().replace(/\/$/, "");
 }
 
@@ -36,9 +37,7 @@ const mdProcessor = unified()
   .use(remarkRehype)
   .use(rehypeStringify);
 
-export async function renderMarkdownToHtml(
-  markdown: string | undefined
-): Promise<string> {
+export async function renderMarkdownToHtml(markdown?: string): Promise<string> {
   return String(await mdProcessor.process(markdown ?? ""));
 }
 
