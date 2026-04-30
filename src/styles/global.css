@@ -47,6 +47,25 @@ html[data-theme="dark"] {
     0 4px 24px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    --paper: #1a1813;
+    --paper-deep: #24201a;
+    --ink: #e8dfc9;
+    --ink-soft: #9f947c;
+    --rule: #3a362c;
+    --moss: #9fb06a;
+    --moss-hover: #bfce8c;
+    --moss-tint: rgba(159, 176, 106, 0.1);
+    --link: var(--moss);
+    --link-hover: var(--moss-hover);
+    --selection-bg: #4a3e1f;
+    --selection-fg: #f5efe1;
+    --shadow-elevated:
+      0 4px 24px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
 html {
   background: var(--paper);
   overflow-x: clip;
@@ -99,6 +118,7 @@ h3,
 h4 {
   font-family: var(--font-serif);
   font-weight: 500;
+  text-wrap: balance;
 }
 
 .page-title {
@@ -166,6 +186,15 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   text-decoration: var(--shiki-dark-text-decoration);
 }
 
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) :is(.astro-code, .astro-code span) {
+    color: var(--shiki-dark);
+    font-style: var(--shiki-dark-font-style);
+    font-weight: var(--shiki-dark-font-weight);
+    text-decoration: var(--shiki-dark-text-decoration);
+  }
+}
+
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--link);
@@ -178,7 +207,7 @@ a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, var(--link) 35%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--link) 55%, transparent);
   transition:
     color 0.2s ease,
     text-decoration-color 0.2s ease;
