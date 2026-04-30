@@ -1,5 +1,10 @@
 import type { APIContext } from "astro";
-import { BLOG_DESCRIPTION, getSiteUrl, SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
+import {
+  BLOG_DESCRIPTION,
+  getSiteUrl,
+  SITE_AUTHOR,
+  SITE_TITLE,
+} from "../lib/blog";
 import { getFeedItems } from "../lib/feed";
 import { xmlEscape } from "../lib/xml";
 
