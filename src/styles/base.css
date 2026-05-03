@@ -71,7 +71,7 @@ a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, var(--link) 55%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--link) 70%, transparent);
   transition:
     color 0.2s ease,
     text-decoration-color 0.2s ease;
