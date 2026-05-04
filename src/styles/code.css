@@ -15,12 +15,3 @@ html[data-theme="dark"] :is(.astro-code, .astro-code span) {
   font-weight: var(--shiki-dark-font-weight);
   text-decoration: var(--shiki-dark-text-decoration);
 }
-
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) :is(.astro-code, .astro-code span) {
-    color: var(--shiki-dark);
-    font-style: var(--shiki-dark-font-style);
-    font-weight: var(--shiki-dark-font-weight);
-    text-decoration: var(--shiki-dark-text-decoration);
-  }
-}
