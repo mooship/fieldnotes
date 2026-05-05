@@ -1,9 +1,3 @@
-html.no-transition *,
-html.no-transition *::before,
-html.no-transition *::after {
-  transition: none !important;
-}
-
 html {
   background: var(--paper);
   overflow-x: clip;
@@ -29,7 +23,6 @@ body {
     calc(20px + env(safe-area-inset-right))
     calc(40px + env(safe-area-inset-bottom))
     calc(20px + env(safe-area-inset-left));
-  transition: background-color 0.3s ease;
 }
 
 h1 {
