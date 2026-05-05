@@ -5,7 +5,6 @@ import "../styles/typography.css";
 import "../styles/tags.css";
 import "../styles/code.css";
 import { Font } from "astro:assets";
-import ThemeToggle from "../components/ThemeToggle.astro";
 import EasterEggs from "../components/EasterEggs.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
@@ -57,24 +56,6 @@ const jsonLd = {
 <!doctype html>
 <html lang="en">
   <head>
-    <script is:inline>
-      document.documentElement.classList.add("no-transition");
-      const theme = localStorage.getItem("theme");
-      if (theme === "dark" || theme === "light") {
-        document.documentElement.dataset.theme = theme;
-      } else if (
-        globalThis.matchMedia("(prefers-color-scheme: dark)").matches
-      ) {
-        document.documentElement.dataset.theme = "dark";
-      } else {
-        document.documentElement.dataset.theme = "light";
-      }
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          document.documentElement.classList.remove("no-transition");
-        });
-      });
-    </script>
     <Font cssVariable="--font-serif" preload />
     <Font cssVariable="--font-mono" preload />
     <meta charset="UTF-8" />
@@ -155,7 +136,6 @@ const jsonLd = {
             href="/uses"
             aria-current={pathname === "/uses" ? "page" : undefined}>Uses</a
           >
-          <ThemeToggle />
         </nav>
       </div>
     </header>
