@@ -16,4 +16,4 @@ The Eightfold Path is where most of that gets specific. Right speech, right acti
 
 The part I keep returning to: your peace and the peace of the people around you are not separate. You can't really have one while ignoring the other. Knowing that and treating it as true are different things.
 
-I don't have this figured out. I'm still at the beginning. But I'd rather sit with good questions than hold bad certainties.
+I don't have this figured out. I'm still at the beginning. But the questions feel more honest than the answers I was carrying before.
