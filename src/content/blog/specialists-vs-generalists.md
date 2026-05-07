@@ -7,17 +7,11 @@ tags:
   - software
 ---
 
-There's a category of AI tool that promises to simulate an entire software team.
-BMAD is the most prominent example right now. The idea is that you orchestrate a
-set of AI agents, each playing a role --- product manager, architect, developer,
-QA engineer --- and together they walk a project through the full SDLC. One
-person, full coverage.
+BMAD promises that one person can run the full SDLC --- orchestrate a set of AI
+agents, each playing a role, and together they simulate an entire software team.
 
-It's a genuinely impressive trick. I understand the appeal. Why staff a team
-when a framework can simulate one?
-
-But I keep coming back to the same problem: simulating a role is not the same
-as being good at it.
+It's a genuinely impressive trick. But I keep coming back to the same problem:
+simulating a role is not the same as being good at it.
 
 ---
 
@@ -38,15 +32,14 @@ instincts aren't there.
 
 ---
 
-The more honest framing is that AI is a force multiplier, not a replacement.
+Think about what AI actually does for people who are already good at something.
+A specialist with decent tooling is faster, sharper, more productive. They offload
+the boilerplate, get unstuck quicker, move through the parts of the work that
+don't need their full attention. The depth they've built over years is still there
+--- the AI just reduces friction around it.
 
-A specialist with good AI tooling is faster, sharper, more productive. They can
-offload the boilerplate, get unstuck quicker, draft things they'd otherwise spend
-an hour on. The depth they've built over years is still there --- the AI just
-removes some of the friction around it.
-
-A generalist with the same tools is still a generalist. The output ceiling is set
-by whoever is holding the wheel. Faster mediocrity is still mediocrity.
+A generalist with the same tools is still a generalist. Faster, maybe. The
+quality ceiling doesn't move.
 
 ---
 
@@ -55,24 +48,17 @@ everyone can theoretically cover everything. The coverage looks the same on a
 planning board. The quality doesn't.
 
 When a specialist is accountable for their part of the SDLC, they care about it
-differently. They've built intuitions around it. They know what good looks like
-in that domain and they know when something is quietly wrong even if it's passing
-all the checks. That kind of ownership doesn't come from prompt templates.
+differently. They've built intuitions around it. They know what good looks like and when something is quietly wrong even if it's
+passing all the checks. That kind of ownership doesn't come from prompt templates.
 
-Give people room to go deep. Let your teammates specialise. Resist the instinct
-to treat the SDLC as a set of interchangeable tasks that anyone, human or AI, can
-swap into and out of.
+The teams that get this right treat the SDLC like what it actually is: a set of
+phases that each reward deep familiarity. They give people room to own something.
 
 ---
 
-None of this is an argument against AI tools. I use them constantly. BMAD-style
-frameworks are interesting experiments and probably useful in the right context ---
-solo projects, prototyping, situations where you genuinely don't have access to
-specialists.
+I reach for AI tools constantly. BMAD-style experiments are interesting, and for
+solo work or a quick prototype there's a real argument for them.
 
 But using a tool that simulates expertise is not the same as building it. A team
 that tries to replace specialists with orchestrated generalists will find that out
 eventually, usually at the worst possible moment.
-
-Specialise. Own something. Let the AI make you faster at the thing you're already
-good at.
