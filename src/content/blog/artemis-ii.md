@@ -18,6 +18,6 @@ I think what makes this land so hard for me is generational. I was born twenty-s
 
 When the media and reality line up like this, it does something to the collective imagination that neither can do alone. Apollo had its own version of that -- the whole country watching a single screen, holding its breath. I wonder sometimes if part of what I'm feeling is nostalgia for a moment I never lived through, a longing for the kind of shared attention that probably can't exist anymore in the same way. But people are paying attention anyway. People who don't normally care about space are asking questions about lunar orbits and re-entry speeds. It's not Apollo-scale unity, but it's real.
 
-None of that is really the point, though. The point is simpler than any of the analysis. It's just the feeling of watching a countdown and believing, for the first time in a long time, that something extraordinary is about to happen.
+It's just the feeling of watching a countdown and believing, for the first time in a long time, that something extraordinary is about to happen.
 
 To the Moon.

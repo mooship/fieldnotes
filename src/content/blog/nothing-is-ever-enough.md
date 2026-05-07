@@ -10,7 +10,7 @@ I've never been more productive than I am right now. The tools I use are better 
 
 That feeling -- that no amount of output is ever sufficient -- has been sitting with me for a while. It disguises itself as a personal failing, but it's structural. Baked into the way work is organised under capitalism. The system doesn't have a concept of "enough." It has a concept of "more."
 
-This isn't new. The pattern goes back to the earliest labour-saving technologies. When the power loom mechanised weaving, textile workers didn't get shorter days. They got larger quotas. When the assembly line made manufacturing faster, the gains went to throughput, not to rest. When computers automated office work, we didn't shrink the workweek. We invented more work to fill it. Email. Reports. Meetings about the reports. The technology changed. The logic didn't.
+This isn't new. The pattern goes back to the earliest labour-saving technologies. When the power loom mechanised weaving, textile workers didn't get shorter days. They got larger quotas. When the assembly line made manufacturing faster, the gains went to throughput, not to rest. When computers automated office work, we didn't shrink the workweek. We invented more work to fill it --- email, reports, meetings about the reports. The technology changed. The logic didn't.
 
 To be fair, the workweek did shrink over the twentieth century, from sixty-plus hours to roughly forty. Real wages rose. Labour movements fought for and won genuine concessions. But that trend stalled decades ago. Since the 1970s, productivity has kept climbing while wages flatlined and working hours stopped falling. The gains kept coming. They just stopped flowing back to the people doing the work.
 

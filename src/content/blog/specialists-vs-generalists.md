@@ -27,24 +27,24 @@ after the next strategy review.
 These aren't things you get by asking an AI to put on a hat.
 
 An AI agent roleplaying an architect can give you something that looks like an
-architecture. The instincts behind it aren't there.
+architecture. What it can't give you is what the architect learned from the last
+time a system like that failed.
 
 ---
 
-Think about what AI actually does for people who are already good at something.
-A specialist with decent tooling moves faster and catches more. They offload the
-boilerplate, get unstuck quicker, move through the parts of the work that don't
-need their full attention. The depth they've built over years is still there
---- the AI just reduces friction around it.
+What AI actually does for someone who's already good at something is reduce
+friction. A specialist offloads the boilerplate, gets unstuck faster, moves
+through the parts of the work that don't need their full attention. The depth
+they've built over years is still doing the real work --- the AI just gets out
+of the way of it.
 
-A generalist with the same tools is still a generalist. Faster, maybe. The
-quality ceiling doesn't move.
+A generalist with the same tools moves faster. Their quality ceiling doesn't.
 
 ---
 
 I'd rather work on a team where everyone owns something deeply than a team where
 everyone can theoretically cover everything. The coverage looks the same on a
-planning board. The quality doesn't.
+planning board --- the quality gap only shows up later.
 
 When a specialist is accountable for their part of the SDLC, they've been living
 in it long enough that something wrong feels wrong before they can explain why.
@@ -59,11 +59,10 @@ I reach for AI tools constantly. BMAD-style experiments are interesting, and for
 solo work or a quick prototype there's a real argument for them.
 
 The tools I actually keep coming back to are the ones that sharpen what I already
-know how to do. [Superpowers](https://claude.com/plugins/superpowers) is a good
-example --- a Claude Code plugin built around developer workflows: TDD, debugging,
-planning. It doesn't ask me to roleplay as a product owner or a UX designer. It
-just makes me a better developer.
+know how to do --- ones built around developer workflows like TDD, debugging, and
+planning. They don't ask me to roleplay as a product owner or a UX designer. They
+just make me a better developer.
 
-But using a tool that simulates expertise is not the same as building it. A team
-that tries to cover the whole SDLC with a BMAD setup will find that out
-eventually, usually at the worst possible moment.
+But using a tool that simulates expertise is not the same as building it. The gap
+between those two things doesn't show up in the prototype. It shows up when
+something goes wrong and there's nobody in the room who's seen it go wrong before.
