@@ -7,8 +7,9 @@ tags:
   - software
 ---
 
-BMAD promises that one person can run the full SDLC --- orchestrate a set of AI
-agents, each playing a role, and together they simulate an entire software team.
+BMAD gives each agent a role --- architect, product manager, QA engineer,
+developer --- and orchestrates them through the full SDLC. One person, one
+prompt, an entire simulated software team.
 
 It's a genuinely impressive trick. But I keep coming back to the same problem:
 simulating a role is not the same as being good at it.
@@ -30,15 +31,15 @@ An AI agent roleplaying an architect can give you something that looks like an
 architecture. What it can't give you is what the architect learned from the last
 time a system like that failed.
 
----
-
 What AI actually does for someone who's already good at something is reduce
 friction. A specialist offloads the boilerplate, gets unstuck faster, moves
 through the parts of the work that don't need their full attention. The depth
 they've built over years is still doing the real work --- the AI just gets out
 of the way of it.
 
-A generalist with the same tools moves faster. Their quality ceiling doesn't.
+A generalist with the same tools moves faster too. But moving faster toward the
+same ceiling is not the same as raising it. The output looks similar until it
+doesn't.
 
 ---
 
@@ -55,13 +56,9 @@ phases that each reward deep familiarity. They give people room to own something
 
 ---
 
-I reach for AI tools constantly. BMAD-style experiments are interesting, and for
-solo work or a quick prototype there's a real argument for them.
-
-The tools I actually keep coming back to are the ones that sharpen what I already
-know how to do --- ones built around developer workflows like TDD, debugging, and
-planning. They don't ask me to roleplay as a product owner or a UX designer. They
-just make me a better developer.
+I reach for AI tools constantly. The ones that stick are the ones that make me
+better at what I already know how to do --- they reduce friction in the work,
+they don't replace the years that made me worth using them.
 
 But using a tool that simulates expertise is not the same as building it. The gap
 between those two things doesn't show up in the prototype. It shows up when
