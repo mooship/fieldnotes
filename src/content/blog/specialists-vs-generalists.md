@@ -8,8 +8,8 @@ tags:
 ---
 
 BMAD gives each agent a role --- architect, product manager, QA engineer,
-developer --- and orchestrates them through the full SDLC. One person, one
-prompt, an entire simulated software team.
+UX designer, developer --- and orchestrates them through the full SDLC. One
+person, one prompt, an entire simulated software team.
 
 It's a genuinely impressive trick. But I keep coming back to the same problem:
 simulating a role is not the same as being good at it.
@@ -21,9 +21,11 @@ architect has spent years internalising failure modes --- the ones that only sho
 up at scale, under load, after the third time a system has been hastily extended
 in a direction it wasn't designed for. A good QA engineer thinks adversarially by
 instinct. They've been burned enough times by edge cases that they go looking for
-them before anyone else does. A product manager who's run stakeholder meetings
-knows which requirements are load-bearing and which ones will quietly disappear
-after the next strategy review.
+them before anyone else does. A UX designer who's watched real users struggle
+with a flow knows which affordances are actually invisible --- not from
+heuristics, but from having seen the confusion on someone's face. A product
+manager who's run stakeholder meetings knows which requirements are load-bearing
+and which ones will quietly disappear after the next strategy review.
 
 These aren't things you get by asking an AI to put on a hat.
 
