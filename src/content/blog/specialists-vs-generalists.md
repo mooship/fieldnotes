@@ -59,6 +59,13 @@ phases that each reward deep familiarity. They give people room to own something
 I reach for AI tools constantly. BMAD-style experiments are interesting, and for
 solo work or a quick prototype there's a real argument for them.
 
+The tools I actually keep coming back to are the ones that sharpen what I already
+know how to do. [Superpowers](https://claude.com/plugins/superpowers) is a good
+example --- it's a Claude Code plugin built around developer workflows: TDD,
+systematic debugging, planning, subagent-driven implementation. It doesn't ask me
+to roleplay as a business analyst or product owner. It takes the thing I know how
+to do and removes friction from it.
+
 But using a tool that simulates expertise is not the same as building it. A team
 that tries to replace specialists with orchestrated generalists will find that out
 eventually, usually at the worst possible moment.
