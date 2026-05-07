@@ -296,41 +296,47 @@
     });
   }
 
+  let initialized = false;
+
   function init() {
     toast =
       document.querySelector<HTMLElement>("#easter-egg-toast") ?? undefined;
     const footerEl = document.querySelector("footer");
     const headerEl = document.querySelector("header");
+    const titleLink = document.querySelector("header a:first-child");
 
-    const progress = SEQUENCES.map(() => 0);
+    if (!initialized) {
+      initialized = true;
 
-    document.addEventListener("keydown", (e: KeyboardEvent) => {
-      if (
-        e.isComposing ||
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
-      )
-        return;
+      const progress = SEQUENCES.map(() => 0);
 
-      const key = e.key.toLowerCase();
-      for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
-        const input = useCode ? e.code : key;
-        if (input === seq[progress[i]]) {
-          progress[i]++;
-          if (progress[i] === seq.length) {
-            progress[i] = 0;
-            showToast(egg);
+      document.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (
+          e.isComposing ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement
+        )
+          return;
+
+        const key = e.key.toLowerCase();
+        for (const [i, [seq, egg, useCode]] of SEQUENCES.entries()) {
+          const input = useCode ? e.code : key;
+          if (input === seq[progress[i]]) {
+            progress[i]++;
+            if (progress[i] === seq.length) {
+              progress[i] = 0;
+              showToast(egg);
+            }
+          } else {
+            progress[i] = input === seq[0] ? 1 : 0;
           }
-        } else {
-          progress[i] = input === seq[0] ? 1 : 0;
         }
-      }
-    });
+      });
+    }
 
     let clickCount = 0;
     let clickTimer: ReturnType<typeof setTimeout> | undefined;
 
-    const titleLink = document.querySelector("header a:first-child");
     titleLink?.addEventListener("click", () => {
       clickCount++;
       if (clickCount === 3) {
@@ -351,5 +357,5 @@
     addTripleSwipeLeft(footerEl, () => showToast("artemis"));
   }
 
-  init();
+  document.addEventListener("astro:page-load", init);
 </script>
