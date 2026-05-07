@@ -16,11 +16,14 @@ interface Props {
 }
 
 const { post, readingTime, showTags = false } = Astro.props;
+const slug = getPostSlug(post.id);
 ---
 
 <li>
-  <a class="post-title" href={`/blog/${getPostSlug(post.id)}`}
-    >{post.data.title}</a
+  <a
+    class="post-title"
+    href={`/blog/${slug}`}
+    transition:name={`post-title-${slug}`}>{post.data.title}</a
   >
   <p class="post-meta meta-label">
     <time datetime={post.data.pubDate.toISOString()}>
