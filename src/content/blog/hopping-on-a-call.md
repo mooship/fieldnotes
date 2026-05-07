@@ -32,7 +32,7 @@ Linus Torvalds has said, in various forms over many years, that he prefers writt
 
 ---
 
-The throughline in both cases isn't really about remote work, or tooling, or time zones. It's about what writing does to an idea. Writing is how you find out whether the thing in your head is any good. A call lets a half-formed thought pass as a conversation: you say it, someone nods, it sounds reasonable enough out loud, and the moment is gone before anyone has to look at it too hard. A paragraph is less forgiving. You read it back and you can usually tell, fairly quickly, that you don't actually know what you're proposing yet. That's the paragraph doing its job.
+Neither case is really about remote work, or tooling, or time zones. It's about what writing does to an idea. Writing is how you find out whether the thing in your head is any good. A call lets a half-formed thought pass as a conversation: you say it, someone nods, it sounds reasonable enough out loud, and the moment is gone before anyone has to look at it too hard. A paragraph is less forgiving. You read it back and you can usually tell, fairly quickly, that you don't actually know what you're proposing yet. That's the paragraph doing its job.
 
 Preferring async isn't really about productivity, either, at least not for me. It's about taking your own thinking seriously enough to put it through the effort of sentences, and taking other people's time seriously enough not to spend it on your first draft.
 
