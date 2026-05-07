@@ -239,8 +239,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     });
   }
 
-  initCopyButtons();
-  initShareButton();
+  document.addEventListener("astro:page-load", () => {
+    initCopyButtons();
+    initShareButton();
+  });
 </script>
 
 <style>
