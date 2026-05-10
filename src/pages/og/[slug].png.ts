@@ -38,7 +38,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const GET: APIRoute = async ({ props, site }) => {
   const { title } = props as { title: string };
-  const hostname = site ? new URL(site).hostname : "timothybrits.co.za";
+  const hostname = site?.hostname ?? "timothybrits.co.za";
   const { regular, italic } = await loadFonts();
 
   const svg = await satori(
