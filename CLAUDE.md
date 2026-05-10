@@ -51,7 +51,7 @@ Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on
 
 **Fonts:** Fraunces serif (body/headings) and system sans (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, …) for nav, meta, and tags. Fraunces is loaded via Astro's font API (`fontProviders.fontsource()`) and exposed as `--font-serif`; the sans stack lives in `--font-sans`. Font-face declarations are injected automatically. Typography details (sizes, weights, letter-spacing) are in `src/styles/typography.css`.
 
-**Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and a custom `remarkReadingTime` plugin (`src/lib/remark-reading-time.ts`) that injects estimated reading time into `remarkPluginFrontmatter.readingTime` for blog posts. Syntax highlighting uses Shiki with `min-light`/`min-dark` themes.
+**Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and a custom `remarkReadingTime` plugin (`src/lib/remark-reading-time.ts`) that injects estimated reading time into `remarkPluginFrontmatter.readingTime` for blog posts. Syntax highlighting uses Shiki with `rose-pine-dawn`/`rose-pine-moon` themes.
 
 **Build pipeline:** Astro integrations run at build time — sitemap generation (`@astrojs/sitemap`) and RSS feeds (`@astrojs/rss`).
 
