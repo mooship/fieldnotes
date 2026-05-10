@@ -7,10 +7,10 @@ import { getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const require = createRequire(import.meta.url);
 
-const PAPER = "#f5efe1";
-const INK = "#1f1a10";
-const INK_SOFT = "#6b5d47";
-const RULE = "#c9bfa8";
+const PAPER = "#faf4ed";
+const INK = "#575279";
+const INK_SOFT = "#797593";
+const RULE = "#dfdad9";
 
 let fontsPromise: Promise<{ regular: Buffer; italic: Buffer }> | undefined;
 
