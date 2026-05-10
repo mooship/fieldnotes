@@ -15,7 +15,6 @@ body {
     "onum" 1,
     "ss01" 1;
   font-optical-sizing: auto;
-  background: var(--paper);
   color: var(--ink);
   max-width: 640px;
   margin: 0 auto;
@@ -28,7 +27,6 @@ body {
 h1 {
   font-family: var(--font-serif);
   font-weight: 700;
-  color: var(--ink);
   text-wrap: balance;
   text-rendering: optimizeLegibility;
   letter-spacing: -0.01em;
@@ -38,7 +36,6 @@ h1 {
 h2 {
   font-family: var(--font-serif);
   font-weight: 500;
-  color: var(--ink);
   text-wrap: balance;
   text-rendering: optimizeLegibility;
   letter-spacing: 0;
