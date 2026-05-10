@@ -3,24 +3,23 @@
   --font-sans:
     -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
-  /* Rose Pine Dawn */
-  --paper: #faf4ed;
-  --paper-deep: #f2e9e1;
-  --ink: #575279;
-  --ink-soft: #797593;
-  --rule: #dfdad9;
-  --moss: #907aa9;
-  --moss-hover: #7b6895;
-  --moss-tint: rgba(144, 122, 169, 0.08);
+  --paper: #f5efe1;
+  --paper-deep: #ece3cf;
+  --ink: #1f1a10;
+  --ink-soft: #6b5d47;
+  --rule: #c9bfa8;
+  --moss: #5d6e33;
+  --moss-hover: #414d24;
+  --moss-tint: rgba(93, 110, 51, 0.08);
   --link: var(--moss);
   --link-hover: var(--moss-hover);
-  --selection-bg: #dfdad9;
-  --selection-fg: #575279;
+  --selection-bg: #d6c88a;
+  --selection-fg: #1f1a10;
 
   --radius: 2px;
   --radius-input: 6px;
   --shadow-elevated:
-    0 4px 16px rgba(87, 82, 121, 0.06), 0 1px 3px rgba(87, 82, 121, 0.04);
+    0 4px 16px rgba(20, 15, 5, 0.06), 0 1px 3px rgba(20, 15, 5, 0.04);
   --z-toast: 100;
   --z-skip-link: 9999;
 
@@ -33,19 +32,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Rose Pine Moon */
-    --paper: #232136;
-    --paper-deep: #2a273f;
-    --ink: #e0def4;
-    --ink-soft: #908caa;
-    --rule: #44415a;
-    --moss: #c4a7e7;
-    --moss-hover: #d4b8f6;
-    --moss-tint: rgba(196, 167, 231, 0.1);
+    --paper: #1a1813;
+    --paper-deep: #24201a;
+    --ink: #e8dfc9;
+    --ink-soft: #9f947c;
+    --rule: #3a362c;
+    --moss: #9fb06a;
+    --moss-hover: #bfce8c;
+    --moss-tint: rgba(159, 176, 106, 0.1);
     --link: var(--moss);
     --link-hover: var(--moss-hover);
-    --selection-bg: #44415a;
-    --selection-fg: #e0def4;
+    --selection-bg: #4a3e1f;
+    --selection-fg: #f5efe1;
     --shadow-elevated:
       0 4px 24px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
   }
@@ -53,18 +51,18 @@
 
 @media (prefers-contrast: more) {
   :root {
-    --ink-soft: #4a4769;
-    --rule: #b9b4c4;
-    --moss: #6b5a87;
-    --moss-hover: #574872;
+    --ink-soft: #4a3f2a;
+    --rule: #8a7f68;
+    --moss: #3d5a2a;
+    --moss-hover: #263916;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --ink-soft: #c4c0d4;
-      --rule: #6e6a86;
-      --moss: #d8c8f0;
-      --moss-hover: #e5d8f8;
+      --ink-soft: #d4cab5;
+      --rule: #6b6658;
+      --moss: #b8d49a;
+      --moss-hover: #d2e6b5;
     }
   }
 }
