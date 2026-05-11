@@ -6,6 +6,8 @@ tags:
   - politics
 ---
 
+I've been trying to write about Gaza for months. Every draft collapses under the scale of it.
+
 Home is not something most of us have to define. It's the place that exists when you're not in it — that holds your history, keeps your people, stays where you left it. You can lose it in many ways. Through war, poverty, time, displacement. But most of those losses leave the possibility of return open, at least in theory. The structure is gone. The possibility, maybe, isn't.
 
 What does it look like when the erasure of that possibility is the point?
@@ -54,6 +56,6 @@ What it is not is a constraint.
 
 The hardest part isn't the violence. It's what surrounds it. The world built an elaborate structure of international law and multilateral institutions precisely to prevent this: territorial acquisition by force, systematic dispossession, the erasure of a people from a place. That structure has issued its verdict. The project continues.
 
-The Nakba was a specific event — 1948, the displacement of approximately 700,000 Palestinians. It was also, retroactively, a beginning. What is being documented now, across Gaza, Lebanon, and the West Bank, is whether that project reaches a conclusion it cannot be walked back from.
+I keep returning to 1948. The Nakba — the displacement of approximately 700,000 Palestinians — was a specific event. It was also, retroactively, a beginning. What is being documented now, across Gaza, Lebanon, and the West Bank, is whether that project reaches a conclusion it cannot be walked back from.
 
 Not the homes. The possibility of home.
