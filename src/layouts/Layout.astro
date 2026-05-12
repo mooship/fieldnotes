@@ -7,6 +7,7 @@ import "../styles/code.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import EasterEggs from "../components/EasterEggs.astro";
+import CarbonBadge from "../components/CarbonBadge.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
 export interface Props {
@@ -150,6 +151,7 @@ const jsonLd = {
         <a href="/rss.xml">RSS</a>
         <a href="/feed.json">JSON Feed</a>
       </nav>
+      <CarbonBadge />
     </footer>
   </body>
 </html>
