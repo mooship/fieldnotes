@@ -10,7 +10,7 @@ const { green = true } = Astro.props;
 
 <script>
   function initBadge() {
-    const el = document.getElementById("carbon-badge");
+    const el = document.querySelector("#carbon-badge");
     if (!el) return;
 
     const green = el.dataset.green ?? "0";
@@ -39,11 +39,11 @@ const { green = true } = Astro.props;
         .reduce(
           (total: number, e: PerformanceEntry) =>
             total + ((e as PerformanceResourceTiming).transferSize || 0),
-          0,
+          0
         );
 
       fetch(
-        `https://api.websitecarbon.com/data?bytes=${Math.round(bytes)}&green=${green}`,
+        `https://api.websitecarbon.com/data?bytes=${Math.round(bytes)}&green=${green}`
       )
         .then((r) => (r.ok ? r.json() : Promise.reject()))
         .then(({ gco2e, cleanerThan }) => {
@@ -51,7 +51,7 @@ const { green = true } = Astro.props;
           try {
             localStorage.setItem(
               cacheKey,
-              JSON.stringify({ ts: Date.now(), gco2e, cleanerThan }),
+              JSON.stringify({ ts: Date.now(), gco2e, cleanerThan })
             );
           } catch {}
         })
