@@ -36,13 +36,16 @@ const { green = true } = Astro.props;
     } catch {}
 
     function fetchAndRender() {
-      const bytes = performance
-        .getEntriesByType("resource")
-        .reduce(
-          (total: number, e: PerformanceEntry) =>
-            total + ((e as PerformanceResourceTiming).transferSize || 0),
-          0
-        );
+      let bytes = 0;
+      for (const r of performance.getEntriesByType(
+        "resource"
+      ) as PerformanceResourceTiming[]) {
+        bytes += r.encodedBodySize || r.transferSize || 0;
+      }
+
+      if (!bytes) {
+        return;
+      }
 
       fetch(
         `https://api.websitecarbon.com/data?bytes=${Math.round(bytes)}&green=${green}`
