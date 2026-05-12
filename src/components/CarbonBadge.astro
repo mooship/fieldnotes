@@ -10,16 +10,18 @@ const { green = true } = Astro.props;
 
 <script>
   function initBadge() {
-    const el = document.querySelector("#carbon-badge");
-    if (!el) return;
+    const el = document.querySelector<HTMLElement>("#carbon-badge");
+    if (!el) {
+      return;
+    }
 
     const green = el.dataset.green ?? "0";
-    const cacheKey = `wcb:${location.href}`;
+    const cacheKey = `wcb:${location.pathname}`;
 
     function render(gco2e: number, cleanerThan: number) {
       const grams = gco2e.toFixed(2);
       const pct = Math.round(cleanerThan * 100);
-      el!.innerHTML = `<a href="https://www.websitecarbon.com" rel="noopener noreferrer" title="Cleaner than ${pct}% of pages tested — Website Carbon">${grams}&thinsp;g CO₂/view</a>`;
+      el.innerHTML = `<a href="https://www.websitecarbon.com" rel="noopener noreferrer" title="Cleaner than ${pct}% of pages tested — Website Carbon">${grams}&thinsp;g CO₂/view</a>`;
     }
 
     try {
@@ -45,7 +47,10 @@ const { green = true } = Astro.props;
       fetch(
         `https://api.websitecarbon.com/data?bytes=${Math.round(bytes)}&green=${green}`
       )
-        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
         .then(({ gco2e, cleanerThan }) => {
           render(gco2e, cleanerThan);
           try {
@@ -67,17 +72,3 @@ const { green = true } = Astro.props;
 
   document.addEventListener("astro:page-load", initBadge);
 </script>
-
-<style>
-  #carbon-badge a {
-    color: var(--ink-soft);
-    text-decoration: none;
-  }
-
-  #carbon-badge a:hover {
-    color: var(--ink);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-</style>
