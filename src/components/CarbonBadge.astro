@@ -1,0 +1,83 @@
+---
+interface Props {
+  green?: boolean;
+}
+
+const { green = true } = Astro.props;
+---
+
+<span id="carbon-badge" data-green={green ? "1" : "0"}></span>
+
+<script>
+  function initBadge() {
+    const el = document.getElementById("carbon-badge");
+    if (!el) return;
+
+    const green = el.dataset.green ?? "0";
+    const cacheKey = `wcb:${location.href}`;
+
+    function render(gco2e: number, cleanerThan: number) {
+      const grams = gco2e.toFixed(2);
+      const pct = Math.round(cleanerThan * 100);
+      el!.innerHTML = `<a href="https://www.websitecarbon.com" rel="noopener noreferrer" title="Cleaner than ${pct}% of pages tested — Website Carbon">${grams}&thinsp;g CO₂/view</a>`;
+    }
+
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const { ts, gco2e, cleanerThan } = JSON.parse(cached);
+        if (Date.now() - ts < 86_400_000) {
+          render(gco2e, cleanerThan);
+          return;
+        }
+      }
+    } catch {}
+
+    function fetchAndRender() {
+      const bytes = performance
+        .getEntriesByType("resource")
+        .reduce(
+          (total: number, e: PerformanceEntry) =>
+            total + ((e as PerformanceResourceTiming).transferSize || 0),
+          0,
+        );
+
+      fetch(
+        `https://api.websitecarbon.com/data?bytes=${Math.round(bytes)}&green=${green}`,
+      )
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then(({ gco2e, cleanerThan }) => {
+          render(gco2e, cleanerThan);
+          try {
+            localStorage.setItem(
+              cacheKey,
+              JSON.stringify({ ts: Date.now(), gco2e, cleanerThan }),
+            );
+          } catch {}
+        })
+        .catch(() => {});
+    }
+
+    if (document.readyState === "complete") {
+      fetchAndRender();
+    } else {
+      window.addEventListener("load", fetchAndRender, { once: true });
+    }
+  }
+
+  document.addEventListener("astro:page-load", initBadge);
+</script>
+
+<style>
+  #carbon-badge a {
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  #carbon-badge a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+</style>
