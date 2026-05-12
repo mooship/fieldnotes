@@ -63,11 +63,7 @@ const { green = true } = Astro.props;
         .catch(() => {});
     }
 
-    if (document.readyState === "complete") {
-      fetchAndRender();
-    } else {
-      window.addEventListener("load", fetchAndRender, { once: true });
-    }
+    fetchAndRender();
   }
 
   document.addEventListener("astro:page-load", initBadge);
