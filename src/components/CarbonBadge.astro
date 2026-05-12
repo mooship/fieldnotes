@@ -43,7 +43,9 @@ const { green = true } = Astro.props;
         bytes += r.encodedBodySize || r.transferSize || 0;
       }
 
-      if (!bytes) return;
+      if (!bytes) {
+        return;
+      }
 
       fetch(
         `https://api.websitecarbon.com/data?bytes=${Math.round(bytes)}&green=${green}`
