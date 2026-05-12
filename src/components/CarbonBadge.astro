@@ -37,8 +37,9 @@ const { green = true } = Astro.props;
 
     function fetchAndRender() {
       let bytes = 0;
-      for (const e of performance.getEntriesByType("resource")) {
-        const r = e as PerformanceResourceTiming;
+      for (const r of performance.getEntriesByType(
+        "resource"
+      ) as PerformanceResourceTiming[]) {
         bytes += r.encodedBodySize || r.transferSize || 0;
       }
 
