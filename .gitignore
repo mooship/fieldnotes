@@ -25,6 +25,7 @@ yarn-error.log*
 
 # claude code
 .claude/
+.playwright-mcp/
 
 # eslint
 .eslintcache
