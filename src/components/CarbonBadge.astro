@@ -67,5 +67,5 @@ const { green = true } = Astro.props;
     fetchAndRender();
   }
 
-  document.addEventListener("astro:page-load", initBadge);
+  document.addEventListener("DOMContentLoaded", initBadge);
 </script>
