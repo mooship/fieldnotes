@@ -47,9 +47,7 @@ const { green = true } = Astro.props;
         return;
       }
 
-      fetch(
-        `https://api.websitecarbon.com/data?bytes=${Math.round(bytes)}&green=${green}`
-      )
+      fetch(`/api/carbon?bytes=${Math.round(bytes)}&green=${green}`)
         .then((r) => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
