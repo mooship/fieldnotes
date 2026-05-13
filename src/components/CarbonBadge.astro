@@ -17,7 +17,6 @@ const { green = true } = Astro.props;
 
     const green = el.dataset.green ?? "0";
     const cacheKey = `wcb:${location.pathname}`;
-    const bytesFallbackKey = "wcb:bytes";
 
     function render(gco2e: number, cleanerThan: number) {
       const grams = gco2e.toFixed(2);
@@ -37,18 +36,14 @@ const { green = true } = Astro.props;
     } catch {}
 
     function fetchAndRender() {
-      let bytes = 0;
+      const nav = performance.getEntriesByType(
+        "navigation"
+      )[0] as PerformanceNavigationTiming | undefined;
+      let bytes = nav ? nav.encodedBodySize || nav.transferSize || 0 : 0;
       for (const r of performance.getEntriesByType(
         "resource"
       ) as PerformanceResourceTiming[]) {
         bytes += r.encodedBodySize || r.transferSize || 0;
-      }
-
-      if (!bytes) {
-        try {
-          const stored = localStorage.getItem(bytesFallbackKey);
-          if (stored) bytes = Number(stored) || 0;
-        } catch {}
       }
 
       if (!bytes) {
@@ -67,7 +62,6 @@ const { green = true } = Astro.props;
               cacheKey,
               JSON.stringify({ ts: Date.now(), gco2e, cleanerThan })
             );
-            localStorage.setItem(bytesFallbackKey, String(bytes));
           } catch {}
         })
         .catch(() => {});
