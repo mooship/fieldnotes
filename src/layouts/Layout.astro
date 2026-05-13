@@ -5,7 +5,6 @@ import "../styles/typography.css";
 import "../styles/tags.css";
 import "../styles/code.css";
 import { Font } from "astro:assets";
-import { ClientRouter } from "astro:transitions";
 import CarbonBadge from "../components/CarbonBadge.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
@@ -99,7 +98,6 @@ const jsonLd = {
       href="/feed.json"
     />
     <meta name="generator" content={Astro.generator} />
-    <ClientRouter />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content={type} />
@@ -121,7 +119,7 @@ const jsonLd = {
     >
     <header>
       <div class="masthead">
-        <a href="/" class="wordmark" transition:name="wordmark">
+        <a href="/" class="wordmark">
           <span class="wordmark-title">{SITE_TITLE}</span>
           <span class="wordmark-byline">by {SITE_AUTHOR}</span>
         </a>
