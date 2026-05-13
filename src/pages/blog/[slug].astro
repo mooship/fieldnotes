@@ -239,7 +239,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     });
   }
 
-  document.addEventListener("astro:page-load", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     initCopyButtons();
     initShareButton();
   });
