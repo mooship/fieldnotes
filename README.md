@@ -1,8 +1,6 @@
 # Fieldnotes
 
-Personal link tree built with Astro + TypeScript + CSS. Fast, minimal, easy to tweak.
-
-> Based on the excellent Astro Biolink Kit by [Leif](https://grains.leifjerami.com).
+Personal site and blog built with Astro + TypeScript + CSS. Includes a blog with tags, series, full-text search, and OG image generation. Fast, minimal, easy to tweak.
 
 ## Quick Start
 
@@ -32,76 +30,87 @@ Dev server runs at: http://localhost:4321
 
 ```text
 src/
-	pages/
-		index.astro      # Home page (imports and renders sections)
-		blog/
-			index.astro    # Blog index
-			[slug].astro   # Blog post page
-	sections/
-		intro.md         # Introduction section
-		personal.md      # Personal links
-		writing.md       # Writing intro section on home page
-		opensource.md    # Open source section
-		support.md       # Support section
-	content/
-		blog/            # Blog posts (.md)
-	layouts/
-		Layout.astro     # Base layout wrapper
-	lib/
-		blog.ts          # Blog helpers
-		blog.test.ts
-		remark-reading-time.ts
-		remark-reading-time.test.ts
-		xml.ts           # XML character escaping (used by atom feed)
-		xml.test.ts
-	__mocks__/
-		astro-content.ts # Vitest stub for astro:content virtual module
-	styles/
-		global.css       # Global styles / overrides
-public/              # Static assets (images, favicons, etc.)
+  pages/
+    index.astro          # Home page (imports and renders 5 section .md files)
+    now.astro            # /now page
+    uses.astro           # /uses page
+    404.astro
+    robots.txt.ts
+    rss.xml.ts
+    atom.xml.ts
+    feed.json.ts
+    blog/
+      index.astro        # Blog index (includes pagefind search)
+      [slug].astro       # Blog post page
+      tags/
+        index.astro      # All tags
+        [tag].astro      # Posts for a tag
+      series/
+        index.astro      # Series index
+    og/
+      [slug].png.ts      # OG image generation (satori + sharp)
+  sections/
+    intro.md             # Home page: introduction
+    personal.md          # Home page: personal links
+    writing.md           # Home page: writing intro
+    opensource.md        # Home page: open source
+    support.md           # Home page: support
+    now.md               # /now page content
+    uses.md              # /uses page content
+  components/
+    PostListItem.astro   # Single post row in blog listings
+    CarbonBadge.astro    # Page carbon footprint badge
+  content/
+    blog/                # Blog posts (.md)
+  layouts/
+    Layout.astro         # Base layout wrapper
+  lib/
+    blog.ts              # Blog helpers (fetch, sort, slug, constants)
+    blog.test.ts
+    feed.ts              # Shared feed item builder (used by rss/atom/json endpoints)
+    feed.test.ts
+    remark-reading-time.ts
+    remark-reading-time.test.ts
+    xml.ts               # XML character escaping (atom feed)
+    xml.test.ts
+  __mocks__/
+    astro-content.ts     # Vitest stub for astro:content virtual module
+  styles/
+    tokens.css           # CSS custom properties
+    base.css             # Resets and base element styles
+    typography.css       # Type scale
+    tags.css             # Tag pill styles
+    code.css             # Code block styles
+public/                  # Static assets (images, favicons, etc.)
 ```
 
-## Customising Your Links
+## Customising Content
 
 1. Edit home page sections in `src/sections/intro.md`, `src/sections/personal.md`, `src/sections/writing.md`, `src/sections/opensource.md`, and `src/sections/support.md`.
-2. Add blog posts in `src/content/blog/` (do not edit `src/sections/writing.md` for post content).
-3. Run `npm run lint`, `npm run test`, and `npm run build` before pushing changes.
+2. Edit `/now` and `/uses` content in `src/sections/now.md` and `src/sections/uses.md`.
+3. Add blog posts in `src/content/blog/` — frontmatter supports `tags` (array) and `series`.
+4. Run `npm run lint`, `npm run test`, and `npm run build` before pushing changes.
 
 ### Styling Tweaks
 
-Small changes: adjust CSS variables or rules in `src/styles/global.css`.
+Small changes: adjust CSS variables in `src/styles/tokens.css` or element rules in `src/styles/base.css`.
 
 Layout changes: edit `src/layouts/Layout.astro` (semantic HTML + scoped styles).
 
-Fonts are self‑hosted (variable font packages) for performance & privacy.
+Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declarations are injected automatically at build time.
 
 ## Tech Notes
 
-- Astro 6.x
+- Astro (static output, experimental Rust compiler enabled)
 - TypeScript enabled (`tsconfig.json`)
 - ESLint flat config for Astro, TS, CSS, and Markdown
-- Vitest unit tests with happy-dom (run with `npm run test`)
+- Vitest unit tests with happy-dom (`npm run test`)
 - Lefthook pre-commit hook: runs `lint` + `format` in parallel on every commit
-- Astro font provider setup via `fontProviders.fontsource()` in `astro.config.mjs`
-- Experimental Rust compiler enabled (`experimental.rustCompiler: true`)
-- Import sorting + Prettier formatting
-- Sitemap integration (`@astrojs/sitemap`) and static output build
-
-## Updating
-
-Pull upstream improvements from the original template if desired:
-
-```sh
-git remote add upstream https://github.com/leifjerami/astro-biolink-kit.git
-git fetch upstream
-git merge upstream/main
-```
-
-Resolve any merge conflicts (usually README or minor style changes).
-
-## Attribution
-
-Original project: Astro Biolink Kit by [Leif](https://grains.leifjerami.com).
+- Fonts via `fontProviders.fontsource()` (Fraunces + Geist Mono)
+- Prettier formatting + import sorting
+- `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations
+- OG image generation via `satori` + `sharp`
+- RSS, Atom, and JSON feed endpoints
 
 ## License
 
