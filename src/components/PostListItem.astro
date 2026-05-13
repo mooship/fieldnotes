@@ -23,7 +23,7 @@ const slug = getPostSlug(post.id);
   <a
     class="post-title"
     href={`/blog/${slug}`}
-    transition:name={`post-title-${slug}`}>{post.data.title}</a
+  >{post.data.title}</a
   >
   <p class="post-meta meta-label">
     <time datetime={post.data.pubDate.toISOString()}>
