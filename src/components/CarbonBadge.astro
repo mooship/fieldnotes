@@ -41,11 +41,16 @@ const { green = true } = Astro.props;
     } catch {}
 
     function fetchAndRender() {
-      let bytes = 0;
+      const nav = performance.getEntriesByType(
+        "navigation"
+      )[0] as PerformanceNavigationTiming | undefined;
+      let bytes = nav
+        ? nav.encodedBodySize || nav.decodedBodySize || 0
+        : 0;
       for (const r of performance.getEntriesByType(
         "resource"
       ) as PerformanceResourceTiming[]) {
-        bytes += r.encodedBodySize || r.transferSize || 0;
+        bytes += r.encodedBodySize || r.decodedBodySize || 0;
       }
 
       if (!bytes) {
