@@ -19,9 +19,14 @@ const { green = true } = Astro.props;
     const cacheKey = `wcb:1:${location.pathname}`;
 
     function render(gco2e: number, cleanerThan: number) {
-      const grams = gco2e.toFixed(2);
+      const grams = gco2e < 0.005 ? "<0.01" : gco2e.toFixed(2);
       const pct = Math.round(cleanerThan * 100);
-      el.innerHTML = `<a href="https://www.websitecarbon.com" rel="noopener noreferrer" title="Cleaner than ${pct}% of pages tested — Website Carbon">${grams}&thinsp;g CO₂/view</a>`;
+      const a = document.createElement("a");
+      a.href = "https://www.websitecarbon.com";
+      a.rel = "noopener noreferrer";
+      a.title = `Cleaner than ${pct}% of pages tested — Website Carbon`;
+      a.textContent = `${grams} g CO₂/view`;
+      el.replaceChildren(a);
     }
 
     try {
