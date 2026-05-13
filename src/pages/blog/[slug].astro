@@ -50,7 +50,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     </a>
     <article>
       <header>
-        <h1 transition:name={`post-title-${slug}`}>{post.data.title}</h1>
+        <h1>{post.data.title}</h1>
         <time class="meta-label" datetime={post.data.pubDate.toISOString()}>
           <span class="visually-hidden">Published: </span>
           {formatDate(post.data.pubDate)}
