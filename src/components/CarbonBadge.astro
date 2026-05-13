@@ -36,9 +36,9 @@ const { green = true } = Astro.props;
     } catch {}
 
     function fetchAndRender() {
-      const nav = performance.getEntriesByType(
-        "navigation"
-      )[0] as PerformanceNavigationTiming | undefined;
+      const nav = performance.getEntriesByType("navigation")[0] as
+        | PerformanceNavigationTiming
+        | undefined;
       let bytes = nav ? nav.encodedBodySize || nav.transferSize || 0 : 0;
       for (const r of performance.getEntriesByType(
         "resource"
