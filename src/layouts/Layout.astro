@@ -6,7 +6,6 @@ import "../styles/tags.css";
 import "../styles/code.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import EasterEggs from "../components/EasterEggs.astro";
 import CarbonBadge from "../components/CarbonBadge.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
@@ -143,7 +142,6 @@ const jsonLd = {
       </div>
     </header>
     <slot />
-    <EasterEggs />
     <footer>
       <nav class="feed-links" aria-label="Feed subscriptions">
         <span>Subscribe:</span>
