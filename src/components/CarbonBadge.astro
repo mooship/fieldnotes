@@ -17,6 +17,7 @@ const { green = true } = Astro.props;
 
     const green = el.dataset.green ?? "0";
     const cacheKey = `wcb:${location.pathname}`;
+    const bytesFallbackKey = "wcb:bytes";
 
     function render(gco2e: number, cleanerThan: number) {
       const grams = gco2e.toFixed(2);
@@ -44,6 +45,13 @@ const { green = true } = Astro.props;
       }
 
       if (!bytes) {
+        try {
+          const stored = localStorage.getItem(bytesFallbackKey);
+          if (stored) bytes = Number(stored) || 0;
+        } catch {}
+      }
+
+      if (!bytes) {
         return;
       }
 
@@ -59,12 +67,17 @@ const { green = true } = Astro.props;
               cacheKey,
               JSON.stringify({ ts: Date.now(), gco2e, cleanerThan })
             );
+            localStorage.setItem(bytesFallbackKey, String(bytes));
           } catch {}
         })
         .catch(() => {});
     }
 
-    fetchAndRender();
+    if (document.readyState === "complete") {
+      fetchAndRender();
+    } else {
+      window.addEventListener("load", fetchAndRender, { once: true });
+    }
   }
 
   document.addEventListener("DOMContentLoaded", initBadge);
