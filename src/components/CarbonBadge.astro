@@ -16,7 +16,7 @@ const { green = true } = Astro.props;
     }
 
     const green = el.dataset.green ?? "0";
-    const cacheKey = `wcb:${location.pathname}`;
+    const cacheKey = `wcb:1:${location.pathname}`;
 
     function render(gco2e: number, cleanerThan: number) {
       const grams = gco2e.toFixed(2);
@@ -64,7 +64,11 @@ const { green = true } = Astro.props;
         .catch(() => {});
     }
 
-    fetchAndRender();
+    if (document.readyState === "complete") {
+      fetchAndRender();
+    } else {
+      window.addEventListener("load", fetchAndRender, { once: true });
+    }
   }
 
   document.addEventListener("DOMContentLoaded", initBadge);
