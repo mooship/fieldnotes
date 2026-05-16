@@ -18,7 +18,7 @@
     "@astrojs/compiler-rs": "^0.2.0",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.1",
-    "@eslint/css": "^1.0.0",
+    "@eslint/css": "^1.2.0",
     "@eslint/markdown": "^8.0.1",
     "@fontsource/fraunces": "^5.2.9",
     "@lucide/astro": "^1.16.0",
