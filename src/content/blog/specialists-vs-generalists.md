@@ -16,7 +16,7 @@ simulating a role is not the same as being good at it.
 
 ---
 
-The SDLC has phases because they require different ways of thinking. A senior
+Software development has phases because each one calls for a different way of thinking. A senior
 architect has spent years internalising failure modes --- the ones that only show
 up at scale, under load, after the third time a system has been hastily extended
 in a direction it wasn't designed for. A good QA engineer thinks adversarially by
@@ -49,12 +49,9 @@ I'd rather work on a team where everyone owns something deeply than a team where
 everyone can theoretically cover everything. The coverage looks the same on a
 planning board --- the quality gap only shows up later.
 
-When a specialist is accountable for their part of the SDLC, they've been living
+When a specialist is accountable for their part of the process, they've been living
 in it long enough that something wrong feels wrong before they can explain why.
 You can't prompt that into existence.
-
-The teams that get this right treat the SDLC like what it actually is: a set of
-phases that each reward deep familiarity. They give people room to own something.
 
 ---
 
