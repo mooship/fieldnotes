@@ -1,23 +1,19 @@
 ---
 title: "Please help Malak"
-description: "A 20-year-old in Gaza is studying for her degree under bombardment, her mother has cancer, and her family has been displaced ten times. She's asking for help. I'm asking too."
+description: "A 20-year-old in Gaza is studying for her degree under bombardment, her mother has cancer, and her family has been displaced ten times. I gave a bit. You don't have to give much."
 pubDate: 2026-05-19
 tags:
   - giving
 ---
 
-I want to tell you about Malak AbuNahel.
+I don't give much money to things. A few dollars a month, which isn't really anything. I'm mentioning this upfront because I'm about to ask you to donate to something, and I'd rather you know that than think I'm speaking from some position of generosity I don't actually occupy.
 
-She's 20 years old and lives in Gaza. She graduated high school in 2023 with a 97.1% average — the kind of result that, anywhere else, would open every door. In Gaza, it opened a laptop screen. She's now in her second year of university, studying remotely, under bombardment.
+Her name is Malak AbuNahel. She's 20, lives in Gaza, graduated high school in 2023 with a 97.1% average. She's in her second year of university now, studying remotely, while her city is being bombed.
 
-On October 7th, Malak's family was inside their home when it was bombed. They survived. They crawled out of the rubble. Since then they've been displaced more than ten times, living for months in a torn tent that offered no shelter from the summer heat or the winter cold.
+On October 7th their home was bombed while the family was inside it. They got out. Since then they've been displaced more than ten times — for months they were living in a tent. Her mother has heart disease and breast cancer and can barely access treatment. Her father has no work; there aren't jobs in Gaza anymore. Her 18-year-old brother is sitting his final school exams with chronic asthma. Her youngest sister is 11.
 
-Her mother, Mayson, is 46 and fighting both heart disease and breast cancer — treatments that are nearly impossible to access in a city under siege, running out of everything. Her father has no work; there are no jobs left. Her 18-year-old brother is trying to sit his final school exams while living with chronic asthma amid the dust and smoke of an active war. Her youngest sister is 11.
+She wants to study abroad. Finish her degree somewhere she can actually attend a class. Help her family get somewhere safe.
 
-Despite all of it, Malak refuses to stop. She wants to continue her studies abroad — somewhere she can sit in a classroom, learn in peace, and build a future. Somewhere her family can be safe.
+[Her Chuffed campaign is here.](https://chuffed.org/project/146999-help-me-learn-and-save-my-family)
 
-She has a Chuffed campaign to raise money for tuition, her mother's medical care, and her family's relocation. I'm asking you to consider donating.
-
-[Help Malak learn and save her family →](https://chuffed.org/project/146999-help-me-learn-and-save-my-family)
-
-Even a small amount matters. Please share it if you can't give right now.
+I gave a bit. You don't have to give much. Share it if you can't give anything.
