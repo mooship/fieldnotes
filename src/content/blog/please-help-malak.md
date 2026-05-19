@@ -12,7 +12,7 @@ Her name is Malak AbuNahel. She's 20, lives in Gaza, graduated high school in 20
 
 In October 2023 their home was bombed while the family was inside it. They got out. Since then they've been displaced more than ten times — for months they were living in a tent. Her mother has heart disease and breast cancer and can barely access treatment. Her father has no work; there aren't jobs in Gaza anymore. Her 18-year-old brother is sitting his final school exams with chronic asthma. Her youngest sister is 11.
 
-That was nearly three years ago. More than 80% of Gaza's buildings have been destroyed or damaged. The territory is still occupied, still being bombed, still being starved. None of this has stopped.
+That was nearly three years ago. More than 80% of Gaza's buildings have been destroyed or damaged. Palestine is still occupied, still being bombed, still being starved. None of this has stopped.
 
 She wants to study abroad. Finish her degree somewhere she can actually attend a class. Help her family get somewhere safe.
 
