@@ -1,7 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Content as NowContent } from "../sections/now.md";
+import { Content as NowContent, frontmatter as nowFrontmatter } from "../sections/now.md";
 import { SITE_TITLE } from "../lib/blog";
+
+const lastUpdated = new Date(nowFrontmatter.lastUpdated as string);
+const lastUpdatedDisplay = lastUpdated.toLocaleDateString("en-ZA", {
+  year: "numeric",
+  month: "long",
+});
+const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
 ---
 
 <Layout
@@ -12,7 +19,7 @@ import { SITE_TITLE } from "../lib/blog";
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">Now</h1>
     <p class="meta-label updated">
-      Last updated: <time datetime="2026-04">April 2026</time>
+      Last updated: <time datetime={lastUpdatedDatetime}>{lastUpdatedDisplay}</time>
     </p>
     <NowContent />
     <p class="nownownow">

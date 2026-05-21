@@ -1,3 +1,7 @@
+---
+lastUpdated: 2026-04-01
+---
+
 ## What I'm doing
 
 Working as a mid-level software engineer at a consultancy, currently placed on a GIS project in the property industry. Outside of work, looking for an open-source project to contribute to.
