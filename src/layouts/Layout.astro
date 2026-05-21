@@ -37,7 +37,7 @@ const schemaType = type === "article" ? "Article" : "WebSite";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": schemaType,
-  name: title,
+  name: type === "website" ? SITE_TITLE : title,
   ...(canonical ? { url: canonical } : {}),
   ...(description ? { description } : {}),
   ...(image ? { image } : {}),
@@ -103,6 +103,7 @@ const jsonLd = {
     <meta property="og:type" content={type} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:locale" content="en_ZA" />
     {image && <meta property="og:image" content={image} />}
     <meta
       name="twitter:card"

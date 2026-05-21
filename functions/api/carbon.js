@@ -4,10 +4,7 @@ export async function onRequest(context) {
   const green = url.searchParams.get("green") ?? "1";
 
   if (!bytes || Number.isNaN(Number(bytes))) {
-    return Response.json({ error: "Invalid bytes parameter" }, {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return Response.json({ error: "Invalid bytes parameter" }, { status: 400 });
   }
 
   try {
@@ -18,23 +15,20 @@ export async function onRequest(context) {
     if (!upstream.ok) {
       return Response.json(
         { error: `Upstream error ${upstream.status}` },
-        { status: upstream.status, headers: { "Content-Type": "application/json" } }
+        { status: upstream.status }
       );
     }
 
     const data = await upstream.json();
 
-    return Response.json(data, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=86400",
-      },
-    });
+    return Response.json(
+      { gco2e: data.c, cleanerThan: data.p },
+      {
+        status: 200,
+        headers: { "Cache-Control": "public, max-age=86400" },
+      }
+    );
   } catch {
-    return Response.json({ error: "Failed to fetch" }, {
-      status: 502,
-      headers: { "Content-Type": "application/json" },
-    });
+    return Response.json({ error: "Failed to fetch" }, { status: 502 });
   }
 }

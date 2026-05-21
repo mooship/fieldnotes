@@ -10,6 +10,7 @@ import {
   getReadingTime,
   getRelatedPosts,
   getSeriesPosts,
+  getTagUrl,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -75,7 +76,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             <ul class="post-tags" aria-label="Tags">
               {post.data.tags.map((tag: string) => (
                 <li>
-                  <a href={`/blog/tags/${tag}`} class="tag">
+                  <a href={getTagUrl(tag)} class="tag">
                     {tag}
                   </a>
                 </li>
@@ -98,7 +99,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
                   return (
                     <li class={isCurrent ? "current" : ""}>
                       {isCurrent ? (
-                        <span aria-current="page">{sp.data.title}</span>
+                        <span aria-current="true">{sp.data.title}</span>
                       ) : (
                         <a href={`/blog/${spSlug}`}>{sp.data.title}</a>
                       )}
@@ -223,7 +224,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         } catch (error) {
           if (error instanceof DOMException && error.name === "AbortError")
             return;
-          // share failed for another reason — fall through to clipboard
         }
       }
       clearTimeout(resetTimer);
