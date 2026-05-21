@@ -31,7 +31,7 @@ const tagsWithCount = [...countByTag.entries()]
         <ul class="tag-list">
           {tagsWithCount.map(({ tag, count }) => (
             <li>
-              <a href={`/blog/tags/${tag}`} class="tag">
+              <a href={`/blog/tags/${encodeURIComponent(tag)}`} class="tag">
                 {tag}
               </a>
               <span class="count">{count}</span>
