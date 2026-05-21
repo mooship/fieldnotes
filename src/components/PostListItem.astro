@@ -1,5 +1,5 @@
 ---
-import { formatDate, getPostSlug } from "../lib/blog";
+import { formatDate, getPostSlug, getTagUrl } from "../lib/blog";
 
 interface Props {
   post: {
@@ -32,7 +32,7 @@ const slug = getPostSlug(post.id);
       <ul class="post-tags" aria-label="Tags">
         {post.data.tags.map((tag: string) => (
           <li>
-            <a href={`/blog/tags/${tag}`} class="tag">
+            <a href={getTagUrl(tag)} class="tag">
               {tag}
             </a>
           </li>
