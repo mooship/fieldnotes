@@ -32,7 +32,7 @@ const slug = getPostSlug(post.id);
       <ul class="post-tags" aria-label="Tags">
         {post.data.tags.map((tag: string) => (
           <li>
-            <a href={`/blog/tags/${tag}`} class="tag">
+            <a href={`/blog/tags/${encodeURIComponent(tag)}`} class="tag">
               {tag}
             </a>
           </li>
