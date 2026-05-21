@@ -12,7 +12,7 @@ The Expanse novels by James S. A. Corey — well, listening to the audiobooks.
 
 ## What I'm playing
 
-Age of Empires III: Definitive Edition, Dota 2, and Stardew Valley.
+Age of Empires II: Definitive Edition and Stardew Valley.
 
 ## What I'm interested in
 
