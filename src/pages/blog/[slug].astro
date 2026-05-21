@@ -10,6 +10,7 @@ import {
   getReadingTime,
   getRelatedPosts,
   getSeriesPosts,
+  getTagUrl,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -75,7 +76,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             <ul class="post-tags" aria-label="Tags">
               {post.data.tags.map((tag: string) => (
                 <li>
-                  <a href={`/blog/tags/${encodeURIComponent(tag)}`} class="tag">
+                  <a href={getTagUrl(tag)} class="tag">
                     {tag}
                   </a>
                 </li>
