@@ -24,6 +24,10 @@ export function getPostSlug(id: string): string {
   return id.replace(/\.md$/, "");
 }
 
+export function getTagUrl(tag: string): string {
+  return `/blog/tags/${encodeURIComponent(tag)}`;
+}
+
 export function getSiteUrl(site?: URL): string {
   if (!site) throw new Error("site must be set in astro.config.mjs");
   return site.toString().replace(/\/$/, "");

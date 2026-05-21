@@ -15,7 +15,7 @@ export async function onRequest(context) {
     if (!upstream.ok) {
       return Response.json(
         { error: `Upstream error ${upstream.status}` },
-        { status: upstream.status, headers: { "Content-Type": "application/json" } }
+        { status: upstream.status }
       );
     }
 
