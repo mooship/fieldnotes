@@ -23,6 +23,11 @@ const postsWithMeta = posts.map((post) => ({
 >
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">Blog</h1>
+    <nav class="browse" aria-label="Browse posts">
+      <a href="/blog/tags" class="nav-link">Tags</a>
+      <span aria-hidden="true">·</span>
+      <a href="/blog/series" class="nav-link">Series</a>
+    </nav>
     <div class="search-wrapper">
       <Search
         id="search"
@@ -66,6 +71,14 @@ const postsWithMeta = posts.map((post) => ({
 
   .back-link {
     margin-top: 1rem;
+  }
+
+  .browse {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: -0.75rem 0 1.75rem 0;
+    color: var(--secondary-label);
   }
 
   .search-wrapper {
