@@ -7,6 +7,23 @@ updates:
       day: "saturday"
       time: "09:00"
       timezone: "Africa/Johannesburg"
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+          - "astro-*"
+      dev-tools:
+        patterns:
+          - "@eslint/*"
+          - "@typescript-eslint/*"
+          - "eslint*"
+          - "prettier*"
+          - "typescript"
+          - "vitest"
+          - "happy-dom"
+          - "@lefthook/*"
+          - "lefthook"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -14,3 +31,7 @@ updates:
       day: "saturday"
       time: "09:00"
       timezone: "Africa/Johannesburg"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
