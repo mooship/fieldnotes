@@ -99,7 +99,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
                   return (
                     <li class={isCurrent ? "current" : ""}>
                       {isCurrent ? (
-                        <span aria-current="true">{sp.data.title}</span>
+                        <span aria-current="page">{sp.data.title}</span>
                       ) : (
                         <a href={`/blog/${spSlug}`}>{sp.data.title}</a>
                       )}
