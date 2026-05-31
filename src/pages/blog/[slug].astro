@@ -9,7 +9,6 @@ import {
   getPostSlug,
   getReadingTime,
   getRelatedPosts,
-  getSeriesPosts,
   getTagUrl,
   SITE_TITLE,
 } from "../../lib/blog";
@@ -20,20 +19,19 @@ export async function getStaticPaths() {
     const slug = getPostSlug(post.id);
     const adjacent = getAdjacentPosts(posts, slug);
     const related = getRelatedPosts(posts, post);
-    const seriesPosts = post.data.series
-      ? getSeriesPosts(posts, post.data.series)
-      : [];
     return {
       params: { slug },
-      props: { post, adjacent, related, seriesPosts },
+      props: { post, adjacent, related },
     };
   });
 }
 
-const { post, adjacent, related, seriesPosts } = Astro.props;
+const { post, adjacent, related } = Astro.props;
 const { slug } = Astro.params;
-const { Content, remarkPluginFrontmatter } = await render(post);
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
 const readingTime = getReadingTime(remarkPluginFrontmatter);
+const toc = headings.filter(({ depth }) => depth === 2 || depth === 3);
+const showToc = toc.length >= 3;
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 ---
 
@@ -86,27 +84,15 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         }
       </header>
       {
-        seriesPosts.length > 1 && (
-          <nav class="series-box" aria-label="Post series">
-            <p class="meta-label series-label">
-              Series: <strong>{post.data.series}</strong>
-            </p>
+        showToc && (
+          <nav class="toc" aria-label="Table of contents">
+            <p class="meta-label toc-label">On this page</p>
             <ol>
-              {seriesPosts.map(
-                (sp: { id: string; data: { title: string } }) => {
-                  const spSlug = getPostSlug(sp.id);
-                  const isCurrent = sp.id === post.id;
-                  return (
-                    <li class={isCurrent ? "current" : ""}>
-                      {isCurrent ? (
-                        <span aria-current="page">{sp.data.title}</span>
-                      ) : (
-                        <a href={`/blog/${spSlug}`}>{sp.data.title}</a>
-                      )}
-                    </li>
-                  );
-                }
-              )}
+              {toc.map((heading) => (
+                <li class={heading.depth === 3 ? "toc-sub" : ""}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
             </ol>
           </nav>
         )
@@ -435,7 +421,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     margin: 2.5rem 0;
   }
 
-  .series-box {
+  .toc {
     border: 1px solid var(--rule);
     border-radius: var(--radius);
     padding: 1rem 1.25rem;
@@ -443,26 +429,33 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     background: var(--paper-deep);
   }
 
-  .series-label {
+  .toc-label {
     margin: 0 0 0.5rem 0;
   }
 
-  .series-box ol {
-    list-style: decimal;
-    padding-left: 1.25rem;
+  .toc ol {
+    list-style: none;
+    padding-left: 0;
     margin: 0;
   }
 
-  .series-box li {
+  .toc li {
     font-size: 0.95rem;
     margin-bottom: 0.25rem;
+    line-height: 1.4;
+  }
+
+  .toc li.toc-sub {
+    padding-left: 1rem;
+  }
+
+  .toc a {
+    font-family: var(--font-sans);
     color: var(--ink-soft);
   }
 
-  .series-box li.current {
-    color: var(--ink);
-    font-weight: 400;
-    font-style: italic;
+  .toc a:hover {
+    color: var(--link);
   }
 
   .related-posts {

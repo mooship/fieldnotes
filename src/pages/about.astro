@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Content as AboutContent } from "../sections/about.md";
+import { SITE_TITLE } from "../lib/blog";
+---
+
+<Layout
+  title={`About — ${SITE_TITLE}`}
+  description="Who I am, what I build, and what this site is for."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1 class="page-title">About</h1>
+    <AboutContent />
+    <a href="/" class="nav-link back-link">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 2rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  main :global(p) {
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+  }
+
+  main :global(h2) {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.375rem;
+    margin: 2rem 0 0.75rem 0;
+    letter-spacing: -0.01em;
+  }
+
+  main :global(ul) {
+    padding-left: 1.5rem;
+    list-style: disc;
+    margin-top: 0;
+  }
+
+  main :global(li) {
+    margin-bottom: 0.4rem;
+    color: var(--label);
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+</style>

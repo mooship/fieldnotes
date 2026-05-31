@@ -9,7 +9,6 @@ import {
   getPostSlug,
   getReadingTime,
   getRelatedPosts,
-  getSeriesPosts,
   getSiteUrl,
   renderMarkdownToHtml,
 } from "./blog";
@@ -155,84 +154,6 @@ function setupPosts(posts: Post[]) {
       filter ? posts.filter((p) => filter(p)) : posts
   );
 }
-
-describe("getSeriesPosts", () => {
-  const posts = [
-    {
-      id: "c.md",
-      data: {
-        title: "Part 3",
-        series: "my-series",
-        seriesOrder: 3,
-        pubDate: new Date("2024-03-01"),
-      },
-    },
-    {
-      id: "a.md",
-      data: {
-        title: "Part 1",
-        series: "my-series",
-        seriesOrder: 1,
-        pubDate: new Date("2024-01-01"),
-      },
-    },
-    {
-      id: "b.md",
-      data: {
-        title: "Part 2",
-        series: "my-series",
-        seriesOrder: 2,
-        pubDate: new Date("2024-02-01"),
-      },
-    },
-    {
-      id: "other.md",
-      data: {
-        title: "Other",
-        series: "other-series",
-        seriesOrder: 1,
-        pubDate: new Date("2024-01-15"),
-      },
-    },
-  ];
-
-  it("returns posts in a series sorted by seriesOrder", () => {
-    const result = getSeriesPosts(posts, "my-series");
-    expect(result.map((p) => p.data.title)).toEqual([
-      "Part 1",
-      "Part 2",
-      "Part 3",
-    ]);
-  });
-
-  it("excludes posts from other series", () => {
-    const result = getSeriesPosts(posts, "my-series");
-    expect(result).toHaveLength(3);
-  });
-
-  it("falls back to pubDate when seriesOrder is missing", () => {
-    const noPosts = [
-      {
-        id: "b.md",
-        data: {
-          title: "Second",
-          series: "s",
-          pubDate: new Date("2024-02-01"),
-        },
-      },
-      {
-        id: "a.md",
-        data: {
-          title: "First",
-          series: "s",
-          pubDate: new Date("2024-01-01"),
-        },
-      },
-    ];
-    const result = getSeriesPosts(noPosts, "s");
-    expect(result.map((p) => p.data.title)).toEqual(["First", "Second"]);
-  });
-});
 
 describe("getRelatedPosts", () => {
   const posts = [

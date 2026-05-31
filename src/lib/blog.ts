@@ -17,6 +17,8 @@ export function formatDate(date: Date): string {
 
 export const SITE_TITLE = "Fieldnotes";
 export const SITE_AUTHOR = "Timothy Brits";
+export const SITE_X_HANDLE = "";
+export const SITE_REPO_URL = "https://github.com/mooship/fieldnotes";
 export const BLOG_DESCRIPTION =
   "Writing by Timothy Brits on software, open source, Buddhism, and eco-socialism.";
 
@@ -111,27 +113,6 @@ export function getPostsByTag<T extends TaggedPost>(
   tag: string
 ): T[] {
   return posts.filter((post) => post.data.tags.includes(tag));
-}
-
-interface SeriesPost {
-  id: string;
-  data: {
-    title: string;
-    series?: string;
-    seriesOrder?: number;
-    pubDate: Date;
-  };
-}
-
-export function getSeriesPosts(posts: SeriesPost[], seriesName: string) {
-  return posts
-    .filter((post) => post.data.series === seriesName)
-    .toSorted((a, b) => {
-      const orderA = a.data.seriesOrder ?? Infinity;
-      const orderB = b.data.seriesOrder ?? Infinity;
-      if (orderA !== orderB) return orderA - orderB;
-      return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
-    });
 }
 
 interface RelatedPost {
