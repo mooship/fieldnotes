@@ -309,6 +309,9 @@ const jsonLd = {
   .feed-links a,
   .social-links a {
     padding: 0.5rem 0;
+  }
+
+  .feed-links a {
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
@@ -327,5 +330,13 @@ const jsonLd = {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+  }
+
+  @media (max-width: 600px) {
+    .footer-top,
+    .footer-bottom {
+      justify-content: center;
+      text-align: center;
+    }
   }
 </style>
