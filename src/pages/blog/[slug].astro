@@ -31,7 +31,6 @@ const { slug } = Astro.params;
 const { Content, headings, remarkPluginFrontmatter } = await render(post);
 const readingTime = getReadingTime(remarkPluginFrontmatter);
 const toc = headings.filter(({ depth }) => depth === 2 || depth === 3);
-const showToc = toc.length >= 3;
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 ---
 
@@ -84,7 +83,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         }
       </header>
       {
-        showToc && (
+        toc.length >= 3 && (
           <nav class="toc" aria-label="Table of contents">
             <p class="meta-label toc-label">On this page</p>
             <ol>
