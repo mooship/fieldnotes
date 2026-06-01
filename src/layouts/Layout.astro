@@ -7,12 +7,7 @@ import "../styles/code.css";
 import "../styles/print.css";
 import { Font } from "astro:assets";
 import CarbonBadge from "../components/CarbonBadge.astro";
-import {
-  SITE_AUTHOR,
-  SITE_REPO_URL,
-  SITE_TITLE,
-  SITE_X_HANDLE,
-} from "../lib/blog";
+import { SITE_AUTHOR, SITE_REPO_URL, SITE_TITLE } from "../lib/blog";
 
 export interface Props {
   title: string;
@@ -118,8 +113,6 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     {image && <meta name="twitter:image" content={image} />}
-    {SITE_X_HANDLE && <meta name="twitter:site" content={SITE_X_HANDLE} />}
-    {SITE_X_HANDLE && <meta name="twitter:creator" content={SITE_X_HANDLE} />}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>

@@ -1,16 +1,18 @@
-I'm Timothy — a software developer from Pretoria, South Africa. I build
-full-stack web applications and open-source tools, mostly in TypeScript, React,
-and Rust.
+I'm Timothy, a software developer based in Pretoria, South Africa. I've been
+writing software since 2018, mostly on the web, where TypeScript is my language
+of choice. Lately I've been dabbling in Swift to see what building outside the
+browser feels like.
 
-My work and my life are guided by Buddhist practice, leftist values, and
-anti-fascist conviction. I care about software that respects the people who use
-it, about technology in service of a fairer and more livable world, and about
-doing fewer things more carefully.
+I'm an eco-socialist and a Buddhist. Those two things shape how I think about
+technology: who it serves, what it costs, and whether it's worth building at
+all.
 
-Fieldnotes is where I write about all of that — software and open source, the
-craft of building things, Buddhism, eco-socialism, and whatever else I'm
-thinking through at the time. It's less a publication than a notebook left open
-in public.
+Outside of work I tinker. I wrote [scriv](https://crates.io/crates/scriv), a
+terminal notes app. I play a lot of RTS and grand strategy, listen to too many
+audiobooks, and have a dog who is unimpressed by all of it.
+
+Fieldnotes is where I write about whatever I'm turning over — software, the
+tools I'm building, books, politics. Nothing formal. Just thinking out loud.
 
 ## Elsewhere
 
@@ -19,5 +21,5 @@ in public.
 - [Threads](https://www.threads.com/@greendegrowth/)
 - [Email](mailto:contact@timothybrits.co.za)
 
-If you want to know what I'm focused on right now, the [now page](/now) is kept
-current, and [uses](/uses) lists the tools I build with.
+For what I'm up to right now, there's a [now page](/now). The [uses](/uses) page
+lists what I build with.

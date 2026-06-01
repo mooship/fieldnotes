@@ -14,7 +14,7 @@
 ## Languages & Frameworks
 
 - TypeScript with React — my daily driver for everything on the web
-- Rust — still learning, but it's changed how I think about code
+- Swift — just started dabbling, curious where it takes me
 
 ## Infrastructure
 
