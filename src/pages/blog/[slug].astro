@@ -28,9 +28,8 @@ export async function getStaticPaths() {
 
 const { post, adjacent, related } = Astro.props;
 const { slug } = Astro.params;
-const { Content, headings, remarkPluginFrontmatter } = await render(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
 const readingTime = getReadingTime(remarkPluginFrontmatter);
-const toc = headings.filter(({ depth }) => depth === 2 || depth === 3);
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 ---
 
@@ -82,20 +81,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
           )
         }
       </header>
-      {
-        toc.length >= 3 && (
-          <nav class="toc" aria-label="Table of contents">
-            <p class="meta-label toc-label">On this page</p>
-            <ol>
-              {toc.map((heading) => (
-                <li class={heading.depth === 3 ? "toc-sub" : ""}>
-                  <a href={`#${heading.slug}`}>{heading.text}</a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-        )
-      }
       <Content />
     </article>
     <div class="post-footer">
@@ -418,43 +403,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     border: none;
     border-top: 1px solid var(--rule);
     margin: 2.5rem 0;
-  }
-
-  .toc {
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    margin-bottom: 2rem;
-    background: var(--paper-deep);
-  }
-
-  .toc-label {
-    margin: 0 0 0.5rem 0;
-  }
-
-  .toc ol {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-
-  .toc li {
-    font-size: 0.95rem;
-    margin-bottom: 0.25rem;
-    line-height: 1.4;
-  }
-
-  .toc li.toc-sub {
-    padding-left: 1rem;
-  }
-
-  .toc a {
-    font-family: var(--font-sans);
-    color: var(--ink-soft);
-  }
-
-  .toc a:hover {
-    color: var(--link);
   }
 
   .related-posts {
