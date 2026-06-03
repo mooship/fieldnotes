@@ -11,6 +11,8 @@
   --selection-bg: var(--signal);
   --selection-fg: #ffffff;
 
+  --letter-spacing-meta: 0.06em;
+
   --radius: 0;
   --radius-input: 0;
   --shadow-elevated: none;
