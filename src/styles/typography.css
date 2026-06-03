@@ -1,28 +1,27 @@
 .page-title {
-  font-family: var(--font-serif);
-  font-size: 3rem;
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  margin: 0 0 1.5rem 0;
+  font-family: var(--font-sans);
+  font-size: clamp(2.75rem, 9vw, 4.25rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  margin: 0 0 1.75rem 0;
 }
 
 main h2 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 1.5rem;
-  line-height: 1.2;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-  margin: 2.5rem 0 0.75rem 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.625rem;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 3rem 0 0.75rem 0;
 }
 
 .meta-label {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
@@ -30,15 +29,15 @@ main h2 {
 .nav-link {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-soft);
   text-decoration: none;
 }
 
 .nav-link:hover {
-  color: var(--ink);
+  color: var(--signal);
   text-decoration: none;
 }

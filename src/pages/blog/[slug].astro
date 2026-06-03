@@ -262,12 +262,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   h1 {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     font-weight: 700;
-    font-size: 2.375rem;
-    margin: 0 0 0.75rem 0;
-    letter-spacing: -0.015em;
-    line-height: 1.12;
+    font-size: clamp(2.25rem, 6vw, 3.25rem);
+    margin: 0 0 0.9rem 0;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
   }
 
   .updated {
@@ -300,12 +300,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .share-btn:hover {
-    color: var(--link);
-    border-color: var(--link);
+    color: var(--signal);
+    border-color: var(--signal);
   }
 
   .share-btn:focus-visible {
-    outline: 2px solid var(--link);
+    outline: 2px solid var(--signal);
     outline-offset: 2px;
   }
 
@@ -318,22 +318,21 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   article :global(h3),
   article :global(h4) {
     color: var(--ink);
-    font-family: var(--font-serif);
-    font-weight: 400;
-    margin: 2.5rem 0 0.75rem 0;
-    text-wrap: balance;
-    letter-spacing: -0.005em;
-    line-height: 1.2;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    margin: 2.75rem 0 0.75rem 0;
+    text-wrap: pretty;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
   }
 
   article :global(h2) {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
   }
 
   article :global(h3) {
     font-size: 1.25rem;
-    font-style: italic;
-    font-weight: 400;
+    font-weight: 600;
   }
 
   article :global(h4) {
@@ -341,11 +340,11 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   article :global(blockquote) {
-    margin: 1.75rem 0 1.75rem 1.5rem;
-    padding: 0;
+    margin: 1.75rem 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    border-left: 3px solid var(--signal);
     color: var(--ink-soft);
     font-size: 1.05rem;
-    font-style: italic;
   }
 
   article :global(blockquote) :global(p:last-child) {
@@ -461,8 +460,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   .series-box li.current {
     color: var(--ink);
-    font-weight: 400;
-    font-style: italic;
+    font-weight: 700;
   }
 
   .related-posts {
@@ -486,7 +484,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   .related-posts a {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     font-size: 1rem;
   }
 
@@ -504,7 +502,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     align-items: center;
     gap: 0.5rem;
     font-size: 0.95rem;
-    font-style: italic;
     max-width: 48%;
   }
 
