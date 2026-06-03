@@ -17,7 +17,6 @@ main h2 {
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 1.625rem;
-  line-height: 1.15;
   letter-spacing: 0;
   margin: 3.2rem 0 0.8rem 0;
 }
@@ -27,7 +26,7 @@ main h2 {
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--letter-spacing-meta);
   text-transform: uppercase;
   color: var(--ink-soft);
 }
@@ -37,7 +36,7 @@ main h2 {
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--letter-spacing-meta);
   text-transform: uppercase;
   color: var(--ink-soft);
   text-decoration: none;
