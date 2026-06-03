@@ -7,23 +7,24 @@ import { getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const require = createRequire(import.meta.url);
 
-const PAPER = "#f5efe1";
-const INK = "#1f1a10";
-const INK_SOFT = "#6b5d47";
-const RULE = "#c9bfa8";
+const PAPER = "#ffffff";
+const INK = "#0a0a0a";
+const INK_SOFT = "#6b6b6b";
+const RULE = "#d8d8d8";
+const SIGNAL = "#e2231a";
 
-let fontsPromise: Promise<{ regular: Buffer; italic: Buffer }> | undefined;
+let fontsPromise: Promise<{ regular: Buffer; bold: Buffer }> | undefined;
 
-async function loadFonts(): Promise<{ regular: Buffer; italic: Buffer }> {
+async function loadFonts(): Promise<{ regular: Buffer; bold: Buffer }> {
   if (!fontsPromise) {
     const regularPath =
-      require.resolve("@fontsource/fraunces/files/fraunces-latin-700-normal.woff");
-    const italicPath =
-      require.resolve("@fontsource/fraunces/files/fraunces-latin-400-italic.woff");
+      require.resolve("@fontsource/inter/files/inter-latin-400-normal.woff");
+    const boldPath =
+      require.resolve("@fontsource/inter/files/inter-latin-700-normal.woff");
     fontsPromise = Promise.all([
       readFile(regularPath),
-      readFile(italicPath),
-    ]).then(([regular, italic]) => ({ regular, italic }));
+      readFile(boldPath),
+    ]).then(([regular, bold]) => ({ regular, bold }));
   }
   return fontsPromise;
 }
@@ -39,7 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const GET: APIRoute = async ({ props, site }) => {
   const { title } = props as { title: string };
   const hostname = site?.hostname ?? "timothybrits.co.za";
-  const { regular, italic } = await loadFonts();
+  const { regular, bold } = await loadFonts();
 
   const svg = await satori(
     {
@@ -52,8 +53,8 @@ export const GET: APIRoute = async ({ props, site }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           backgroundColor: PAPER,
-          padding: "70px 90px",
-          fontFamily: "Fraunces",
+          padding: "80px 90px",
+          fontFamily: "Inter",
         },
         children: [
           {
@@ -61,12 +62,34 @@ export const GET: APIRoute = async ({ props, site }) => {
             props: {
               style: {
                 display: "flex",
-                fontSize: "22px",
-                fontStyle: "italic",
-                color: INK_SOFT,
-                letterSpacing: "0.02em",
+                alignItems: "center",
+                gap: "18px",
               },
-              children: "Timothy Brits — fieldnotes",
+              children: [
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      width: "22px",
+                      height: "22px",
+                      backgroundColor: SIGNAL,
+                    },
+                  },
+                },
+                {
+                  type: "div",
+                  props: {
+                    style: {
+                      display: "flex",
+                      fontSize: "20px",
+                      fontWeight: 700,
+                      color: INK,
+                      letterSpacing: "0.14em",
+                    },
+                    children: "TIMOTHY BRITS — FIELDNOTES",
+                  },
+                },
+              ],
             },
           },
           {
@@ -81,12 +104,12 @@ export const GET: APIRoute = async ({ props, site }) => {
                   type: "div",
                   props: {
                     style: {
-                      fontSize: "60px",
+                      fontSize: "76px",
                       fontWeight: 700,
-                      lineHeight: 1.12,
+                      lineHeight: 1,
                       color: INK,
-                      letterSpacing: "-0.015em",
-                      maxWidth: "95%",
+                      letterSpacing: "-0.035em",
+                      maxWidth: "100%",
                     },
                     children: title,
                   },
@@ -95,10 +118,10 @@ export const GET: APIRoute = async ({ props, site }) => {
                   type: "div",
                   props: {
                     style: {
-                      width: "60px",
-                      height: "2px",
-                      backgroundColor: INK_SOFT,
-                      marginTop: "28px",
+                      width: "90px",
+                      height: "8px",
+                      backgroundColor: SIGNAL,
+                      marginTop: "34px",
                     },
                   },
                 },
@@ -112,22 +135,26 @@ export const GET: APIRoute = async ({ props, site }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                fontSize: "20px",
-                fontStyle: "italic",
+                fontSize: "18px",
+                fontWeight: 700,
                 color: INK_SOFT,
+                letterSpacing: "0.1em",
                 borderTop: `1px solid ${RULE}`,
-                paddingTop: "22px",
+                paddingTop: "24px",
               },
               children: [
                 {
                   type: "div",
-                  props: { children: hostname },
+                  props: { children: hostname.toUpperCase() },
                 },
                 {
                   type: "div",
                   props: {
-                    style: { fontSize: "28px" },
-                    children: "❦",
+                    style: {
+                      width: "14px",
+                      height: "14px",
+                      backgroundColor: SIGNAL,
+                    },
                   },
                 },
               ],
@@ -141,16 +168,16 @@ export const GET: APIRoute = async ({ props, site }) => {
       height: 630,
       fonts: [
         {
-          name: "Fraunces",
+          name: "Inter",
           data: regular,
-          weight: 700,
+          weight: 400,
           style: "normal",
         },
         {
-          name: "Fraunces",
-          data: italic,
-          weight: 400,
-          style: "italic",
+          name: "Inter",
+          data: bold,
+          weight: 700,
+          style: "normal",
         },
       ],
     }
