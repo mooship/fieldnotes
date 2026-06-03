@@ -19,7 +19,7 @@
 .tag:focus-visible {
   background: var(--signal);
   border-color: var(--signal);
-  color: #ffffff;
+  color: var(--signal-fg);
   text-decoration: none;
 }
 
