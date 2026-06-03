@@ -30,5 +30,5 @@
 - [Astro](https://astro.build) — static output, love this framework
 - Cloudflare Pages — fast edge deploys, zero config
 - Cloudflare Web Analytics — privacy-first, no cookies
-- [Fraunces](https://fonts.google.com/specimen/Fraunces) for body and headings — warm humanist serif
-- System sans (SF Pro on Apple, Segoe UI on Windows) for nav, dates, and tags
+- [Inter](https://fonts.google.com/specimen/Inter) for everything — a clean neo-grotesque, in the Swiss tradition
+- [Geist Mono](https://vercel.com/font) for code

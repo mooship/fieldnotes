@@ -1,68 +1,62 @@
 :root {
-  --font-serif: "Fraunces", Georgia, Cambria, "Times New Roman", serif;
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --paper: #ffffff;
+  --paper-deep: #f2f2f2;
+  --ink: #0a0a0a;
+  --ink-soft: #6b6b6b;
+  --rule: #d8d8d8;
+  --signal: #e2231a;
+  --signal-hover: #b41a13;
+  --signal-tint: rgba(226, 35, 26, 0.08);
+  --link: var(--ink);
+  --link-hover: var(--signal);
+  --selection-bg: var(--signal);
+  --selection-fg: #ffffff;
 
-  --paper: #f5efe1;
-  --paper-deep: #ece3cf;
-  --ink: #1f1a10;
-  --ink-soft: #6b5d47;
-  --rule: #c9bfa8;
-  --moss: #5d6e33;
-  --moss-hover: #414d24;
-  --moss-tint: rgba(93, 110, 51, 0.08);
-  --link: var(--moss);
-  --link-hover: var(--moss-hover);
-  --selection-bg: #d6c88a;
-  --selection-fg: #1f1a10;
-
-  --radius: 2px;
-  --radius-input: 6px;
-  --shadow-elevated:
-    0 4px 16px rgba(20, 15, 5, 0.06), 0 1px 3px rgba(20, 15, 5, 0.04);
+  --radius: 0;
+  --radius-input: 0;
+  --shadow-elevated: none;
   --z-toast: 100;
   --z-skip-link: 9999;
 
   --system-background: var(--paper);
   --label: var(--ink);
   --secondary-label: var(--ink-soft);
-  --tint: var(--link);
+  --tint: var(--signal);
   --separator: var(--rule);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #1a1813;
-    --paper-deep: #24201a;
-    --ink: #e8dfc9;
-    --ink-soft: #9f947c;
-    --rule: #3a362c;
-    --moss: #9fb06a;
-    --moss-hover: #bfce8c;
-    --moss-tint: rgba(159, 176, 106, 0.1);
-    --link: var(--moss);
-    --link-hover: var(--moss-hover);
-    --selection-bg: #4a3e1f;
-    --selection-fg: #f5efe1;
-    --shadow-elevated:
-      0 4px 24px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --paper: #0a0a0a;
+    --paper-deep: #161616;
+    --ink: #f2f2f2;
+    --ink-soft: #9a9a9a;
+    --rule: #2a2a2a;
+    --signal: #ff453a;
+    --signal-hover: #ff6b62;
+    --signal-tint: rgba(255, 69, 58, 0.12);
+    --link: var(--ink);
+    --link-hover: var(--signal);
+    --selection-bg: var(--signal);
+    --selection-fg: #0a0a0a;
+    --shadow-elevated: none;
   }
 }
 
 @media (prefers-contrast: more) {
   :root {
-    --ink-soft: #4a3f2a;
-    --rule: #8a7f68;
-    --moss: #3d5a2a;
-    --moss-hover: #263916;
+    --ink-soft: #3a3a3a;
+    --rule: #8a8a8a;
+    --signal: #c00d05;
+    --signal-hover: #8a0900;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --ink-soft: #d4cab5;
-      --rule: #6b6658;
-      --moss: #b8d49a;
-      --moss-hover: #d2e6b5;
+      --ink-soft: #cccccc;
+      --rule: #6b6b6b;
+      --signal: #ff6b62;
+      --signal-hover: #ff9089;
     }
   }
 }
