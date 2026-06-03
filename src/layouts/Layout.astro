@@ -56,7 +56,7 @@ const jsonLd = {
 <!doctype html>
 <html lang="en">
   <head>
-    <Font cssVariable="--font-serif" preload />
+    <Font cssVariable="--font-sans" preload />
     <Font cssVariable="--font-mono" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, viewport-fit=cover" />
@@ -66,12 +66,12 @@ const jsonLd = {
     <meta name="robots" content={robots} />
     <meta
       name="theme-color"
-      content="#f5efe1"
+      content="#ffffff"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#1a1813"
+      content="#0a0a0a"
       media="(prefers-color-scheme: dark)"
     />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -200,21 +200,22 @@ const jsonLd = {
   }
 
   .wordmark-title {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-weight: 700;
     font-size: 1.5rem;
     color: var(--ink);
-    letter-spacing: 0;
+    letter-spacing: -0.03em;
     line-height: 1;
   }
 
   .wordmark-byline {
     font-family: var(--font-sans);
     font-style: normal;
-    font-weight: 400;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    font-weight: 600;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
     color: var(--ink-soft);
     line-height: 1;
   }
@@ -243,10 +244,10 @@ const jsonLd = {
 
   nav a[aria-current="page"],
   nav a[aria-current="page"]:hover {
-    color: var(--ink);
+    color: var(--signal);
     text-decoration: underline;
-    text-decoration-color: var(--ink);
-    text-decoration-thickness: 1px;
+    text-decoration-color: var(--signal);
+    text-decoration-thickness: 2px;
     text-underline-offset: 4px;
   }
 
