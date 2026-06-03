@@ -204,7 +204,8 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     if (!btn) return;
 
     const canShare =
-      window.matchMedia("(pointer: coarse)").matches && "share" in navigator;
+      globalThis.matchMedia("(pointer: coarse)").matches &&
+      "share" in navigator;
     const canCopy = "clipboard" in navigator;
     if (!canShare && !canCopy) {
       btn.hidden = true;
