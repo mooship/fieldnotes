@@ -1,20 +1,25 @@
 .tag {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--link);
-  border: 1px solid var(--link);
+  color: var(--ink);
+  border: 1px solid var(--rule);
   border-radius: var(--radius);
-  padding: 0.4rem 0.65rem;
+  padding: 0.35rem 0.6rem;
   text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .tag:hover,
 .tag:focus-visible {
-  background: var(--link);
-  color: var(--paper);
+  background: var(--signal);
+  border-color: var(--signal);
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -33,5 +38,6 @@
 @media (prefers-contrast: more) {
   .tag {
     border-width: 2px;
+    border-color: var(--ink);
   }
 }

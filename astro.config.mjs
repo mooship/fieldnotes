@@ -17,11 +17,17 @@ export default defineConfig({
     },
     {
       provider: fontProviders.fontsource(),
-      name: "Fraunces",
-      cssVariable: "--font-serif",
-      weights: [400, 700],
-      styles: ["normal", "italic"],
-      fallbacks: ["Georgia", "Cambria", "Times New Roman", "serif"],
+      name: "Inter",
+      cssVariable: "--font-sans",
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      fallbacks: [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "system-ui",
+        "sans-serif",
+      ],
     },
   ],
   cacheDir: "./.astro-cache",
@@ -40,8 +46,8 @@ export default defineConfig({
     ],
     shikiConfig: {
       themes: {
-        light: "rose-pine-dawn",
-        dark: "rose-pine-moon",
+        light: "min-light",
+        dark: "min-dark",
       },
       defaultColor: false,
     },
