@@ -203,9 +203,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     const btn = document.querySelector<HTMLButtonElement>(".share-btn");
     if (!btn) return;
 
-    const canShare = "share" in navigator;
-    const canCopy = "clipboard" in navigator;
-    if (!canShare && !canCopy) {
+    if (!("share" in navigator) && !("clipboard" in navigator)) {
       btn.hidden = true;
       return;
     }
@@ -217,7 +215,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
     let resetTimer: ReturnType<typeof setTimeout> | undefined;
     btn.addEventListener("click", async () => {
-      if (canShare && navigator.canShare?.(shareData)) {
+      if (
+        globalThis.matchMedia("(pointer: coarse)").matches &&
+        navigator.canShare?.(shareData)
+      ) {
         try {
           await navigator.share(shareData);
           return;
