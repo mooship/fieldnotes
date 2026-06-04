@@ -8,7 +8,7 @@ tags:
   - personal
 ---
 
-Artemis II has me excited about space again. Humans are going back to the Moon -- crew on board, not just hardware -- and it's the first time that's happened since Apollo. It hits different when there are people in the capsule.
+Artemis II has me excited about space again. Humans are going back to the Moon -- crew on board, not just hardware -- and it's the first time that's happened since Apollo. It lands differently when there are people in the capsule.
 
 It also happens to coincide with a new season of For All Mankind, which feels almost too perfect. Between the real mission and the show, I've been thinking about space constantly.
 
