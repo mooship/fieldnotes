@@ -39,6 +39,6 @@ export default defineConfig({
 
 That's it. Every Markdown file Astro processes (blog posts, content collections, standalone pages) gets proper typographic punctuation for free.
 
-Under the hood, remark-smartypants uses [retext-smartypants](https://github.com/retextjs/retext-smartypants), which itself is a port of John Gruber's [SmartyPants](https://daringfireball.net/projects/smartypants/), the same algorithm that's been cleaning up punctuation since 2003. It's battle-tested.
+Under the hood, remark-smartypants uses [retext-smartypants](https://github.com/retextjs/retext-smartypants), which itself is a port of John Gruber's [SmartyPants](https://daringfireball.net/projects/smartypants/), the same algorithm that's been cleaning up punctuation since 2003. Whatever edge case you're worried about, it has almost certainly seen it.
 
-One of the lowest-effort, highest-impact things you can add to a Markdown pipeline.
+One line of config, and every dash and quote you publish from here on is correct. That's a good trade.
