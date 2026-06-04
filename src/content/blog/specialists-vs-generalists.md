@@ -34,4 +34,4 @@ When a specialist is accountable for their part of the process, they've been liv
 
 I reach for AI tools constantly. The ones that stick are the ones that make me better at what I already know how to do -- they reduce friction in the work, they don't replace the years that made me worth using them.
 
-But using a tool that simulates expertise is not the same as building it. The gap between those two things doesn't show up in the prototype. It shows up when something goes wrong and there's nobody in the room who's seen it go wrong before.
+But a tool that simulates expertise will never build it in you. That gap doesn't show up in the prototype. It shows up when something goes wrong and there's nobody in the room who's seen it go wrong before.
