@@ -13,9 +13,6 @@
     "start": "astro dev",
     "test": "vitest run"
   },
-  "dependencies": {
-    "@fontsource/geist": "^5.2.9"
-  },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/compiler-rs": "^0.2.0",
@@ -23,6 +20,7 @@
     "@astrojs/sitemap": "^3.7.1",
     "@eslint/css": "^1.0.0",
     "@eslint/markdown": "^8.0.1",
+    "@fontsource/geist": "^5.2.9",
     "@lucide/astro": "^1.16.0",
     "@types/mdast": "^4.0.4",
     "astro": "^6.3.1",
