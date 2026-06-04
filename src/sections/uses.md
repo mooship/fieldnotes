@@ -4,7 +4,7 @@
 
 ## Editor
 
-- [Zed](https://zed.dev) — fast enough to forget it's there
+- [VS Code](https://code.visualstudio.com) — hard to beat the ecosystem
 
 ## Terminal
 
