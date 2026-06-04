@@ -29,7 +29,6 @@ export async function GET(context: APIContext) {
     <summary>${xmlEscape(item.description)}</summary>
     <content type="html">${xmlEscape(item.html)}</content>
     <link href="${xmlEscape(item.url)}" />
-${item.tags.map((tag) => `    <category term="${xmlEscape(tag)}" />`).join("\n")}
   </entry>`
     )
     .join("\n");

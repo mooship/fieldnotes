@@ -8,9 +8,7 @@ import {
   getBlogPosts,
   getPostSlug,
   getReadingTime,
-  getRelatedPosts,
   getSeriesPosts,
-  getTagUrl,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -19,18 +17,17 @@ export async function getStaticPaths() {
   return posts.map((post) => {
     const slug = getPostSlug(post.id);
     const adjacent = getAdjacentPosts(posts, slug);
-    const related = getRelatedPosts(posts, post);
     const seriesPosts = post.data.series
       ? getSeriesPosts(posts, post.data.series)
       : [];
     return {
       params: { slug },
-      props: { post, adjacent, related, seriesPosts },
+      props: { post, adjacent, seriesPosts },
     };
   });
 }
 
-const { post, adjacent, related, seriesPosts } = Astro.props;
+const { post, adjacent, seriesPosts } = Astro.props;
 const { slug } = Astro.params;
 const { Content, remarkPluginFrontmatter } = await render(post);
 const readingTime = getReadingTime(remarkPluginFrontmatter);
@@ -69,19 +66,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             >
               Updated: {formatDate(post.data.updatedDate)}
             </time>
-          )
-        }
-        {
-          post.data.tags.length > 0 && (
-            <ul class="post-tags" aria-label="Tags">
-              {post.data.tags.map((tag: string) => (
-                <li>
-                  <a href={getTagUrl(tag)} class="tag">
-                    {tag}
-                  </a>
-                </li>
-              ))}
-            </ul>
           )
         }
       </header>
@@ -124,22 +108,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
         Share
       </button>
     </div>
-    {
-      related.length > 0 && (
-        <aside class="related-posts">
-          <h2 class="meta-label">Related posts</h2>
-          <ul>
-            {related.map(
-              (rp: { id: string; data: { title: string; pubDate: Date } }) => (
-                <li>
-                  <a href={`/blog/${getPostSlug(rp.id)}`}>{rp.data.title}</a>
-                </li>
-              )
-            )}
-          </ul>
-        </aside>
-      )
-    }
     {
       (adjacent.prev || adjacent.next) && (
         <nav class="post-nav" aria-label="Post navigation">
@@ -276,10 +244,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
   .updated {
     margin-top: 0.25rem;
-  }
-
-  .post-tags {
-    margin-top: 0.75rem;
   }
 
   .post-footer {
@@ -462,31 +426,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   .series-box li.current {
     color: var(--ink);
     font-weight: 700;
-  }
-
-  .related-posts {
-    margin-top: 3.2rem;
-    padding-top: 1.6rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .related-posts h2 {
-    margin: 0 0 0.75rem 0;
-  }
-
-  .related-posts ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .related-posts li {
-    margin-bottom: 0.4rem;
-  }
-
-  .related-posts a {
-    font-family: var(--font-sans);
-    font-size: 1rem;
   }
 
   .post-nav {
