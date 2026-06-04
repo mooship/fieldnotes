@@ -2,10 +2,6 @@
 title: "To the Moon"
 description: "Artemis II has me excited about space again."
 pubDate: 2026-04-06
-tags:
-  - space
-  - culture
-  - personal
 ---
 
 Artemis II has me excited about space again. Humans are going back to the Moon -- crew on board, not just hardware -- and it's the first time that's happened since Apollo. It lands differently when there are people in the capsule.

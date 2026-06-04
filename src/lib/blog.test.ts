@@ -3,12 +3,9 @@ import {
   computeReadingTime,
   formatDate,
   getAdjacentPosts,
-  getAllTags,
   getBlogPosts,
-  getPostsByTag,
   getPostSlug,
   getReadingTime,
-  getRelatedPosts,
   getSeriesPosts,
   getSiteUrl,
   renderMarkdownToHtml,
@@ -115,38 +112,6 @@ describe("getAdjacentPosts", () => {
   });
 });
 
-describe("getAllTags", () => {
-  it("returns sorted unique tags from all posts", () => {
-    const posts = [
-      { data: { tags: ["personal", "technology"] } },
-      { data: { tags: ["technology", "philosophy"] } },
-      { data: { tags: ["personal"] } },
-    ];
-    expect(getAllTags(posts)).toEqual(["personal", "philosophy", "technology"]);
-  });
-
-  it("returns empty array when no posts have tags", () => {
-    const posts = [{ data: { tags: [] } }, { data: { tags: [] } }];
-    expect(getAllTags(posts)).toEqual([]);
-  });
-});
-
-describe("getPostsByTag", () => {
-  const posts = [
-    { data: { tags: ["personal", "technology"] } },
-    { data: { tags: ["philosophy"] } },
-    { data: { tags: ["personal"] } },
-  ];
-
-  it("filters posts by tag", () => {
-    expect(getPostsByTag(posts, "personal")).toHaveLength(2);
-  });
-
-  it("returns empty array for unknown tag", () => {
-    expect(getPostsByTag(posts, "unknown")).toHaveLength(0);
-  });
-});
-
 type Post = { id: string; data: { draft: boolean; pubDate: Date } };
 
 function setupPosts(posts: Post[]) {
@@ -231,76 +196,6 @@ describe("getSeriesPosts", () => {
     ];
     const result = getSeriesPosts(noPosts, "s");
     expect(result.map((p) => p.data.title)).toEqual(["First", "Second"]);
-  });
-});
-
-describe("getRelatedPosts", () => {
-  const posts = [
-    {
-      id: "a.md",
-      data: {
-        title: "Post A",
-        tags: ["tech", "personal"],
-        pubDate: new Date("2024-01-01"),
-      },
-    },
-    {
-      id: "b.md",
-      data: {
-        title: "Post B",
-        tags: ["tech", "philosophy"],
-        pubDate: new Date("2024-02-01"),
-      },
-    },
-    {
-      id: "c.md",
-      data: {
-        title: "Post C",
-        tags: ["personal", "philosophy"],
-        pubDate: new Date("2024-03-01"),
-      },
-    },
-    {
-      id: "d.md",
-      data: {
-        title: "Post D",
-        tags: ["unrelated"],
-        pubDate: new Date("2024-04-01"),
-      },
-    },
-  ];
-
-  it("returns posts sorted by shared tag count", () => {
-    const current = posts[0];
-    const result = getRelatedPosts(posts, current);
-    expect(result.map((p) => p.data.title)).toEqual(["Post C", "Post B"]);
-  });
-
-  it("excludes the current post", () => {
-    const current = posts[0];
-    const result = getRelatedPosts(posts, current);
-    expect(result.every((p) => p.id !== current.id)).toBe(true);
-  });
-
-  it("excludes posts with no shared tags", () => {
-    const current = posts[0];
-    const result = getRelatedPosts(posts, current);
-    expect(result.find((p) => p.data.title === "Post D")).toBeUndefined();
-  });
-
-  it("respects the limit parameter", () => {
-    const current = posts[0];
-    const result = getRelatedPosts(posts, current, 1);
-    expect(result).toHaveLength(1);
-  });
-
-  it("returns empty array when no posts share any tags", () => {
-    const current = {
-      id: "x.md",
-      data: { tags: ["obscure-tag"] },
-    };
-    const result = getRelatedPosts(posts, current);
-    expect(result).toHaveLength(0);
   });
 });
 

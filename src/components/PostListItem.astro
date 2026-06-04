@@ -1,5 +1,5 @@
 ---
-import { formatDate, getPostSlug, getTagUrl } from "../lib/blog";
+import { formatDate, getPostSlug } from "../lib/blog";
 
 interface Props {
   post: {
@@ -8,14 +8,12 @@ interface Props {
       title: string;
       description: string;
       pubDate: Date;
-      tags: string[];
     };
   };
   readingTime?: string;
-  showTags?: boolean;
 }
 
-const { post, readingTime, showTags = false } = Astro.props;
+const { post, readingTime } = Astro.props;
 const slug = getPostSlug(post.id);
 ---
 
@@ -27,19 +25,6 @@ const slug = getPostSlug(post.id);
     </time>
     {readingTime && <span> · {readingTime}</span>}
   </p>
-  {
-    showTags && post.data.tags.length > 0 && (
-      <ul class="post-tags" aria-label="Tags">
-        {post.data.tags.map((tag: string) => (
-          <li>
-            <a href={getTagUrl(tag)} class="tag">
-              {tag}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )
-  }
   <p class="post-desc">{post.data.description}</p>
 </li>
 
@@ -57,10 +42,6 @@ const slug = getPostSlug(post.id);
 
   .post-meta {
     margin: 0.4rem 0 0 0;
-  }
-
-  .post-tags {
-    margin: 0.4rem 0;
   }
 
   .post-desc {

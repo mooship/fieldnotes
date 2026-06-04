@@ -16,7 +16,6 @@ export async function GET(context: APIContext) {
       pubDate: item.pubDate,
       description: item.description,
       content: item.html,
-      categories: item.tags,
       link: item.url,
     })),
   });

@@ -17,7 +17,6 @@ describe("getFeedItems", () => {
           description: "A test",
           pubDate: new Date("2024-06-01"),
           updatedDate: new Date("2024-06-15"),
-          tags: ["tech"],
           draft: false,
         },
         body: "Hello **world**",
@@ -32,7 +31,6 @@ describe("getFeedItems", () => {
     expect(items[0].html).toContain("<strong>world</strong>");
     expect(items[0].pubDate).toEqual(new Date("2024-06-01"));
     expect(items[0].updatedDate).toEqual(new Date("2024-06-15"));
-    expect(items[0].tags).toEqual(["tech"]);
   });
 
   it("uses pubDate as updatedDate when updatedDate is missing", async () => {
@@ -44,7 +42,6 @@ describe("getFeedItems", () => {
           title: "No Update",
           description: "Desc",
           pubDate,
-          tags: [],
           draft: false,
         },
         body: "Content",

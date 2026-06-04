@@ -2,8 +2,6 @@
 title: "Hopping on a Call"
 description: "Against meeting culture, and why GitLab and the Linux kernel both run on the written word."
 pubDate: 2026-04-10
-tags:
-  - technology
 ---
 
 A message lands in Slack. "Hey, got a sec to hop on a call?" You look at the clock, at the thing you were in the middle of, at the thread of thought you'd just about pulled into focus. You type back, "sure." It is almost never a sec.

@@ -24,10 +24,6 @@ export function getPostSlug(id: string): string {
   return id.replace(/\.md$/, "");
 }
 
-export function getTagUrl(tag: string): string {
-  return `/blog/tags/${encodeURIComponent(tag)}`;
-}
-
 export function getSiteUrl(site?: URL): string {
   if (!site) throw new Error("site must be set in astro.config.mjs");
   return site.toString().replace(/\/$/, "");
@@ -98,21 +94,6 @@ export function getAdjacentPosts(
   };
 }
 
-interface TaggedPost {
-  data: { tags: string[] };
-}
-
-export function getAllTags(posts: TaggedPost[]): string[] {
-  return [...new Set(posts.flatMap((post) => post.data.tags))].toSorted();
-}
-
-export function getPostsByTag<T extends TaggedPost>(
-  posts: T[],
-  tag: string
-): T[] {
-  return posts.filter((post) => post.data.tags.includes(tag));
-}
-
 interface SeriesPost {
   id: string;
   data: {
@@ -132,37 +113,4 @@ export function getSeriesPosts(posts: SeriesPost[], seriesName: string) {
       if (orderA !== orderB) return orderA - orderB;
       return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
     });
-}
-
-interface RelatedPost {
-  id: string;
-  data: { title: string; tags: string[]; pubDate: Date };
-}
-
-interface CurrentPost {
-  id: string;
-  data: { tags: string[] };
-}
-
-export function getRelatedPosts(
-  posts: RelatedPost[],
-  currentPost: CurrentPost,
-  limit = 3
-) {
-  const currentTags = new Set(currentPost.data.tags);
-
-  return posts
-    .filter((post) => post.id !== currentPost.id)
-    .map((post) => ({
-      post,
-      score: post.data.tags.filter((tag) => currentTags.has(tag)).length,
-    }))
-    .filter(({ score }) => score > 0)
-    .toSorted(
-      (a, b) =>
-        b.score - a.score ||
-        b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf()
-    )
-    .slice(0, limit)
-    .map(({ post }) => post);
 }

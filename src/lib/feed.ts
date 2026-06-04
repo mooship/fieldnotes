@@ -7,7 +7,6 @@ export interface FeedItem {
   html: string;
   pubDate: Date;
   updatedDate: Date;
-  tags: string[];
 }
 
 export async function getFeedItems(siteUrl: string): Promise<FeedItem[]> {
@@ -20,7 +19,6 @@ export async function getFeedItems(siteUrl: string): Promise<FeedItem[]> {
       html: await renderMarkdownToHtml(post.body),
       pubDate: post.data.pubDate,
       updatedDate: post.data.updatedDate ?? post.data.pubDate,
-      tags: post.data.tags,
     }))
   );
 }
