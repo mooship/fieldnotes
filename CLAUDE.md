@@ -25,7 +25,7 @@ Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Mar
 
 Tests use Vitest with happy-dom. Test files live next to the source files they test (`*.test.ts`).
 
-- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`
+- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `getReadingTime`, `computeReadingTime`, `formatDate`
 - `src/lib/feed.test.ts` — `getFeedItems`
 - `src/lib/xml.test.ts` — `xmlEscape`
 - `src/lib/remark-reading-time.test.ts` — `remarkReadingTime` plugin
