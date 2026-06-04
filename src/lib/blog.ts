@@ -114,4 +114,3 @@ export function getSeriesPosts(posts: SeriesPost[], seriesName: string) {
       return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
     });
 }
-
