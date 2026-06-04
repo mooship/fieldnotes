@@ -2,8 +2,6 @@
 title: "On Eco-Socialism"
 description: "Why fixing the climate means fixing the economy, and why technology alone won't do it."
 pubDate: 2026-03-24
-tags:
-  - politics
 ---
 
 For a long time I didn't have a name for what bothered me about mainstream environmentalism. Switch to renewables, change your habits, wait for the right technology. There was always this assumption that the system was basically fine and just needed better inputs. But the same question kept surfacing: why did we end up here? And the honest answer is that we got here through a specific mode of production, with specific incentives, that structurally selects against internalising the costs of harm. This isn't a fixable detail. It's the mechanism.

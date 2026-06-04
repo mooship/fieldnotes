@@ -27,7 +27,6 @@ export async function GET(context: APIContext) {
       content_html: item.html,
       date_published: item.pubDate.toISOString(),
       date_modified: item.updatedDate.toISOString(),
-      tags: item.tags,
     })),
   };
 
