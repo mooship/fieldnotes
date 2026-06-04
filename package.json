@@ -14,8 +14,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fontsource/geist": "^5.2.9",
-    "@fontsource/inter": "^5.2.8"
+    "@fontsource/geist": "^5.2.9"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
