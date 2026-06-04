@@ -2,8 +2,6 @@
 title: "Please Help Malak"
 description: "A 20-year-old in Gaza is studying for her degree under bombardment, her mother has cancer, and her family has been displaced ten times. I gave a bit. You don't have to give much."
 pubDate: 2026-05-19
-tags:
-  - giving
 ---
 
 I don't give much money to things. A few dollars a month, which isn't really anything. I'm mentioning this upfront because I'm about to ask you to donate to something, and I'd rather you know that than think I'm speaking from some position of generosity I don't actually occupy.

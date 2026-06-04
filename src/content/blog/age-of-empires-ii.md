@@ -2,8 +2,6 @@
 title: "Age of Empires II"
 description: "Why Age of Empires II Definitive Edition is the perfect RTS, and my favourite game of all time."
 pubDate: 2026-04-04
-tags:
-  - gaming
 ---
 
 I've been playing Age of Empires II since around 2002, maybe 2003. It came on a demo disc -- PC Format or NAG magazine, I can't quite remember which. Before I understood build orders or eco management or what a feudal rush was, I was building walls around my town centre and wondering why the AI kept showing up with thirty crossbowmen before I'd even clicked up to Castle Age. I lost constantly. I loved every second of it.
