@@ -1,6 +1,6 @@
 # Fieldnotes
 
-Personal site and blog built with Astro + TypeScript + CSS. Includes a blog with tags, series, full-text search, and OG image generation. Fast, minimal, easy to tweak.
+Personal site and blog built with Astro + TypeScript + CSS. Includes a blog with tags, full-text search, and OG image generation. Fast, minimal, easy to tweak.
 
 ## Quick Start
 
@@ -45,8 +45,6 @@ src/
       tags/
         index.astro      # All tags
         [tag].astro      # Posts for a tag
-      series/
-        index.astro      # Series index
     og/
       [slug].png.ts      # OG image generation (satori + sharp)
   sections/
@@ -88,7 +86,7 @@ public/                  # Static assets (images, favicons, etc.)
 
 1. Edit home page sections in `src/sections/intro.md`, `src/sections/personal.md`, `src/sections/writing.md`, `src/sections/opensource.md`, and `src/sections/support.md`.
 2. Edit `/now` and `/uses` content in `src/sections/now.md` and `src/sections/uses.md`.
-3. Add blog posts in `src/content/blog/` — frontmatter supports `tags` (array) and `series`.
+3. Add blog posts in `src/content/blog/` — frontmatter supports `tags` (array).
 4. Run `npm run lint`, `npm run test`, and `npm run build` before pushing changes.
 
 ### Styling Tweaks

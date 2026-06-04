@@ -93,24 +93,3 @@ export function getAdjacentPosts(
       : undefined,
   };
 }
-
-interface SeriesPost {
-  id: string;
-  data: {
-    title: string;
-    series?: string;
-    seriesOrder?: number;
-    pubDate: Date;
-  };
-}
-
-export function getSeriesPosts(posts: SeriesPost[], seriesName: string) {
-  return posts
-    .filter((post) => post.data.series === seriesName)
-    .toSorted((a, b) => {
-      const orderA = a.data.seriesOrder ?? Infinity;
-      const orderB = b.data.seriesOrder ?? Infinity;
-      if (orderA !== orderB) return orderA - orderB;
-      return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
-    });
-}
