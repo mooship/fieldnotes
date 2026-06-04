@@ -104,7 +104,7 @@ Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declara
 - ESLint flat config for Astro, TS, CSS, and Markdown
 - Vitest unit tests with happy-dom (`npm run test`)
 - Lefthook pre-commit hook: runs `lint` + `format` in parallel on every commit
-- Fonts via `fontProviders.fontsource()` (Inter + Geist Mono)
+- Fonts via `fontProviders.fontsource()` (Geist + Geist Mono)
 - Prettier formatting + import sorting
 - `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations
 - OG image generation via `satori` + `sharp`
