@@ -18,9 +18,9 @@ let fontsPromise: Promise<{ regular: Buffer; bold: Buffer }> | undefined;
 async function loadFonts(): Promise<{ regular: Buffer; bold: Buffer }> {
   if (!fontsPromise) {
     const regularPath =
-      require.resolve("@fontsource/inter/files/inter-latin-400-normal.woff");
+      require.resolve("@fontsource/geist/files/geist-latin-400-normal.woff");
     const boldPath =
-      require.resolve("@fontsource/inter/files/inter-latin-700-normal.woff");
+      require.resolve("@fontsource/geist/files/geist-latin-700-normal.woff");
     fontsPromise = Promise.all([
       readFile(regularPath),
       readFile(boldPath),
@@ -54,7 +54,7 @@ export const GET: APIRoute = async ({ props, site }) => {
           justifyContent: "space-between",
           backgroundColor: PAPER,
           padding: "80px 90px",
-          fontFamily: "Inter",
+          fontFamily: "Geist",
         },
         children: [
           {
@@ -168,13 +168,13 @@ export const GET: APIRoute = async ({ props, site }) => {
       height: 630,
       fonts: [
         {
-          name: "Inter",
+          name: "Geist",
           data: regular,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Inter",
+          name: "Geist",
           data: bold,
           weight: 700,
           style: "normal",

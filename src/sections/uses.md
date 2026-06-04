@@ -30,5 +30,5 @@
 - [Astro](https://astro.build) — static output, love this framework
 - Cloudflare Pages — fast edge deploys, zero config
 - Cloudflare Web Analytics — privacy-first, no cookies
-- [Inter](https://fonts.google.com/specimen/Inter) for everything — a clean neo-grotesque, in the Swiss tradition
+- [Geist](https://vercel.com/font) for everything — neo-grotesque, pairs naturally with Geist Mono
 - [Geist Mono](https://vercel.com/font) for code
