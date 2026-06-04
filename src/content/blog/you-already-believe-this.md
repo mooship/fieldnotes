@@ -2,8 +2,6 @@
 title: "You Already Believe This"
 description: "Libraries, parks, the NHS, mutual aid -- we live inside socialist infrastructure every day. We just don't call it that."
 pubDate: 2026-04-03
-tags:
-  - politics
 ---
 
 Think about the library. The building is publicly funded. The books are publicly owned. Anyone can walk in and borrow them, no means test, no proof that you've earned it. The assumption behind the whole thing is that access to knowledge is something the collective provides to its members simply because they're members. The whole model, right there.

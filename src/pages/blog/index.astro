@@ -24,8 +24,6 @@ const postsWithMeta = posts.map((post) => ({
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">Blog</h1>
     <nav class="browse" aria-label="Browse posts">
-      <a href="/blog/tags" class="nav-link">Tags</a>
-      <span aria-hidden="true">·</span>
       <a href="/blog/series" class="nav-link">Series</a>
     </nav>
     <div class="search-wrapper">
@@ -41,7 +39,7 @@ const postsWithMeta = posts.map((post) => ({
       ) : (
         <ul>
           {postsWithMeta.map(({ post, readingTime }) => (
-            <PostListItem post={post} readingTime={readingTime} showTags />
+            <PostListItem post={post} readingTime={readingTime} />
           ))}
         </ul>
       )
@@ -75,11 +73,7 @@ const postsWithMeta = posts.map((post) => ({
   }
 
   .browse {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
     margin: 0 0 1.6rem 0;
-    color: var(--secondary-label);
   }
 
   .search-wrapper {

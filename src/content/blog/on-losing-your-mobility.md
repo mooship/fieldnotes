@@ -2,9 +2,6 @@
 title: "On Losing Your Mobility"
 description: "You don't notice your body until it starts failing you."
 pubDate: 2026-04-29
-tags:
-  - personal
-  - health
 ---
 
 I have pes planus. Flat feet, in plain English. The arches never formed properly, so my feet splay out when I stand, which tilts my ankles inward, which rotates my knees, which torques my hips, which pulls my pelvis out of alignment. I'm in pain most of the time. My lower back locks up. Some mornings I get out of bed like an old man, shuffling to the bathroom in small, careful steps while I wait for things to loosen up.
