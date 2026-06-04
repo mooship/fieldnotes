@@ -28,7 +28,7 @@ The NHS is not the Soviet Union. The library is not a gulag. The question "shoul
 
 ---
 
-I've been drawn to Buddhism partly because of how it treats interdependence -- as a description of how things are, not a political position. There is no separate self. My welfare depends on the welfare of the people around me, on the systems that sustain me, on choices made by people I'll never meet. This isn't sentiment. It's structure.
+I've been drawn to Buddhism partly because of how it treats interdependence -- as a description of how things are, not a political position. There is no separate self. My welfare depends on the welfare of the people around me, on the systems that sustain me, on choices made by people I'll never meet. None of that is sentiment -- it's just the structure of the thing.
 
 Buddhist ethics asks these questions at the individual level -- does your work cause harm? Are your actions honest? -- but the ground they stand on is collective. You can't answer them honestly while pretending you're alone.
 
