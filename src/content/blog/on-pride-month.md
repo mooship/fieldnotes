@@ -18,6 +18,4 @@ Which brings me to the part I have less patience for. A lot of what gets called 
 
 I don't think it should be allowed to work. When you turn a person's safety into a debate, the cost of the debate doesn't fall on the idea. It falls on people who were mostly already paying it.
 
----
-
 I'm an ally, and the longer I sit with the word the more I think it isn't a label you give yourself. It's closer to a habit. Saying the obvious thing out loud when the room would rather you didn't. Refusing to treat anyone's right to exist as a question that's still open. We owe each other more than what the loudest people are currently offering, and I don't think that's a particularly radical thing to believe.
