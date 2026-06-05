@@ -4,6 +4,8 @@ description: "South Africa was the first country to protect us by name. Pride is
 pubDate: 2026-06-05
 ---
 
+A short note before this one: it refers to sexual violence.
+
 South Africa was the first country in the world to write protection from discrimination on the basis of sexual orientation into its constitution. That was 1996. On paper we were ahead of almost everyone, and I do think that's worth being proud of. But a constitution is a promise, and a promise only means as much as the distance between it and the street.
 
 That distance is still wide. People are still attacked for who they love. "Corrective" rape is still a phrase that exists here, aimed mostly at queer women -- the idea being that an identity is a fault you can punish out of someone. I find it hard to write that sentence calmly. The law says one thing; for a lot of people, day to day, the country says something else.
