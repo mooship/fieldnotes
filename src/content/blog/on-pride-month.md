@@ -4,20 +4,20 @@ description: "South Africa was the first country to protect us by name. Pride is
 pubDate: 2026-06-05
 ---
 
-South Africa was the first country in the world to write protection from discrimination on the basis of sexual orientation into its constitution. In 1996, on paper, we were further ahead than almost anywhere else on earth. It's the kind of fact you want to be proud of, and I am. But a constitution is a promise, and a promise is only as real as the distance between it and the street.
+South Africa was the first country in the world to write protection from discrimination on the basis of sexual orientation into its constitution. That was 1996. On paper we were ahead of almost everyone, and I do think that's worth being proud of. But a constitution is a promise, and a promise only means as much as the distance between it and the street.
 
-That distance is still wide. People are still beaten for who they love. "Corrective" rape is still a word that exists here, aimed mostly at queer women, as if a person's identity were a fault to be punished out of them. The document says one thing. The lived reality, in too many places, says another. Rights on paper are not the same as safety, and pretending otherwise is a comfort we haven't earned yet.
-
----
-
-That gap is what Pride Month is actually about. Not the floats, not the branding, not the corporate logos that go rainbow for thirty days and quietly revert on the first of July. Pride is a refusal to be invisible in a place where invisibility was, for a long time, the safer option. When silence is what danger asks of you, being seen is the whole point.
+That distance is still wide. People are still attacked for who they love. "Corrective" rape is still a phrase that exists here, aimed mostly at queer women -- the idea being that an identity is a fault you can punish out of someone. I find it hard to write that sentence calmly. The law says one thing; for a lot of people, day to day, the country says something else.
 
 ---
 
-Which brings me to the thing I find harder to stay calm about. A lot of what now gets called "anti-woke" is just old hatred that found a tidier word. Call someone's acceptance "woke", call their existence an "agenda", and you get to be against a human being while telling yourself you're only against a politics. It's a clever trick. It lets cruelty pass as common sense.
-
-I don't think it should pass. When you reframe a person's safety as a debate, the cost of that debate doesn't land on an abstraction. It lands on someone. Usually someone who was already paying.
+That gap is what Pride is actually about, at least to me. Not the floats, or the corporate logos that turn rainbow for thirty days and quietly change back on the first of July -- though those are easy enough to be cynical about. Underneath it, Pride is a refusal to be invisible in a place where, for a long time, being invisible was the safer bet. When silence is the thing danger asks of you, being seen is itself the point.
 
 ---
 
-I'm an ally, and I've come to think being one isn't a label you award yourself. It's a thing you do. It's saying the obvious thing out loud when the room would rather you didn't. It's refusing to treat anyone's right to exist as an open question. We owe each other more than what the loudest voices are currently offering. That's the whole of it, really.
+Which brings me to the part I have less patience for. A lot of what gets called "anti-woke" now is just an older hatred that found a more respectable word. Call someone's acceptance "woke", call their existence an "agenda", and you get to be against a person while telling yourself you're only against a politics. It's a neat trick, and it works because it lets cruelty sound reasonable.
+
+I don't think it should be allowed to work. When you turn a person's safety into a debate, the cost of the debate doesn't fall on the idea. It falls on people who were mostly already paying it.
+
+---
+
+I'm an ally, and the longer I sit with the word the more I think it isn't a label you give yourself. It's closer to a habit. Saying the obvious thing out loud when the room would rather you didn't. Refusing to treat anyone's right to exist as a question that's still open. We owe each other more than what the loudest people are currently offering, and I don't think that's a particularly radical thing to believe.
