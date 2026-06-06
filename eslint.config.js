@@ -29,7 +29,28 @@ export default [
       "unicorn/text-encoding-identifier-case": "off",
     },
   },
-  css.configs.recommended,
+  {
+    files: ["**/*.css"],
+    language: "css/css",
+    plugins: css.configs.recommended.plugins,
+    rules: {
+      ...css.configs.recommended.rules,
+      "css/no-invalid-properties": [
+        "error",
+        { allowUnknownVariables: true },
+      ],
+      "css/no-important": "off",
+      "css/use-baseline": [
+        "error",
+        {
+          available: "newly",
+          allowProperties: ["text-wrap"],
+          allowSelectors: ["selection"],
+        },
+      ],
+      "css/font-family-fallbacks": "off",
+    },
+  },
   ...markdown.configs.recommended,
   prettierConfig,
 ];
