@@ -20,10 +20,10 @@ export default [
   ...tseslint.configs.recommended,
   ...astroPlugin.configs.recommended,
   {
-    ...unicorn.configs["flat/recommended"],
+    ...unicorn.configs.recommended,
     files: ["**/*.{js,mjs,ts,astro}"],
     rules: {
-      ...unicorn.configs["flat/recommended"].rules,
+      ...unicorn.configs.recommended.rules,
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
       "unicorn/text-encoding-identifier-case": "off",
