@@ -30,9 +30,9 @@ export default [
     },
   },
   {
-    ...css.configs.recommended,
     files: ["**/*.css"],
     language: "css/css",
+    plugins: css.configs.recommended.plugins,
     rules: {
       ...css.configs.recommended.rules,
       "css/no-invalid-properties": [
