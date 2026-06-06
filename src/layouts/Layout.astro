@@ -111,7 +111,7 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     {image && <meta name="twitter:image" content={image} />}
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <a href="#main-content" class="skip-link visually-hidden"

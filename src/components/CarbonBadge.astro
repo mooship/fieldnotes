@@ -26,7 +26,7 @@ const { green = true } = Astro.props;
       a.rel = "noopener noreferrer";
       a.title = `Cleaner than ${pct}% of pages tested — Website Carbon`;
       a.textContent = `${grams} g CO₂/view`;
-      el.replaceChildren(a);
+      el?.replaceChildren(a);
     }
 
     try {

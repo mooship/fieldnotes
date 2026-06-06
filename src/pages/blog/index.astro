@@ -1,5 +1,5 @@
 ---
-import Search from "astro-pagefind/components/Search";
+import Search from "astro-pagefind/components/Search.astro";
 import PostListItem from "../../components/PostListItem.astro";
 import Layout from "../../layouts/Layout.astro";
 import {
@@ -24,11 +24,7 @@ const postsWithMeta = posts.map((post) => ({
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">Blog</h1>
     <div class="search-wrapper">
-      <Search
-        id="search"
-        className="pagefind-ui"
-        uiOptions={{ showImages: false, showSubResults: false }}
-      />
+      <Search className="pagefind-ui" />
     </div>
     {
       postsWithMeta.length === 0 ? (
