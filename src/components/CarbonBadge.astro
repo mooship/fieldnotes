@@ -18,6 +18,13 @@ const { green = true } = Astro.props;
   const PERCENTAGE_OF_DATA_LOADED_ON_SUBSEQUENT_LOAD = 0.02;
   const DATACENTER_ENERGY_SHARE = 0.15;
 
+  const CACHE_FACTOR =
+    FIRST_TIME_VIEWING_PERCENTAGE +
+    RETURNING_VISITOR_PERCENTAGE * PERCENTAGE_OF_DATA_LOADED_ON_SUBSEQUENT_LOAD;
+  const GREEN_GRID_INTENSITY =
+    DATACENTER_ENERGY_SHARE * RENEWABLES_GRID_INTENSITY +
+    (1 - DATACENTER_ENERGY_SHARE) * GLOBAL_GRID_INTENSITY;
+
   /**
    * Estimate grams of CO₂ per page view from transferred bytes using the
    * Sustainable Web Design Model (the same model the Website Carbon
@@ -25,17 +32,8 @@ const { green = true } = Astro.props;
    * in dev, preview, and production with no runtime API dependency.
    */
   function estimateGramsCo2(bytes: number, green: boolean): number {
-    const gb = bytes / GIGABYTE;
-    const cacheFactor =
-      FIRST_TIME_VIEWING_PERCENTAGE +
-      RETURNING_VISITOR_PERCENTAGE *
-        PERCENTAGE_OF_DATA_LOADED_ON_SUBSEQUENT_LOAD;
-    const energyKwh = gb * KWH_PER_GB * cacheFactor;
-    const intensity = green
-      ? DATACENTER_ENERGY_SHARE * RENEWABLES_GRID_INTENSITY +
-        (1 - DATACENTER_ENERGY_SHARE) * GLOBAL_GRID_INTENSITY
-      : GLOBAL_GRID_INTENSITY;
-    return energyKwh * intensity;
+    const energyKwh = (bytes / GIGABYTE) * KWH_PER_GB * CACHE_FACTOR;
+    return energyKwh * (green ? GREEN_GRID_INTENSITY : GLOBAL_GRID_INTENSITY);
   }
 
   function measureBytes(): number {
