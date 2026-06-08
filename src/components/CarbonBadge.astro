@@ -9,75 +9,70 @@ const { green = true } = Astro.props;
 <span id="carbon-badge" data-green={green ? "1" : "0"}></span>
 
 <script>
-  function initBadge() {
+  const KWH_PER_GB = 0.81;
+  const GIGABYTE = 1024 * 1024 * 1024;
+  const GLOBAL_GRID_INTENSITY = 494;
+  const RENEWABLES_GRID_INTENSITY = 50;
+  const FIRST_TIME_VIEWING_PERCENTAGE = 0.75;
+  const RETURNING_VISITOR_PERCENTAGE = 0.25;
+  const PERCENTAGE_OF_DATA_LOADED_ON_SUBSEQUENT_LOAD = 0.02;
+  const DATACENTER_ENERGY_SHARE = 0.15;
+
+  /**
+   * Estimate grams of CO₂ per page view from transferred bytes using the
+   * Sustainable Web Design Model (the same model the Website Carbon
+   * Calculator uses). Computed client-side so the badge renders identically
+   * in dev, preview, and production with no runtime API dependency.
+   */
+  function estimateGramsCo2(bytes: number, green: boolean): number {
+    const gb = bytes / GIGABYTE;
+    const cacheFactor =
+      FIRST_TIME_VIEWING_PERCENTAGE +
+      RETURNING_VISITOR_PERCENTAGE * PERCENTAGE_OF_DATA_LOADED_ON_SUBSEQUENT_LOAD;
+    const energyKwh = gb * KWH_PER_GB * cacheFactor;
+    const intensity = green
+      ? DATACENTER_ENERGY_SHARE * RENEWABLES_GRID_INTENSITY +
+        (1 - DATACENTER_ENERGY_SHARE) * GLOBAL_GRID_INTENSITY
+      : GLOBAL_GRID_INTENSITY;
+    return energyKwh * intensity;
+  }
+
+  function measureBytes(): number {
+    const nav = performance.getEntriesByType("navigation")[0] as
+      | PerformanceNavigationTiming
+      | undefined;
+    let bytes = nav
+      ? nav.encodedBodySize || nav.decodedBodySize || nav.transferSize || 0
+      : 0;
+    for (const r of performance.getEntriesByType(
+      "resource"
+    ) as PerformanceResourceTiming[]) {
+      bytes += r.encodedBodySize || r.decodedBodySize || 0;
+    }
+    return bytes;
+  }
+
+  function render() {
     const el = document.querySelector<HTMLElement>("#carbon-badge");
     if (!el) {
       return;
     }
 
-    const green = el.dataset.green ?? "0";
-    const cacheKey = `wcb:1:${location.pathname}`;
+    const green = el.dataset.green === "1";
+    const gco2e = estimateGramsCo2(measureBytes(), green);
+    const grams = gco2e < 0.005 ? "<0.01" : gco2e.toFixed(2);
 
-    function render(gco2e: number, cleanerThan: number) {
-      const grams = gco2e < 0.005 ? "<0.01" : gco2e.toFixed(2);
-      const pct = Math.round(cleanerThan * 100);
-      const a = document.createElement("a");
-      a.href = "https://www.websitecarbon.com";
-      a.rel = "noopener noreferrer";
-      a.title = `Cleaner than ${pct}% of pages tested — Website Carbon`;
-      a.textContent = `${grams} g CO₂/view`;
-      el!.replaceChildren(a);
-    }
-
-    try {
-      const cached = localStorage.getItem(cacheKey);
-      if (cached) {
-        const { ts, gco2e, cleanerThan } = JSON.parse(cached);
-        if (Date.now() - ts < 86_400_000) {
-          render(gco2e, cleanerThan);
-          return;
-        }
-      }
-    } catch {}
-
-    function fetchAndRender() {
-      const nav = performance.getEntriesByType("navigation")[0] as
-        | PerformanceNavigationTiming
-        | undefined;
-      let bytes = nav ? nav.encodedBodySize || nav.decodedBodySize || 0 : 0;
-      for (const r of performance.getEntriesByType(
-        "resource"
-      ) as PerformanceResourceTiming[]) {
-        bytes += r.encodedBodySize || r.decodedBodySize || 0;
-      }
-
-      if (!bytes) {
-        return;
-      }
-
-      fetch(`/api/carbon?bytes=${Math.round(bytes)}&green=${green}`)
-        .then((r) => {
-          if (!r.ok) throw new Error(`HTTP ${r.status}`);
-          return r.json();
-        })
-        .then(({ gco2e, cleanerThan }) => {
-          render(gco2e, cleanerThan);
-          try {
-            localStorage.setItem(
-              cacheKey,
-              JSON.stringify({ ts: Date.now(), gco2e, cleanerThan })
-            );
-          } catch {}
-        })
-        .catch(() => {});
-    }
-
-    if (document.readyState === "complete") {
-      fetchAndRender();
-    } else {
-      window.addEventListener("load", fetchAndRender, { once: true });
-    }
+    const a = document.createElement("a");
+    a.href = "https://sustainablewebdesign.org/estimating-digital-emissions/";
+    a.rel = "noopener noreferrer";
+    a.title = "Estimated emissions per page view — Sustainable Web Design Model";
+    a.textContent = `${grams} g CO₂/view`;
+    el.replaceChildren(a);
   }
 
-  document.addEventListener("DOMContentLoaded", initBadge);
+  if (document.readyState === "complete") {
+    render();
+  } else {
+    window.addEventListener("load", render, { once: true });
+  }
 </script>
