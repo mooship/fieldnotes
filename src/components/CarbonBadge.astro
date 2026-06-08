@@ -28,7 +28,8 @@ const { green = true } = Astro.props;
     const gb = bytes / GIGABYTE;
     const cacheFactor =
       FIRST_TIME_VIEWING_PERCENTAGE +
-      RETURNING_VISITOR_PERCENTAGE * PERCENTAGE_OF_DATA_LOADED_ON_SUBSEQUENT_LOAD;
+      RETURNING_VISITOR_PERCENTAGE *
+        PERCENTAGE_OF_DATA_LOADED_ON_SUBSEQUENT_LOAD;
     const energyKwh = gb * KWH_PER_GB * cacheFactor;
     const intensity = green
       ? DATACENTER_ENERGY_SHARE * RENEWABLES_GRID_INTENSITY +
@@ -65,7 +66,8 @@ const { green = true } = Astro.props;
     const a = document.createElement("a");
     a.href = "https://sustainablewebdesign.org/estimating-digital-emissions/";
     a.rel = "noopener noreferrer";
-    a.title = "Estimated emissions per page view — Sustainable Web Design Model";
+    a.title =
+      "Estimated emissions per page view — Sustainable Web Design Model";
     a.textContent = `${grams} g CO₂/view`;
     el.replaceChildren(a);
   }
