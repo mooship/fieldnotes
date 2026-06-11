@@ -45,15 +45,13 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     <article>
       <header>
         <h1>{post.data.title}</h1>
-        <time class="meta-label" datetime={post.data.pubDate.toISOString()}>
-          <span class="visually-hidden">Published: </span>
-          {formatDate(post.data.pubDate)}
-        </time>
-        {
-          readingTime && (
-            <span class="meta-label reading-time">{readingTime}</span>
-          )
-        }
+        <p class="meta-label">
+          <time datetime={post.data.pubDate.toISOString()}>
+            <span class="visually-hidden">Published: </span>
+            {formatDate(post.data.pubDate)}
+          </time>
+          {readingTime && <span> · {readingTime}</span>}
+        </p>
         {
           post.data.updatedDate && (
             <time
@@ -187,7 +185,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 <style>
   main {
     margin: auto;
-    padding-top: 2rem;
+    padding-top: 1.6rem;
   }
 
   .back-link {
@@ -198,6 +196,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     margin-bottom: 3.2rem;
     padding-bottom: 1.6rem;
     border-bottom: 1px solid var(--rule);
+  }
+
+  header .meta-label {
+    margin: 0;
   }
 
   h1 {
@@ -213,7 +215,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     }
   }
 
-  .updated {
+  header .updated {
     margin-top: 0.25rem;
   }
 
@@ -359,9 +361,14 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
     margin: 0 0 1rem 0;
   }
 
+  article :global(ul) {
+    list-style: square;
+  }
+
   article :global(li) {
     margin-bottom: 0.4rem;
     line-height: 1.5;
+    color: var(--ink);
   }
 
   article :global(hr) {
