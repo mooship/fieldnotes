@@ -30,7 +30,7 @@ I've been drawn to Buddhism partly because of how it treats interdependence -- a
 
 Buddhist ethics asks these questions at the individual level -- does your work cause harm? Are your actions honest? -- but the ground they stand on is collective. You can't answer them honestly while pretending you're alone.
 
-Mutual aid gets at this in practice. Not charity -- charity maintains a hierarchy between giver and recipient. Mutual aid is horizontal: we take care of each other because we're each other's context. Because the separation between your wellbeing and mine is less absolute than we've been taught to think.
+Mutual aid gets at this in practice. Not charity -- charity maintains a hierarchy between giver and recipient. Mutual aid is horizontal: we take care of each other because the separation between your wellbeing and mine is less absolute than we've been taught to think.
 
 ---
 

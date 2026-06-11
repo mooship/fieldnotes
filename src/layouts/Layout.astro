@@ -124,6 +124,7 @@ const jsonLd = {
     <header>
       <div class="masthead">
         <a href="/" class="wordmark">
+          <span class="wordmark-mark" aria-hidden="true"></span>
           <span class="wordmark-title">{SITE_TITLE}</span>
           <span class="wordmark-byline">by {SITE_AUTHOR}</span>
         </a>
@@ -187,14 +188,17 @@ const jsonLd = {
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0.8rem 1.6rem;
-    padding-bottom: 1.6rem;
+    padding: 1.2rem 0 1.6rem 0;
+    border-top: 4px solid var(--ink);
     border-bottom: 1px solid var(--rule);
   }
 
   .wordmark {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.5rem;
+    row-gap: 0.25rem;
+    align-items: center;
     text-decoration: none;
   }
 
@@ -202,7 +206,14 @@ const jsonLd = {
     text-decoration: none;
   }
 
+  .wordmark-mark {
+    width: 0.9rem;
+    height: 0.9rem;
+    background: var(--signal);
+  }
+
   .wordmark-title {
+    grid-column: 2;
     font-family: var(--font-sans);
     font-style: normal;
     font-weight: 700;
@@ -213,6 +224,7 @@ const jsonLd = {
   }
 
   .wordmark-byline {
+    grid-column: 2;
     font-family: var(--font-sans);
     font-style: normal;
     font-weight: 600;
@@ -273,6 +285,11 @@ const jsonLd = {
     display: flex;
     align-items: center;
     gap: 1.25rem;
+  }
+
+  .feed-links > span {
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-meta);
   }
 
   .feed-links a {
