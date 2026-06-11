@@ -1,5 +1,5 @@
 .astro-code {
-  background-color: var(--paper-deep);
+  background-color: var(--paper);
 }
 
 :is(.astro-code, .astro-code span) {
