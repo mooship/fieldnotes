@@ -18,13 +18,13 @@ const slug = getPostSlug(post.id);
 ---
 
 <li>
-  <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
   <p class="post-meta meta-label">
     <time datetime={post.data.pubDate.toISOString()}>
       {formatDate(post.data.pubDate)}
     </time>
     {readingTime && <span> · {readingTime}</span>}
   </p>
+  <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
   <p class="post-desc">{post.data.description}</p>
 </li>
 
@@ -35,19 +35,23 @@ const slug = getPostSlug(post.id);
     margin-bottom: 0;
   }
 
-  .post-title {
-    font-size: 1.0625rem;
-    font-weight: 500;
+  .post-meta {
+    margin: 0;
   }
 
-  .post-meta {
-    margin: 0.4rem 0 0 0;
+  .post-title {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
   }
 
   .post-desc {
     margin: 0.4rem 0 0 0;
     font-size: 0.9375rem;
-    color: var(--secondary-label);
+    color: var(--ink-soft);
     line-height: 1.5;
   }
 </style>
