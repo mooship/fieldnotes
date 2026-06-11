@@ -4,7 +4,7 @@ description: "AI orchestration tools like BMAD are impressive. They're not a rea
 pubDate: 2026-05-07
 ---
 
-BMAD gives each agent a role -- architect, product manager, QA engineer, UX designer, developer -- and orchestrates them through the full SDLC. One person, one prompt, an entire simulated software team.
+BMAD is one of those AI orchestration frameworks doing the rounds at the moment. It gives each agent a role -- architect, product manager, QA engineer, UX designer, developer -- and orchestrates them through the full SDLC. One person, one prompt, an entire simulated software team.
 
 It's a genuinely impressive trick. But I keep coming back to the same problem:
 simulating a role is not the same as being good at it.
@@ -19,7 +19,7 @@ An AI agent roleplaying an architect can give you something that looks like an a
 
 What AI actually does for someone who's already good at something is reduce friction. A specialist offloads the boilerplate, gets unstuck faster, moves through the parts of the work that don't need their full attention. The depth they've built over years is still doing the real work -- the AI just gets out of the way of it.
 
-A generalist with the same tools moves faster too. But moving faster toward the same ceiling is not the same as raising it. The output looks similar until it doesn't.
+A generalist with the same tools moves faster too. But moving faster toward the same ceiling is not the same as raising it.
 
 ---
 
@@ -31,4 +31,4 @@ When a specialist is accountable for their part of the process, they've been liv
 
 I reach for AI tools constantly. The ones that stick are the ones that make me better at what I already know how to do -- they reduce friction in the work, they don't replace the years that made me worth using them.
 
-But a tool that simulates expertise will never build it in you. That gap doesn't show up in the prototype. It shows up when something goes wrong and there's nobody in the room who's seen it go wrong before.
+But a tool that simulates expertise will never build it in you. And that gap never shows up in the prototype -- it shows up when something breaks and nobody in the room has seen it break before.

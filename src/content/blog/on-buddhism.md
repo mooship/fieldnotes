@@ -8,7 +8,7 @@ I'm new to Buddhism. I want to be clear about that -- I haven't been meditating 
 
 What drew me in wasn't ritual or religion. It was the ethics.
 
-Buddhism asks you to live well -- to cause less harm, and to be honest with yourself about why you do what you do. That clicked for me in a way other things hadn't.
+Buddhism asks you to live well -- to cause less harm, and to be honest with yourself about why you do what you do. That made sense to me in a way other things hadn't.
 
 The Eightfold Path is where most of that gets specific. Right speech, right action, right livelihood. Concrete enough to check yourself against. How did I speak to that person? What am I spending my time on? Does what I do for money cause harm to anyone?
 
