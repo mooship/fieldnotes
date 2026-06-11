@@ -12,6 +12,6 @@ I've tried things. Orthotics. Stretches. Physiotherapy exercises that take twent
 
 What's strange is the scale of what it's changed. It's flat feet -- people have flat feet. And yet it has quietly hollowed out a part of my life: the part where I could walk for hours, or go hiking, or just stand at a concert without counting down the minutes until I can sit. I miss that. I miss being in my body without negotiating with it first.
 
-I think what I'm grieving is something I never properly valued when I had it. Your body just does what it does and you don't have to think about it. Until you do. It's only when something starts to fail that you understand the scale of what was quietly holding everything together.
+I think what I'm grieving is something I never properly valued when I had it. Your body just does what it does and you don't have to think about it. Until you do. It's only when something starts to fail that you understand the scale of what was holding everything together.
 
-I suspect a lot of people have their version of this -- the thing that nobody takes seriously but that has quietly changed the shape of their life. It doesn't make a good story. There's no crisis, no moment where things sharply get better or worse. Just a person, a bit worse off than before, learning to make do.
+I suspect a lot of people have their version of this -- the thing that nobody takes seriously but that has slowly changed the shape of their life. It doesn't make a good story. There's no crisis, no moment where things sharply get better or worse. Just a person, a bit worse off than before, learning to make do.

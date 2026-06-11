@@ -1,15 +1,15 @@
 .page-title {
   font-family: var(--font-sans);
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.03em;
   margin: 0 0 1.6rem 0;
 }
 
 @media (max-width: 560px) {
   .page-title {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
   }
 }
 
@@ -28,6 +28,7 @@ main h2 {
   font-weight: 600;
   letter-spacing: var(--letter-spacing-meta);
   text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
   color: var(--ink-soft);
 }
 

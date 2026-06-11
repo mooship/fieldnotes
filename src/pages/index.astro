@@ -13,7 +13,7 @@ const recentPosts = posts.slice(0, 5);
 
 <Layout
   title={SITE_TITLE}
-  description="Links and ways to connect with Timothy Brits - social profiles, and more."
+  description="Timothy Brits — software developer in Pretoria, South Africa. Writing on software, open source, Buddhism, and eco-socialism."
   type="website"
 >
   <main id="main-content" tabindex="-1">
@@ -68,9 +68,8 @@ const recentPosts = posts.slice(0, 5);
   }
 
   main :global(h2) {
-    font-size: 1.625rem;
-    letter-spacing: 0;
-    margin-top: 3.2rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.6rem;
   }
 
   main :global(h2) + :global(p) {
@@ -106,7 +105,6 @@ const recentPosts = posts.slice(0, 5);
     list-style: none;
     padding: 0;
     margin: 0.8rem 0 0.8rem 0;
-    border-top: 1px solid var(--rule);
   }
 
   .recent-posts li {
