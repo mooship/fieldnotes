@@ -15,11 +15,11 @@ Here's what it does:
 - `--` becomes an em dash, `---` becomes an en dash
 - `...` becomes a proper ellipsis
 
-That's the entire pitch. No configuration, no decisions. It processes your Markdown at build time and outputs the right characters.
+That's the entire pitch: no configuration, no decisions to make. It processes your Markdown at build time and outputs the right characters.
 
 ## Why bother?
 
-Typography is one of those details that separates "looks fine" from "looks good." Curly quotes and proper dashes show up in every printed book but almost never on the web. It's a small thing. But small things compound. Good defaults in your build pipeline mean better output without thinking about it.
+Typography is one of those details that separates "looks fine" from "looks good." Curly quotes and proper dashes show up in every printed book but almost never on the web. It's a small thing, but small things compound, and good defaults in your build pipeline mean better output without having to think about it.
 
 ## Using it in Astro
 

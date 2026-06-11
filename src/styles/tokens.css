@@ -5,7 +5,6 @@
   --ink-soft: #6b6b6b;
   --rule: #d8d8d8;
   --signal: #e2231a;
-  --signal-fg: #ffffff;
   --link: var(--ink);
   --link-hover: var(--signal);
   --selection-bg: var(--signal);
@@ -14,16 +13,7 @@
   --letter-spacing-meta: 0.06em;
 
   --radius: 0;
-  --radius-input: 0;
-  --shadow-elevated: none;
-  --z-toast: 100;
   --z-skip-link: 9999;
-
-  --system-background: var(--paper);
-  --label: var(--ink);
-  --secondary-label: var(--ink-soft);
-  --tint: var(--signal);
-  --separator: var(--rule);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,12 +24,10 @@
     --ink-soft: #9a9a9a;
     --rule: #2a2a2a;
     --signal: #ff453a;
-    --signal-fg: #ffffff;
     --link: var(--ink);
     --link-hover: var(--signal);
     --selection-bg: var(--signal);
     --selection-fg: #0a0a0a;
-    --shadow-elevated: none;
   }
 }
 

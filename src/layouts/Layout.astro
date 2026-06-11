@@ -124,7 +124,10 @@ const jsonLd = {
     <header>
       <div class="masthead">
         <a href="/" class="wordmark">
-          <span class="wordmark-title">{SITE_TITLE}</span>
+          <span class="wordmark-title">
+            <span class="wordmark-mark" aria-hidden="true"></span>
+            {SITE_TITLE}
+          </span>
           <span class="wordmark-byline">by {SITE_AUTHOR}</span>
         </a>
         <nav aria-label="Main">
@@ -187,7 +190,8 @@ const jsonLd = {
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0.8rem 1.6rem;
-    padding-bottom: 1.6rem;
+    padding: 1.2rem 0 1.6rem 0;
+    border-top: 4px solid var(--ink);
     border-bottom: 1px solid var(--rule);
   }
 
@@ -203,6 +207,9 @@ const jsonLd = {
   }
 
   .wordmark-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: var(--font-sans);
     font-style: normal;
     font-weight: 700;
@@ -210,6 +217,13 @@ const jsonLd = {
     color: var(--ink);
     letter-spacing: -0.01em;
     line-height: 1;
+  }
+
+  .wordmark-mark {
+    width: 0.6em;
+    height: 0.6em;
+    background: var(--signal);
+    flex-shrink: 0;
   }
 
   .wordmark-byline {
