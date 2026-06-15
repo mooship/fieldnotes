@@ -1,15 +1,9 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import { formatDate, getPostSlug } from "../lib/blog";
 
 interface Props {
-  post: {
-    id: string;
-    data: {
-      title: string;
-      description: string;
-      pubDate: Date;
-    };
-  };
+  post: CollectionEntry<"blog">;
   readingTime?: string;
 }
 

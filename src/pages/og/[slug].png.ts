@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import satori from "satori";
 import sharp from "sharp";
-import { getBlogPosts, getPostSlug } from "../../lib/blog";
+import { getBlogPosts, getPostSlug, getSiteUrl } from "../../lib/blog";
 
 const require = createRequire(import.meta.url);
 
@@ -39,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const GET: APIRoute = async ({ props, site }) => {
   const { title } = props as { title: string };
-  const hostname = site?.hostname ?? "timothybrits.co.za";
+  const hostname = new URL(getSiteUrl(site)).hostname;
   const { regular, bold } = await loadFonts();
 
   const svg = await satori(
