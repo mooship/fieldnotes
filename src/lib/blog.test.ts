@@ -193,10 +193,7 @@ describe("computeReadingTime", () => {
 
   it("ignores markdown syntax when counting words", () => {
     const plain = "word ".repeat(40).trim();
-    const decorated = Array.from(
-      { length: 40 },
-      () => "[word](https://example.com)"
-    ).join(" ");
+    const decorated = "[word](https://example.com) ".repeat(40).trim();
     expect(computeReadingTime(decorated)).toBe(computeReadingTime(plain));
   });
 });
