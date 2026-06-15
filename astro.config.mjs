@@ -3,7 +3,10 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig, fontProviders } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkSmartypants from "remark-smartypants";
-import { remarkReadingTime } from "./src/lib/remark-reading-time.ts";
+import {
+  EXTERNAL_LINKS_OPTIONS,
+  SMARTYPANTS_OPTIONS,
+} from "./src/lib/markdown-config.ts";
 
 export default defineConfig({
   site: "https://timothybrits.co.za",
@@ -37,13 +40,8 @@ export default defineConfig({
     },
   },
   markdown: {
-    remarkPlugins: [
-      [remarkSmartypants, { dashes: "inverted" }],
-      remarkReadingTime,
-    ],
-    rehypePlugins: [
-      [rehypeExternalLinks, { rel: ["noopener", "noreferrer"] }],
-    ],
+    remarkPlugins: [[remarkSmartypants, SMARTYPANTS_OPTIONS]],
+    rehypePlugins: [[rehypeExternalLinks, EXTERNAL_LINKS_OPTIONS]],
     shikiConfig: {
       themes: {
         light: "min-light",

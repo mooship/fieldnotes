@@ -3,11 +3,11 @@ import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { ArrowLeft, ArrowRight } from "@lucide/astro";
 import {
+  computeReadingTime,
   formatDate,
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
-  getReadingTime,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -25,8 +25,8 @@ export async function getStaticPaths() {
 
 const { post, adjacent } = Astro.props;
 const { slug } = Astro.params;
-const { Content, remarkPluginFrontmatter } = await render(post);
-const readingTime = getReadingTime(remarkPluginFrontmatter);
+const { Content } = await render(post);
+const readingTime = computeReadingTime(post.body);
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 ---
 
@@ -102,6 +102,24 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 </Layout>
 
 <script>
+  const RESET_DELAY_MS = 2000;
+  const resetTimers = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>>();
+
+  function flashButtonText(
+    button: HTMLElement,
+    message: string,
+    original: string
+  ) {
+    clearTimeout(resetTimers.get(button));
+    button.textContent = message;
+    resetTimers.set(
+      button,
+      setTimeout(() => {
+        button.textContent = original;
+      }, RESET_DELAY_MS)
+    );
+  }
+
   function initCopyButtons() {
     for (const pre of document.querySelectorAll("article pre")) {
       if (pre.querySelector(".copy-btn")) continue;
@@ -113,21 +131,16 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       button.setAttribute("aria-live", "polite");
       button.textContent = "Copy";
 
-      let resetTimer: ReturnType<typeof setTimeout> | undefined;
       button.addEventListener("click", async () => {
         const code = pre.querySelector("code");
         if (!code) return;
 
-        clearTimeout(resetTimer);
         try {
           await navigator.clipboard.writeText(code.textContent ?? "");
-          button.textContent = "Copied!";
+          flashButtonText(button, "Copied!", "Copy");
         } catch {
-          button.textContent = "Failed";
+          flashButtonText(button, "Failed", "Copy");
         }
-        resetTimer = setTimeout(() => {
-          button.textContent = "Copy";
-        }, 2000);
       });
 
       (pre as HTMLElement).style.position = "relative";
@@ -149,7 +162,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       url: globalThis.location.href,
     };
 
-    let resetTimer: ReturnType<typeof setTimeout> | undefined;
     btn.addEventListener("click", async () => {
       if (
         globalThis.matchMedia("(pointer: coarse)").matches &&
@@ -163,16 +175,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
             return;
         }
       }
-      clearTimeout(resetTimer);
       try {
         await navigator.clipboard.writeText(shareData.url);
-        btn.textContent = "Copied!";
+        flashButtonText(btn, "Copied!", "Share");
       } catch {
-        btn.textContent = "Failed";
+        flashButtonText(btn, "Failed", "Share");
       }
-      resetTimer = setTimeout(() => {
-        btn.textContent = "Share";
-      }, 2000);
     });
   }
 
