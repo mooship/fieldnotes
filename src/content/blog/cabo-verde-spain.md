@@ -1,15 +1,15 @@
 ---
 title: "Cabo Verde, 0-0"
-description: "A debut World Cup side held Spain, and it moved me more than I expected."
+description: "A debut World Cup side held Spain, and it stayed with me longer than the scoreline should have."
 pubDate: 2026-06-15
 ---
 
-Cabo Verde held Spain to a 0-0 draw at their first ever World Cup, and I haven't been able to stop thinking about it.
+Cabo Verde held Spain to a 0-0 draw at their first ever World Cup, and I've been thinking about it for two days now.
 
-This is a country of half a million people -- fewer than fit in some of the stadiums this tournament is being played in -- ten volcanic islands in the Atlantic, qualifying for the World Cup for the first time in their history. And in their first real test, they walked out against the reigning European champions and refused to break. Ninety minutes of bodies in the way, of a back line that wouldn't be moved, of a goalkeeper having the night of his life. Spain had the ball and the names and the history. Cabo Verde had a clean sheet.
+Half a million people live there, spread across ten volcanic islands in the Atlantic -- a smaller crowd than some of the stadiums at this tournament hold on a single night. They had never qualified before. And the reward for finally getting here was Spain, the reigning European champions, in the group stage. By every reasonable expectation it should have been a long evening. It wasn't. They defended for ninety minutes like the result was personal, the keeper had the kind of game you remember for the rest of your life, and at the end of it the scoreboard still said nothing-nothing.
 
-What gets me isn't the upset itself. It's what a result like this does to everyone watching back home. There's a whole generation of kids on those islands who just watched their country hold one of the best teams on the planet to nothing. That rearranges what they think is possible for themselves. You can't buy that, and you can't manufacture it -- it only comes from showing up and actually doing the thing.
+I don't think it's the upset that got to me, exactly. Spain will be fine; they'll probably win the group. It's more that I keep picturing the islands while it was happening -- the bars and the living rooms, kids who have only ever seen their country in the qualifiers if at all, watching the team hold one of the best sides on the planet to zero. You grow up being quietly told where your ceiling is. A night like that quietly moves it.
 
-I love that the World Cup still has room for this. For all the money and the machinery around the sport, a debutant nation can still walk onto the biggest stage and write a line into their history that nobody can ever take back. A draw isn't a trophy. But for a team playing their first tournament, against Spain, it might as well be.
+Maybe I'm reading too much into one draw. It isn't a trophy, and a group stage is a long way from anything. But there's something about a country showing up for the first time and refusing to be a formality that I find genuinely moving, and I'd rather just admit that than talk myself out of it.
 
-0-0 never felt like this much.
+0-0, and I can't stop smiling about it.
