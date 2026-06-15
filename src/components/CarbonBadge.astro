@@ -1,12 +1,8 @@
 ---
-interface Props {
-  green?: boolean;
-}
 
-const { green = true } = Astro.props;
 ---
 
-<span id="carbon-badge" data-green={green ? "1" : "0"}></span>
+<span id="carbon-badge"></span>
 
 <script>
   const KWH_PER_GB = 0.81;
@@ -31,9 +27,9 @@ const { green = true } = Astro.props;
    * Calculator uses). Computed client-side so the badge renders identically
    * in dev, preview, and production with no runtime API dependency.
    */
-  function estimateGramsCo2(bytes: number, green: boolean): number {
+  function estimateGramsCo2(bytes: number): number {
     const energyKwh = (bytes / GIGABYTE) * KWH_PER_GB * CACHE_FACTOR;
-    return energyKwh * (green ? GREEN_GRID_INTENSITY : GLOBAL_GRID_INTENSITY);
+    return energyKwh * GREEN_GRID_INTENSITY;
   }
 
   function measureBytes(): number {
@@ -57,8 +53,7 @@ const { green = true } = Astro.props;
       return;
     }
 
-    const green = el.dataset.green === "1";
-    const gco2e = estimateGramsCo2(measureBytes(), green);
+    const gco2e = estimateGramsCo2(measureBytes());
     const grams = gco2e < 0.005 ? "<0.01" : gco2e.toFixed(2);
 
     const a = document.createElement("a");

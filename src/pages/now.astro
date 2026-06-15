@@ -4,13 +4,10 @@ import {
   Content as NowContent,
   frontmatter as nowFrontmatter,
 } from "../sections/now.md";
-import { SITE_TITLE } from "../lib/blog";
+import { formatMonthYear, SITE_TITLE } from "../lib/blog";
 
 const lastUpdated = new Date(nowFrontmatter.lastUpdated as string);
-const lastUpdatedDisplay = lastUpdated.toLocaleDateString("en-ZA", {
-  year: "numeric",
-  month: "long",
-});
+const lastUpdatedDisplay = formatMonthYear(lastUpdated);
 const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
 ---
 

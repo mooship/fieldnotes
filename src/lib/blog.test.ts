@@ -5,7 +5,6 @@ import {
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
-  getReadingTime,
   getSiteUrl,
   renderMarkdownToHtml,
 } from "./blog";
@@ -120,20 +119,6 @@ function setupPosts(posts: Post[]) {
   );
 }
 
-describe("getReadingTime", () => {
-  it("returns the readingTime string when present", () => {
-    expect(getReadingTime({ readingTime: "3 min read" })).toBe("3 min read");
-  });
-
-  it("returns undefined when readingTime is missing", () => {
-    expect(getReadingTime({})).toBeUndefined();
-  });
-
-  it("returns undefined when readingTime is not a string", () => {
-    expect(getReadingTime({ readingTime: 42 })).toBeUndefined();
-  });
-});
-
 describe("getBlogPosts", () => {
   it("filters out draft posts", async () => {
     setupPosts([
@@ -204,5 +189,14 @@ describe("computeReadingTime", () => {
   it("handles undefined input without throwing", () => {
     expect(() => computeReadingTime()).not.toThrow();
     expect(computeReadingTime()).toMatch(/\d+ min read/);
+  });
+
+  it("ignores markdown syntax when counting words", () => {
+    const plain = "word ".repeat(40).trim();
+    const decorated = Array.from(
+      { length: 40 },
+      () => "[word](https://example.com)"
+    ).join(" ");
+    expect(computeReadingTime(decorated)).toBe(computeReadingTime(plain));
   });
 });

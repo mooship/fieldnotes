@@ -25,10 +25,9 @@ Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Mar
 
 Tests use Vitest with happy-dom. Test files live next to the source files they test (`*.test.ts`).
 
-- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `getReadingTime`, `computeReadingTime`, `formatDate`
+- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `computeReadingTime`, `formatDate`, `formatMonthYear`
 - `src/lib/feed.test.ts` — `getFeedItems`
 - `src/lib/xml.test.ts` — `xmlEscape`
-- `src/lib/remark-reading-time.test.ts` — `remarkReadingTime` plugin
 
 `astro:content` is a virtual Astro module that doesn't exist outside the Astro runtime. Tests that import from `src/lib/blog.ts` use `vi.hoisted` + `vi.mock` to intercept it. The alias in `vitest.config.ts` resolves it to `src/__mocks__/astro-content.ts` so Vite can find the module during test runs.
 
@@ -52,7 +51,7 @@ Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on
 
 **Fonts:** Geist (the neo-grotesque used for everything — body, headings, nav, meta) and Geist Mono (code only). Both are loaded via Astro's font API (`fontProviders.fontsource()`) and exposed as `--font-sans` and `--font-mono` respectively; `--font-sans` carries a system-sans fallback stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, …). There is no serif face. Font-face declarations are injected automatically. Typography details (sizes, weights, letter-spacing) are in `src/styles/typography.css`.
 
-**Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses), a custom `remarkReadingTime` plugin (`src/lib/remark-reading-time.ts`) that injects estimated reading time into `remarkPluginFrontmatter.readingTime` for blog posts, and `rehype-external-links` (adds `rel="noopener noreferrer"` to outbound links). Syntax highlighting uses Shiki with `min-light`/`min-dark` themes (muted, to suit the monochrome palette).
+**Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and `rehype-external-links` (adds `rel="noopener noreferrer"` to outbound links). The shared plugin options live in `src/lib/markdown-config.ts` so the Astro pipeline (`astro.config.mjs`) and the feed-rendering pipeline (`src/lib/blog.ts`) stay in sync. Reading time is computed in one place by `computeReadingTime` (`src/lib/blog.ts`), which strips markdown syntax before counting words; both the blog index and individual post pages call it so the estimate is identical everywhere. Syntax highlighting uses Shiki with `min-light`/`min-dark` themes (muted, to suit the monochrome palette).
 
 **Build pipeline:** Astro integrations run at build time — `@astrojs/sitemap` (sitemap generation) and `astro-pagefind` (full-text search index; search UI rendered in the blog index via `astro-pagefind/components/Search`). `@astrojs/rss` is used by `rss.xml.ts` for the RSS feed.
 

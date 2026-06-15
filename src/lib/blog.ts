@@ -1,17 +1,29 @@
 import { getCollection } from "astro:content";
+import { toString as mdastToString } from "mdast-util-to-string";
 import readingTime from "reading-time";
+import rehypeExternalLinks from "rehype-external-links";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkSmartypants from "remark-smartypants";
 import { unified } from "unified";
+import { EXTERNAL_LINKS_OPTIONS, SMARTYPANTS_OPTIONS } from "./markdown-config";
+
+const DATE_LOCALE = "en-ZA";
 
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-ZA", {
+  return date.toLocaleDateString(DATE_LOCALE, {
     year: "numeric",
     month: "long",
     day: "numeric",
+  });
+}
+
+export function formatMonthYear(date: Date): string {
+  return date.toLocaleDateString(DATE_LOCALE, {
+    year: "numeric",
+    month: "long",
   });
 }
 
@@ -29,12 +41,12 @@ export function getSiteUrl(site?: URL): string {
   return site.toString().replace(/\/$/, "");
 }
 
-// Must stay in sync with the remarkSmartypants config in astro.config.mjs.
 const mdProcessor = unified()
   .use(remarkParse)
   .use(remarkGfm)
-  .use(remarkSmartypants, { dashes: "inverted" })
+  .use(remarkSmartypants, SMARTYPANTS_OPTIONS)
   .use(remarkRehype)
+  .use(rehypeExternalLinks, EXTERNAL_LINKS_OPTIONS)
   .use(rehypeStringify);
 
 export async function renderMarkdownToHtml(markdown?: string): Promise<string> {
@@ -48,15 +60,9 @@ export async function getBlogPosts() {
   );
 }
 
-export function getReadingTime(
-  remarkPluginFrontmatter: Record<string, unknown>
-): string | undefined {
-  const value = remarkPluginFrontmatter.readingTime;
-  return typeof value === "string" ? value : undefined;
-}
-
 export function computeReadingTime(body?: string): string {
-  return readingTime(body ?? "").text;
+  const tree = mdProcessor.parse(body ?? "");
+  return readingTime(mdastToString(tree)).text;
 }
 
 export interface AdjacentPost {
