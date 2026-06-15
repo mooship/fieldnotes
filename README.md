@@ -67,8 +67,7 @@ src/
     blog.test.ts
     feed.ts              # Shared feed item builder (used by rss/atom/json endpoints)
     feed.test.ts
-    remark-reading-time.ts
-    remark-reading-time.test.ts
+    markdown-config.ts   # Shared remark/rehype plugin options
     xml.ts               # XML character escaping (atom feed)
     xml.test.ts
   __mocks__/
