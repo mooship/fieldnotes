@@ -14,7 +14,7 @@ export async function GET(context: APIContext) {
   const feed = {
     version: "https://jsonfeed.org/version/1.1",
     title: SITE_TITLE,
-    language: "en",
+    language: "en-ZA",
     home_page_url: site,
     feed_url: `${site}/feed.json`,
     description: BLOG_DESCRIPTION,
