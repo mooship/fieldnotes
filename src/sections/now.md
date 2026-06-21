@@ -1,5 +1,5 @@
 ---
-lastUpdated: 2026-05-21
+lastUpdated: "2026-05-21"
 ---
 
 ## What I'm doing
