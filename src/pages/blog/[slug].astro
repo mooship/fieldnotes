@@ -32,8 +32,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
 
 <Layout
   title={`${post.data.title} — ${SITE_TITLE}`}
+  ogTitle={post.data.title}
   description={post.data.description}
   image={ogImage}
+  imageAlt={`${post.data.title} — ${SITE_TITLE}`}
   type="article"
   datePublished={post.data.pubDate}
   dateModified={post.data.updatedDate ?? post.data.pubDate}
@@ -69,13 +71,19 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       <button
         class="share-btn"
         type="button"
-        aria-live="polite"
         aria-label="Share this post"
         data-title={post.data.title}
       >
         Share
       </button>
     </div>
+    <p
+      class="visually-hidden"
+      role="status"
+      aria-live="polite"
+      id="action-status"
+    >
+    </p>
     {
       (adjacent.prev || adjacent.next) && (
         <nav class="post-nav" aria-label="Post navigation">
@@ -105,6 +113,11 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   const RESET_DELAY_MS = 2000;
   const resetTimers = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>>();
 
+  function announce(message: string) {
+    const status = document.querySelector("#action-status");
+    if (status) status.textContent = message;
+  }
+
   function flashButtonText(
     button: HTMLElement,
     message: string,
@@ -112,6 +125,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   ) {
     clearTimeout(resetTimers.get(button));
     button.textContent = message;
+    announce(message);
     resetTimers.set(
       button,
       setTimeout(() => {
@@ -128,7 +142,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       button.className = "copy-btn";
       button.type = "button";
       button.setAttribute("aria-label", "Copy code");
-      button.setAttribute("aria-live", "polite");
       button.textContent = "Copy";
 
       button.addEventListener("click", async () => {

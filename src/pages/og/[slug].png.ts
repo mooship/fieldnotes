@@ -188,7 +188,7 @@ export const GET: APIRoute = async ({ props, site }) => {
   return new Response(new Uint8Array(png), {
     headers: {
       "Content-Type": "image/png",
-      "Cache-Control": "public, max-age=31536000, immutable",
+      "Cache-Control": "public, max-age=604800, stale-while-revalidate=86400",
     },
   });
 };
