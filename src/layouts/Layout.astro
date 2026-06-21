@@ -9,8 +9,10 @@ import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
 export interface Props {
   title: string;
+  ogTitle?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   canonical?: string;
   robots?: string;
   type?: "website" | "article";
@@ -20,14 +22,18 @@ export interface Props {
 
 const {
   title,
+  ogTitle: ogTitleProp,
   description,
   image,
+  imageAlt,
   canonical: canonicalProp,
   robots = "index,follow",
   type = "website",
   datePublished,
   dateModified,
 } = Astro.props as Props;
+
+const ogTitle = ogTitleProp ?? title;
 
 const url = Astro.url;
 const pathname = url.pathname;
@@ -36,13 +42,16 @@ const schemaType = type === "article" ? "Article" : "WebSite";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": schemaType,
-  name: type === "website" ? SITE_TITLE : title,
+  name: type === "website" ? SITE_TITLE : ogTitle,
   ...(canonical ? { url: canonical } : {}),
   ...(description ? { description } : {}),
   ...(image ? { image } : {}),
   ...(type === "article"
     ? {
+        headline: ogTitle,
+        ...(canonical ? { mainEntityOfPage: canonical } : {}),
         author: { "@type": "Person", name: SITE_AUTHOR },
+        publisher: { "@type": "Person", name: SITE_AUTHOR },
         ...(datePublished
           ? { datePublished: datePublished.toISOString() }
           : {}),
@@ -53,7 +62,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-ZA">
   <head>
     <Font cssVariable="--font-sans" preload />
     <Font cssVariable="--font-mono" />
@@ -97,20 +106,30 @@ const jsonLd = {
       href="/feed.json"
     />
     <meta name="generator" content={Astro.generator} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={ogTitle} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content={type} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={SITE_TITLE} />
     <meta property="og:locale" content="en_ZA" />
-    {image && <meta property="og:image" content={image} />}
+    {
+      image && (
+        <>
+          <meta property="og:image" content={image} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+        </>
+      )
+    }
     <meta
       name="twitter:card"
       content={image ? "summary_large_image" : "summary"}
     />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={ogTitle} />
     {description && <meta name="twitter:description" content={description} />}
     {image && <meta name="twitter:image" content={image} />}
+    {image && imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
     <script
       is:inline
       type="application/ld+json"

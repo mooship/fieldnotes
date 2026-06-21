@@ -34,7 +34,7 @@ export async function GET(context: APIContext) {
     .join("\n");
 
   const xml = `<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-ZA">
   <id>${xmlEscape(site)}/atom.xml</id>
   <title>${xmlEscape(SITE_TITLE)}</title>
   <subtitle>${xmlEscape(BLOG_DESCRIPTION)}</subtitle>
