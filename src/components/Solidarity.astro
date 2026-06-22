@@ -1,0 +1,126 @@
+---
+
+---
+
+<div
+  id="solidarity-banner"
+  class="solidarity-banner"
+  role="status"
+  aria-live="polite"
+  hidden
+>
+  ☭ Solidarity forever
+</div>
+
+<script>
+  const BANNER_DURATION_MS = 4000;
+
+  let timerId: ReturnType<typeof globalThis.setTimeout> | undefined;
+
+  const KONAMI = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
+  ];
+
+  function greet() {
+    const signal =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--signal")
+        .trim() || "#e2231a";
+    console.log(
+      "%c☭ From each according to their ability, to each according to their needs.",
+      `color: ${signal}; font-weight: 700; font-size: 13px;`
+    );
+  }
+
+  function reveal() {
+    const banner = document.querySelector<HTMLElement>("#solidarity-banner");
+    if (!banner) {
+      return;
+    }
+
+    banner.hidden = false;
+    requestAnimationFrame(() => banner.classList.add("is-visible"));
+
+    globalThis.clearTimeout(timerId);
+    timerId = globalThis.setTimeout(() => {
+      banner.classList.remove("is-visible");
+      const reduced = globalThis.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      if (reduced) {
+        banner.hidden = true;
+      } else {
+        banner.addEventListener(
+          "transitionend",
+          () => {
+            banner.hidden = true;
+          },
+          { once: true }
+        );
+      }
+    }, BANNER_DURATION_MS);
+  }
+
+  let index = 0;
+  function onKeydown(event: KeyboardEvent) {
+    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+    if (key === KONAMI[index]) {
+      index += 1;
+    } else {
+      index = key === KONAMI[0] ? 1 : 0;
+    }
+    if (index === KONAMI.length) {
+      index = 0;
+      reveal();
+    }
+  }
+
+  greet();
+  globalThis.addEventListener("keydown", onKeydown);
+</script>
+
+<style>
+  .solidarity-banner {
+    position: fixed;
+    bottom: 1.6rem;
+    left: 50%;
+    z-index: var(--z-skip-link);
+    padding: 0.6rem 1.2rem;
+    background: var(--paper);
+    color: var(--signal);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--signal);
+    border-radius: var(--radius);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    transform: translate(-50%, 1rem);
+    opacity: 0;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .solidarity-banner.is-visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .solidarity-banner {
+      transform: translate(-50%, 0);
+      transition: none;
+    }
+  }
+</style>
