@@ -13,8 +13,9 @@
 </div>
 
 <script>
-  const SIGNAL = "#e2231a";
   const BANNER_DURATION_MS = 4000;
+
+  let timerId: ReturnType<typeof globalThis.setTimeout> | undefined;
 
   const KONAMI = [
     "ArrowUp",
@@ -30,9 +31,13 @@
   ];
 
   function greet() {
+    const signal =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--signal")
+        .trim() || "#e2231a";
     console.log(
       "%c☭ From each according to their ability, to each according to their needs.",
-      `color: ${SIGNAL}; font-weight: 700; font-size: 13px;`
+      `color: ${signal}; font-weight: 700; font-size: 13px;`
     );
   }
 
@@ -45,8 +50,8 @@
     banner.hidden = false;
     requestAnimationFrame(() => banner.classList.add("is-visible"));
 
-    globalThis.clearTimeout(Number(banner.dataset.timer));
-    const timer = globalThis.setTimeout(() => {
+    globalThis.clearTimeout(timerId);
+    timerId = globalThis.setTimeout(() => {
       banner.classList.remove("is-visible");
       const reduced = globalThis.matchMedia(
         "(prefers-reduced-motion: reduce)"
@@ -63,13 +68,16 @@
         );
       }
     }, BANNER_DURATION_MS);
-    banner.dataset.timer = String(timer);
   }
 
   let index = 0;
   function onKeydown(event: KeyboardEvent) {
     const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
-    index = key === KONAMI[index] ? index + 1 : key === KONAMI[0] ? 1 : 0;
+    if (key === KONAMI[index]) {
+      index += 1;
+    } else {
+      index = key === KONAMI[0] ? 1 : 0;
+    }
     if (index === KONAMI.length) {
       index = 0;
       reveal();
