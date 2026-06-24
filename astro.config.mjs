@@ -1,5 +1,6 @@
-import pagefind from "astro-pagefind";
+import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
+import pagefind from "astro-pagefind";
 import { defineConfig, fontProviders } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkSmartypants from "remark-smartypants";
@@ -40,8 +41,10 @@ export default defineConfig({
     },
   },
   markdown: {
-    remarkPlugins: [[remarkSmartypants, SMARTYPANTS_OPTIONS]],
-    rehypePlugins: [[rehypeExternalLinks, EXTERNAL_LINKS_OPTIONS]],
+    processor: unified({
+      remarkPlugins: [[remarkSmartypants, SMARTYPANTS_OPTIONS]],
+      rehypePlugins: [[rehypeExternalLinks, EXTERNAL_LINKS_OPTIONS]],
+    }),
     shikiConfig: {
       themes: {
         light: "min-light",
