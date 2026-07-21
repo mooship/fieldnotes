@@ -55,18 +55,18 @@ describe("getSiteUrl", () => {
 
 describe("renderMarkdownToHtml", () => {
   it("wraps plain text in a paragraph", async () => {
-    const doc = parseHtml(await renderMarkdownToHtml("Hello."));
-    expect(doc.querySelector("p")?.textContent).toBe("Hello.");
+    const document = parseHtml(await renderMarkdownToHtml("Hello."));
+    expect(document.querySelector("p")?.textContent).toBe("Hello.");
   });
 
   it("converts bold markdown to a strong element", async () => {
-    const doc = parseHtml(await renderMarkdownToHtml("**bold**"));
-    expect(doc.querySelector("strong")?.textContent).toBe("bold");
+    const document = parseHtml(await renderMarkdownToHtml("**bold**"));
+    expect(document.querySelector("strong")?.textContent).toBe("bold");
   });
 
   it("converts straight double quotes to smart quotes", async () => {
-    const doc = parseHtml(await renderMarkdownToHtml('"hello"'));
-    expect(doc.querySelector("p")?.textContent).toBe("“hello”");
+    const document = parseHtml(await renderMarkdownToHtml('"hello"'));
+    expect(document.querySelector("p")?.textContent).toBe("“hello”");
   });
 
   it("returns empty string for empty input", async () => {
@@ -114,8 +114,8 @@ type Post = { id: string; data: { draft: boolean; pubDate: Date } };
 
 function setupPosts(posts: Post[]) {
   mockGetCollection.mockImplementation(
-    async (_col: unknown, filter?: (p: Post) => boolean) =>
-      filter ? posts.filter((p) => filter(p)) : posts
+    async (_collection: unknown, isMatching?: (post: Post) => boolean) =>
+      isMatching ? posts.filter((post) => isMatching(post)) : posts
   );
 }
 

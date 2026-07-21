@@ -27,7 +27,7 @@ const { post, adjacent } = Astro.props;
 const { slug } = Astro.params;
 const { Content } = await render(post);
 const readingTime = computeReadingTime(post.body);
-const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
+const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
 ---
 
 <Layout
@@ -162,22 +162,22 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
   }
 
   function initShareButton() {
-    const btn = document.querySelector<HTMLButtonElement>(".share-btn");
-    if (!btn) return;
+    const button = document.querySelector<HTMLButtonElement>(".share-btn");
+    if (!button) return;
 
     if (!("share" in navigator) && !("clipboard" in navigator)) {
-      btn.hidden = true;
+      button.hidden = true;
       return;
     }
 
     const shareData = {
-      title: btn.dataset.title ?? document.title,
-      url: globalThis.location.href,
+      title: button.dataset.title ?? document.title,
+      url: location.href,
     };
 
-    btn.addEventListener("click", async () => {
+    button.addEventListener("click", async () => {
       if (
-        globalThis.matchMedia("(pointer: coarse)").matches &&
+        matchMedia("(pointer: coarse)").matches &&
         navigator.canShare?.(shareData)
       ) {
         try {
@@ -190,9 +190,9 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).toString();
       }
       try {
         await navigator.clipboard.writeText(shareData.url);
-        flashButtonText(btn, "Copied!", "Share");
+        flashButtonText(button, "Copied!", "Share");
       } catch {
-        flashButtonText(btn, "Failed", "Share");
+        flashButtonText(button, "Failed", "Share");
       }
     });
   }
