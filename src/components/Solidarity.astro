@@ -15,7 +15,9 @@
 <script>
   const BANNER_DURATION_MS = 4000;
 
-  let timerId: ReturnType<typeof globalThis.setTimeout> | undefined;
+  const timerState = {
+    id: undefined as ReturnType<typeof setTimeout> | undefined,
+  };
 
   const KONAMI = [
     "ArrowUp",
@@ -50,12 +52,10 @@
     banner.hidden = false;
     requestAnimationFrame(() => banner.classList.add("is-visible"));
 
-    globalThis.clearTimeout(timerId);
-    timerId = globalThis.setTimeout(() => {
+    clearTimeout(timerState.id);
+    timerState.id = setTimeout(() => {
       banner.classList.remove("is-visible");
-      const reduced = globalThis.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduced) {
         banner.hidden = true;
       } else {
@@ -70,22 +70,25 @@
     }, BANNER_DURATION_MS);
   }
 
-  let index = 0;
+  const keyState = {
+    index: 0,
+  };
+
   function onKeydown(event: KeyboardEvent) {
     const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
-    if (key === KONAMI[index]) {
-      index += 1;
+    if (key === KONAMI[keyState.index]) {
+      keyState.index += 1;
     } else {
-      index = key === KONAMI[0] ? 1 : 0;
+      keyState.index = key === KONAMI[0] ? 1 : 0;
     }
-    if (index === KONAMI.length) {
-      index = 0;
+    if (keyState.index === KONAMI.length) {
+      keyState.index = 0;
       reveal();
     }
   }
 
   greet();
-  globalThis.addEventListener("keydown", onKeydown);
+  addEventListener("keydown", onKeydown);
 </script>
 
 <style>

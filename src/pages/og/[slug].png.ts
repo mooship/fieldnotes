@@ -13,20 +13,25 @@ const INK_SOFT = "#6b6b6b";
 const RULE = "#d8d8d8";
 const SIGNAL = "#e2231a";
 
-let fontsPromise: Promise<{ regular: Buffer; bold: Buffer }> | undefined;
+const fonts = {
+  promise: undefined as Promise<{ regular: Buffer; bold: Buffer }> | undefined,
+};
 
 async function loadFonts(): Promise<{ regular: Buffer; bold: Buffer }> {
-  if (!fontsPromise) {
+  if (!fonts.promise) {
     const regularPath =
       require.resolve("@fontsource/geist/files/geist-latin-400-normal.woff");
     const boldPath =
       require.resolve("@fontsource/geist/files/geist-latin-700-normal.woff");
-    fontsPromise = Promise.all([
-      readFile(regularPath),
-      readFile(boldPath),
-    ]).then(([regular, bold]) => ({ regular, bold }));
+    fonts.promise = (async () => {
+      const [regular, bold] = await Promise.all([
+        readFile(regularPath),
+        readFile(boldPath),
+      ]);
+      return { regular, bold };
+    })();
   }
-  return fontsPromise;
+  return fonts.promise;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

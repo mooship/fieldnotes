@@ -6,6 +6,6 @@ const XML_ENTITIES: Record<string, string> = {
   "'": "&apos;",
 };
 
-export function xmlEscape(str: string): string {
-  return str.replaceAll(/[&<>"']/g, (ch) => XML_ENTITIES[ch]);
+export function xmlEscape(string_: string): string {
+  return string_.replaceAll(/[&<>"']/g, (ch) => XML_ENTITIES[ch]);
 }

@@ -34,8 +34,7 @@
 
   function measureBytes(): number {
     const nav = performance.getEntriesByType("navigation")[0] as
-      | PerformanceNavigationTiming
-      | undefined;
+      PerformanceNavigationTiming | undefined;
     let bytes = nav
       ? nav.encodedBodySize || nav.decodedBodySize || nav.transferSize || 0
       : 0;
@@ -48,13 +47,13 @@
   }
 
   function render() {
-    const el = document.querySelector<HTMLElement>("#carbon-badge");
-    if (!el) {
+    const element = document.querySelector<HTMLElement>("#carbon-badge");
+    if (!element) {
       return;
     }
 
-    const gco2e = estimateGramsCo2(measureBytes());
-    const grams = gco2e < 0.005 ? "<0.01" : gco2e.toFixed(2);
+    const gramsCo2Error = estimateGramsCo2(measureBytes());
+    const grams = gramsCo2Error < 0.005 ? "<0.01" : gramsCo2Error.toFixed(2);
 
     const a = document.createElement("a");
     a.href = "https://sustainablewebdesign.org/estimating-digital-emissions/";
@@ -62,7 +61,7 @@
     a.title =
       "Estimated emissions per page view — Sustainable Web Design Model";
     a.textContent = `${grams} g CO₂/view`;
-    el.replaceChildren(a);
+    element.replaceChildren(a);
   }
 
   if (document.readyState === "complete") {

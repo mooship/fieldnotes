@@ -54,7 +54,4 @@ export default defineConfig({
     },
   },
   integrations: [sitemap(), pagefind()],
-  experimental: {
-    rustCompiler: true,
-  },
 });

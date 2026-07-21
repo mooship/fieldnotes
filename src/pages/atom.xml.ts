@@ -15,7 +15,7 @@ export async function GET(context: APIContext) {
   const updated =
     items.length > 0
       ? new Date(
-          Math.max(...items.map((i) => i.updatedDate.getTime()))
+          Math.max(...items.map((index) => index.updatedDate.getTime()))
         ).toISOString()
       : new Date().toISOString();
 

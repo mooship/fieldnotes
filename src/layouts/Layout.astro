@@ -8,7 +8,7 @@ import CarbonBadge from "../components/CarbonBadge.astro";
 import Solidarity from "../components/Solidarity.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
-export interface Props {
+export interface Properties {
   title: string;
   ogTitle?: string;
   description?: string;
@@ -23,42 +23,38 @@ export interface Props {
 
 const {
   title,
-  ogTitle: ogTitleProp,
+  ogTitle: ogTitleProperty,
   description,
   image,
   imageAlt,
-  canonical: canonicalProp,
+  canonical: canonicalProperty,
   robots = "index,follow",
   type = "website",
   datePublished,
   dateModified,
-} = Astro.props as Props;
+} = Astro.props as Properties;
 
-const ogTitle = ogTitleProp ?? title;
+const ogTitle = ogTitleProperty ?? title;
 
 const url = Astro.url;
 const pathname = url.pathname;
-const canonical = canonicalProp ?? url.origin + url.pathname;
+const canonical = canonicalProperty ?? url.origin + url.pathname;
 const schemaType = type === "article" ? "Article" : "WebSite";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": schemaType,
   name: type === "website" ? SITE_TITLE : ogTitle,
-  ...(canonical ? { url: canonical } : {}),
-  ...(description ? { description } : {}),
-  ...(image ? { image } : {}),
-  ...(type === "article"
-    ? {
-        headline: ogTitle,
-        ...(canonical ? { mainEntityOfPage: canonical } : {}),
-        author: { "@type": "Person", name: SITE_AUTHOR },
-        publisher: { "@type": "Person", name: SITE_AUTHOR },
-        ...(datePublished
-          ? { datePublished: datePublished.toISOString() }
-          : {}),
-        ...(dateModified ? { dateModified: dateModified.toISOString() } : {}),
-      }
-    : {}),
+  ...(canonical && { url: canonical }),
+  ...(description && { description }),
+  ...(image && { image }),
+  ...(type === "article" && {
+    headline: ogTitle,
+    ...(canonical && { mainEntityOfPage: canonical }),
+    author: { "@type": "Person", name: SITE_AUTHOR },
+    publisher: { "@type": "Person", name: SITE_AUTHOR },
+    ...(datePublished && { datePublished: datePublished.toISOString() }),
+    ...(dateModified && { dateModified: dateModified.toISOString() }),
+  }),
 };
 ---
 

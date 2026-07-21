@@ -38,7 +38,7 @@ export function getPostSlug(id: string): string {
 
 export function getSiteUrl(site?: URL): string {
   if (!site) throw new Error("site must be set in astro.config.mjs");
-  return site.toString().replace(/\/$/, "");
+  return site.href.replace(/\/$/, "");
 }
 
 const mdProcessor = unified()
