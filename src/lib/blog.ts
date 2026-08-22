@@ -36,6 +36,10 @@ export function getPostSlug(id: string): string {
   return id.replace(/\.md$/, "");
 }
 
+export function getPostUrl(siteUrl: string, id: string): string {
+  return `${siteUrl}/blog/${getPostSlug(id)}`;
+}
+
 export function getSiteUrl(site?: URL): string {
   if (!site) throw new Error("site must be set in astro.config.mjs");
   return site.href.replace(/\/$/, "");

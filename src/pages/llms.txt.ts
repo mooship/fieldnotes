@@ -1,20 +1,9 @@
 import type { APIContext } from "astro";
-import {
-  BLOG_DESCRIPTION,
-  getBlogPosts,
-  getPostSlug,
-  getSiteUrl,
-} from "../lib/blog";
+import { BLOG_DESCRIPTION, getBlogPosts, getPostUrl, getSiteUrl } from "../lib/blog";
 
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site);
   const posts = await getBlogPosts();
-
-  const postLinks = posts
-    .map(
-      (post) => `- [${post.data.title}](${site}/blog/${getPostSlug(post.id)})`
-    )
-    .join("\n");
 
   const lines = [
     "# Fieldnotes",
@@ -23,13 +12,16 @@ export async function GET(context: APIContext) {
     "",
     "## Pages",
     "",
-    `- [Blog](${site}/blog): All posts, newest first.`,
-    `- [Now](${site}/now): What I'm currently doing.`,
-    `- [Uses](${site}/uses): Hardware and software I use.`,
+    `- [Blog](${site}/blog): ${BLOG_DESCRIPTION}`,
+    `- [Now](${site}/now): What I'm currently working on, reading, and learning.`,
+    `- [Uses](${site}/uses): The tools, hardware, and software I use daily.`,
     "",
     "## Posts",
     "",
-    postLinks,
+    ...posts.map(
+      (post) =>
+        `- [${post.data.title}](${getPostUrl(site, post.id)}): ${post.data.description}`
+    ),
     "",
   ];
 
