@@ -1,12 +1,19 @@
 import type { APIContext } from "astro";
-import { BLOG_DESCRIPTION, getBlogPosts, getPostSlug, getSiteUrl } from "../lib/blog";
+import {
+  BLOG_DESCRIPTION,
+  getBlogPosts,
+  getPostSlug,
+  getSiteUrl,
+} from "../lib/blog";
 
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site);
   const posts = await getBlogPosts();
 
   const postLinks = posts
-    .map((post) => `- [${post.data.title}](${site}/blog/${getPostSlug(post.id)})`)
+    .map(
+      (post) => `- [${post.data.title}](${site}/blog/${getPostSlug(post.id)})`
+    )
     .join("\n");
 
   const lines = [
