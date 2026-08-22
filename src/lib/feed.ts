@@ -1,4 +1,4 @@
-import { getBlogPosts, getPostSlug, renderMarkdownToHtml } from "./blog";
+import { getBlogPosts, getPostUrl, renderMarkdownToHtml } from "./blog";
 
 export interface FeedItem {
   url: string;
@@ -13,7 +13,7 @@ export async function getFeedItems(siteUrl: string): Promise<FeedItem[]> {
   const posts = await getBlogPosts();
   return Promise.all(
     posts.map(async (post) => ({
-      url: `${siteUrl}/blog/${getPostSlug(post.id)}`,
+      url: getPostUrl(siteUrl, post.id),
       title: post.data.title,
       description: post.data.description,
       html: await renderMarkdownToHtml(post.body),
