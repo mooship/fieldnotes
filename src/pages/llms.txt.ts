@@ -1,5 +1,10 @@
 import type { APIContext } from "astro";
-import { BLOG_DESCRIPTION, getBlogPosts, getPostUrl, getSiteUrl } from "../lib/blog";
+import {
+  BLOG_DESCRIPTION,
+  getBlogPosts,
+  getPostUrl,
+  getSiteUrl,
+} from "../lib/blog";
 
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site);
