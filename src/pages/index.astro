@@ -5,10 +5,7 @@ import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
-import { formatDate, getBlogPosts, getPostSlug, SITE_TITLE } from "../lib/blog";
-
-const posts = await getBlogPosts();
-const recentPosts = posts.slice(0, 5);
+import { SITE_TITLE } from "../lib/blog";
 ---
 
 <Layout
@@ -21,29 +18,6 @@ const recentPosts = posts.slice(0, 5);
     <div class="lead">
       <IntroContent />
     </div>
-    {
-      recentPosts.length > 0 && (
-        <>
-          <h2>Blog</h2>
-          <ul class="recent-posts">
-            {recentPosts.map((post) => (
-              <li>
-                <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
-                <time
-                  class="meta-label post-date"
-                  datetime={post.data.pubDate.toISOString()}
-                >
-                  {formatDate(post.data.pubDate)}
-                </time>
-              </li>
-            ))}
-          </ul>
-          <a href="/blog" class="nav-link all-posts">
-            All posts <span aria-hidden="true">&rarr;</span>
-          </a>
-        </>
-      )
-    }
     <OpenSourceContent />
     <WritingContent />
     <SupportContent />
@@ -93,30 +67,11 @@ const recentPosts = posts.slice(0, 5);
     font-size: 1.0625rem;
   }
 
-  main :global(.all-posts) {
-    font-size: 0.75rem;
-  }
-
   main :global(.project-desc) {
     margin: 0.1rem 0 0 0;
     font-size: 0.9rem;
     font-style: normal;
     color: var(--ink-soft);
     line-height: 1.5;
-  }
-
-  .recent-posts {
-    list-style: none;
-    padding: 0;
-    margin: 0.8rem 0 0.8rem 0;
-  }
-
-  .recent-posts li {
-    margin-bottom: 0;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--rule);
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
   }
 </style>
