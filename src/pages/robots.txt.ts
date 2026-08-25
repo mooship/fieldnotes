@@ -1,41 +1,16 @@
 import type { APIContext } from "astro";
 import { getSiteUrl } from "../lib/blog";
+import { AI_TRAINING_BOTS } from "../lib/robots";
 
 export function GET(context: APIContext) {
   const siteUrl = getSiteUrl(context.site);
-
-  const aiTrainingBots = [
-    "GPTBot",
-    "ChatGPT-User",
-    "CCBot",
-    "Google-Extended",
-    "anthropic-ai",
-    "ClaudeBot",
-    "Claude-Web",
-    "Bytespider",
-    "Diffbot",
-    "FacebookBot",
-    "Applebot-Extended",
-    "PerplexityBot",
-    "cohere-ai",
-    "Omgilibot",
-    "Timpibot",
-    "ImagesiftBot",
-    "Amazonbot",
-    "YouBot",
-    "Meta-ExternalAgent",
-  ];
 
   return new Response(
     [
       "User-agent: *",
       "Allow: /",
       "",
-      ...aiTrainingBots.flatMap((bot) => [
-        `User-agent: ${bot}`,
-        "Disallow: /",
-        "",
-      ]),
+      ...AI_TRAINING_BOTS.map((bot) => `User-agent: ${bot}\nDisallow: /\n`),
       `Sitemap: ${siteUrl}/sitemap-index.xml`,
     ].join("\n"),
     {
