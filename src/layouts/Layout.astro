@@ -84,24 +84,6 @@ const jsonLd = {
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={`${SITE_TITLE} — RSS`}
-      href="/rss.xml"
-    />
-    <link
-      rel="alternate"
-      type="application/atom+xml"
-      title={`${SITE_TITLE} — Atom`}
-      href="/atom.xml"
-    />
-    <link
-      rel="alternate"
-      type="application/feed+json"
-      title={`${SITE_TITLE} — JSON Feed`}
-      href="/feed.json"
-    />
     <meta name="generator" content={Astro.generator} />
     <meta property="og:title" content={ogTitle} />
     {description && <meta property="og:description" content={description} />}
@@ -285,23 +267,6 @@ const jsonLd = {
     font-size: 0.75rem;
     letter-spacing: 0;
     color: var(--ink-soft);
-  }
-
-  .feed-links {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-  }
-
-  .feed-links > span {
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-meta);
-  }
-
-  .feed-links a {
-    padding: 0.4rem 0;
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-meta);
   }
 
   footer a {
