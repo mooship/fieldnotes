@@ -39,6 +39,10 @@ Lefthook runs a pre-commit hook that executes `lint` and `format` in parallel on
 
 - **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation.
 
+## Git commit conventions
+
+- **Never include a `Claude-Session:` link (or any claude.ai/code session URL) in a commit message on this repo.** A trailing `Co-Authored-By: Claude ...` line is fine if included, but omit the session-link trailer entirely — this repo is public and the owner doesn't want session links surfacing in commit history.
+
 ## Architecture
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
