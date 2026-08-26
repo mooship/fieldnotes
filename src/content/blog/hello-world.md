@@ -12,8 +12,6 @@ I live in the terminal: [Ghostty](https://ghostty.org), zsh, and [Starship](http
 
 Outside work I tinker. I'm the author of [scriv](https://crates.io/crates/scriv), a terminal notes app. I play video games, mostly RTS and grand strategy, the kind where you lose four hours before you notice. I listen to audiobooks, mostly sci-fi and historical fiction; they make long walks feel short. I have a dog. He has no interest in any of this.
 
-I'm an eco-socialist and a Buddhist. Those two things shape how I think about technology: who it serves, what it costs, and whether it's worth building at all.
-
 This blog is a place for me to write. About software, about tools I'm working on, about ideas I'm turning over. Nothing formal, just thinking out loud.
 
 Glad you're here.
