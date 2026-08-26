@@ -1,0 +1,422 @@
+---
+import { render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { ArrowLeft, ArrowRight } from "@lucide/astro";
+import {
+  computeReadingTime,
+  formatDate,
+  getAdjacentPosts,
+  getBlogPosts,
+  getPostSlug,
+  SITE_TITLE,
+} from "../../lib/blog";
+
+export async function getStaticPaths() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => {
+    const slug = getPostSlug(post.id);
+    const adjacent = getAdjacentPosts(posts, slug);
+    return {
+      params: { slug },
+      props: { post, adjacent },
+    };
+  });
+}
+
+const { post, adjacent } = Astro.props;
+const { slug } = Astro.params;
+const { Content } = await render(post);
+const readingTime = computeReadingTime(post.body);
+const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
+---
+
+<Layout
+  title={`${post.data.title} — ${SITE_TITLE}`}
+  ogTitle={post.data.title}
+  description={post.data.description}
+  image={ogImage}
+  imageAlt={`${post.data.title} — ${SITE_TITLE}`}
+  type="article"
+  datePublished={post.data.pubDate}
+  dateModified={post.data.updatedDate ?? post.data.pubDate}
+>
+  <main id="main-content" tabindex="-1">
+    <a href="/blog" class="nav-link back-link">
+      <span aria-hidden="true">&larr;</span> All posts
+    </a>
+    <article>
+      <header>
+        <h1>{post.data.title}</h1>
+        <p class="meta-label">
+          <time datetime={post.data.pubDate.toISOString()}>
+            <span class="visually-hidden">Published: </span>
+            {formatDate(post.data.pubDate)}
+          </time>
+          {readingTime && <span> · {readingTime}</span>}
+        </p>
+        {
+          post.data.updatedDate && (
+            <time
+              class="meta-label updated"
+              datetime={post.data.updatedDate.toISOString()}
+            >
+              Updated: {formatDate(post.data.updatedDate)}
+            </time>
+          )
+        }
+      </header>
+      <Content />
+    </article>
+    <div class="post-footer">
+      <button
+        class="share-btn"
+        type="button"
+        aria-label="Share this post"
+        data-title={post.data.title}
+      >
+        Share
+      </button>
+    </div>
+    <p
+      class="visually-hidden"
+      role="status"
+      aria-live="polite"
+      id="action-status"
+    >
+    </p>
+    {
+      (adjacent.prev || adjacent.next) && (
+        <nav class="post-nav" aria-label="Post navigation">
+          {adjacent.prev ? (
+            <a href={`/blog/${adjacent.prev.slug}`} class="post-nav-link prev">
+              <ArrowLeft size={16} aria-hidden="true" />
+              <span>{adjacent.prev.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {adjacent.next ? (
+            <a href={`/blog/${adjacent.next.slug}`} class="post-nav-link next">
+              <span>{adjacent.next.title}</span>
+              <ArrowRight size={16} aria-hidden="true" />
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )
+    }
+  </main>
+</Layout>
+
+<script>
+  const RESET_DELAY_MS = 2000;
+  const resetTimers = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>>();
+
+  function announce(message: string) {
+    const status = document.querySelector("#action-status");
+    if (status) status.textContent = message;
+  }
+
+  function flashButtonText(
+    button: HTMLElement,
+    message: string,
+    original: string
+  ) {
+    clearTimeout(resetTimers.get(button));
+    button.textContent = message;
+    announce(message);
+    resetTimers.set(
+      button,
+      setTimeout(() => {
+        button.textContent = original;
+      }, RESET_DELAY_MS)
+    );
+  }
+
+  function initCopyButtons() {
+    for (const pre of document.querySelectorAll("article pre")) {
+      if (pre.querySelector(".copy-btn")) continue;
+
+      const button = document.createElement("button");
+      button.className = "copy-btn";
+      button.type = "button";
+      button.setAttribute("aria-label", "Copy code");
+      button.textContent = "Copy";
+
+      button.addEventListener("click", async () => {
+        const code = pre.querySelector("code");
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code.textContent ?? "");
+          flashButtonText(button, "Copied!", "Copy");
+        } catch {
+          flashButtonText(button, "Failed", "Copy");
+        }
+      });
+
+      (pre as HTMLElement).style.position = "relative";
+      pre.append(button);
+    }
+  }
+
+  function initShareButton() {
+    const button = document.querySelector<HTMLButtonElement>(".share-btn");
+    if (!button) return;
+
+    if (!("share" in navigator) && !("clipboard" in navigator)) {
+      button.hidden = true;
+      return;
+    }
+
+    const shareData = {
+      title: button.dataset.title ?? document.title,
+      url: location.href,
+    };
+
+    button.addEventListener("click", async () => {
+      if (
+        matchMedia("(pointer: coarse)").matches &&
+        navigator.canShare?.(shareData)
+      ) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (error) {
+          if (error instanceof DOMException && error.name === "AbortError")
+            return;
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        flashButtonText(button, "Copied!", "Share");
+      } catch {
+        flashButtonText(button, "Failed", "Share");
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initCopyButtons();
+    initShareButton();
+  });
+</script>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  .back-link {
+    margin-bottom: 1.6rem;
+  }
+
+  header {
+    margin-bottom: 3.2rem;
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  header .meta-label {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 2.75rem;
+    margin: 0 0 0.8rem 0;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  header .updated {
+    margin-top: 0.25rem;
+  }
+
+  .post-footer {
+    margin-top: 3.2rem;
+  }
+
+  .share-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.45rem 1rem;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .share-btn:hover {
+    color: var(--signal);
+    border-color: var(--signal);
+  }
+
+  .share-btn:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  article :global(p) {
+    margin: 0 0 1.25rem 0;
+    line-height: 1.65;
+  }
+
+  article :global(h2),
+  article :global(h3),
+  article :global(h4) {
+    color: var(--ink);
+    margin: 3.2rem 0 0.8rem 0;
+    text-wrap: pretty;
+    line-height: 1.15;
+  }
+
+  article :global(h2) {
+    font-size: 1.625rem;
+  }
+
+  article :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  article :global(h4) {
+    font-size: 1.125rem;
+  }
+
+  article :global(blockquote) {
+    margin: 1.75rem 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    border-left: 3px solid var(--signal);
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+
+  article :global(blockquote) :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  article :global(code) {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.85em;
+    background: var(--paper-deep);
+    padding: 0.15em 0.4em;
+    border-radius: var(--radius);
+  }
+
+  article :global(pre) {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    background: var(--paper);
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--rule);
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  article :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  article :global(.copy-btn) {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.4rem 0.6rem;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    opacity: 0.6;
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease;
+  }
+
+  article :global(pre:hover .copy-btn),
+  article :global(.copy-btn:focus-visible) {
+    opacity: 1;
+  }
+
+  article :global(.copy-btn:focus-visible) {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  article :global(.copy-btn:hover) {
+    color: var(--ink);
+  }
+
+  @media (pointer: coarse) {
+    article :global(.copy-btn) {
+      opacity: 1;
+    }
+  }
+
+  article :global(ul),
+  article :global(ol) {
+    padding-left: 1.5rem;
+    margin: 0 0 1rem 0;
+  }
+
+  article :global(ul) {
+    list-style: square;
+  }
+
+  article :global(li) {
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  article :global(hr) {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 2.5rem 0;
+  }
+
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6rem;
+    margin-top: 3.2rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .post-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    max-width: 48%;
+  }
+
+  .post-nav-link.next {
+    margin-left: auto;
+    text-align: right;
+  }
+</style>
