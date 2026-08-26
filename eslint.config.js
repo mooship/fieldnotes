@@ -19,6 +19,7 @@ export default [
   },
   ...tseslint.configs.recommended,
   ...astroPlugin.configs.recommended,
+  ...astroPlugin.configs["jsx-a11y-recommended"],
   {
     ...unicorn.configs.recommended,
     files: ["**/*.{js,mjs,ts,astro}"],
