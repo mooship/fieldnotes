@@ -1,6 +1,5 @@
 import type { APIContext } from "astro";
 import { getSiteUrl } from "../lib/blog";
-import { AI_TRAINING_BOTS } from "../lib/robots";
 
 export function GET(context: APIContext) {
   const siteUrl = getSiteUrl(context.site);
@@ -10,7 +9,6 @@ export function GET(context: APIContext) {
       "User-agent: *",
       "Allow: /",
       "",
-      ...AI_TRAINING_BOTS.map((bot) => `User-agent: ${bot}\nDisallow: /\n`),
       `Sitemap: ${siteUrl}/sitemap-index.xml`,
     ].join("\n"),
     {
