@@ -35,10 +35,12 @@ export default defineConfig({
     },
   ],
   cacheDir: "./.astro-cache",
-  vite: {
-    build: {
-      assetsInlineLimit: 4096,
-    },
+  build: {
+    inlineStylesheets: "never",
+  },
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "viewport",
   },
   markdown: {
     processor: unified({
