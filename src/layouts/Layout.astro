@@ -5,7 +5,6 @@ import "../styles/typography.css";
 import "../styles/code.css";
 import { Font } from "astro:assets";
 import CarbonBadge from "../components/CarbonBadge.astro";
-import Solidarity from "../components/Solidarity.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
 export interface Properties {
@@ -127,6 +126,11 @@ const jsonLd = {
           <span class="wordmark-byline">by {SITE_AUTHOR}</span>
         </a>
         <nav aria-label="Main">
+          <a
+            href="/blog"
+            aria-current={pathname.startsWith("/blog") ? "page" : undefined}
+            >Blog</a
+          >
           <a href="/now" aria-current={pathname === "/now" ? "page" : undefined}
             >Now</a
           >
@@ -139,9 +143,14 @@ const jsonLd = {
     </header>
     <slot />
     <footer>
+      <nav class="feed-links" aria-label="Feed subscriptions">
+        <span>Subscribe:</span>
+        <a href="/atom.xml">Atom</a>
+        <a href="/rss.xml">RSS</a>
+        <a href="/feed.json">JSON Feed</a>
+      </nav>
       <CarbonBadge />
     </footer>
-    <Solidarity />
   </body>
 </html>
 
