@@ -30,3 +30,6 @@ yarn-error.log*
 # eslint
 .eslintcache
 .worktrees/
+
+# lighthouse ci
+.lighthouseci/
