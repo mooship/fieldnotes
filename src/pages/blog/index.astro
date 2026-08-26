@@ -1,0 +1,83 @@
+---
+import Search from "astro-pagefind/components/Search.astro";
+import PostListItem from "../../components/PostListItem.astro";
+import Layout from "../../layouts/Layout.astro";
+import {
+  BLOG_DESCRIPTION,
+  computeReadingTime,
+  getBlogPosts,
+  SITE_TITLE,
+} from "../../lib/blog";
+
+const posts = await getBlogPosts();
+const postsWithMeta = posts.map((post) => ({
+  post,
+  readingTime: computeReadingTime(post.body),
+}));
+---
+
+<Layout
+  title={`Blog — ${SITE_TITLE}`}
+  description={BLOG_DESCRIPTION}
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1 class="page-title">Blog</h1>
+    <div class="search-wrapper">
+      <Search className="pagefind-ui" />
+    </div>
+    {
+      postsWithMeta.length === 0 ? (
+        <p class="empty">No posts yet.</p>
+      ) : (
+        <ul>
+          {postsWithMeta.map(({ post, readingTime }) => (
+            <PostListItem post={post} readingTime={readingTime} />
+          ))}
+        </ul>
+      )
+    }
+    <a href="/" class="nav-link back-link">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3.2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .empty {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .back-link {
+    margin-top: 1.6rem;
+  }
+
+  .search-wrapper {
+    min-height: 36px;
+    margin-bottom: 1.6rem;
+  }
+
+  .search-wrapper :global(.pagefind-ui) {
+    --pagefind-ui-scale: 0.85;
+    --pagefind-ui-primary: var(--link);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--paper);
+    --pagefind-ui-border: var(--rule);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: var(--radius);
+    --pagefind-ui-font: var(--font-sans), system-ui, sans-serif;
+  }
+</style>
