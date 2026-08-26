@@ -30,7 +30,7 @@ export function formatMonthYear(date: Date): string {
 export const SITE_TITLE = "Fieldnotes";
 export const SITE_AUTHOR = "Timothy Brits";
 export const BLOG_DESCRIPTION =
-  "Writing by Timothy Brits on software, open source, Buddhism, and eco-socialism.";
+  "Writing by Timothy Brits on software and open source.";
 
 export function getPostSlug(id: string): string {
   return id.replace(/\.md$/, "");
