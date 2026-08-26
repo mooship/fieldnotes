@@ -15,6 +15,7 @@ npm run lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fi
 npm run preview    # preview production build
 npm run format     # prettier with auto-fix
 npm run test       # run Vitest unit tests
+npm run lighthouse # run Lighthouse CI against the built site (informational, no score gate)
 ```
 
 `npm run build` is the primary verification step — it runs `astro check` (TypeScript + Astro type checking) before building. Run `npm run test` to verify utility logic. Both must pass before committing.
