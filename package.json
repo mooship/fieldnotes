@@ -15,6 +15,11 @@
     "start": "astro dev",
     "test": "vitest run"
   },
+  "overrides": {
+    "eslint-plugin-jsx-a11y": {
+      "eslint": "$eslint"
+    }
+  },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/compiler-rs": "^0.3.1",
@@ -56,11 +61,6 @@
     "vfile": "^6.0.3",
     "vitest": "^4.1.10",
     "zod": "^4.4.3"
-  },
-  "overrides": {
-    "eslint-plugin-jsx-a11y": {
-      "eslint": "$eslint"
-    }
   },
   "packageManager": "npm@11.12.1",
   "engines": {
