@@ -6,7 +6,9 @@ import { SITE_TITLE } from "../lib/blog";
 <Layout title={`Page not found — ${SITE_TITLE}`} robots="noindex">
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">404</h1>
-    <p>This page doesn't exist — it must have been collectivised.</p>
+    <p data-role="404-message">
+      This page doesn't exist — it must have been collectivised.
+    </p>
     <nav class="links" aria-label="Suggested pages">
       <ul>
         <li><a href="/">Home</a></li>
@@ -50,3 +52,19 @@ import { SITE_TITLE } from "../lib/blog";
     font-size: 0.95rem;
   }
 </style>
+
+<script>
+  import { incrementSessionCount } from "../lib/easter-eggs";
+
+  const messages = [
+    "This page doesn't exist — it must have been collectivised.",
+    "Gone again? At this point it's a pattern, not an accident.",
+    "Still not here. Maybe try the sitemap, or acceptance.",
+  ];
+  const visits = incrementSessionCount("fieldnotes:404-visits");
+
+  const message = document.querySelector('[data-role="404-message"]');
+  if (message) {
+    message.textContent = messages[Math.min(visits, messages.length) - 1];
+  }
+</script>
