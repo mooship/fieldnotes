@@ -19,7 +19,9 @@ const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">Now</h1>
     <p class="meta-label updated">
-      Last updated: <time datetime={lastUpdatedDatetime}
+      Last updated: <time
+        datetime={lastUpdatedDatetime}
+        title="also known as: whenever I last remembered this file exists"
         >{lastUpdatedDisplay}</time
       >
     </p>

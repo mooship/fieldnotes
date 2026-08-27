@@ -1,6 +1,7 @@
 html {
   background: var(--paper);
   overflow-x: clip;
+  transition: background-color 0.25s ease;
 }
 
 body {
@@ -15,6 +16,7 @@ body {
     "calt" 1;
   font-optical-sizing: auto;
   color: var(--ink);
+  transition: color 0.25s ease;
   max-width: 660px;
   margin: 0 auto;
   padding: calc(40px + env(safe-area-inset-top))
