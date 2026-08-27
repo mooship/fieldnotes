@@ -54,14 +54,14 @@ import { SITE_TITLE } from "../lib/blog";
 </style>
 
 <script>
+  import { incrementSessionCount } from "../lib/easter-eggs";
+
   const messages = [
     "This page doesn't exist — it must have been collectivised.",
     "Gone again? At this point it's a pattern, not an accident.",
     "Still not here. Maybe try the sitemap, or acceptance.",
   ];
-  const key = "fieldnotes:404-visits";
-  const visits = Number(sessionStorage.getItem(key) ?? "0") + 1;
-  sessionStorage.setItem(key, String(visits));
+  const visits = incrementSessionCount("fieldnotes:404-visits");
 
   const message = document.querySelector('[data-role="404-message"]');
   if (message) {

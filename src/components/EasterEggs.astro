@@ -3,45 +3,53 @@
 ---
 
 <script>
+  import { incrementSessionCount } from "../lib/easter-eggs";
+
   console.log(
     "%cfieldnotes%c — statically generated, mildly self-aware.",
     "font-weight:700;color:#e2231a;",
     "font-weight:400;"
   );
 
-  (function watchForKonamiCode() {
-    const konamiSequence = [
-      "ArrowUp",
-      "ArrowUp",
-      "ArrowDown",
-      "ArrowDown",
-      "ArrowLeft",
-      "ArrowRight",
-      "ArrowLeft",
-      "ArrowRight",
-      "b",
-      "a",
-    ];
-    let progress = 0;
+  const konamiSequence = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a",
+  ];
+  const konami = { progress: 0 };
 
-    addEventListener("keydown", (event) => {
-      const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
-      const expected = konamiSequence[progress];
+  addEventListener("keydown", (event) => {
+    const target = event.target;
+    if (
+      target instanceof HTMLElement &&
+      (target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable)
+    ) {
+      return;
+    }
 
-      if (key === expected) {
-        progress += 1;
-        if (progress === konamiSequence.length) {
-          progress = 0;
-          document.documentElement.classList.add("konami-active");
-          setTimeout(() => {
-            document.documentElement.classList.remove("konami-active");
-          }, 4000);
-        }
-      } else {
-        progress = key === konamiSequence[0] ? 1 : 0;
+    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+    if (key === konamiSequence[konami.progress]) {
+      konami.progress += 1;
+      if (konami.progress === konamiSequence.length) {
+        konami.progress = 0;
+        document.documentElement.classList.add("konami-active");
+        setTimeout(() => {
+          document.documentElement.classList.remove("konami-active");
+        }, 4000);
       }
-    });
-  })();
+    } else {
+      konami.progress = 0;
+    }
+  });
 
   const mark = document.querySelector<HTMLElement>(".wordmark-mark");
   if (mark) {
@@ -51,19 +59,16 @@
       "the square remains unmoved.",
       "okay, that's enough.",
     ];
-    let clickCount = Number(
-      sessionStorage.getItem("fieldnotes:mark-clicks") ?? "0"
-    );
 
     mark.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
-      clickCount += 1;
-      sessionStorage.setItem("fieldnotes:mark-clicks", String(clickCount));
-      mark.title = markMessages[(clickCount - 1) % markMessages.length];
+      const count = incrementSessionCount("fieldnotes:mark-clicks");
+      mark.title = markMessages[(count - 1) % markMessages.length];
       mark.classList.remove("mark-pulse");
-      void mark.offsetWidth;
-      mark.classList.add("mark-pulse");
+      requestAnimationFrame(() => {
+        mark.classList.add("mark-pulse");
+      });
     });
   }
 </script>
