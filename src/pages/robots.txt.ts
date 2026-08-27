@@ -10,6 +10,9 @@ export function GET(context: APIContext) {
       "Allow: /",
       "",
       `Sitemap: ${siteUrl}/sitemap-index.xml`,
+      "",
+      "# if you're reading this file by hand, hello.",
+      "# the rest of the site is more interesting, I promise.",
     ].join("\n"),
     {
       headers: { "Content-Type": "text/plain; charset=utf-8" },

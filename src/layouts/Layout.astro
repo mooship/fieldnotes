@@ -5,6 +5,7 @@ import "../styles/typography.css";
 import "../styles/code.css";
 import { Font } from "astro:assets";
 import CarbonBadge from "../components/CarbonBadge.astro";
+import EasterEggs from "../components/EasterEggs.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
 export interface Properties {
@@ -60,6 +61,11 @@ const jsonLd = {
 <!doctype html>
 <html lang="en-ZA">
   <head>
+    <!--
+      you're reading the source of a statically generated site.
+      it's all just markdown and Astro components — nothing hidden
+      but a couple of easter eggs. https://github.com/mooship/fieldnotes
+    -->
     <Font cssVariable="--font-sans" preload />
     <Font cssVariable="--font-mono" />
     <meta charset="UTF-8" />
@@ -151,6 +157,7 @@ const jsonLd = {
       </nav>
       <CarbonBadge />
     </footer>
+    <EasterEggs />
   </body>
 </html>
 
@@ -207,6 +214,22 @@ const jsonLd = {
     width: 0.9rem;
     height: 0.9rem;
     background: var(--signal);
+  }
+
+  .wordmark-mark.mark-pulse {
+    animation: mark-pulse 0.4s ease;
+  }
+
+  @keyframes mark-pulse {
+    0% {
+      transform: scale(1) rotate(0deg);
+    }
+    50% {
+      transform: scale(1.6) rotate(15deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
   }
 
   .wordmark-title {
@@ -288,5 +311,14 @@ const jsonLd = {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+  }
+
+  :global(html.konami-active) {
+    --paper: #e2231a;
+    --paper-deep: #c81f17;
+    --ink: #ffffff;
+    --ink-soft: #ffd9d6;
+    --rule: #ffffff;
+    --signal: #0a0a0a;
   }
 </style>
