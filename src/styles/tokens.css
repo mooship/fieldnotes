@@ -31,6 +31,15 @@
   }
 }
 
+:root.konami-active {
+  --paper: #e2231a;
+  --paper-deep: #c81f17;
+  --ink: #ffffff;
+  --ink-soft: #ffd9d6;
+  --rule: #ffffff;
+  --signal: #0a0a0a;
+}
+
 @media (prefers-contrast: more) {
   :root {
     --ink-soft: #3a3a3a;
