@@ -36,6 +36,10 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 
 Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. Run `npx lefthook install` after cloning to activate hooks.
 
+## CI
+
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking — that only runs as part of `npm run build`, which isn't in `lefthook.yml`. Run `npm run build` locally before pushing if you've touched types, or a type error will only surface in CI.
+
 ## Safety
 
 - **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation.
@@ -48,7 +52,7 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
 
-**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`.
+**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar and copy/share buttons, both reinitialized per navigation via `astro:page-load` — see Known Astro quirks.
 
 **Design system:** Swiss / International Typographic style. Pure black-on-white palette (`--paper` #ffffff light / #0a0a0a dark, `--ink` #0a0a0a / #f2f2f2) with a single hot signal-red accent (`--signal` #e2231a light / #ff453a dark) used for the masthead square mark, the active nav state, blockquote bars, selection fills, and link hover. Links themselves are ink (black), turning signal-red on hover. Sharp corners everywhere (`--radius: 0`), no shadows, hairline rules — plus one heavy 4px ink rule across the top of the masthead. The design relies on a neo-grotesque type system, a strict flush-left ragged-right grid, dramatic size jumps, and one restrained accent — no ornaments, no italics, no section-specific colors.
 
@@ -64,7 +68,7 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 **Standalone pages:** `/now` and `/uses` are static pages (`src/pages/now.astro`, `src/pages/uses.astro`) that import their content from `src/sections/now.md` and `src/sections/uses.md` respectively.
 
-**Components:** `src/components/PostListItem.astro` renders a single post row in blog listings. `src/components/CarbonBadge.astro` renders the page carbon footprint badge.
+**Components:** `src/components/PostListItem.astro` renders a single post row in blog listings. `src/components/CarbonBadge.astro` renders the page carbon footprint badge. `src/components/EasterEggs.astro` holds the Konami-code palette swap and the wordmark click easter egg.
 
 **SEO:** `Layout.astro` accepts `title`, `description`, `image`, `canonical`, `robots`, and `type` props. It generates Open Graph tags, Twitter card tags, and JSON-LD schema (hand-built, no external package).
 
@@ -87,6 +91,18 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 ```
 
 Always use one `:global()` per selector when applying shared styles to multiple global classes.
+
+**View transitions swap `<body>` without a page reload.** `Layout.astro` renders Astro's `ClientRouter`, so navigating between pages does client-side navigation instead of a full reload. This breaks two common assumptions in inline `<script>` tags:
+
+- `load` and `DOMContentLoaded` only fire once, on the very first hard load — they won't fire again after a client-side navigation. Use the `astro:page-load` event instead; it fires on the initial load *and* after every subsequent navigation. Every inline script in this repo (`EasterEggs.astro`, `CarbonBadge.astro`, `blog/[slug].astro`) follows this pattern.
+- Elements not marked `transition:persist` are destroyed and recreated fresh on every navigation, so a listener attached directly to one of them (e.g. the wordmark click handler in `EasterEggs.astro`) is safe to reattach unconditionally on each `astro:page-load` — the old node and its listener are simply gone. But anything bound to `window` or `document` itself *survives* navigation, so re-running that registration on every `astro:page-load` without cleanup stacks a new listener/observer on top of the old one every time. `blog/[slug].astro`'s reading-progress bar (bound to `window`'s `scroll` event and a `ResizeObserver`) guards against this with an `AbortController` aborted at the top of its init function before re-registering.
+
+## Engineering principles
+
+- **Keep it boring and flat.** This is a personal static site with no class hierarchies, no dependency injection, and no plugin system — SOLID/OCP-style abstractions don't have anywhere to attach. Prefer a plain function in `src/lib/` over an interface or a class.
+- **Don't duplicate logic across the Astro and feed pipelines.** `src/lib/markdown-config.ts`, `src/lib/blog.ts`, and `src/lib/feed.ts` exist specifically so `astro.config.mjs`, the blog pages, and the three feed endpoints stay in sync — add new shared logic there, not copied inline at each call site.
+- **YAGNI over speculative flexibility.** Don't add config options, props, or abstraction layers for a second use case that doesn't exist yet — this site has one author, one design, and one deployment target.
+- **New logic in `src/lib/` ships with a test in the same commit.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`) has a matching `*.test.ts` — keep that 1:1, and lean on the existing `astro:content` mock rather than inventing a new one.
 
 ## Code style
 
