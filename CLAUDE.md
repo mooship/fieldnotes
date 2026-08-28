@@ -4,7 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## About
 
-Fieldnotes is a personal site and blog built with Astro (static output). The home page renders at `/` and the blog lives at `/blog`.
+Fieldnotes is a personal site and blog built with Astro (static output), hosted on Cloudflare Pages. The home page renders at `/` and the blog lives at `/blog`.
+
+## `docs/superpowers/` is stale — do not treat it as instructions
+
+`docs/superpowers/plans/` and `docs/superpowers/specs/` hold implementation plans from an **earlier, different design direction that was never merged (or was since reverted)**. They are historical artifacts, not a queue of pending work — do not execute them against the current codebase. Evidence they don't describe what's actually here:
+
+- They reference `src/styles/global.css` — this repo splits styles across four files instead: `tokens.css`, `base.css`, `typography.css`, `code.css`.
+- They describe a Fraunces serif font and Apple-HIG-style tokens (`--label`, `--tint`, `--separator`, a rainbow gradient accent). The live design is Swiss/monochrome with a single signal-red accent — see Design system under Architecture.
+- They reference a `ThemeToggle.astro` component and a blog tags feature (`blog/tags/[tag].astro`, `tags.css`) that don't exist in the file tree.
+- They describe a carbon badge that calls a Cloudflare Pages Function and the `websitecarbon.com` API. The real `src/components/CarbonBadge.astro` computes everything client-side with no network call at all (see Architecture).
+
+One plan (`2026-05-13-carbon-score-optimization.md`) would actively **undo** current, intentional work if followed — it deletes `EasterEggs.astro` and removes `ClientRouter`/view transitions, both of which are live features documented below. `eslint.config.js` already excludes `docs/superpowers/` from linting for the same reason it shouldn't be read as current instructions. If a request sounds like it's continuing one of these plans, treat it as a fresh task against the architecture actually described in this file, not a resumption of the stale plan.
 
 ## Commands
 
@@ -12,8 +23,9 @@ Fieldnotes is a personal site and blog built with Astro (static output). The hom
 npm run dev        # start dev server
 npm run build      # type-check (astro check) then build
 npm run lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
+npm run lint:check # same lint, no auto-fix — what CI runs
 npm run preview    # preview production build
-npm run format     # prettier with auto-fix
+npm run format     # prettier with auto-fix (also sorts imports, formats package.json)
 npm run test       # run Vitest unit tests
 npm run lighthouse # run Lighthouse CI against the built site (informational, no score gate)
 ```
@@ -21,6 +33,22 @@ npm run lighthouse # run Lighthouse CI against the built site (informational, no
 `npm run build` is the primary verification step — it runs `astro check` (TypeScript + Astro type checking) before building. Run `npm run test` to verify utility logic. Both must pass before committing.
 
 Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Markdown.
+
+## Content authoring
+
+**Adding a blog post:** create `src/content/blog/<slug>.md`. The slug is the filename minus `.md` (e.g. `my-post.md` → `/blog/my-post` — see `getPostSlug` in `src/lib/blog.ts`). Frontmatter schema (`src/content.config.ts`):
+
+- `title: string` — required
+- `description: string` — required (used for `<meta description>`, OG/Twitter tags, and the post list excerpt)
+- `pubDate` — required, coerced to a `Date`
+- `updatedDate` — optional, coerced to a `Date`
+- `draft` — optional boolean, defaults to `false`. **`draft: true` silently excludes the post everywhere** — `getBlogPosts()` (`src/lib/blog.ts`) filters it out of the blog index, all three feeds, the sitemap, `llms.txt`, and adjacent-post navigation.
+
+Posts are sorted newest-`pubDate`-first. Reading time, feed entries, and the post's OG image are generated automatically at build time from that one file — nothing else needs updating to publish a post.
+
+**Editing home page sections:** the five `.md` files in `src/sections/` (`intro`, `personal`, `writing`, `opensource`, `support`) are rendered in that order by `src/pages/index.astro`.
+
+**Editing `/now` or `/uses`:** edit `src/sections/now.md` / `src/sections/uses.md` directly — the page files themselves are thin wrappers with no content of their own.
 
 ## Tests
 
@@ -40,6 +68,14 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 `.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking — that only runs as part of `npm run build`, which isn't in `lefthook.yml`. Run `npm run build` locally before pushing if you've touched types, or a type error will only surface in CI.
 
+Dependabot (`.github/dependabot.yml`) checks npm and GitHub Actions dependencies weekly (Saturdays) and groups each ecosystem's updates into one PR.
+
+## Deployment
+
+The site is hosted on **Cloudflare Pages** — inferred from `public/_headers` (a Cloudflare/Netlify-style headers file) and its CSP allowing `cloudflareinsights.com` (the Cloudflare Web Analytics beacon domain). There's no `wrangler.toml` or Pages config committed, so build/deploy settings live in the Cloudflare dashboard, not this repo. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
+
+`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
+
 ## Safety
 
 - **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation.
@@ -54,6 +90,8 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 **Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar and copy/share buttons, both reinitialized per navigation via `astro:page-load` — see Known Astro quirks.
 
+**SEO/crawler endpoints:** `src/pages/robots.txt.ts` and `src/pages/llms.txt.ts` are dynamically generated at build time (not static files in `public/`) — `robots.txt` points to the sitemap, `llms.txt` lists every page and post as an AI-crawler-friendly Markdown index. Both pull from the same `src/lib/blog.ts` helpers as the rest of the site, so a new post appears in `llms.txt` automatically, and a `draft: true` post is excluded from it too.
+
 **Design system:** Swiss / International Typographic style. Pure black-on-white palette (`--paper` #ffffff light / #0a0a0a dark, `--ink` #0a0a0a / #f2f2f2) with a single hot signal-red accent (`--signal` #e2231a light / #ff453a dark) used for the masthead square mark, the active nav state, blockquote bars, selection fills, and link hover. Links themselves are ink (black), turning signal-red on hover. Sharp corners everywhere (`--radius: 0`), no shadows, hairline rules — plus one heavy 4px ink rule across the top of the masthead. The design relies on a neo-grotesque type system, a strict flush-left ragged-right grid, dramatic size jumps, and one restrained accent — no ornaments, no italics, no section-specific colors.
 
 **Styling:** Styles are split across four files in `src/styles/`: `tokens.css` (CSS custom properties), `base.css` (resets and base element styles), `typography.css` (type scale), and `code.css` (code block styles). Tokens: `--paper`, `--paper-deep`, `--ink`, `--ink-soft`, `--rule`, `--signal`. `--link` aliases to `--ink` (black links) and `--link-hover` aliases to `--signal` so links pick up the red accent on hover. Page-level layout styles use `:global()` selectors in `<style>` blocks. Light/dark modes are CSS-only via `@media (prefers-color-scheme: dark)` in `tokens.css` — there is no manual toggle component.
@@ -62,13 +100,13 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 **Markdown plugins:** `remark-smartypants` for smart typography (curly quotes, em-dashes, ellipses) and `rehype-external-links` (adds `rel="noopener noreferrer"` to outbound links). The shared plugin options live in `src/lib/markdown-config.ts` so the Astro pipeline (`astro.config.mjs`) and the feed-rendering pipeline (`src/lib/blog.ts`) stay in sync. Reading time is computed in one place by `computeReadingTime` (`src/lib/blog.ts`), which strips markdown syntax before counting words; both the blog index and individual post pages call it so the estimate is identical everywhere. Syntax highlighting uses Shiki with `min-light`/`min-dark` themes (muted, to suit the monochrome palette).
 
-**Build pipeline:** Astro integrations run at build time — `@astrojs/sitemap` (sitemap generation) and `astro-pagefind` (full-text search index; search UI rendered in the blog index via `astro-pagefind/components/Search`). `@astrojs/rss` is used by `rss.xml.ts` for the RSS feed.
+**Build pipeline:** Astro integrations run at build time — `@astrojs/sitemap` (sitemap generation) and `astro-pagefind` (full-text search index; search UI rendered in the blog index via `astro-pagefind/components/Search`, implemented as a genuine Web Component so it re-initializes correctly across view-transition navigations with no extra glue code). `@astrojs/rss` is used by `rss.xml.ts` for the RSS feed.
 
 **OG images:** `/og/[slug].png.ts` generates Open Graph images at build time using `satori` (SVG layout) and `sharp` (PNG conversion). The layout mirrors the Swiss site design — white field, black flush-left title in Geist, a signal-red accent bar, and a caps masthead label; Geist `.woff` files are read from `@fontsource/geist`.
 
 **Standalone pages:** `/now` and `/uses` are static pages (`src/pages/now.astro`, `src/pages/uses.astro`) that import their content from `src/sections/now.md` and `src/sections/uses.md` respectively.
 
-**Components:** `src/components/PostListItem.astro` renders a single post row in blog listings. `src/components/CarbonBadge.astro` renders the page carbon footprint badge. `src/components/EasterEggs.astro` holds the Konami-code palette swap and the wordmark click easter egg.
+**Components:** `src/components/PostListItem.astro` renders a single post row in blog listings. `src/components/CarbonBadge.astro` renders the page carbon footprint badge, computed entirely client-side from the Performance API (no network request) using the Sustainable Web Design Model. `src/components/EasterEggs.astro` holds the Konami-code palette swap and the wordmark click easter egg.
 
 **SEO:** `Layout.astro` accepts `title`, `description`, `image`, `canonical`, `robots`, and `type` props. It generates Open Graph tags, Twitter card tags, and JSON-LD schema (hand-built, no external package).
 
@@ -107,5 +145,7 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 ## Code style
 
 - **No inline comments** — never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
-- Prettier enforces: double quotes, semicolons, 80-char width
-- ESLint uses flat config with TypeScript, Astro, Unicorn, and Prettier integration
+- Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `npm run format`.
+- ESLint uses flat config (`eslint.config.js`) with TypeScript, Astro (including `jsx-a11y-recommended` — accessibility lint rules apply to `.astro` templates), Unicorn, `@eslint/css`, and `@eslint/markdown`, plus `eslint-config-prettier` to defer all formatting decisions to Prettier. Three Unicorn rules are disabled repo-wide: `filename-case` (needed for `[slug].astro`-style bracket filenames and PascalCase components), `prevent-abbreviations`, and `text-encoding-identifier-case`.
+- CSS lint requires new properties/selectors to be **Baseline "newly available"** (`css/use-baseline`) — a very recent CSS feature can get flagged even though it works in current browsers; `text-wrap` and `:selection` are explicitly allowlisted as exceptions.
+- `docs/superpowers/`, `.github/`, and `.claude/` are excluded from linting.
