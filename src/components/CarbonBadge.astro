@@ -43,6 +43,7 @@
     ) as PerformanceResourceTiming[]) {
       bytes += r.encodedBodySize || r.decodedBodySize || 0;
     }
+    performance.clearResourceTimings();
     return bytes;
   }
 
@@ -64,9 +65,5 @@
     element.replaceChildren(a);
   }
 
-  if (document.readyState === "complete") {
-    render();
-  } else {
-    window.addEventListener("load", render, { once: true });
-  }
+  document.addEventListener("astro:page-load", render);
 </script>
