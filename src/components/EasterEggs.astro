@@ -51,8 +51,12 @@
     }
   });
 
-  const mark = document.querySelector<HTMLElement>(".wordmark-mark");
-  if (mark) {
+  function setupWordmarkEasterEgg() {
+    const mark = document.querySelector<HTMLElement>(".wordmark-mark");
+    if (!mark) {
+      return;
+    }
+
     const markMessages = [
       "still just a square.",
       "solidarity, comrade.",
@@ -71,4 +75,6 @@
       });
     });
   }
+
+  document.addEventListener("astro:page-load", setupWordmarkEasterEgg);
 </script>
