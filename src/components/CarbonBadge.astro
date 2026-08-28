@@ -43,6 +43,7 @@
     ) as PerformanceResourceTiming[]) {
       bytes += r.encodedBodySize || r.decodedBodySize || 0;
     }
+    performance.clearResourceTimings();
     return bytes;
   }
 
