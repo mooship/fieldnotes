@@ -61,7 +61,7 @@ Dependabot (`.github/dependabot.yml`) checks npm and GitHub Actions dependencies
 
 ## Deployment
 
-The site is hosted on **Cloudflare Pages** — inferred from `public/_headers` (a Cloudflare/Netlify-style headers file) and its CSP allowing `cloudflareinsights.com` (the Cloudflare Web Analytics beacon domain). There's no `wrangler.toml` or Pages config committed, so build/deploy settings live in the Cloudflare dashboard, not this repo. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
+The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages config committed — build/deploy settings live in the Cloudflare dashboard, not this repo. `public/_headers` is Cloudflare Pages' native way to set response headers (its CSP allows `cloudflareinsights.com` for Cloudflare Web Analytics). Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
 `public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
