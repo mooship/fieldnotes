@@ -4,3 +4,5 @@ pre-commit:
       run: npm run lint
     - name: format
       run: npm run format
+    - name: test
+      run: npm run test
