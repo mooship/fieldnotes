@@ -197,7 +197,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
     });
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     initCopyButtons();
     initShareButton();
   });
