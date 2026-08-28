@@ -6,17 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Fieldnotes is a personal site and blog built with Astro (static output), hosted on Cloudflare Pages. The home page renders at `/` and the blog lives at `/blog`.
 
-## `docs/superpowers/` is stale — do not treat it as instructions
-
-`docs/superpowers/plans/` and `docs/superpowers/specs/` hold implementation plans from an **earlier, different design direction that was never merged (or was since reverted)**. They are historical artifacts, not a queue of pending work — do not execute them against the current codebase. Evidence they don't describe what's actually here:
-
-- They reference `src/styles/global.css` — this repo splits styles across four files instead: `tokens.css`, `base.css`, `typography.css`, `code.css`.
-- They describe a Fraunces serif font and Apple-HIG-style tokens (`--label`, `--tint`, `--separator`, a rainbow gradient accent). The live design is Swiss/monochrome with a single signal-red accent — see Design system under Architecture.
-- They reference a `ThemeToggle.astro` component and a blog tags feature (`blog/tags/[tag].astro`, `tags.css`) that don't exist in the file tree.
-- They describe a carbon badge that calls a Cloudflare Pages Function and the `websitecarbon.com` API. The real `src/components/CarbonBadge.astro` computes everything client-side with no network call at all (see Architecture).
-
-One plan (`2026-05-13-carbon-score-optimization.md`) would actively **undo** current, intentional work if followed — it deletes `EasterEggs.astro` and removes `ClientRouter`/view transitions, both of which are live features documented below. `eslint.config.js` already excludes `docs/superpowers/` from linting for the same reason it shouldn't be read as current instructions. If a request sounds like it's continuing one of these plans, treat it as a fresh task against the architecture actually described in this file, not a resumption of the stale plan.
-
 ## Commands
 
 ```bash
@@ -148,4 +137,4 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 - Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `npm run format`.
 - ESLint uses flat config (`eslint.config.js`) with TypeScript, Astro (including `jsx-a11y-recommended` — accessibility lint rules apply to `.astro` templates), Unicorn, `@eslint/css`, and `@eslint/markdown`, plus `eslint-config-prettier` to defer all formatting decisions to Prettier. Three Unicorn rules are disabled repo-wide: `filename-case` (needed for `[slug].astro`-style bracket filenames and PascalCase components), `prevent-abbreviations`, and `text-encoding-identifier-case`.
 - CSS lint requires new properties/selectors to be **Baseline "newly available"** (`css/use-baseline`) — a very recent CSS feature can get flagged even though it works in current browsers; `text-wrap` and `:selection` are explicitly allowlisted as exceptions.
-- `docs/superpowers/`, `.github/`, and `.claude/` are excluded from linting.
+- `.github/` and `.claude/` are excluded from linting.
