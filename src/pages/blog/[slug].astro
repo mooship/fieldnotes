@@ -225,7 +225,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
     measure();
     updateProgress();
 
-    window.addEventListener("scroll", updateProgress, { passive: true, signal });
+    window.addEventListener("scroll", updateProgress, {
+      passive: true,
+      signal,
+    });
 
     const resizeObserver = new ResizeObserver(() => {
       measure();
