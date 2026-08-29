@@ -7,6 +7,7 @@ import {
 } from "../lib/blog";
 import { getFeedItems } from "../lib/feed";
 
+/** Serves the `/feed.json` feed (JSON Feed 1.1), built from the same items as the RSS and Atom feeds. */
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site);
   const items = await getFeedItems(site);

@@ -9,6 +9,13 @@ import CarbonBadge from "../components/CarbonBadge.astro";
 import EasterEggs from "../components/EasterEggs.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
+/**
+ * Props for the site-wide layout: page `<title>`, meta tags, and JSON-LD.
+ * `ogTitle` defaults to `title` and `canonical` defaults to the current URL
+ * when omitted. `type: "article"` adds article-specific JSON-LD fields
+ * (headline, author, publisher, dates) alongside the base WebSite/Article
+ * schema.
+ */
 export interface Properties {
   title: string;
   ogTitle?: string;

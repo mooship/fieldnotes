@@ -32,6 +32,12 @@
     return energyKwh * GREEN_GRID_INTENSITY;
   }
 
+  /**
+   * Sums transferred bytes for the navigation plus every resource fetched
+   * since the last measurement, then clears the resource timing buffer so
+   * repeat client-side navigations (view transitions) don't double-count
+   * resources from earlier pages.
+   */
   function measureBytes(): number {
     const nav = performance.getEntriesByType("navigation")[0] as
       PerformanceNavigationTiming | undefined;

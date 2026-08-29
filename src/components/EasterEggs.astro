@@ -25,6 +25,12 @@
   ];
   const konami = { progress: 0 };
 
+  /**
+   * Tracks progress through the Konami code across keydowns, ignoring input
+   * while focus is in an editable field so typing doesn't trigger it. A
+   * wrong key resets progress to 0 rather than rechecking it against the
+   * sequence start.
+   */
   addEventListener("keydown", (event) => {
     const target = event.target;
     if (
@@ -51,6 +57,12 @@
     }
   });
 
+  /**
+   * Wires the masthead square's click easter egg: each click shows the next
+   * message in `markMessages` (cycling via the session click count) and
+   * replays the pulse animation. Safe to call on every `astro:page-load`
+   * since the wordmark element itself is recreated on each navigation.
+   */
   function setupWordmarkEasterEgg() {
     const mark = document.querySelector<HTMLElement>(".wordmark-mark");
     if (!mark) {
