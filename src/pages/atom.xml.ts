@@ -8,6 +8,11 @@ import {
 import { getFeedItems } from "../lib/feed";
 import { xmlEscape } from "../lib/xml";
 
+/**
+ * Serves the `/atom.xml` feed. Built by hand (rather than via a library,
+ * unlike `/rss.xml`) so the feed-level `<updated>` can reflect the most
+ * recently updated post rather than the current build time.
+ */
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site);
   const items = await getFeedItems(site);

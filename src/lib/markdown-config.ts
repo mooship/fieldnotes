@@ -1,3 +1,8 @@
+/**
+ * Shared plugin options for the Markdown pipeline, kept in one place so
+ * `astro.config.mjs` (the Astro build pipeline) and `src/lib/blog.ts` (the
+ * feed-rendering pipeline) stay in sync.
+ */
 export const SMARTYPANTS_OPTIONS = { dashes: "inverted" } as const;
 
 /**
