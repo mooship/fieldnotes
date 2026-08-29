@@ -162,6 +162,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
     }
   }
 
+  /**
+   * Wires the share button. Prefers the native share sheet on coarse
+   * (touch) pointers when the payload is shareable; otherwise, and as the
+   * fallback if the user cancels or the share sheet errors, copies the URL
+   * to the clipboard.
+   */
   function initShareButton() {
     const button = document.querySelector<HTMLButtonElement>(".share-btn");
     if (!button) return;
@@ -202,6 +208,12 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
     controller: undefined,
   };
 
+  /**
+   * Wires the reading-progress bar to `window`'s `scroll` event and a
+   * `ResizeObserver`, both of which survive view-transition navigations.
+   * Aborts and replaces any listeners from a previous navigation first, so
+   * repeat calls (once per `astro:page-load`) don't stack duplicates.
+   */
   function initReadingProgress() {
     const bar = document.querySelector<HTMLElement>("#reading-progress");
     if (!bar) return;

@@ -1,6 +1,7 @@
 import type { APIContext } from "astro";
 import { getSiteUrl } from "../lib/blog";
 
+/** Serves `/robots.txt`, allowing all crawlers and pointing them at the sitemap. */
 export function GET(context: APIContext) {
   const siteUrl = getSiteUrl(context.site);
 
