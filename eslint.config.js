@@ -5,7 +5,9 @@ import astroPlugin from "eslint-plugin-astro";
 import unicorn from "eslint-plugin-unicorn";
 import tseslint from "typescript-eslint";
 
-/** @type {import("eslint").Linter.Config[]} */
+/**
+ * @type {import("eslint").Linter.Config[]}
+ */
 export default [
   {
     ignores: ["dist/", ".astro/", ".astro-cache/", ".github/", ".claude/"],
