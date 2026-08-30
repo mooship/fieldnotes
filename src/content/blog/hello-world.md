@@ -2,6 +2,9 @@
 title: "Hello, World"
 description: "An introduction: who I am, what I do, and what this blog will be."
 pubDate: 2026-03-22
+tags:
+  - "personal"
+  - "meta"
 ---
 
 Hello. I'm Timothy, a software developer based in Pretoria, South Africa.

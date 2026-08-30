@@ -90,6 +90,57 @@ export function computeReadingTime(body?: string): string {
   return readingTime(mdastToString(tree)).text;
 }
 
+/** Converts a tag to a URL-safe slug, e.g. "Web Dev" -> "web-dev". */
+export function getTagSlug(tag: string): string {
+  return tag
+    .toLowerCase()
+    .trim()
+    .replaceAll(/[^a-z0-9]+/g, "-")
+    .replaceAll(/^-+|-+$/g, "");
+}
+
+export interface TagSummary {
+  tag: string;
+  slug: string;
+  count: number;
+}
+
+interface TaggedPost {
+  data: { tags: string[] };
+}
+
+/**
+ * Returns every distinct tag used across `posts`, alphabetically sorted,
+ * with a URL slug and how many posts carry it. Two differently-cased or
+ * -spaced tags that slugify to the same value are counted together, under
+ * whichever spelling was seen first.
+ */
+export function getAllTags(posts: TaggedPost[]): TagSummary[] {
+  const bySlug = new Map<string, TagSummary>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const slug = getTagSlug(tag);
+      const existing = bySlug.get(slug);
+      if (existing) existing.count += 1;
+      else bySlug.set(slug, { tag, slug, count: 1 });
+    }
+  }
+  return bySlug
+    .values()
+    .toArray()
+    .toSorted((a, b) => a.tag.localeCompare(b.tag));
+}
+
+/** Filters `posts` down to those carrying a tag that slugifies to `tagSlug`. */
+export function getPostsByTag<T extends TaggedPost>(
+  posts: T[],
+  tagSlug: string
+): T[] {
+  return posts.filter((post) =>
+    post.data.tags.some((tag) => getTagSlug(tag) === tagSlug)
+  );
+}
+
 export interface AdjacentPost {
   slug: string;
   title: string;

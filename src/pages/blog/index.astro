@@ -26,6 +26,7 @@ const postsWithMeta = posts.map((post) => ({
     <div class="search-wrapper">
       <Search className="pagefind-ui" />
     </div>
+    <a href="/blog/tags" class="nav-link tags-link">Browse by tag</a>
     {
       postsWithMeta.length === 0 ? (
         <p class="empty">No posts yet.</p>
@@ -67,6 +68,11 @@ const postsWithMeta = posts.map((post) => ({
 
   .search-wrapper {
     min-height: 36px;
+    margin-bottom: 1.6rem;
+  }
+
+  .tags-link {
+    display: inline-block;
     margin-bottom: 1.6rem;
   }
 

@@ -1,5 +1,5 @@
 ---
-import { formatDate, getPostSlug } from "../lib/blog";
+import { formatDate, getPostSlug, getTagSlug } from "../lib/blog";
 
 const { post, readingTime } = Astro.props;
 const slug = getPostSlug(post.id);
@@ -14,6 +14,20 @@ const slug = getPostSlug(post.id);
   </p>
   <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
   <p class="post-desc">{post.data.description}</p>
+  {
+    post.data.tags.length > 0 && (
+      <p class="post-tags">
+        {post.data.tags.map((tag: string, index: number) => (
+          <>
+            {index > 0 && " / "}
+            <a class="nav-link" href={`/blog/tags/${getTagSlug(tag)}`}>
+              {tag}
+            </a>
+          </>
+        ))}
+      </p>
+    )
+  }
 </li>
 
 <style>
@@ -41,5 +55,9 @@ const slug = getPostSlug(post.id);
     font-size: 0.9375rem;
     color: var(--ink-soft);
     line-height: 1.5;
+  }
+
+  .post-tags {
+    margin: 0.6rem 0 0 0;
   }
 </style>

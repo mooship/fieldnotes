@@ -1,0 +1,69 @@
+---
+import PostListItem from "../../../components/PostListItem.astro";
+import Layout from "../../../layouts/Layout.astro";
+import {
+  computeReadingTime,
+  getAllTags,
+  getBlogPosts,
+  getPostsByTag,
+  SITE_TITLE,
+} from "../../../lib/blog";
+
+export async function getStaticPaths() {
+  const posts = await getBlogPosts();
+  const tags = getAllTags(posts);
+  return tags.map(({ tag, slug }) => ({
+    params: { tag: slug },
+    props: { tag, posts: getPostsByTag(posts, slug) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+const postsWithMeta = posts.map((post) => ({
+  post,
+  readingTime: computeReadingTime(post.body),
+}));
+---
+
+<Layout
+  title={`${tag} — ${SITE_TITLE}`}
+  description={`Posts tagged "${tag}" on ${SITE_TITLE}.`}
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <p class="meta-label eyebrow">Tag</p>
+    <h1 class="page-title">{tag}</h1>
+    <ul>
+      {
+        postsWithMeta.map(({ post, readingTime }) => (
+          <PostListItem post={post} readingTime={readingTime} />
+        ))
+      }
+    </ul>
+    <a href="/blog/tags" class="nav-link back-link">
+      <span aria-hidden="true">&larr;</span> All tags
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.6rem 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3.2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .back-link {
+    margin-top: 1.6rem;
+  }
+</style>

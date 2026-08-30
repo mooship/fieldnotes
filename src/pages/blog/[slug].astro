@@ -8,6 +8,7 @@ import {
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
+  getTagSlug,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -63,6 +64,20 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
             >
               Updated: {formatDate(post.data.updatedDate)}
             </time>
+          )
+        }
+        {
+          post.data.tags.length > 0 && (
+            <p class="post-tags">
+              {post.data.tags.map((tag: string, index: number) => (
+                <>
+                  {index > 0 && " / "}
+                  <a class="nav-link" href={`/blog/tags/${getTagSlug(tag)}`}>
+                    {tag}
+                  </a>
+                </>
+              ))}
+            </p>
           )
         }
       </header>
@@ -315,6 +330,10 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
 
   header .updated {
     margin-top: 0.25rem;
+  }
+
+  header .post-tags {
+    margin: 0.6rem 0 0 0;
   }
 
   .post-footer {
