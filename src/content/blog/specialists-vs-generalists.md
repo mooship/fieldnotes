@@ -2,6 +2,9 @@
 title: "Depth Beats Width"
 description: "AI orchestration tools like BMAD are impressive. They're not a reason to stop specialising."
 pubDate: 2026-05-07
+tags:
+  - "software"
+  - "ai"
 ---
 
 BMAD is one of those AI orchestration frameworks doing the rounds at the moment. It gives each agent a role -- architect, product manager, QA engineer, UX designer, developer -- and orchestrates them through the full SDLC. One person, one prompt, an entire simulated software team.

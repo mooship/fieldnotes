@@ -3,9 +3,12 @@ import {
   computeReadingTime,
   formatDate,
   getAdjacentPosts,
+  getAllTags,
   getBlogPosts,
   getPostSlug,
+  getPostsByTag,
   getSiteUrl,
+  getTagSlug,
   renderMarkdownToHtml,
 } from "./blog";
 
@@ -159,6 +162,65 @@ describe("getBlogPosts", () => {
       "middle.md",
       "older.md",
     ]);
+  });
+});
+
+describe("getTagSlug", () => {
+  it("lowercases the tag", () => {
+    expect(getTagSlug("Gaming")).toBe("gaming");
+  });
+
+  it("replaces spaces with hyphens", () => {
+    expect(getTagSlug("web dev")).toBe("web-dev");
+  });
+
+  it("collapses non-alphanumeric runs into a single hyphen", () => {
+    expect(getTagSlug("C++ & Rust")).toBe("c-rust");
+  });
+
+  it("trims leading and trailing hyphens", () => {
+    expect(getTagSlug(" ai! ")).toBe("ai");
+  });
+});
+
+describe("getAllTags", () => {
+  const posts = [
+    { data: { tags: ["gaming", "AI"] } },
+    { data: { tags: ["ai"] } },
+    { data: { tags: [] } },
+  ];
+
+  it("returns distinct tags sorted alphabetically", () => {
+    expect(getAllTags(posts).map((t) => t.tag)).toEqual(["AI", "gaming"]);
+  });
+
+  it("counts posts sharing a tag that slugifies the same way", () => {
+    const tags = getAllTags(posts);
+    expect(tags.find((t) => t.slug === "ai")?.count).toBe(2);
+    expect(tags.find((t) => t.slug === "gaming")?.count).toBe(1);
+  });
+
+  it("returns an empty array when no posts have tags", () => {
+    expect(getAllTags([{ data: { tags: [] } }])).toEqual([]);
+  });
+});
+
+describe("getPostsByTag", () => {
+  const posts = [
+    { id: "a.md", data: { tags: ["Gaming"] } },
+    { id: "b.md", data: { tags: ["ai"] } },
+    { id: "c.md", data: { tags: ["gaming", "ai"] } },
+  ];
+
+  it("matches posts whose tag slugifies to the given slug", () => {
+    expect(getPostsByTag(posts, "gaming").map((p) => p.id)).toEqual([
+      "a.md",
+      "c.md",
+    ]);
+  });
+
+  it("returns an empty array for an unknown tag slug", () => {
+    expect(getPostsByTag(posts, "unknown")).toEqual([]);
   });
 });
 

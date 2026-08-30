@@ -1,0 +1,85 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import {
+  BLOG_DESCRIPTION,
+  getAllTags,
+  getBlogPosts,
+  SITE_TITLE,
+} from "../../../lib/blog";
+
+const posts = await getBlogPosts();
+const tags = getAllTags(posts);
+---
+
+<Layout
+  title={`Tags — ${SITE_TITLE}`}
+  description={BLOG_DESCRIPTION}
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1 class="page-title">Tags</h1>
+    {
+      tags.length === 0 ? (
+        <p class="empty">No tags yet.</p>
+      ) : (
+        <ul>
+          {tags.map(({ tag, slug, count }) => (
+            <li>
+              <a class="tag-title" href={`/blog/tags/${slug}`}>
+                {tag}
+              </a>
+              <span class="tag-count meta-label">
+                {count} {count === 1 ? "post" : "posts"}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <a href="/blog" class="nav-link back-link">
+      <span aria-hidden="true">&larr;</span> All posts
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3.2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tag-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .tag-count {
+    flex-shrink: 0;
+  }
+
+  .empty {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .back-link {
+    margin-top: 1.6rem;
+  }
+</style>

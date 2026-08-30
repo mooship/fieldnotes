@@ -2,6 +2,8 @@
 title: "Cabo Verde, 0-0"
 description: "A debut World Cup side held Spain, and it stayed with me longer than the scoreline should have."
 pubDate: 2026-06-15
+tags:
+  - "sport"
 ---
 
 Cabo Verde held Spain to a 0-0 draw at their first ever World Cup, and I've been thinking about it for two days now.

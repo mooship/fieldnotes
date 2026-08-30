@@ -7,6 +7,8 @@ import { z } from "zod";
  * `draft: true` posts pass this schema but are filtered out everywhere by
  * `getBlogPosts()` (`src/lib/blog.ts`), not here.
  */
+const tagsSchema = z.array(z.string()).optional().default([]);
+
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
   schema: z.object({
@@ -15,6 +17,7 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     draft: z.boolean().optional().default(false),
+    tags: tagsSchema,
   }),
 });
 
