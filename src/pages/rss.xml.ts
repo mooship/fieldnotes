@@ -3,7 +3,9 @@ import type { APIContext } from "astro";
 import { BLOG_DESCRIPTION, getSiteUrl, SITE_TITLE } from "../lib/blog";
 import { getFeedItems } from "../lib/feed";
 
-/** Serves the `/rss.xml` feed, built from the same items as the Atom and JSON feeds. */
+/**
+Serves the `/rss.xml` feed, built from the same items as the Atom and JSON feeds.
+*/
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site);
   const items = await getFeedItems(site);

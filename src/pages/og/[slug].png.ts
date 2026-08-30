@@ -39,7 +39,9 @@ async function loadFonts(): Promise<{ regular: Buffer; bold: Buffer }> {
   return fonts.promise;
 }
 
-/** Generates one static `/og/<slug>.png` route per published post. */
+/**
+Generates one static `/og/<slug>.png` route per published post.
+*/
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getBlogPosts();
   return posts.map((post) => ({

@@ -1,5 +1,6 @@
 ---
 import { formatDate, getPostSlug } from "../lib/blog";
+import TagList from "./TagList.astro";
 
 const { post, readingTime } = Astro.props;
 const slug = getPostSlug(post.id);
@@ -14,6 +15,7 @@ const slug = getPostSlug(post.id);
   </p>
   <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
   <p class="post-desc">{post.data.description}</p>
+  <TagList tags={post.data.tags} />
 </li>
 
 <style>
