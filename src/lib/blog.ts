@@ -12,7 +12,9 @@ import { EXTERNAL_LINKS_OPTIONS, SMARTYPANTS_OPTIONS } from "./markdown-config";
 
 const DATE_LOCALE = "en-ZA";
 
-/** Formats a date as a full day/month/year string, e.g. "15 March 2024". */
+/**
+Formats a date as a full day/month/year string, e.g. "15 March 2024".
+*/
 export function formatDate(date: Date): string {
   return date.toLocaleDateString(DATE_LOCALE, {
     year: "numeric",
@@ -21,7 +23,9 @@ export function formatDate(date: Date): string {
   });
 }
 
-/** Formats a date as a month/year string, e.g. "March 2024". */
+/**
+Formats a date as a month/year string, e.g. "March 2024".
+*/
 export function formatMonthYear(date: Date): string {
   return date.toLocaleDateString(DATE_LOCALE, {
     year: "numeric",
@@ -34,12 +38,16 @@ export const SITE_AUTHOR = "Timothy Brits";
 export const BLOG_DESCRIPTION =
   "Writing by Timothy Brits on software and open source.";
 
-/** Derives a post's URL slug from its content collection id, e.g. "my-post.md" -> "my-post". */
+/**
+Derives a post's URL slug from its content collection id, e.g. "my-post.md" -> "my-post".
+*/
 export function getPostSlug(id: string): string {
   return id.replace(/\.md$/, "");
 }
 
-/** Builds the absolute URL for a post from a site origin and its content collection id. */
+/**
+Builds the absolute URL for a post from a site origin and its content collection id.
+*/
 export function getPostUrl(siteUrl: string, id: string): string {
   return `${siteUrl}/blog/${getPostSlug(id)}`;
 }
@@ -67,12 +75,16 @@ const mdProcessor = unified()
   .use(rehypeExternalLinks, EXTERNAL_LINKS_OPTIONS)
   .use(rehypeStringify);
 
-/** Renders a post's Markdown body to an HTML string using the shared pipeline. */
+/**
+Renders a post's Markdown body to an HTML string using the shared pipeline.
+*/
 export async function renderMarkdownToHtml(markdown?: string): Promise<string> {
   return String(await mdProcessor.process(markdown ?? ""));
 }
 
-/** Returns all non-draft blog posts, sorted newest `pubDate` first. */
+/**
+Returns all non-draft blog posts, sorted newest `pubDate` first.
+*/
 export async function getBlogPosts() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
   return posts.toSorted(
@@ -90,7 +102,9 @@ export function computeReadingTime(body?: string): string {
   return readingTime(mdastToString(tree)).text;
 }
 
-/** Converts a tag to a URL-safe slug, e.g. "Web Dev" -> "web-dev". */
+/**
+Converts a tag to a URL-safe slug, e.g. "Web Dev" -> "web-dev".
+*/
 export function getTagSlug(tag: string): string {
   return tag
     .toLowerCase()
@@ -131,7 +145,9 @@ export function getAllTags(posts: TaggedPost[]): TagSummary[] {
     .toSorted((a, b) => a.tag.localeCompare(b.tag));
 }
 
-/** Filters `posts` down to those carrying a tag that slugifies to `tagSlug`. */
+/**
+Filters `posts` down to those carrying a tag that slugifies to `tagSlug`.
+*/
 export function getPostsByTag<T extends TaggedPost>(
   posts: T[],
   tagSlug: string
