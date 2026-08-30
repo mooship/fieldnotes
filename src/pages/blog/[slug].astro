@@ -1,5 +1,6 @@
 ---
 import { render } from "astro:content";
+import TagList from "../../components/TagList.astro";
 import Layout from "../../layouts/Layout.astro";
 import { ArrowLeft, ArrowRight } from "@lucide/astro";
 import {
@@ -65,6 +66,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
             </time>
           )
         }
+        <TagList tags={post.data.tags} />
       </header>
       <Content />
     </article>

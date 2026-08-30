@@ -1,6 +1,8 @@
 import { getBlogPosts, getPostUrl, renderMarkdownToHtml } from "./blog";
 
-/** A post normalized for feed output, shared across the RSS, Atom, and JSON Feed endpoints. */
+/**
+A post normalized for feed output, shared across the RSS, Atom, and JSON Feed endpoints.
+*/
 export interface FeedItem {
   url: string;
   title: string;
