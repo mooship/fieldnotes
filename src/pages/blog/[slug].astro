@@ -1,5 +1,6 @@
 ---
 import { render } from "astro:content";
+import TagList from "../../components/TagList.astro";
 import Layout from "../../layouts/Layout.astro";
 import { ArrowLeft, ArrowRight } from "@lucide/astro";
 import {
@@ -8,7 +9,6 @@ import {
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
-  getTagSlug,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -66,20 +66,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
             </time>
           )
         }
-        {
-          post.data.tags.length > 0 && (
-            <p class="post-tags">
-              {post.data.tags.map((tag: string, index: number) => (
-                <>
-                  {index > 0 && " / "}
-                  <a class="nav-link" href={`/blog/tags/${getTagSlug(tag)}`}>
-                    {tag}
-                  </a>
-                </>
-              ))}
-            </p>
-          )
-        }
+        <TagList tags={post.data.tags} />
       </header>
       <Content />
     </article>
@@ -330,10 +317,6 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
 
   header .updated {
     margin-top: 0.25rem;
-  }
-
-  header .post-tags {
-    margin: 0.6rem 0 0 0;
   }
 
   .post-footer {
