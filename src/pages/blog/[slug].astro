@@ -44,9 +44,14 @@ const isTocVisible = tocHeadings.length > 0;
   datePublished={post.data.pubDate}
   dateModified={post.data.updatedDate ?? post.data.pubDate}
 >
-  <div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
+  <div
+    id="reading-progress"
+    class="reading-progress no-print"
+    aria-hidden="true"
+  >
+  </div>
   <main id="main-content" tabindex="-1">
-    <a href="/blog" class="nav-link back-link">
+    <a href="/blog" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All posts
     </a>
     <article>
@@ -73,7 +78,7 @@ const isTocVisible = tocHeadings.length > 0;
       </header>
       {
         isTocVisible && (
-          <details class="toc" open>
+          <details class="toc no-print" open>
             <summary class="meta-label">Contents</summary>
             <ul>
               {tocHeadings.map((heading) => (
@@ -89,7 +94,7 @@ const isTocVisible = tocHeadings.length > 0;
     </article>
     <div class="post-footer">
       <button
-        class="share-btn"
+        class="share-btn no-print"
         type="button"
         aria-label="Share this post"
         data-title={post.data.title}
@@ -106,7 +111,7 @@ const isTocVisible = tocHeadings.length > 0;
     </p>
     {
       (adjacent.prev || adjacent.next) && (
-        <nav class="post-nav" aria-label="Post navigation">
+        <nav class="post-nav no-print" aria-label="Post navigation">
           {adjacent.prev ? (
             <a href={`/blog/${adjacent.prev.slug}`} class="post-nav-link prev">
               <ArrowLeft size={16} aria-hidden="true" />
@@ -159,7 +164,7 @@ const isTocVisible = tocHeadings.length > 0;
       if (pre.querySelector(".copy-btn")) continue;
 
       const button = document.createElement("button");
-      button.className = "copy-btn";
+      button.className = "copy-btn no-print";
       button.type = "button";
       button.setAttribute("aria-label", "Copy code");
       button.textContent = "Copy";

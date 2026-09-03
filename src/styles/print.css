@@ -17,15 +17,7 @@
     padding: 0;
   }
 
-  .skip-link,
-  header nav,
-  footer,
-  .reading-progress,
-  .back-link,
-  .share-btn,
-  .post-nav,
-  .copy-btn,
-  .toc {
+  .no-print {
     display: none !important;
   }
 
