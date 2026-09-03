@@ -3,6 +3,7 @@ import "../styles/tokens.css";
 import "../styles/base.css";
 import "../styles/typography.css";
 import "../styles/code.css";
+import "../styles/print.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import CarbonBadge from "../components/CarbonBadge.astro";
@@ -130,7 +131,7 @@ const jsonLd = {
     <ClientRouter />
   </head>
   <body>
-    <a href="#main-content" class="skip-link visually-hidden"
+    <a href="#main-content" class="skip-link visually-hidden no-print"
       >Skip to main content</a
     >
     <header>
@@ -140,7 +141,7 @@ const jsonLd = {
           <span class="wordmark-title">{SITE_TITLE}</span>
           <span class="wordmark-byline">by {SITE_AUTHOR}</span>
         </a>
-        <nav aria-label="Main">
+        <nav aria-label="Main" class="no-print">
           <a
             href="/blog"
             aria-current={pathname.startsWith("/blog") ? "page" : undefined}
@@ -153,11 +154,16 @@ const jsonLd = {
             href="/uses"
             aria-current={pathname === "/uses" ? "page" : undefined}>Uses</a
           >
+          <a
+            href="/colophon"
+            aria-current={pathname === "/colophon" ? "page" : undefined}
+            >Colophon</a
+          >
         </nav>
       </div>
     </header>
     <slot />
-    <footer>
+    <footer class="no-print">
       <nav class="feed-links" aria-label="Feed subscriptions">
         <span>Subscribe:</span>
         <a href="/atom.xml">Atom</a>
