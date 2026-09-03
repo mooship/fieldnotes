@@ -9,6 +9,7 @@ import {
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
+  getTocHeadings,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -26,9 +27,11 @@ export async function getStaticPaths() {
 
 const { post, adjacent } = Astro.props;
 const { slug } = Astro.params;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const readingTime = computeReadingTime(post.body);
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
+const tocHeadings = getTocHeadings(headings);
+const isTocVisible = tocHeadings.length > 0;
 ---
 
 <Layout
@@ -41,9 +44,14 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
   datePublished={post.data.pubDate}
   dateModified={post.data.updatedDate ?? post.data.pubDate}
 >
-  <div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
+  <div
+    id="reading-progress"
+    class="reading-progress no-print"
+    aria-hidden="true"
+  >
+  </div>
   <main id="main-content" tabindex="-1">
-    <a href="/blog" class="nav-link back-link">
+    <a href="/blog" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All posts
     </a>
     <article>
@@ -68,11 +76,25 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
         }
         <TagList tags={post.data.tags} />
       </header>
+      {
+        isTocVisible && (
+          <details class="toc no-print" open>
+            <summary class="meta-label">Contents</summary>
+            <ul>
+              {tocHeadings.map((heading) => (
+                <li class={`toc-depth-${heading.depth}`}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )
+      }
       <Content />
     </article>
     <div class="post-footer">
       <button
-        class="share-btn"
+        class="share-btn no-print"
         type="button"
         aria-label="Share this post"
         data-title={post.data.title}
@@ -89,7 +111,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
     </p>
     {
       (adjacent.prev || adjacent.next) && (
-        <nav class="post-nav" aria-label="Post navigation">
+        <nav class="post-nav no-print" aria-label="Post navigation">
           {adjacent.prev ? (
             <a href={`/blog/${adjacent.prev.slug}`} class="post-nav-link prev">
               <ArrowLeft size={16} aria-hidden="true" />
@@ -142,7 +164,7 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
       if (pre.querySelector(".copy-btn")) continue;
 
       const button = document.createElement("button");
-      button.className = "copy-btn";
+      button.className = "copy-btn no-print";
       button.type = "button";
       button.setAttribute("aria-label", "Copy code");
       button.textContent = "Copy";
@@ -262,10 +284,68 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
     signal.addEventListener("abort", () => resizeObserver.disconnect());
   }
 
+  const tocState: { controller: AbortController | undefined } = {
+    controller: undefined,
+  };
+
+  /**
+   * Highlights the ToC link for the heading currently nearest the top of
+   * the viewport as the reader scrolls. Guards against stacking observers
+   * across navigations the same way `initReadingProgress` does.
+   */
+  function initTocScrollspy() {
+    const toc = document.querySelector<HTMLElement>(".toc");
+    if (!toc) return;
+
+    tocState.controller?.abort();
+    const controller = new AbortController();
+    tocState.controller = controller;
+    const { signal } = controller;
+
+    const links = new Map<string, HTMLAnchorElement>();
+    const headingElements: HTMLElement[] = [];
+    for (const link of toc.querySelectorAll<HTMLAnchorElement>(
+      "a[href^='#']"
+    )) {
+      const id = link.getAttribute("href")?.slice(1);
+      const heading = id
+        ? document.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
+        : undefined;
+      if (!id || !heading) continue;
+      links.set(id, link);
+      headingElements.push(heading);
+    }
+    if (headingElements.length === 0) return;
+
+    let activeLink: HTMLAnchorElement | undefined;
+    const setActive = (id: string | undefined) => {
+      const link = id ? links.get(id) : undefined;
+      if (link === activeLink) return;
+      activeLink?.removeAttribute("aria-current");
+      link?.setAttribute("aria-current", "true");
+      activeLink = link;
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .toSorted(
+            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+          );
+        if (visible[0]) setActive(visible[0].target.id);
+      },
+      { rootMargin: "0px 0px -70% 0px" }
+    );
+    for (const element of headingElements) observer.observe(element);
+    signal.addEventListener("abort", () => observer.disconnect());
+  }
+
   document.addEventListener("astro:page-load", () => {
     initCopyButtons();
     initShareButton();
     initReadingProgress();
+    initTocScrollspy();
   });
 </script>
 
@@ -317,6 +397,56 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
 
   header .updated {
     margin-top: 0.25rem;
+  }
+
+  .toc {
+    margin-bottom: 2.8rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--rule);
+  }
+
+  .toc summary {
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .toc summary:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.9rem 0 0 0;
+  }
+
+  .toc li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .toc li:last-child {
+    margin-bottom: 0;
+  }
+
+  .toc .toc-depth-3 {
+    padding-left: 1.25rem;
+  }
+
+  .toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .toc a:hover {
+    color: var(--signal);
+  }
+
+  .toc a[aria-current="true"] {
+    color: var(--signal);
+    font-weight: 600;
   }
 
   .post-footer {

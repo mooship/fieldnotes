@@ -37,13 +37,13 @@ Posts are sorted newest-`pubDate`-first. Reading time, feed entries, and the pos
 
 **Editing home page sections:** the five `.md` files in `src/sections/` (`intro`, `personal`, `writing`, `opensource`, `support`) are rendered in that order by `src/pages/index.astro`.
 
-**Editing `/now` or `/uses`:** edit `src/sections/now.md` / `src/sections/uses.md` directly — the page files themselves are thin wrappers with no content of their own.
+**Editing `/now`, `/uses`, or `/colophon`:** edit `src/sections/now.md` / `src/sections/uses.md` / `src/sections/colophon.md` directly — the page files themselves are thin wrappers with no content of their own.
 
 ## Tests
 
 Tests use Vitest with happy-dom. Test files live next to the source files they test (`*.test.ts`).
 
-- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `computeReadingTime`, `formatDate`, `formatMonthYear`
+- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `getTocHeadings`, `computeReadingTime`, `formatDate`, `formatMonthYear`
 - `src/lib/feed.test.ts` — `getFeedItems`
 - `src/lib/xml.test.ts` — `xmlEscape`
 
@@ -77,13 +77,15 @@ The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages 
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
 
-**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar and copy/share buttons, both reinitialized per navigation via `astro:page-load` — see Known Astro quirks.
+**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar, copy/share buttons, and an auto-generated table of contents (`render()`'s `headings` filtered by `getTocHeadings` in `src/lib/blog.ts`, which returns them only when a post has three or more h2/h3 headings, with scrollspy highlighting via `IntersectionObserver`) — all reinitialized per navigation via `astro:page-load`, see Known Astro quirks.
 
 **SEO/crawler endpoints:** `src/pages/robots.txt.ts` and `src/pages/llms.txt.ts` are dynamically generated at build time (not static files in `public/`) — `robots.txt` points to the sitemap, `llms.txt` lists every page and post as an AI-crawler-friendly Markdown index. Both pull from the same `src/lib/blog.ts` helpers as the rest of the site, so a new post appears in `llms.txt` automatically, and a `draft: true` post is excluded from it too.
 
 **Design system:** Swiss / International Typographic style. Pure black-on-white palette (`--paper` #ffffff light / #0a0a0a dark, `--ink` #0a0a0a / #f2f2f2) with a single hot signal-red accent (`--signal` #e2231a light / #ff453a dark) used for the masthead square mark, the active nav state, blockquote bars, selection fills, and link hover. Links themselves are ink (black), turning signal-red on hover. Sharp corners everywhere (`--radius: 0`), no shadows, hairline rules — plus one heavy 4px ink rule across the top of the masthead. The design relies on a neo-grotesque type system, a strict flush-left ragged-right grid, dramatic size jumps, and one restrained accent — no ornaments, no italics, no section-specific colors.
 
-**Styling:** Styles are split across four files in `src/styles/`: `tokens.css` (CSS custom properties), `base.css` (resets and base element styles), `typography.css` (type scale), and `code.css` (code block styles). Tokens: `--paper`, `--paper-deep`, `--ink`, `--ink-soft`, `--rule`, `--signal`. `--link` aliases to `--ink` (black links) and `--link-hover` aliases to `--signal` so links pick up the red accent on hover. Page-level layout styles use `:global()` selectors in `<style>` blocks. Light/dark modes are CSS-only via `@media (prefers-color-scheme: dark)` in `tokens.css` — there is no manual toggle component.
+**Styling:** Styles are split across five files in `src/styles/`: `tokens.css` (CSS custom properties), `base.css` (resets and base element styles), `typography.css` (type scale), `code.css` (code block styles), and `print.css` (`@media print` rules — forces black-on-white regardless of the OS color scheme and appends link URLs). Tokens: `--paper`, `--paper-deep`, `--ink`, `--ink-soft`, `--rule`, `--signal`. `--link` aliases to `--ink` (black links) and `--link-hover` aliases to `--signal` so links pick up the red accent on hover. Page-level layout styles use `:global()` selectors in `<style>` blocks — note `print.css` is a plain (non-scoped) stylesheet, so it uses bare selectors, not `:global()`. Light/dark modes are CSS-only via `@media (prefers-color-scheme: dark)` in `tokens.css` — there is no manual toggle component.
+
+**Hiding an element from print:** add the `no-print` class directly to it. `print.css` defines the single rule (`.no-print { display: none !important; }` under `@media print`); every page/component that has interactive chrome not worth printing (nav, footer, share/copy buttons, the reading-progress bar, back-links, the post ToC) applies the class itself rather than `print.css` maintaining a list of every other file's internal class names. Add `no-print` to any new interactive UI the same way — `print.css` never needs to change for it.
 
 **Fonts:** Geist (the neo-grotesque used for everything — body, headings, nav, meta) and Geist Mono (code only). Both are loaded via Astro's font API (`fontProviders.fontsource()`) and exposed as `--font-sans` and `--font-mono` respectively; `--font-sans` carries a system-sans fallback stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, …). There is no serif face. Font-face declarations are injected automatically. Typography details (sizes, weights, letter-spacing) are in `src/styles/typography.css`.
 
@@ -93,7 +95,7 @@ The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages 
 
 **OG images:** `/og/[slug].png.ts` generates Open Graph images at build time using `satori` (SVG layout) and `sharp` (PNG conversion). The layout mirrors the Swiss site design — white field, black flush-left title in Geist, a signal-red accent bar, and a caps masthead label; Geist `.woff` files are read from `@fontsource/geist`.
 
-**Standalone pages:** `/now` and `/uses` are static pages (`src/pages/now.astro`, `src/pages/uses.astro`) that import their content from `src/sections/now.md` and `src/sections/uses.md` respectively.
+**Standalone pages:** `/now`, `/uses`, and `/colophon` are static pages (`src/pages/now.astro`, `src/pages/uses.astro`, `src/pages/colophon.astro`) that import their content from the matching `.md` file in `src/sections/`.
 
 **Components:** `src/components/PostListItem.astro` renders a single post row in blog listings. `src/components/CarbonBadge.astro` renders the page carbon footprint badge, computed entirely client-side from the Performance API (no network request) using the Sustainable Web Design Model. `src/components/EasterEggs.astro` holds the Konami-code palette swap and the wordmark click easter egg.
 

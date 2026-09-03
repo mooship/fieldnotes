@@ -197,3 +197,19 @@ export function getAdjacentPosts(
       : undefined,
   };
 }
+
+const TOC_MIN_HEADINGS = 3;
+
+interface TocHeading {
+  depth: number;
+}
+
+/**
+ * Picks the h2/h3 headings worth showing in a post's table of contents.
+ * Returns an empty array below `TOC_MIN_HEADINGS` — a couple of headings
+ * read as clutter, not navigation.
+ */
+export function getTocHeadings<T extends TocHeading>(headings: T[]): T[] {
+  const tocHeadings = headings.filter((heading) => heading.depth <= 3);
+  return tocHeadings.length >= TOC_MIN_HEADINGS ? tocHeadings : [];
+}

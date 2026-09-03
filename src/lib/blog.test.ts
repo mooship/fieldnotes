@@ -9,6 +9,7 @@ import {
   getPostsByTag,
   getSiteUrl,
   getTagSlug,
+  getTocHeadings,
   renderMarkdownToHtml,
 } from "./blog";
 
@@ -110,6 +111,32 @@ describe("getAdjacentPosts", () => {
     const result = getAdjacentPosts(posts, "unknown");
     expect(result.prev).toBeUndefined();
     expect(result.next).toBeUndefined();
+  });
+});
+
+describe("getTocHeadings", () => {
+  it("returns an empty array below the minimum heading count", () => {
+    const headings = [{ depth: 2 }, { depth: 2 }];
+    expect(getTocHeadings(headings)).toEqual([]);
+  });
+
+  it("returns h2/h3 headings at or above the minimum count", () => {
+    const headings = [{ depth: 2 }, { depth: 3 }, { depth: 2 }];
+    expect(getTocHeadings(headings)).toEqual(headings);
+  });
+
+  it("excludes headings deeper than h3", () => {
+    const headings = [{ depth: 2 }, { depth: 3 }, { depth: 2 }, { depth: 4 }];
+    expect(getTocHeadings(headings)).toEqual([
+      { depth: 2 },
+      { depth: 3 },
+      { depth: 2 },
+    ]);
+  });
+
+  it("returns an empty array once deep headings drop the count below the minimum", () => {
+    const headings = [{ depth: 2 }, { depth: 4 }, { depth: 2 }];
+    expect(getTocHeadings(headings)).toEqual([]);
   });
 });
 
