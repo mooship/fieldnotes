@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import { Content as IntroContent } from "../sections/intro.md";
 import { Content as PersonalContent } from "../sections/personal.md";
-import { Content as WritingContent } from "../sections/writing.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
 import { Content as SupportContent } from "../sections/support.md";
 import { formatDate, getBlogPosts, getPostSlug, SITE_TITLE } from "../lib/blog";
@@ -45,7 +44,6 @@ const recentPosts = posts.slice(0, 5);
       )
     }
     <OpenSourceContent />
-    <WritingContent />
     <SupportContent />
     <PersonalContent />
   </main>
