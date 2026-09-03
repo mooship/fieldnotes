@@ -14,12 +14,12 @@
 ## Languages & Frameworks
 
 - TypeScript with React — my daily driver for everything on the web
-- Rust — still learning, but it's changed how I think about code
+- .NET / C# — my professional stack
 
 ## Infrastructure
 
 - PostgreSQL via [Neon](https://neon.tech) — serverless Postgres that just works
-- Cloudflare Pages and Workers — fast deploys, generous free tier
+- Cloudflare Workers — fast deploys, generous free tier
 
 ## AI
 
