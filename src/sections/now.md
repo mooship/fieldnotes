@@ -12,7 +12,7 @@ The Expanse novels by James S. A. Corey — well, listening to the audiobooks.
 
 ## What I'm playing
 
-Age of Empires II: Definitive Edition, Stardew Valley, Star Wars: Knights of the Old Republic, and Star Wars: Knights of the Old Republic II – The Sith Lords.
+Age of Empires II: Definitive Edition, Stardew Valley, and Star Wars: Knights of the Old Republic II – The Sith Lords.
 
 ## What I'm interested in
 
