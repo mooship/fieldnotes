@@ -1,5 +1,5 @@
 ---
-lastUpdated: "2026-08-25"
+lastUpdated: "2026-09-03"
 ---
 
 ## What I'm doing
@@ -12,7 +12,7 @@ The Expanse novels by James S. A. Corey — well, listening to the audiobooks.
 
 ## What I'm playing
 
-Age of Empires II: Definitive Edition and Stardew Valley.
+Age of Empires II: Definitive Edition, Stardew Valley, and Star Wars: Knights of the Old Republic II – The Sith Lords.
 
 ## What I'm interested in
 
