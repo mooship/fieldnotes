@@ -9,11 +9,8 @@ import {
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
-  getPostUrl,
-  getSiteUrl,
   SITE_TITLE,
 } from "../../lib/blog";
-import { getWebmentions, summarizeWebmentions } from "../../lib/webmentions";
 
 export async function getStaticPaths() {
   const posts = await getBlogPosts();
@@ -36,13 +33,6 @@ const readingTime = computeReadingTime(post.body);
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
 const tocHeadings = headings.filter((heading) => heading.depth <= 3);
 const isTocVisible = tocHeadings.length >= TOC_MIN_HEADINGS;
-
-const postUrl = getPostUrl(getSiteUrl(Astro.site), post.id);
-const webmentions = summarizeWebmentions(await getWebmentions(postUrl));
-const isWebmentionsVisible =
-  webmentions.likeCount > 0 ||
-  webmentions.repostCount > 0 ||
-  webmentions.replies.length > 0;
 ---
 
 <Layout
@@ -115,57 +105,6 @@ const isWebmentionsVisible =
       id="action-status"
     >
     </p>
-    {
-      isWebmentionsVisible && (
-        <section class="webmentions" aria-labelledby="webmentions-heading">
-          <h2 id="webmentions-heading" class="meta-label">
-            Webmentions
-          </h2>
-          {(webmentions.likeCount > 0 || webmentions.repostCount > 0) && (
-            <p class="webmention-counts">
-              {webmentions.likeCount > 0 && (
-                <span>
-                  {webmentions.likeCount} like
-                  {webmentions.likeCount === 1 ? "" : "s"}
-                </span>
-              )}
-              {webmentions.repostCount > 0 && (
-                <span>
-                  {webmentions.repostCount} repost
-                  {webmentions.repostCount === 1 ? "" : "s"}
-                </span>
-              )}
-            </p>
-          )}
-          {webmentions.replies.length > 0 && (
-            <ul class="webmention-replies">
-              {webmentions.replies.map((reply) => (
-                <li>
-                  <p class="webmention-meta">
-                    <a
-                      href={reply.authorUrl ?? reply.url}
-                      class="webmention-author"
-                    >
-                      {reply.authorName ?? "Someone"}
-                    </a>
-                    {reply.published && (
-                      <time datetime={reply.published}>
-                        {formatDate(new Date(reply.published))}
-                      </time>
-                    )}
-                  </p>
-                  <p class="webmention-content">{reply.content}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-          <p class="webmention-note">
-            Replies and likes from elsewhere on the web, via{" "}
-            <a href="/colophon">Webmention</a>.
-          </p>
-        </section>
-      )
-    }
     {
       (adjacent.prev || adjacent.next) && (
         <nav class="post-nav" aria-label="Post navigation">
@@ -663,63 +602,6 @@ const isWebmentionsVisible =
     border: none;
     border-top: 1px solid var(--rule);
     margin: 2.5rem 0;
-  }
-
-  .webmentions {
-    margin-top: 3.2rem;
-    padding-top: 1.6rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .webmention-counts {
-    display: flex;
-    gap: 1.2rem;
-    margin: 0.8rem 0 0 0;
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-  }
-
-  .webmention-replies {
-    list-style: none;
-    padding: 0;
-    margin: 1.2rem 0 0 0;
-  }
-
-  .webmention-replies li {
-    padding: 0.9rem 0;
-    border-top: 1px solid var(--rule);
-  }
-
-  .webmention-replies li:first-child {
-    border-top: none;
-  }
-
-  .webmention-meta {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    margin: 0 0 0.3rem 0;
-    font-size: 0.8rem;
-  }
-
-  .webmention-author {
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  .webmention-meta time {
-    color: var(--ink-soft);
-  }
-
-  .webmention-content {
-    margin: 0;
-    line-height: 1.55;
-  }
-
-  .webmention-note {
-    margin: 1.2rem 0 0 0;
-    font-size: 0.8rem;
-    color: var(--ink-soft);
   }
 
   .post-nav {
