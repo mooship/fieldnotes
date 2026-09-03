@@ -1,0 +1,63 @@
+@media print {
+  :root {
+    --paper: #ffffff;
+    --paper-deep: #ffffff;
+    --ink: #000000;
+    --ink-soft: #333333;
+    --rule: #999999;
+    --signal: #000000;
+  }
+
+  * {
+    print-color-adjust: exact;
+  }
+
+  body {
+    max-width: none;
+    padding: 0;
+  }
+
+  .skip-link,
+  header nav,
+  footer,
+  .reading-progress,
+  .back-link,
+  .share-btn,
+  .post-nav,
+  .copy-btn,
+  .toc {
+    display: none !important;
+  }
+
+  .masthead {
+    border-top: none;
+    padding: 0 0 0.8rem 0;
+  }
+
+  .wordmark-byline::after {
+    content: " — printed from timothybrits.co.za";
+  }
+
+  article pre {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    border: 1px solid var(--rule);
+  }
+
+  article blockquote,
+  article pre,
+  article figure,
+  article img {
+    break-inside: avoid;
+  }
+
+  a[href]:not(.nav-link)::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: var(--ink-soft);
+  }
+
+  a[href^="#"]::after {
+    content: "";
+  }
+}

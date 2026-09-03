@@ -37,7 +37,7 @@ Posts are sorted newest-`pubDate`-first. Reading time, feed entries, and the pos
 
 **Editing home page sections:** the five `.md` files in `src/sections/` (`intro`, `personal`, `writing`, `opensource`, `support`) are rendered in that order by `src/pages/index.astro`.
 
-**Editing `/now` or `/uses`:** edit `src/sections/now.md` / `src/sections/uses.md` directly — the page files themselves are thin wrappers with no content of their own.
+**Editing `/now`, `/uses`, or `/colophon`:** edit `src/sections/now.md` / `src/sections/uses.md` / `src/sections/colophon.md` directly — the page files themselves are thin wrappers with no content of their own.
 
 ## Tests
 
@@ -46,6 +46,7 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 - `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `computeReadingTime`, `formatDate`, `formatMonthYear`
 - `src/lib/feed.test.ts` — `getFeedItems`
 - `src/lib/xml.test.ts` — `xmlEscape`
+- `src/lib/webmentions.test.ts` — `getWebmentions`, `summarizeWebmentions`
 
 `astro:content` is a virtual Astro module that doesn't exist outside the Astro runtime. Tests that import from `src/lib/blog.ts` use `vi.hoisted` + `vi.mock` to intercept it. The alias in `vitest.config.ts` resolves it to `src/__mocks__/astro-content.ts` so Vite can find the module during test runs.
 
@@ -63,7 +64,11 @@ Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one P
 
 The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages config committed — build/deploy settings live in the Cloudflare dashboard, not this repo. `public/_headers` is Cloudflare Pages' native way to set response headers (its CSP allows `cloudflareinsights.com` for Cloudflare Web Analytics). Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
-`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
+`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource loaded by the browser** — a script, font, image, or client-side `fetch` from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time. This doesn't apply to a build-time-only fetch (e.g. `src/lib/webmentions.ts`, called from `blog/[slug].astro`'s frontmatter for each post): that runs in Node during `astro build`, never in the browser, so the CSP is irrelevant to it.
+
+## Webmentions
+
+`<link rel="webmention">`/`rel="pingback">` tags in `Layout.astro` point at `https://webmention.io/timothybrits.co.za/...`, and `src/lib/webmentions.ts` fetches from that same webmention.io account at build time. Both are inert until the site owner signs up at [webmention.io](https://webmention.io) with this domain and verifies ownership (typically via `rel="me"` links to an existing identity, e.g. GitHub) — until then `getWebmentions` just gets 404s/empty responses and returns `[]`, so posts render with no Webmentions section and nothing breaks.
 
 ## Safety
 
@@ -77,13 +82,13 @@ The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages 
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
 
-**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar and copy/share buttons, both reinitialized per navigation via `astro:page-load` — see Known Astro quirks.
+**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar, copy/share buttons (all reinitialized per navigation via `astro:page-load` — see Known Astro quirks), an auto-generated table of contents (from `render()`'s `headings` return value, shown when a post has three or more h2/h3 headings, with scrollspy highlighting via `IntersectionObserver`), and a Webmentions section fetched at build time by `src/lib/webmentions.ts` from webmention.io's public jf2 API.
 
 **SEO/crawler endpoints:** `src/pages/robots.txt.ts` and `src/pages/llms.txt.ts` are dynamically generated at build time (not static files in `public/`) — `robots.txt` points to the sitemap, `llms.txt` lists every page and post as an AI-crawler-friendly Markdown index. Both pull from the same `src/lib/blog.ts` helpers as the rest of the site, so a new post appears in `llms.txt` automatically, and a `draft: true` post is excluded from it too.
 
 **Design system:** Swiss / International Typographic style. Pure black-on-white palette (`--paper` #ffffff light / #0a0a0a dark, `--ink` #0a0a0a / #f2f2f2) with a single hot signal-red accent (`--signal` #e2231a light / #ff453a dark) used for the masthead square mark, the active nav state, blockquote bars, selection fills, and link hover. Links themselves are ink (black), turning signal-red on hover. Sharp corners everywhere (`--radius: 0`), no shadows, hairline rules — plus one heavy 4px ink rule across the top of the masthead. The design relies on a neo-grotesque type system, a strict flush-left ragged-right grid, dramatic size jumps, and one restrained accent — no ornaments, no italics, no section-specific colors.
 
-**Styling:** Styles are split across four files in `src/styles/`: `tokens.css` (CSS custom properties), `base.css` (resets and base element styles), `typography.css` (type scale), and `code.css` (code block styles). Tokens: `--paper`, `--paper-deep`, `--ink`, `--ink-soft`, `--rule`, `--signal`. `--link` aliases to `--ink` (black links) and `--link-hover` aliases to `--signal` so links pick up the red accent on hover. Page-level layout styles use `:global()` selectors in `<style>` blocks. Light/dark modes are CSS-only via `@media (prefers-color-scheme: dark)` in `tokens.css` — there is no manual toggle component.
+**Styling:** Styles are split across five files in `src/styles/`: `tokens.css` (CSS custom properties), `base.css` (resets and base element styles), `typography.css` (type scale), `code.css` (code block styles), and `print.css` (`@media print` rules — hides interactive chrome, forces black-on-white regardless of the OS color scheme, and appends link URLs). Tokens: `--paper`, `--paper-deep`, `--ink`, `--ink-soft`, `--rule`, `--signal`. `--link` aliases to `--ink` (black links) and `--link-hover` aliases to `--signal` so links pick up the red accent on hover. Page-level layout styles use `:global()` selectors in `<style>` blocks — note `print.css` is a plain (non-scoped) stylesheet, so it uses bare selectors, not `:global()`. Light/dark modes are CSS-only via `@media (prefers-color-scheme: dark)` in `tokens.css` — there is no manual toggle component.
 
 **Fonts:** Geist (the neo-grotesque used for everything — body, headings, nav, meta) and Geist Mono (code only). Both are loaded via Astro's font API (`fontProviders.fontsource()`) and exposed as `--font-sans` and `--font-mono` respectively; `--font-sans` carries a system-sans fallback stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, …). There is no serif face. Font-face declarations are injected automatically. Typography details (sizes, weights, letter-spacing) are in `src/styles/typography.css`.
 
@@ -93,7 +98,7 @@ The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages 
 
 **OG images:** `/og/[slug].png.ts` generates Open Graph images at build time using `satori` (SVG layout) and `sharp` (PNG conversion). The layout mirrors the Swiss site design — white field, black flush-left title in Geist, a signal-red accent bar, and a caps masthead label; Geist `.woff` files are read from `@fontsource/geist`.
 
-**Standalone pages:** `/now` and `/uses` are static pages (`src/pages/now.astro`, `src/pages/uses.astro`) that import their content from `src/sections/now.md` and `src/sections/uses.md` respectively.
+**Standalone pages:** `/now`, `/uses`, and `/colophon` are static pages (`src/pages/now.astro`, `src/pages/uses.astro`, `src/pages/colophon.astro`) that import their content from the matching `.md` file in `src/sections/`.
 
 **Components:** `src/components/PostListItem.astro` renders a single post row in blog listings. `src/components/CarbonBadge.astro` renders the page carbon footprint badge, computed entirely client-side from the Performance API (no network request) using the Sustainable Web Design Model. `src/components/EasterEggs.astro` holds the Konami-code palette swap and the wordmark click easter egg.
 
@@ -129,7 +134,7 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 - **Keep it boring and flat.** This is a personal static site with no class hierarchies, no dependency injection, and no plugin system — SOLID/OCP-style abstractions don't have anywhere to attach. Prefer a plain function in `src/lib/` over an interface or a class.
 - **Don't duplicate logic across the Astro and feed pipelines.** `src/lib/markdown-config.ts`, `src/lib/blog.ts`, and `src/lib/feed.ts` exist specifically so `astro.config.mjs`, the blog pages, and the three feed endpoints stay in sync — add new shared logic there, not copied inline at each call site.
 - **YAGNI over speculative flexibility.** Don't add config options, props, or abstraction layers for a second use case that doesn't exist yet — this site has one author, one design, and one deployment target.
-- **New logic in `src/lib/` ships with a test in the same commit.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`) has a matching `*.test.ts` — keep that 1:1, and lean on the existing `astro:content` mock rather than inventing a new one.
+- **New logic in `src/lib/` ships with a test in the same commit.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`, `webmentions.ts`) has a matching `*.test.ts` — keep that 1:1, and lean on the existing `astro:content` mock rather than inventing a new one.
 
 ## Code style
 
