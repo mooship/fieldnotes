@@ -29,6 +29,11 @@ updates:
     ignore:
       - dependency-name: "astro"
       - dependency-name: "zod"
+      # @astrojs/check (Volar-based) can't run on TypeScript 7 until
+      # TS ships a stable replacement for the removed Strada API,
+      # expected in 7.1. Drop this once @astrojs/check supports it.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
