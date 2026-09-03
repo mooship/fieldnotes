@@ -46,7 +46,6 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 - `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `computeReadingTime`, `formatDate`, `formatMonthYear`
 - `src/lib/feed.test.ts` — `getFeedItems`
 - `src/lib/xml.test.ts` — `xmlEscape`
-- `src/lib/webmentions.test.ts` — `getWebmentions`, `summarizeWebmentions`
 
 `astro:content` is a virtual Astro module that doesn't exist outside the Astro runtime. Tests that import from `src/lib/blog.ts` use `vi.hoisted` + `vi.mock` to intercept it. The alias in `vitest.config.ts` resolves it to `src/__mocks__/astro-content.ts` so Vite can find the module during test runs.
 
@@ -64,11 +63,7 @@ Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one P
 
 The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages config committed — build/deploy settings live in the Cloudflare dashboard, not this repo. `public/_headers` is Cloudflare Pages' native way to set response headers (its CSP allows `cloudflareinsights.com` for Cloudflare Web Analytics). Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
-`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource loaded by the browser** — a script, font, image, or client-side `fetch` from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time. This doesn't apply to a build-time-only fetch (e.g. `src/lib/webmentions.ts`, called from `blog/[slug].astro`'s frontmatter for each post): that runs in Node during `astro build`, never in the browser, so the CSP is irrelevant to it.
-
-## Webmentions
-
-`<link rel="webmention">`/`rel="pingback">` tags in `Layout.astro` point at `https://webmention.io/timothybrits.co.za/...`, and `src/lib/webmentions.ts` fetches from that same webmention.io account at build time. Both are inert until the site owner signs up at [webmention.io](https://webmention.io) with this domain and verifies ownership (typically via `rel="me"` links to an existing identity, e.g. GitHub) — until then `getWebmentions` just gets 404s/empty responses and returns `[]`, so posts render with no Webmentions section and nothing breaks.
+`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
 ## Safety
 
@@ -82,7 +77,7 @@ The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages 
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
 
-**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar, copy/share buttons (all reinitialized per navigation via `astro:page-load` — see Known Astro quirks), an auto-generated table of contents (from `render()`'s `headings` return value, shown when a post has three or more h2/h3 headings, with scrollspy highlighting via `IntersectionObserver`), and a Webmentions section fetched at build time by `src/lib/webmentions.ts` from webmention.io's public jf2 API.
+**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar, copy/share buttons, and an auto-generated table of contents (from `render()`'s `headings` return value, shown when a post has three or more h2/h3 headings, with scrollspy highlighting via `IntersectionObserver`) — all reinitialized per navigation via `astro:page-load`, see Known Astro quirks.
 
 **SEO/crawler endpoints:** `src/pages/robots.txt.ts` and `src/pages/llms.txt.ts` are dynamically generated at build time (not static files in `public/`) — `robots.txt` points to the sitemap, `llms.txt` lists every page and post as an AI-crawler-friendly Markdown index. Both pull from the same `src/lib/blog.ts` helpers as the rest of the site, so a new post appears in `llms.txt` automatically, and a `draft: true` post is excluded from it too.
 
@@ -134,7 +129,7 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 - **Keep it boring and flat.** This is a personal static site with no class hierarchies, no dependency injection, and no plugin system — SOLID/OCP-style abstractions don't have anywhere to attach. Prefer a plain function in `src/lib/` over an interface or a class.
 - **Don't duplicate logic across the Astro and feed pipelines.** `src/lib/markdown-config.ts`, `src/lib/blog.ts`, and `src/lib/feed.ts` exist specifically so `astro.config.mjs`, the blog pages, and the three feed endpoints stay in sync — add new shared logic there, not copied inline at each call site.
 - **YAGNI over speculative flexibility.** Don't add config options, props, or abstraction layers for a second use case that doesn't exist yet — this site has one author, one design, and one deployment target.
-- **New logic in `src/lib/` ships with a test in the same commit.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`, `webmentions.ts`) has a matching `*.test.ts` — keep that 1:1, and lean on the existing `astro:content` mock rather than inventing a new one.
+- **New logic in `src/lib/` ships with a test in the same commit.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`) has a matching `*.test.ts` — keep that 1:1, and lean on the existing `astro:content` mock rather than inventing a new one.
 
 ## Code style
 

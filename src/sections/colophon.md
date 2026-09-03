@@ -11,10 +11,6 @@
 
 Swiss / International Typographic style: pure black-on-white, one hot signal-red accent, sharp corners, hairline rules, a flush-left ragged-right grid. No shadows, no gradients, no italics. Dark mode is CSS-only via `prefers-color-scheme` — there's no toggle, no stored preference, no flash of the wrong theme.
 
-## Webmentions
-
-Post pages listen for [Webmention](https://indieweb.org/Webmention), an open W3C standard for cross-site replies: if you write about a post on your own site and link to it, that shows up under the post here, without any comment system, account, or tracking. Likes and reposts from IndieWeb-aware readers work the same way.
-
 ## Performance & privacy
 
 No tracking scripts beyond [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/), which is cookieless and doesn't fingerprint. The carbon badge in the footer of every page is computed entirely client-side from the Performance API using the [Sustainable Web Design Model](https://sustainablewebdesign.org) — nothing is sent anywhere to produce it.
