@@ -9,6 +9,7 @@ import {
   getAdjacentPosts,
   getBlogPosts,
   getPostSlug,
+  getTocHeadings,
   SITE_TITLE,
 } from "../../lib/blog";
 
@@ -24,15 +25,13 @@ export async function getStaticPaths() {
   });
 }
 
-const TOC_MIN_HEADINGS = 3;
-
 const { post, adjacent } = Astro.props;
 const { slug } = Astro.params;
 const { Content, headings } = await render(post);
 const readingTime = computeReadingTime(post.body);
 const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
-const tocHeadings = headings.filter((heading) => heading.depth <= 3);
-const isTocVisible = tocHeadings.length >= TOC_MIN_HEADINGS;
+const tocHeadings = getTocHeadings(headings);
+const isTocVisible = tocHeadings.length > 0;
 ---
 
 <Layout
@@ -298,20 +297,19 @@ const isTocVisible = tocHeadings.length >= TOC_MIN_HEADINGS;
     tocState.controller = controller;
     const { signal } = controller;
 
-    const links = new Map(
-      [...toc.querySelectorAll<HTMLAnchorElement>("a[href^='#']")].map(
-        (link) => [link.getAttribute("href")?.slice(1), link]
-      )
-    );
-    const headingElements = links
-      .keys()
-      .map((id) =>
-        id
-          ? document.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
-          : undefined
-      )
-      .filter((element): element is HTMLElement => Boolean(element))
-      .toArray();
+    const links = new Map<string, HTMLAnchorElement>();
+    const headingElements: HTMLElement[] = [];
+    for (const link of toc.querySelectorAll<HTMLAnchorElement>(
+      "a[href^='#']"
+    )) {
+      const id = link.getAttribute("href")?.slice(1);
+      const heading = id
+        ? document.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
+        : undefined;
+      if (!id || !heading) continue;
+      links.set(id, link);
+      headingElements.push(heading);
+    }
     if (headingElements.length === 0) return;
 
     let activeLink: HTMLAnchorElement | undefined;
