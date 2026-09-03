@@ -57,7 +57,7 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 `.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking — that only runs as part of `npm run build`, which isn't in `lefthook.yml`. Run `npm run build` locally before pushing if you've touched types, or a type error will only surface in CI.
 
-Dependabot (`.github/dependabot.yml`) checks npm and GitHub Actions dependencies weekly (Saturdays) and groups each ecosystem's updates into one PR.
+Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one PR. Most npm and GitHub Actions dependencies check monthly (first Saturday); `astro` and `zod` are split into their own weekly-grouped PR instead.
 
 ## Deployment
 
