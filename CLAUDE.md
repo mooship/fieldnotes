@@ -43,7 +43,7 @@ Posts are sorted newest-`pubDate`-first. Reading time, feed entries, and the pos
 
 Tests use Vitest with happy-dom. Test files live next to the source files they test (`*.test.ts`).
 
-- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `computeReadingTime`, `formatDate`, `formatMonthYear`
+- `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `getTocHeadings`, `computeReadingTime`, `formatDate`, `formatMonthYear`
 - `src/lib/feed.test.ts` — `getFeedItems`
 - `src/lib/xml.test.ts` — `xmlEscape`
 
@@ -77,7 +77,7 @@ The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages 
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
 
-**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar, copy/share buttons, and an auto-generated table of contents (from `render()`'s `headings` return value, shown when a post has three or more h2/h3 headings, with scrollspy highlighting via `IntersectionObserver`) — all reinitialized per navigation via `astro:page-load`, see Known Astro quirks.
+**Blog:** Posts live in `src/content/blog/` as `.md` files. The collection is defined in `src/content.config.ts` using Astro's `glob()` loader. Shared blog utilities (fetch, sort, slug transform, description constant) are in `src/lib/blog.ts`. Three feed endpoints are generated at build time: `/rss.xml`, `/atom.xml`, `/feed.json` — all share `src/lib/feed.ts` (`getFeedItems`) which renders post HTML and normalises dates. XML character escaping lives in `src/lib/xml.ts`. Individual post pages (`src/pages/blog/[slug].astro`) also render a signal-red reading-progress bar, copy/share buttons, and an auto-generated table of contents (`render()`'s `headings` filtered by `getTocHeadings` in `src/lib/blog.ts`, which returns them only when a post has three or more h2/h3 headings, with scrollspy highlighting via `IntersectionObserver`) — all reinitialized per navigation via `astro:page-load`, see Known Astro quirks.
 
 **SEO/crawler endpoints:** `src/pages/robots.txt.ts` and `src/pages/llms.txt.ts` are dynamically generated at build time (not static files in `public/`) — `robots.txt` points to the sitemap, `llms.txt` lists every page and post as an AI-crawler-friendly Markdown index. Both pull from the same `src/lib/blog.ts` helpers as the rest of the site, so a new post appears in `llms.txt` automatically, and a `draft: true` post is excluded from it too.
 
