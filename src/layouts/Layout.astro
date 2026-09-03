@@ -131,7 +131,7 @@ const jsonLd = {
     <ClientRouter />
   </head>
   <body>
-    <a href="#main-content" class="skip-link visually-hidden"
+    <a href="#main-content" class="skip-link visually-hidden no-print"
       >Skip to main content</a
     >
     <header>
@@ -141,7 +141,7 @@ const jsonLd = {
           <span class="wordmark-title">{SITE_TITLE}</span>
           <span class="wordmark-byline">by {SITE_AUTHOR}</span>
         </a>
-        <nav aria-label="Main">
+        <nav aria-label="Main" class="no-print">
           <a
             href="/blog"
             aria-current={pathname.startsWith("/blog") ? "page" : undefined}
@@ -163,7 +163,7 @@ const jsonLd = {
       </div>
     </header>
     <slot />
-    <footer>
+    <footer class="no-print">
       <nav class="feed-links" aria-label="Feed subscriptions">
         <span>Subscribe:</span>
         <a href="/atom.xml">Atom</a>
