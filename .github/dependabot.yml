@@ -1,5 +1,7 @@
 version: 2
 updates:
+  # Astro (the framework) and Zod (input validation) get a faster,
+  # separate weekly PR; everything else is bulk-grouped and monthly.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -8,14 +10,29 @@ updates:
       time: "09:00"
       timezone: "Africa/Johannesburg"
     groups:
+      npm-critical:
+        patterns:
+          - "*"
+    allow:
+      - dependency-name: "astro"
+      - dependency-name: "zod"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Africa/Johannesburg"
+    groups:
       npm:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "astro"
+      - dependency-name: "zod"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "saturday"
+      interval: "monthly"
       time: "09:00"
       timezone: "Africa/Johannesburg"
     groups:
