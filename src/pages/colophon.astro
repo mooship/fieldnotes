@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Content as ColophonContent } from "../sections/colophon.md";
+import { SITE_TITLE } from "../lib/blog";
+---
+
+<Layout
+  title={`Colophon — ${SITE_TITLE}`}
+  description="How this site is built, designed, and hosted."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1 class="page-title">Colophon</h1>
+    <ColophonContent />
+    <a href="/" class="nav-link back-link">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  main :global(p) {
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+  }
+
+  main :global(ul) {
+    padding-left: 1.5rem;
+    list-style: square;
+    margin-top: 0;
+  }
+
+  main :global(li) {
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+</style>
