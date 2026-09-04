@@ -69,10 +69,6 @@ The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages 
 
 - **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation.
 
-## Git commit conventions
-
-- **Never include a `Claude-Session:` link (or any claude.ai/code session URL) in a commit message on this repo.** A trailing `Co-Authored-By: Claude ...` line is fine if included, but omit the session-link trailer entirely — this repo is public and the owner doesn't want session links surfacing in commit history.
-
 ## Architecture
 
 **How the home page is assembled:** `src/pages/index.astro` imports five `.md` files as Astro content components and renders them sequentially inside a `<main>`. The markdown files each export a `Content` component via Astro's MD pipeline — they are not routes themselves. A blog section is rendered inline (not from a `.md` file) by querying the content collection.
@@ -131,11 +127,12 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 - **Keep it boring and flat.** This is a personal static site with no class hierarchies, no dependency injection, and no plugin system — SOLID/OCP-style abstractions don't have anywhere to attach. Prefer a plain function in `src/lib/` over an interface or a class.
 - **Don't duplicate logic across the Astro and feed pipelines.** `src/lib/markdown-config.ts`, `src/lib/blog.ts`, and `src/lib/feed.ts` exist specifically so `astro.config.mjs`, the blog pages, and the three feed endpoints stay in sync — add new shared logic there, not copied inline at each call site.
 - **YAGNI over speculative flexibility.** Don't add config options, props, or abstraction layers for a second use case that doesn't exist yet — this site has one author, one design, and one deployment target.
-- **New logic in `src/lib/` ships with a test in the same commit.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`) has a matching `*.test.ts` — keep that 1:1, and lean on the existing `astro:content` mock rather than inventing a new one.
+- **TDD: new logic in `src/lib/` ships with a test in the same commit, written first.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`) has a matching `*.test.ts` — keep that 1:1, write the failing test before the implementation, and lean on the existing `astro:content` mock rather than inventing a new one.
 
-## Code style
+## Code Style
 
 - **No inline comments** — never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
+- **British English spelling** in site copy and UI labels (section markdown, blog posts, nav/meta text) — "colour", "optimise", "favourite" — matching the author's other projects.
 - Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `npm run format`.
 - ESLint uses flat config (`eslint.config.js`) with TypeScript, Astro (including `jsx-a11y-recommended` — accessibility lint rules apply to `.astro` templates), Unicorn, `@eslint/css`, and `@eslint/markdown`, plus `eslint-config-prettier` to defer all formatting decisions to Prettier. Three Unicorn rules are disabled repo-wide: `filename-case` (needed for `[slug].astro`-style bracket filenames and PascalCase components), `prevent-abbreviations`, and `text-encoding-identifier-case`.
 - CSS lint requires new properties/selectors to be **Baseline "newly available"** (`css/use-baseline`) — a very recent CSS feature can get flagged even though it works in current browsers; `text-wrap` and `:selection` are explicitly allowlisted as exceptions.
