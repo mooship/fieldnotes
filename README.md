@@ -4,7 +4,7 @@ Personal site and blog built with Astro + TypeScript + CSS. Includes a blog with
 
 ## Quick Start
 
-Prerequisite: Node 24+ and npm.
+Prerequisite: Node 22+ and npm.
 
 ```sh
 git clone <your-fork-url> fieldnotes
@@ -17,25 +17,29 @@ Dev server runs at: http://localhost:4321
 
 ## Common Scripts
 
-| Script            | Purpose                          |
-| ----------------- | -------------------------------- |
-| `npm run dev`     | Start local development server   |
-| `npm run build`   | Type check then production build |
-| `npm run lint`    | Lint and auto-fix all file types |
-| `npm run preview` | Preview built site               |
-| `npm run format`  | Prettier + import sorting        |
-| `npm run test`    | Run Vitest unit tests            |
+| Script               | Purpose                                  |
+| -------------------- | ---------------------------------------- |
+| `npm run dev`        | Start local development server           |
+| `npm run build`      | Type check then production build         |
+| `npm run lint`       | Lint and auto-fix all file types         |
+| `npm run lint:check` | Same lint, no auto-fix — what CI runs    |
+| `npm run preview`    | Preview built site                       |
+| `npm run format`     | Prettier + import sorting                |
+| `npm run test`       | Run Vitest unit tests                    |
+| `npm run lighthouse` | Run Lighthouse CI against the built site |
 
 ## Structure (essentials)
 
 ```text
 src/
   pages/
-    index.astro          # Home page (imports and renders 5 section .md files)
+    index.astro          # Home page (imports 4 section .md files, blog list rendered inline)
     now.astro            # /now page
     uses.astro           # /uses page
+    colophon.astro       # /colophon page
     404.astro
     robots.txt.ts
+    llms.txt.ts
     rss.xml.ts
     atom.xml.ts
     feed.json.ts
@@ -50,11 +54,11 @@ src/
   sections/
     intro.md             # Home page: introduction
     personal.md          # Home page: personal links
-    writing.md           # Home page: writing intro
     opensource.md        # Home page: open source
     support.md           # Home page: support
     now.md               # /now page content
     uses.md              # /uses page content
+    colophon.md          # /colophon page content
   components/
     PostListItem.astro   # Single post row in blog listings
     CarbonBadge.astro    # Page carbon footprint badge
@@ -76,16 +80,16 @@ src/
     tokens.css           # CSS custom properties
     base.css             # Resets and base element styles
     typography.css       # Type scale
-    tags.css             # Tag pill styles
     code.css             # Code block styles
+    print.css            # @media print rules
 public/                  # Static assets (images, favicons, etc.)
 ```
 
 ## Customising Content
 
-1. Edit home page sections in `src/sections/intro.md`, `src/sections/personal.md`, `src/sections/writing.md`, `src/sections/opensource.md`, and `src/sections/support.md`.
-2. Edit `/now` and `/uses` content in `src/sections/now.md` and `src/sections/uses.md`.
-3. Add blog posts in `src/content/blog/` — frontmatter supports `tags` (array).
+1. Edit home page sections in `src/sections/intro.md`, `src/sections/personal.md`, `src/sections/opensource.md`, and `src/sections/support.md` — rendered in that order by `src/pages/index.astro`, with the blog listing rendered inline between the intro and open-source sections.
+2. Edit `/now`, `/uses`, and `/colophon` content in `src/sections/now.md`, `src/sections/uses.md`, and `src/sections/colophon.md`.
+3. Add blog posts in `src/content/blog/` — frontmatter supports `title`, `description`, `pubDate`, `updatedDate`, `draft`, and `tags` (array). `draft: true` excludes a post from the blog index, all three feeds, the sitemap, and `llms.txt`.
 4. Run `npm run lint`, `npm run test`, and `npm run build` before pushing changes.
 
 ### Styling Tweaks
@@ -98,16 +102,17 @@ Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declara
 
 ## Tech Notes
 
-- Astro (static output, experimental Rust compiler enabled)
+- Astro (static output)
 - TypeScript enabled (`tsconfig.json`)
 - ESLint flat config for Astro, TS, CSS, and Markdown
 - Vitest unit tests with happy-dom (`npm run test`)
-- Lefthook pre-commit hook: runs `lint` + `format` in parallel on every commit
+- Lefthook pre-commit hook: runs `lint`, `format`, and `test` on every commit (run `npx lefthook install` after cloning to activate it)
 - Fonts via `fontProviders.fontsource()` (Geist + Geist Mono)
 - Prettier formatting + import sorting
 - `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations
 - OG image generation via `satori` + `sharp`
 - RSS, Atom, and JSON feed endpoints
+- Hosted on Cloudflare Pages — `public/_headers` sets a strict CSP and cache rules specific to that host; adding a new external resource (script, font, image, API call) needs a matching entry there too
 
 ## License
 
@@ -125,6 +130,6 @@ npm run test
 npm run build
 ```
 
-That's it — customise your content files, tweak styles, deploy anywhere Astro supports (Netlify, Vercel, Cloudflare, etc.).
+That's it — customise your content files, tweak styles, deploy. The static build output can run on most Astro-compatible hosts, but this repo is configured for Cloudflare Pages specifically (`public/_headers` sets Cloudflare-specific CSP and cache headers).
 
 Enjoy your lean, fast link hub.
