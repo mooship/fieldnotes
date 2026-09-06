@@ -96,10 +96,7 @@ export function nextGeneration(grid: Grid): Grid {
 Counts every alive cell in the grid.
 */
 export function countLiveCells(grid: Grid): number {
-  return grid.reduce(
-    (total, line) => total + line.filter(Boolean).length,
-    0
-  );
+  return grid.reduce((total, line) => total + line.filter(Boolean).length, 0);
 }
 
 /**
