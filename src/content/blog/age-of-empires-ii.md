@@ -16,8 +16,8 @@ Definitive Edition is the reason the game is thriving in 2026. The original was 
 
 I rediscovered AoE2 in 2019, just before COVID, and so did my friends. We played together on North-West University's congested network, laggy and chaotic and absolutely brilliant. Rediscovering a childhood game with people you care about does that -- it brought all the nostalgia back and then some. [Spirit of the Law's](https://youtube.com/@spiritofthelaw) YouTube videos were perfect for getting back up to speed -- breaking down mechanics, testing things properly, explaining what had changed since the game I remembered. [Hera's](https://youtube.com/@heraageofempires2) content pulled me in further. Between the two of them I went from rusty nostalgia to understanding the game in a way I never had as a kid.
 
-But honestly, the balance and the meta and the competitive scene aren't what keep me coming back. It's the feeling. The sound of the town centre bell when you garrison villagers. The horn when you advance to the next age. The satisfaction of a perfectly timed flank with cavalry archers. AoE2 has a rhythm to it, a pace that builds from quiet scouting into full-scale chaos, and that arc never gets old.
+But honestly, the balance and the meta and the competitive scene aren't what keep me coming back. It's the sound of the town centre bell when you garrison villagers. The horn when you advance to the next age. The satisfaction of a perfectly timed flank with cavalry archers. AoE2 has a rhythm to it, a pace that builds from quiet scouting into full-scale chaos, and that arc never gets old.
 
 Every few years a new RTS comes along and people ask if it's the "AoE2 killer." None of them are. They're fine games, but AoE2 occupies a space that can't really be replaced: the right amount of complexity, the right speed, the right balance between strategy and execution. It doesn't try to be everything. It just does what it does better than anything else.
 
-It's the perfect RTS, and it's my favourite game. Twenty-five years in, nothing else comes close.
+It's the best RTS there is, as far as I'm concerned. Twenty-five years in, nothing else comes close.
