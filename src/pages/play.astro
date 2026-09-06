@@ -5,40 +5,47 @@ import { SITE_TITLE } from "../lib/blog";
 
 <Layout
   title={`Play — ${SITE_TITLE}`}
-  description="A small Breakout clone, built out of the same squares and rules as the rest of the site."
+  description="Conway's Game of Life, rendered in the same squares as the rest of the site."
   type="website"
 >
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">Play</h1>
     <p class="intro">
-      A small Breakout clone. Arrow keys, A/D, or the pointer move the paddle —
-      space launches the ball and restarts after a game ends.
+      Conway's Game of Life. Click or drag on the grid to toggle cells, or
+      focus it and use the arrow keys plus space. Play advances generations
+      on its own; Step advances one at a time.
     </p>
     <div class="game no-print">
       <div class="hud">
-        <span>Score: <strong id="score">0</strong></span>
-        <span>Lives: <strong id="lives">3</strong></span>
-        <span>Best: <strong id="best">0</strong></span>
+        <span>Generation: <strong id="generation">0</strong></span>
+        <span>Population: <strong id="population">0</strong></span>
       </div>
       <canvas
-        id="breakout-canvas"
+        id="life-canvas"
         width="480"
         height="360"
         tabindex="0"
-        aria-label="Breakout game board"
+        aria-label="Game of Life grid. Click, drag, or use arrow keys and space to toggle cells."
       >
-        Your browser doesn't support canvas, so there's no game here — just the
-        rest of the site.
+        Your browser doesn't support canvas, so there's no simulation here —
+        just the rest of the site.
       </canvas>
       <div class="controls">
-        <button type="button" id="game-toggle">Start</button>
-        <p class="hint">Space also launches and restarts.</p>
+        <button type="button" id="toggle-run">Pause</button>
+        <button type="button" id="step">Step</button>
+        <button type="button" id="randomize">Randomize</button>
+        <button type="button" id="clear-grid">Clear</button>
+      </div>
+      <div class="speed-control">
+        <label for="speed">Speed</label>
+        <input type="range" id="speed" min="1" max="20" value="6" />
+        <span id="speed-value">6/s</span>
       </div>
       <p
         class="visually-hidden"
         role="status"
         aria-live="polite"
-        id="game-status"
+        id="life-status"
       >
       </p>
     </div>
@@ -105,11 +112,12 @@ import { SITE_TITLE } from "../lib/blog";
 
   .controls {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
+    gap: 0.6rem;
   }
 
-  #game-toggle {
+  .controls button {
     background: none;
     border: 1px solid var(--rule);
     border-radius: var(--radius);
@@ -126,20 +134,36 @@ import { SITE_TITLE } from "../lib/blog";
       border-color 0.15s ease;
   }
 
-  #game-toggle:hover {
+  .controls button:hover {
     color: var(--signal);
     border-color: var(--signal);
   }
 
-  #game-toggle:focus-visible {
+  .controls button:focus-visible {
     outline: 2px solid var(--signal);
     outline-offset: 2px;
   }
 
-  .hint {
+  .controls button:disabled {
+    color: var(--rule);
+    cursor: default;
+  }
+
+  .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    font-family: var(--font-sans);
     font-size: 0.75rem;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
     color: var(--ink-soft);
-    margin: 0;
+  }
+
+  .speed-control input[type="range"] {
+    flex: 1;
+    accent-color: var(--signal);
   }
 
   .back-link {
@@ -149,54 +173,58 @@ import { SITE_TITLE } from "../lib/blog";
 
 <script>
   import {
-    type Ball,
-    type Brick,
-    BRICK_SCORE_VALUE,
-    clampPaddleX,
-    createBrickGrid,
-    hasBallFallen,
-    isBoardCleared,
-    reflectOffPaddle,
-    reflectOffWalls,
-    resolveBrickCollisions,
-  } from "../lib/breakout";
+    countLiveCells,
+    createEmptyGrid,
+    type Grid,
+    areGridsEqual,
+    nextGeneration,
+    randomizeGrid,
+    setCell,
+  } from "../lib/game-of-life";
 
   const CANVAS_WIDTH = 480;
   const CANVAS_HEIGHT = 360;
-  const PADDLE_WIDTH = 70;
-  const PADDLE_HEIGHT = 10;
-  const PADDLE_Y = CANVAS_HEIGHT - 24;
-  const PADDLE_SPEED = 420;
-  const BALL_SIZE = 8;
-  const BALL_LAUNCH_SPEED = 240;
-  const INITIAL_LIVES = 3;
-  const HIGH_SCORE_KEY = "fieldnotes:breakout-best";
-
-  type GameStatus = "ready" | "playing" | "gameover" | "won";
+  const CELL_SIZE = 8;
+  const COLS = CANVAS_WIDTH / CELL_SIZE;
+  const ROWS = CANVAS_HEIGHT / CELL_SIZE;
+  const RANDOM_DENSITY = 0.35;
+  const FADE_RATE = 10;
 
   const gameState: { controller: AbortController | undefined } = {
     controller: undefined,
   };
 
-  function initBreakout() {
-    const canvas =
-      document.querySelector<HTMLCanvasElement>("#breakout-canvas");
+  function initLife() {
+    const canvas = document.querySelector<HTMLCanvasElement>("#life-canvas");
     const context = canvas?.getContext("2d");
-    const toggle = document.querySelector<HTMLButtonElement>("#game-toggle");
-    const scoreElement = document.querySelector<HTMLElement>("#score");
-    const livesElement = document.querySelector<HTMLElement>("#lives");
-    const bestElement = document.querySelector<HTMLElement>("#best");
+    const toggleRunButton =
+      document.querySelector<HTMLButtonElement>("#toggle-run");
+    const stepButton = document.querySelector<HTMLButtonElement>("#step");
+    const randomizeButton =
+      document.querySelector<HTMLButtonElement>("#randomize");
+    const clearButton =
+      document.querySelector<HTMLButtonElement>("#clear-grid");
+    const speedInput = document.querySelector<HTMLInputElement>("#speed");
+    const speedValue = document.querySelector<HTMLElement>("#speed-value");
+    const generationElement =
+      document.querySelector<HTMLElement>("#generation");
+    const populationElement =
+      document.querySelector<HTMLElement>("#population");
     if (
       !canvas ||
       !context ||
-      !toggle ||
-      !scoreElement ||
-      !livesElement ||
-      !bestElement
+      !toggleRunButton ||
+      !stepButton ||
+      !randomizeButton ||
+      !clearButton ||
+      !speedInput ||
+      !speedValue ||
+      !generationElement ||
+      !populationElement
     ) {
       return;
     }
-    const statusElement = document.querySelector<HTMLElement>("#game-status");
+    const statusElement = document.querySelector<HTMLElement>("#life-status");
 
     gameState.controller?.abort();
     const controller = new AbortController();
@@ -208,230 +236,264 @@ import { SITE_TITLE } from "../lib/blog";
     canvas.height = CANVAS_HEIGHT * dpr;
     context.scale(dpr, dpr);
 
-    let bestScore = Number(localStorage.getItem(HIGH_SCORE_KEY) ?? "0");
-    bestElement.textContent = String(bestScore);
-
-    let status: GameStatus = "ready";
-    let score = 0;
-    let lives = INITIAL_LIVES;
-    let paddleX = (CANVAS_WIDTH - PADDLE_WIDTH) / 2;
-    let bricks: Brick[] = createBrickGrid({
-      rows: 4,
-      cols: 8,
-      canvasWidth: CANVAS_WIDTH,
-      offsetTop: 40,
-      brickHeight: 16,
-      padding: 6,
-    });
-    const restingBall = (): Ball => ({
-      x: paddleX + PADDLE_WIDTH / 2 - BALL_SIZE / 2,
-      y: PADDLE_Y - BALL_SIZE,
-      width: BALL_SIZE,
-      height: BALL_SIZE,
-      vx: 0,
-      vy: 0,
-    });
-    let ball = restingBall();
+    let grid: Grid = randomizeGrid(ROWS, COLS, RANDOM_DENSITY);
+    const displayAlpha: number[][] = createEmptyGrid(ROWS, COLS).map((line) =>
+      line.map(() => 0)
+    );
+    let isRunning = true;
+    let speed = Number(speedInput.value);
+    let generation = 0;
+    let cursorRow = Math.floor(ROWS / 2);
+    let cursorCol = Math.floor(COLS / 2);
+    let paintValue: boolean | undefined;
 
     const announce = (message: string) => {
       if (statusElement) statusElement.textContent = message;
     };
 
-    const setStatus = (next: GameStatus) => {
-      status = next;
-      switch (next) {
-        case "ready": {
-          toggle.textContent = "Start";
-          toggle.hidden = false;
-          break;
-        }
-        case "playing": {
-          toggle.hidden = true;
-          break;
-        }
-        case "gameover": {
-          toggle.textContent = "Play again";
-          toggle.hidden = false;
-          announce(`Game over. Score: ${score}.`);
-          break;
-        }
-        case "won": {
-          toggle.textContent = "Play again";
-          toggle.hidden = false;
-          announce(`Board cleared! Score: ${score}.`);
-          break;
-        }
+    const updateToggleLabel = () => {
+      toggleRunButton.textContent = isRunning ? "Pause" : "Play";
+      stepButton.disabled = isRunning;
+    };
+
+    const updateStats = () => {
+      generationElement.textContent = String(generation);
+      populationElement.textContent = String(countLiveCells(grid));
+    };
+
+    const step = () => {
+      const next = nextGeneration(grid);
+      generation += 1;
+      const population = countLiveCells(next);
+      const settled = population === 0 || areGridsEqual(next, grid);
+      grid = next;
+      updateStats();
+      if (settled) {
+        isRunning = false;
+        updateToggleLabel();
+        announce(
+          population === 0
+            ? `Extinct at generation ${generation}.`
+            : `Stable at generation ${generation}.`
+        );
       }
     };
 
-    const launchBall = () => {
-      const direction = Math.random() < 0.5 ? -1 : 1;
-      ball = {
-        ...ball,
-        vx: direction * BALL_LAUNCH_SPEED * 0.4,
-        vy: -BALL_LAUNCH_SPEED,
+    const toggleRunning = () => {
+      isRunning = !isRunning;
+      updateToggleLabel();
+    };
+
+    const randomize = () => {
+      grid = randomizeGrid(ROWS, COLS, RANDOM_DENSITY);
+      generation = 0;
+      isRunning = true;
+      updateToggleLabel();
+      updateStats();
+      announce("Randomized.");
+    };
+
+    const clearGrid = () => {
+      grid = createEmptyGrid(ROWS, COLS);
+      generation = 0;
+      isRunning = false;
+      updateToggleLabel();
+      updateStats();
+      announce("Cleared.");
+    };
+
+    const clampRow = (row: number) => Math.min(Math.max(row, 0), ROWS - 1);
+    const clampCol = (col: number) => Math.min(Math.max(col, 0), COLS - 1);
+
+    const cellFromPointer = (event: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = CANVAS_WIDTH / rect.width;
+      const scaleY = CANVAS_HEIGHT / rect.height;
+      const x = (event.clientX - rect.left) * scaleX;
+      const y = (event.clientY - rect.top) * scaleY;
+      return {
+        row: clampRow(Math.floor(y / CELL_SIZE)),
+        col: clampCol(Math.floor(x / CELL_SIZE)),
       };
-      setStatus("playing");
     };
 
-    const resetGame = () => {
-      score = 0;
-      lives = INITIAL_LIVES;
-      bricks = createBrickGrid({
-        rows: 4,
-        cols: 8,
-        canvasWidth: CANVAS_WIDTH,
-        offsetTop: 40,
-        brickHeight: 16,
-        padding: 6,
-      });
-      paddleX = (CANVAS_WIDTH - PADDLE_WIDTH) / 2;
-      ball = restingBall();
-      scoreElement.textContent = "0";
-      livesElement.textContent = String(lives);
-      setStatus("ready");
-    };
-
-    const keys = new Set<string>();
-    addEventListener(
-      "keydown",
-      (event) => {
-        const target = event.target;
-        if (
-          target instanceof HTMLElement &&
-          (target.tagName === "INPUT" ||
-            target.tagName === "TEXTAREA" ||
-            target.isContentEditable)
-        ) {
-          return;
-        }
-        keys.add(event.key.toLowerCase());
-        if (event.key === " ") {
-          event.preventDefault();
-          if (status === "ready") launchBall();
-          else if (status === "gameover" || status === "won") resetGame();
-        }
+    toggleRunButton.addEventListener("click", toggleRunning, { signal });
+    stepButton.addEventListener(
+      "click",
+      () => {
+        if (!isRunning) step();
       },
       { signal }
     );
-    addEventListener("keyup", (event) => keys.delete(event.key.toLowerCase()), {
-      signal,
-    });
+    randomizeButton.addEventListener("click", randomize, { signal });
+    clearButton.addEventListener("click", clearGrid, { signal });
 
+    speedInput.addEventListener(
+      "input",
+      () => {
+        speed = Number(speedInput.value);
+        speedValue.textContent = `${speed}/s`;
+      },
+      { signal }
+    );
+
+    canvas.addEventListener(
+      "pointerdown",
+      (event) => {
+        const { row, col } = cellFromPointer(event);
+        cursorRow = row;
+        cursorCol = col;
+        const wasAlive = grid[row]![col];
+        paintValue = !wasAlive;
+        grid = setCell(grid, row, col, paintValue);
+        updateStats();
+      },
+      { signal }
+    );
     canvas.addEventListener(
       "pointermove",
       (event) => {
-        const rect = canvas.getBoundingClientRect();
-        const scale = CANVAS_WIDTH / rect.width;
-        const pointerX = (event.clientX - rect.left) * scale;
-        paddleX = clampPaddleX(
-          pointerX - PADDLE_WIDTH / 2,
-          PADDLE_WIDTH,
-          CANVAS_WIDTH
-        );
+        if (paintValue === undefined) return;
+        const { row, col } = cellFromPointer(event);
+        grid = setCell(grid, row, col, paintValue);
+        updateStats();
       },
       { signal }
     );
-
-    toggle.addEventListener(
-      "click",
+    addEventListener(
+      "pointerup",
       () => {
-        if (status === "ready") launchBall();
-        else resetGame();
+        paintValue = undefined;
       },
       { signal }
     );
 
-    const update = (dt: number) => {
-      if (status === "playing") {
-        if (keys.has("arrowleft") || keys.has("a")) {
-          paddleX -= PADDLE_SPEED * dt;
-        }
-        if (keys.has("arrowright") || keys.has("d")) {
-          paddleX += PADDLE_SPEED * dt;
-        }
-        paddleX = clampPaddleX(paddleX, PADDLE_WIDTH, CANVAS_WIDTH);
-
-        ball = { ...ball, x: ball.x + ball.vx * dt, y: ball.y + ball.vy * dt };
-        ball = reflectOffWalls(ball, CANVAS_WIDTH);
-        ball = reflectOffPaddle(ball, {
-          x: paddleX,
-          y: PADDLE_Y,
-          width: PADDLE_WIDTH,
-          height: PADDLE_HEIGHT,
-        });
-
-        const collision = resolveBrickCollisions(ball, bricks);
-        if (collision.hit) {
-          ball = collision.ball;
-          bricks = collision.bricks;
-          score += BRICK_SCORE_VALUE;
-          scoreElement.textContent = String(score);
-          if (isBoardCleared(bricks)) {
-            saveBestScore();
-            setStatus("won");
-            return;
+    canvas.addEventListener(
+      "keydown",
+      (event) => {
+        switch (event.key) {
+          case "ArrowUp": {
+            cursorRow = clampRow(cursorRow - 1);
+            event.preventDefault();
+            break;
+          }
+          case "ArrowDown": {
+            cursorRow = clampRow(cursorRow + 1);
+            event.preventDefault();
+            break;
+          }
+          case "ArrowLeft": {
+            cursorCol = clampCol(cursorCol - 1);
+            event.preventDefault();
+            break;
+          }
+          case "ArrowRight": {
+            cursorCol = clampCol(cursorCol + 1);
+            event.preventDefault();
+            break;
+          }
+          case " ":
+          case "Enter": {
+            const wasAlive = grid[cursorRow]![cursorCol];
+            grid = setCell(grid, cursorRow, cursorCol, !wasAlive);
+            updateStats();
+            event.preventDefault();
+            break;
           }
         }
-
-        if (hasBallFallen(ball, CANVAS_HEIGHT)) {
-          lives -= 1;
-          livesElement.textContent = String(lives);
-          if (lives <= 0) {
-            saveBestScore();
-            setStatus("gameover");
-            return;
-          }
-          ball = restingBall();
-          setStatus("ready");
-        }
-      } else {
-        ball = restingBall();
-      }
-    };
-
-    const saveBestScore = () => {
-      if (score <= bestScore) return;
-      bestScore = score;
-      bestElement.textContent = String(bestScore);
-      localStorage.setItem(HIGH_SCORE_KEY, String(bestScore));
-    };
+      },
+      { signal }
+    );
 
     const render = () => {
       const style = getComputedStyle(document.documentElement);
-      const ink = style.getPropertyValue("--ink").trim();
       const paper = style.getPropertyValue("--paper").trim();
-      const signal = style.getPropertyValue("--signal").trim();
+      const rule = style.getPropertyValue("--rule").trim();
+      const signalColor = style.getPropertyValue("--signal").trim();
+      const ink = style.getPropertyValue("--ink").trim();
 
       context.fillStyle = paper;
       context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-      context.fillStyle = signal;
-      for (const brick of bricks) {
-        if (brick.alive) {
-          context.fillRect(brick.x, brick.y, brick.width, brick.height);
+      context.strokeStyle = rule;
+      context.lineWidth = 1;
+      context.beginPath();
+      for (let col = 0; col <= COLS; col++) {
+        const x = col * CELL_SIZE + 0.5;
+        context.moveTo(x, 0);
+        context.lineTo(x, CANVAS_HEIGHT);
+      }
+      for (let row = 0; row <= ROWS; row++) {
+        const y = row * CELL_SIZE + 0.5;
+        context.moveTo(0, y);
+        context.lineTo(CANVAS_WIDTH, y);
+      }
+      context.stroke();
+
+      context.fillStyle = signalColor;
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
+          const alpha = displayAlpha[row]![col]!;
+          if (alpha > 0.01) {
+            context.globalAlpha = alpha;
+            context.fillRect(
+              col * CELL_SIZE + 1,
+              row * CELL_SIZE + 1,
+              CELL_SIZE - 1,
+              CELL_SIZE - 1
+            );
+          }
         }
       }
+      context.globalAlpha = 1;
 
-      context.fillStyle = ink;
-      context.fillRect(paddleX, PADDLE_Y, PADDLE_WIDTH, PADDLE_HEIGHT);
-      context.fillRect(ball.x, ball.y, ball.width, ball.height);
+      context.strokeStyle = ink;
+      context.lineWidth = 2;
+      context.strokeRect(
+        cursorCol * CELL_SIZE + 1,
+        cursorRow * CELL_SIZE + 1,
+        CELL_SIZE - 2,
+        CELL_SIZE - 2
+      );
+    };
+
+    const updateDisplayAlpha = (dt: number) => {
+      const rate = Math.min(1, dt * FADE_RATE);
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
+          const isAlive = grid[row]![col];
+          const target = isAlive ? 1 : 0;
+          displayAlpha[row]![col]! += (target - displayAlpha[row]![col]!) * rate;
+        }
+      }
     };
 
     let lastTime: number | undefined;
+    let stepAccumulator = 0;
     const loop = (timestamp: number) => {
       if (!canvas.isConnected) return;
-      const dt = Math.min((timestamp - (lastTime ?? timestamp)) / 1000, 1 / 30);
+      const dt = Math.min((timestamp - (lastTime ?? timestamp)) / 1000, 1 / 20);
       lastTime = timestamp;
-      update(dt);
+
+      if (isRunning) {
+        stepAccumulator += dt;
+        const interval = 1 / speed;
+        while (isRunning && stepAccumulator >= interval) {
+          step();
+          stepAccumulator -= interval;
+        }
+      }
+
+      updateDisplayAlpha(dt);
       render();
       requestAnimationFrame(loop);
     };
 
-    setStatus("ready");
+    updateToggleLabel();
+    updateStats();
     render();
     requestAnimationFrame(loop);
   }
 
-  document.addEventListener("astro:page-load", initBreakout);
+  document.addEventListener("astro:page-load", initLife);
 </script>
