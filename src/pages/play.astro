@@ -173,13 +173,14 @@ import { SITE_TITLE } from "../lib/blog";
 
 <script>
   import {
+    classifySettlement,
     countLiveCells,
     createEmptyGrid,
     type Grid,
-    areGridsEqual,
     nextGeneration,
     randomizeGrid,
     setCell,
+    toggleCell,
   } from "../lib/game-of-life";
 
   const CANVAS_WIDTH = 480;
@@ -187,8 +188,8 @@ import { SITE_TITLE } from "../lib/blog";
   const CELL_SIZE = 8;
   const COLS = CANVAS_WIDTH / CELL_SIZE;
   const ROWS = CANVAS_HEIGHT / CELL_SIZE;
-  const RANDOM_DENSITY = 0.35;
   const FADE_RATE = 10;
+  const COLOR_REFRESH_INTERVAL = 0.25;
 
   const gameState: { controller: AbortController | undefined } = {
     controller: undefined,
@@ -236,7 +237,7 @@ import { SITE_TITLE } from "../lib/blog";
     canvas.height = CANVAS_HEIGHT * dpr;
     context.scale(dpr, dpr);
 
-    let grid: Grid = randomizeGrid(ROWS, COLS, RANDOM_DENSITY);
+    let grid: Grid = randomizeGrid(ROWS, COLS);
     const displayAlpha: number[][] = createEmptyGrid(ROWS, COLS).map((line) =>
       line.map(() => 0)
     );
@@ -264,15 +265,14 @@ import { SITE_TITLE } from "../lib/blog";
     const step = () => {
       const next = nextGeneration(grid);
       generation += 1;
-      const population = countLiveCells(next);
-      const settled = population === 0 || areGridsEqual(next, grid);
+      const settlement = classifySettlement(grid, next);
       grid = next;
       updateStats();
-      if (settled) {
+      if (settlement !== "running") {
         isRunning = false;
         updateToggleLabel();
         announce(
-          population === 0
+          settlement === "extinct"
             ? `Extinct at generation ${generation}.`
             : `Stable at generation ${generation}.`
         );
@@ -284,23 +284,19 @@ import { SITE_TITLE } from "../lib/blog";
       updateToggleLabel();
     };
 
-    const randomize = () => {
-      grid = randomizeGrid(ROWS, COLS, RANDOM_DENSITY);
+    const resetGame = (newGrid: Grid, shouldRun: boolean, message: string) => {
+      grid = newGrid;
       generation = 0;
-      isRunning = true;
+      isRunning = shouldRun;
       updateToggleLabel();
       updateStats();
-      announce("Randomized.");
+      announce(message);
     };
 
-    const clearGrid = () => {
-      grid = createEmptyGrid(ROWS, COLS);
-      generation = 0;
-      isRunning = false;
-      updateToggleLabel();
-      updateStats();
-      announce("Cleared.");
-    };
+    const randomize = () =>
+      resetGame(randomizeGrid(ROWS, COLS), true, "Randomized.");
+    const clearGrid = () =>
+      resetGame(createEmptyGrid(ROWS, COLS), false, "Cleared.");
 
     const clampRow = (row: number) => Math.min(Math.max(row, 0), ROWS - 1);
     const clampCol = (col: number) => Math.min(Math.max(col, 0), COLS - 1);
@@ -345,7 +341,7 @@ import { SITE_TITLE } from "../lib/blog";
         cursorCol = col;
         const wasAlive = grid[row]![col];
         paintValue = !wasAlive;
-        grid = setCell(grid, row, col, paintValue);
+        grid = toggleCell(grid, row, col);
         updateStats();
       },
       { signal }
@@ -394,8 +390,7 @@ import { SITE_TITLE } from "../lib/blog";
           }
           case " ":
           case "Enter": {
-            const wasAlive = grid[cursorRow]![cursorCol];
-            grid = setCell(grid, cursorRow, cursorCol, !wasAlive);
+            grid = toggleCell(grid, cursorRow, cursorCol);
             updateStats();
             event.preventDefault();
             break;
@@ -405,12 +400,26 @@ import { SITE_TITLE } from "../lib/blog";
       { signal }
     );
 
-    const render = () => {
+    /**
+     * Re-read on a timer in the render loop rather than caching forever and
+     * listening for a `prefers-color-scheme` change: the Konami-code easter
+     * egg and `prefers-contrast: more` also alter these custom properties,
+     * and neither fires a matchMedia event this could listen for.
+     */
+    const readThemeColors = () => {
       const style = getComputedStyle(document.documentElement);
-      const paper = style.getPropertyValue("--paper").trim();
-      const rule = style.getPropertyValue("--rule").trim();
-      const signalColor = style.getPropertyValue("--signal").trim();
-      const ink = style.getPropertyValue("--ink").trim();
+      return {
+        paper: style.getPropertyValue("--paper").trim(),
+        rule: style.getPropertyValue("--rule").trim(),
+        signal: style.getPropertyValue("--signal").trim(),
+        ink: style.getPropertyValue("--ink").trim(),
+      };
+    };
+    let colors = readThemeColors();
+
+    const render = () => {
+      const { paper, rule, ink } = colors;
+      const signalColor = colors.signal;
 
       context.fillStyle = paper;
       context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -471,6 +480,7 @@ import { SITE_TITLE } from "../lib/blog";
 
     let lastTime: number | undefined;
     let stepAccumulator = 0;
+    let colorRefreshAccumulator = 0;
     const loop = (timestamp: number) => {
       if (!canvas.isConnected) return;
       const dt = Math.min((timestamp - (lastTime ?? timestamp)) / 1000, 1 / 20);
@@ -483,6 +493,12 @@ import { SITE_TITLE } from "../lib/blog";
           step();
           stepAccumulator -= interval;
         }
+      }
+
+      colorRefreshAccumulator += dt;
+      if (colorRefreshAccumulator >= COLOR_REFRESH_INTERVAL) {
+        colors = readThemeColors();
+        colorRefreshAccumulator = 0;
       }
 
       updateDisplayAlpha(dt);

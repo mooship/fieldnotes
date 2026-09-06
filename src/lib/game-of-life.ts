@@ -1,5 +1,7 @@
 export type Grid = boolean[][];
 
+export type Settlement = "extinct" | "stable" | "running";
+
 /**
 Creates a `rows * cols` grid with every cell dead.
 */
@@ -26,18 +28,9 @@ export function randomizeGrid(
 }
 
 /**
-Flips a single cell without mutating the grid passed in.
-*/
-export function toggleCell(grid: Grid, row: number, col: number): Grid {
-  return grid.map((line, r) =>
-    r === row ? line.map((cell, c) => (c === col ? !cell : cell)) : line
-  );
-}
-
-/**
-Sets a single cell to `alive`, returning the same grid reference when it's
-already at that value so callers painting a drag stroke across many cells
-each frame don't allocate a new grid for a no-op.
+Sets a single cell to `isAlive`, returning the same grid reference when
+it's already at that value so callers painting a drag stroke across many
+cells each frame don't allocate a new grid for a no-op.
 */
 export function setCell(
   grid: Grid,
@@ -49,6 +42,14 @@ export function setCell(
   return grid.map((line, r) =>
     r === row ? line.map((cell, c) => (c === col ? isAlive : cell)) : line
   );
+}
+
+/**
+Flips a single cell without mutating the grid passed in.
+*/
+export function toggleCell(grid: Grid, row: number, col: number): Grid {
+  const wasAlive = grid[row]![col];
+  return setCell(grid, row, col, !wasAlive);
 }
 
 const NEIGHBOR_OFFSETS: ReadonlyArray<readonly [number, number]> = [
@@ -96,7 +97,13 @@ export function nextGeneration(grid: Grid): Grid {
 Counts every alive cell in the grid.
 */
 export function countLiveCells(grid: Grid): number {
-  return grid.reduce((total, line) => total + line.filter(Boolean).length, 0);
+  let count = 0;
+  for (const line of grid) {
+    for (const cell of line) {
+      if (cell) count++;
+    }
+  }
+  return count;
 }
 
 /**
@@ -107,4 +114,15 @@ export function areGridsEqual(a: Grid, b: Grid): boolean {
   return a.every((line, row) =>
     line.every((cell, col) => cell === b[row]![col])
   );
+}
+
+/**
+Classifies a generation transition: "extinct" once every cell has died,
+"stable" once the grid stops changing between generations (a fixed
+point), or "running" otherwise.
+*/
+export function classifySettlement(previous: Grid, next: Grid): Settlement {
+  if (countLiveCells(next) === 0) return "extinct";
+  if (areGridsEqual(previous, next)) return "stable";
+  return "running";
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   areGridsEqual,
+  classifySettlement,
   countLiveCells,
   countLiveNeighbors,
   createEmptyGrid,
@@ -149,5 +150,34 @@ describe("areGridsEqual", () => {
     const c = toggleCell(createEmptyGrid(2, 2), 0, 0);
     expect(areGridsEqual(a, b)).toBe(false);
     expect(areGridsEqual(b, c)).toBe(true);
+  });
+});
+
+describe("classifySettlement", () => {
+  it("is extinct once every cell has died", () => {
+    const previous = toggleCell(createEmptyGrid(3, 3), 1, 1);
+    const next = createEmptyGrid(3, 3);
+    expect(classifySettlement(previous, next)).toBe("extinct");
+  });
+
+  it("is stable once the grid stops changing", () => {
+    const previous: Grid = [
+      [true, true],
+      [true, true],
+    ];
+    const next: Grid = [
+      [true, true],
+      [true, true],
+    ];
+    expect(classifySettlement(previous, next)).toBe("stable");
+  });
+
+  it("is running when the grid is still alive and changing", () => {
+    const previous = createEmptyGrid(7, 7);
+    previous[3]![2] = true;
+    previous[3]![3] = true;
+    previous[3]![4] = true;
+    const next = nextGeneration(previous);
+    expect(classifySettlement(previous, next)).toBe("running");
   });
 });
