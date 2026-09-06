@@ -27,6 +27,7 @@ export async function GET(context: APIContext) {
     `- [Now](${site}/now): What I'm currently working on, reading, and learning.`,
     `- [Uses](${site}/uses): The tools, hardware, and software I use daily.`,
     `- [Colophon](${site}/colophon): How this site is built, designed, and hosted.`,
+    `- [Play](${site}/play): A small Breakout clone built out of the same squares and rules as the rest of the site.`,
     "",
     "## Posts",
     "",

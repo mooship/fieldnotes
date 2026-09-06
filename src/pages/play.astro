@@ -1,0 +1,437 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE_TITLE } from "../lib/blog";
+---
+
+<Layout
+  title={`Play — ${SITE_TITLE}`}
+  description="A small Breakout clone, built out of the same squares and rules as the rest of the site."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1 class="page-title">Play</h1>
+    <p class="intro">
+      A small Breakout clone. Arrow keys, A/D, or the pointer move the paddle —
+      space launches the ball and restarts after a game ends.
+    </p>
+    <div class="game no-print">
+      <div class="hud">
+        <span>Score: <strong id="score">0</strong></span>
+        <span>Lives: <strong id="lives">3</strong></span>
+        <span>Best: <strong id="best">0</strong></span>
+      </div>
+      <canvas
+        id="breakout-canvas"
+        width="480"
+        height="360"
+        tabindex="0"
+        aria-label="Breakout game board"
+      >
+        Your browser doesn't support canvas, so there's no game here — just the
+        rest of the site.
+      </canvas>
+      <div class="controls">
+        <button type="button" id="game-toggle">Start</button>
+        <p class="hint">Space also launches and restarts.</p>
+      </div>
+      <p
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        id="game-status"
+      >
+      </p>
+    </div>
+    <a href="/" class="nav-link back-link no-print">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  .page-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .intro {
+    max-width: 40rem;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    color: var(--ink-soft);
+  }
+
+  .game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 480px;
+  }
+
+  .hud {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .hud strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  canvas {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    touch-action: none;
+  }
+
+  canvas:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  #game-toggle {
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.45rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  #game-toggle:hover {
+    color: var(--signal);
+    border-color: var(--signal);
+  }
+
+  #game-toggle:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  .hint {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+</style>
+
+<script>
+  import {
+    type Ball,
+    type Brick,
+    BRICK_SCORE_VALUE,
+    clampPaddleX,
+    createBrickGrid,
+    hasBallFallen,
+    isBoardCleared,
+    reflectOffPaddle,
+    reflectOffWalls,
+    resolveBrickCollisions,
+  } from "../lib/breakout";
+
+  const CANVAS_WIDTH = 480;
+  const CANVAS_HEIGHT = 360;
+  const PADDLE_WIDTH = 70;
+  const PADDLE_HEIGHT = 10;
+  const PADDLE_Y = CANVAS_HEIGHT - 24;
+  const PADDLE_SPEED = 420;
+  const BALL_SIZE = 8;
+  const BALL_LAUNCH_SPEED = 240;
+  const INITIAL_LIVES = 3;
+  const HIGH_SCORE_KEY = "fieldnotes:breakout-best";
+
+  type GameStatus = "ready" | "playing" | "gameover" | "won";
+
+  const gameState: { controller: AbortController | undefined } = {
+    controller: undefined,
+  };
+
+  function initBreakout() {
+    const canvas =
+      document.querySelector<HTMLCanvasElement>("#breakout-canvas");
+    const context = canvas?.getContext("2d");
+    const toggle = document.querySelector<HTMLButtonElement>("#game-toggle");
+    const scoreElement = document.querySelector<HTMLElement>("#score");
+    const livesElement = document.querySelector<HTMLElement>("#lives");
+    const bestElement = document.querySelector<HTMLElement>("#best");
+    if (
+      !canvas ||
+      !context ||
+      !toggle ||
+      !scoreElement ||
+      !livesElement ||
+      !bestElement
+    ) {
+      return;
+    }
+    const statusElement = document.querySelector<HTMLElement>("#game-status");
+
+    gameState.controller?.abort();
+    const controller = new AbortController();
+    gameState.controller = controller;
+    const { signal } = controller;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = CANVAS_WIDTH * dpr;
+    canvas.height = CANVAS_HEIGHT * dpr;
+    context.scale(dpr, dpr);
+
+    let bestScore = Number(localStorage.getItem(HIGH_SCORE_KEY) ?? "0");
+    bestElement.textContent = String(bestScore);
+
+    let status: GameStatus = "ready";
+    let score = 0;
+    let lives = INITIAL_LIVES;
+    let paddleX = (CANVAS_WIDTH - PADDLE_WIDTH) / 2;
+    let bricks: Brick[] = createBrickGrid({
+      rows: 4,
+      cols: 8,
+      canvasWidth: CANVAS_WIDTH,
+      offsetTop: 40,
+      brickHeight: 16,
+      padding: 6,
+    });
+    const restingBall = (): Ball => ({
+      x: paddleX + PADDLE_WIDTH / 2 - BALL_SIZE / 2,
+      y: PADDLE_Y - BALL_SIZE,
+      width: BALL_SIZE,
+      height: BALL_SIZE,
+      vx: 0,
+      vy: 0,
+    });
+    let ball = restingBall();
+
+    const announce = (message: string) => {
+      if (statusElement) statusElement.textContent = message;
+    };
+
+    const setStatus = (next: GameStatus) => {
+      status = next;
+      switch (next) {
+        case "ready": {
+          toggle.textContent = "Start";
+          toggle.hidden = false;
+          break;
+        }
+        case "playing": {
+          toggle.hidden = true;
+          break;
+        }
+        case "gameover": {
+          toggle.textContent = "Play again";
+          toggle.hidden = false;
+          announce(`Game over. Score: ${score}.`);
+          break;
+        }
+        case "won": {
+          toggle.textContent = "Play again";
+          toggle.hidden = false;
+          announce(`Board cleared! Score: ${score}.`);
+          break;
+        }
+      }
+    };
+
+    const launchBall = () => {
+      const direction = Math.random() < 0.5 ? -1 : 1;
+      ball = {
+        ...ball,
+        vx: direction * BALL_LAUNCH_SPEED * 0.4,
+        vy: -BALL_LAUNCH_SPEED,
+      };
+      setStatus("playing");
+    };
+
+    const resetGame = () => {
+      score = 0;
+      lives = INITIAL_LIVES;
+      bricks = createBrickGrid({
+        rows: 4,
+        cols: 8,
+        canvasWidth: CANVAS_WIDTH,
+        offsetTop: 40,
+        brickHeight: 16,
+        padding: 6,
+      });
+      paddleX = (CANVAS_WIDTH - PADDLE_WIDTH) / 2;
+      ball = restingBall();
+      scoreElement.textContent = "0";
+      livesElement.textContent = String(lives);
+      setStatus("ready");
+    };
+
+    const keys = new Set<string>();
+    addEventListener(
+      "keydown",
+      (event) => {
+        const target = event.target;
+        if (
+          target instanceof HTMLElement &&
+          (target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA" ||
+            target.isContentEditable)
+        ) {
+          return;
+        }
+        keys.add(event.key.toLowerCase());
+        if (event.key === " ") {
+          event.preventDefault();
+          if (status === "ready") launchBall();
+          else if (status === "gameover" || status === "won") resetGame();
+        }
+      },
+      { signal }
+    );
+    addEventListener("keyup", (event) => keys.delete(event.key.toLowerCase()), {
+      signal,
+    });
+
+    canvas.addEventListener(
+      "pointermove",
+      (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const scale = CANVAS_WIDTH / rect.width;
+        const pointerX = (event.clientX - rect.left) * scale;
+        paddleX = clampPaddleX(
+          pointerX - PADDLE_WIDTH / 2,
+          PADDLE_WIDTH,
+          CANVAS_WIDTH
+        );
+      },
+      { signal }
+    );
+
+    toggle.addEventListener(
+      "click",
+      () => {
+        if (status === "ready") launchBall();
+        else resetGame();
+      },
+      { signal }
+    );
+
+    const update = (dt: number) => {
+      if (status === "playing") {
+        if (keys.has("arrowleft") || keys.has("a")) {
+          paddleX -= PADDLE_SPEED * dt;
+        }
+        if (keys.has("arrowright") || keys.has("d")) {
+          paddleX += PADDLE_SPEED * dt;
+        }
+        paddleX = clampPaddleX(paddleX, PADDLE_WIDTH, CANVAS_WIDTH);
+
+        ball = { ...ball, x: ball.x + ball.vx * dt, y: ball.y + ball.vy * dt };
+        ball = reflectOffWalls(ball, CANVAS_WIDTH);
+        ball = reflectOffPaddle(ball, {
+          x: paddleX,
+          y: PADDLE_Y,
+          width: PADDLE_WIDTH,
+          height: PADDLE_HEIGHT,
+        });
+
+        const collision = resolveBrickCollisions(ball, bricks);
+        if (collision.hit) {
+          ball = collision.ball;
+          bricks = collision.bricks;
+          score += BRICK_SCORE_VALUE;
+          scoreElement.textContent = String(score);
+          if (isBoardCleared(bricks)) {
+            saveBestScore();
+            setStatus("won");
+            return;
+          }
+        }
+
+        if (hasBallFallen(ball, CANVAS_HEIGHT)) {
+          lives -= 1;
+          livesElement.textContent = String(lives);
+          if (lives <= 0) {
+            saveBestScore();
+            setStatus("gameover");
+            return;
+          }
+          ball = restingBall();
+          setStatus("ready");
+        }
+      } else {
+        ball = restingBall();
+      }
+    };
+
+    const saveBestScore = () => {
+      if (score <= bestScore) return;
+      bestScore = score;
+      bestElement.textContent = String(bestScore);
+      localStorage.setItem(HIGH_SCORE_KEY, String(bestScore));
+    };
+
+    const render = () => {
+      const style = getComputedStyle(document.documentElement);
+      const ink = style.getPropertyValue("--ink").trim();
+      const paper = style.getPropertyValue("--paper").trim();
+      const signal = style.getPropertyValue("--signal").trim();
+
+      context.fillStyle = paper;
+      context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+      context.fillStyle = signal;
+      for (const brick of bricks) {
+        if (brick.alive) {
+          context.fillRect(brick.x, brick.y, brick.width, brick.height);
+        }
+      }
+
+      context.fillStyle = ink;
+      context.fillRect(paddleX, PADDLE_Y, PADDLE_WIDTH, PADDLE_HEIGHT);
+      context.fillRect(ball.x, ball.y, ball.width, ball.height);
+    };
+
+    let lastTime: number | undefined;
+    const loop = (timestamp: number) => {
+      if (!canvas.isConnected) return;
+      const dt = Math.min((timestamp - (lastTime ?? timestamp)) / 1000, 1 / 30);
+      lastTime = timestamp;
+      update(dt);
+      render();
+      requestAnimationFrame(loop);
+    };
+
+    setStatus("ready");
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  document.addEventListener("astro:page-load", initBreakout);
+</script>
