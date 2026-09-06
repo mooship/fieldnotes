@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  areGridsEqual,
   countLiveCells,
   countLiveNeighbors,
   createEmptyGrid,
-  type Grid,
-  areGridsEqual,
   nextGeneration,
   randomizeGrid,
   setCell,
   toggleCell,
+  type Grid,
 } from "./game-of-life";
 
 describe("createEmptyGrid", () => {
@@ -16,25 +16,19 @@ describe("createEmptyGrid", () => {
     const grid = createEmptyGrid(3, 4);
     expect(grid).toHaveLength(3);
     expect(grid[0]).toHaveLength(4);
-    expect(grid.every((row) => row.every((cell) => cell === false))).toBe(
-      true
-    );
+    expect(grid.every((row) => row.every((cell) => cell === false))).toBe(true);
   });
 });
 
 describe("randomizeGrid", () => {
   it("fills every cell when the injected random always beats the threshold", () => {
     const grid = randomizeGrid(2, 2, 0.35, () => 0);
-    expect(grid.every((row) => row.every((cell) => cell === true))).toBe(
-      true
-    );
+    expect(grid.every((row) => row.every((cell) => cell === true))).toBe(true);
   });
 
   it("leaves every cell dead when the injected random never beats the threshold", () => {
     const grid = randomizeGrid(2, 2, 0.35, () => 0.99);
-    expect(grid.every((row) => row.every((cell) => cell === false))).toBe(
-      true
-    );
+    expect(grid.every((row) => row.every((cell) => cell === false))).toBe(true);
   });
 });
 
