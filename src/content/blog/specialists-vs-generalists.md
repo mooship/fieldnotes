@@ -7,31 +7,14 @@ tags:
   - "ai"
 ---
 
-BMAD is one of those AI orchestration frameworks doing the rounds at the moment. It gives each agent a role -- architect, product manager, QA engineer, UX designer, developer -- and orchestrates them through the full SDLC. One person, one prompt, an entire simulated software team.
+BMAD is one of those AI orchestration frameworks doing the rounds at the moment. It gives each agent a role, architect, product manager, QA engineer, UX designer, developer, and orchestrates them through the full SDLC. One person, one prompt, an entire simulated software team.
 
-It's a genuinely impressive trick. But I keep coming back to the same problem:
-simulating a role is not the same as being good at it.
+It's an impressive trick, and I keep coming back to the same problem: simulating a role isn't the same as being good at it.
 
----
+Software development has phases because each one calls for a different way of thinking. A senior architect has spent years internalising failure modes, the ones that only show up at scale, under load, after the third time a system has been hastily extended in a direction it wasn't designed for. A good QA engineer thinks adversarially by instinct; they've been burned enough times by edge cases that they go looking for them before anyone else does. A UX designer who's watched real users struggle with a flow knows which affordances are actually invisible, not from heuristics, but from having seen the confusion on someone's face. A product manager who's run stakeholder meetings knows which requirements are load-bearing and which ones will quietly disappear after the next strategy review. None of that comes from asking an AI to put on a hat.
 
-Software development has phases because each one calls for a different way of thinking. A senior architect has spent years internalising failure modes -- the ones that only show up at scale, under load, after the third time a system has been hastily extended in a direction it wasn't designed for. A good QA engineer thinks adversarially by instinct. They've been burned enough times by edge cases that they go looking for them before anyone else does. A UX designer who's watched real users struggle with a flow knows which affordances are actually invisible -- not from heuristics, but from having seen the confusion on someone's face. A product manager who's run stakeholder meetings knows which requirements are load-bearing and which ones will quietly disappear after the next strategy review.
+An AI agent roleplaying an architect can give you something that looks like an architecture. What it can't give you is what the architect learned from the last time a system like that failed. What AI actually does for someone who's already good at something is reduce friction: a specialist offloads the boilerplate, gets unstuck faster, and moves through the parts of the work that don't need their full attention, while the depth they've built over years keeps doing the real work underneath. A generalist with the same tools moves faster too, but they're moving faster toward the same ceiling, not raising it.
 
-These aren't things you get by asking an AI to put on a hat.
+I'd rather work on a team where everyone owns something deeply than one where everyone can theoretically cover everything. The coverage looks identical on a planning board; the quality gap only shows up later, when a specialist who's been accountable for their part of the process notices something wrong before they can even explain why. That instinct doesn't come from a prompt.
 
-An AI agent roleplaying an architect can give you something that looks like an architecture. What it can't give you is what the architect learned from the last time a system like that failed.
-
-What AI actually does for someone who's already good at something is reduce friction. A specialist offloads the boilerplate, gets unstuck faster, moves through the parts of the work that don't need their full attention. The depth they've built over years is still doing the real work -- the AI just gets out of the way of it.
-
-A generalist with the same tools moves faster too. But moving faster toward the same ceiling is not the same as raising it.
-
----
-
-I'd rather work on a team where everyone owns something deeply than a team where everyone can theoretically cover everything. The coverage looks the same on a planning board -- the quality gap only shows up later.
-
-When a specialist is accountable for their part of the process, they've been living in it long enough that something wrong feels wrong before they can explain why. You can't prompt that into existence.
-
----
-
-I reach for AI tools constantly. The ones that stick are the ones that make me better at what I already know how to do -- they reduce friction in the work, they don't replace the years that made me worth using them.
-
-But a tool that simulates expertise will never build it in you. And that gap never shows up in the prototype -- it shows up when something breaks and nobody in the room has seen it break before.
+I reach for AI tools constantly, and the ones that stick are the ones that make me better at what I already know how to do. They reduce friction in the work; they don't replace the years that made me worth using them. A tool that simulates expertise will never build it in you, and that gap doesn't show up in the prototype. It shows up later, when something breaks and nobody in the room has seen it break before.

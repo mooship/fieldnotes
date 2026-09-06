@@ -12,22 +12,12 @@ Matric was all-consuming at the time. The exams, the pressure, figuring out what
 
 The weird thing is I can barely place myself back there. I know it happened. I remember fragments: the smell of school textbooks, the stress of getting my driver's licence, the feeling of wanting it all to be over. But the person sitting in that chair doesn't feel like me anymore. It's more like remembering a story someone told me than something I lived through.
 
-But listed out, the decade was full. I went to university and graduated cum laude with a BSc in Information Technology. I got my first job as a software engineer -- the thing I'd been working toward without fully understanding what it would feel like to arrive. I had my first relationship. I got my first dog. Those things alone would be enough to fill a life, and they all happened in the same ten years.
+But listed out, the decade was full. I went to university and graduated cum laude with a BSc in Information Technology. I got my first job as a software engineer, the thing I'd been working toward without fully understanding what it would feel like to arrive. I had my first relationship. I got my first dog. Those things alone would be enough to fill a life, and they all happened in the same ten years.
 
----
+Not all of it was good, either. I made many, many mistakes: the kind you can see coming and walk into anyway, and the kind that only reveal themselves long after the damage is done. I learned hard lessons about trust, about priorities, about the difference between what I wanted and what was good for me, and none of those lessons came cheap. I also went through heartbreak, and a few stretches where nothing seemed to be working, motivation evaporating, systems I'd built for myself quietly collapsing. Getting through those wasn't a clear victory; there was no switch that flipped. It was months and years of learning to take care of myself, building habits I could sustain and being honest with myself when I couldn't. That work is ongoing. I don't think it ever really stops.
 
-Not all of it was good. I made many, many mistakes. The kind you can see coming and walk into anyway, and the kind that only reveal themselves long after the damage is done. I learned hard lessons about trust, about priorities, about the difference between what I wanted and what was good for me. None of those lessons came cheap.
+The thing I actually learned, more than anything else, is how much family matters. That sounds obvious enough to cross-stitch onto a cushion, but I didn't really understand it at eighteen. I thought independence was the whole point. Turns out the people who were there before you had any of the answers are usually the ones still there after you've run out of them.
 
-I experienced heartbreak, and a few stretches where nothing seemed to be working -- motivation evaporating, systems I'd built for myself quietly collapsing. Getting through those wasn't a clear victory. There was no switch that flipped. It was months and years of learning to take care of myself -- building habits I could sustain, and being honest with myself when I couldn't. That work is ongoing. I don't think it ever really stops.
+What gets me about ten years is how slowly it moved, so slowly I didn't notice it happening, and now when I look back the gap is enormous, with no single moment I can point to. I just ended up here.
 
----
-
-Maybe the most important thing I learned is how much family matters. That sounds obvious, obvious enough to cross-stitch onto a cushion. But I didn't really understand it at eighteen. I thought independence was the whole point. Turns out the people who were there before you had any of the answers are usually the ones still there after you've run out of them.
-
-I think that's what gets me about ten years. It's not that so much has changed. It's that it changed slowly enough that I didn't notice, and now when I look back the gap is enormous. There's no single moment I can point to. I just ended up here.
-
----
-
-Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time -- felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. I don't know what to do with that except pay better attention.
-
-There's no neat takeaway. A decade passed and it feels like both yesterday and a lifetime ago.
+Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time, felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. I don't know what to do with that except pay better attention. A decade passed, and it feels like both yesterday and a lifetime ago.
