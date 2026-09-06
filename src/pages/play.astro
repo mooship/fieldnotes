@@ -1,0 +1,520 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE_TITLE } from "../lib/blog";
+---
+
+<Layout
+  title={`Play — ${SITE_TITLE}`}
+  description="Conway's Game of Life, rendered in the same squares as the rest of the site."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1 class="page-title">Play</h1>
+    <p class="intro">
+      Conway's Game of Life. Click or drag on the grid to toggle cells, or focus
+      it and use the arrow keys plus space. Play advances generations on its
+      own; Step advances one at a time.
+    </p>
+    <div class="game no-print">
+      <div class="hud">
+        <span>Generation: <strong id="generation">0</strong></span>
+        <span>Population: <strong id="population">0</strong></span>
+      </div>
+      <canvas
+        id="life-canvas"
+        width="480"
+        height="360"
+        tabindex="0"
+        aria-label="Game of Life grid. Click, drag, or use arrow keys and space to toggle cells."
+      >
+        Your browser doesn't support canvas, so there's no simulation here —
+        just the rest of the site.
+      </canvas>
+      <div class="controls">
+        <button type="button" id="toggle-run">Pause</button>
+        <button type="button" id="step">Step</button>
+        <button type="button" id="randomize">Randomize</button>
+        <button type="button" id="clear-grid">Clear</button>
+      </div>
+      <div class="speed-control">
+        <label for="speed">Speed</label>
+        <input type="range" id="speed" min="1" max="20" value="6" />
+        <span id="speed-value">6/s</span>
+      </div>
+      <p
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        id="life-status"
+      >
+      </p>
+    </div>
+    <a href="/" class="nav-link back-link no-print">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  .page-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .intro {
+    max-width: 40rem;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    color: var(--ink-soft);
+  }
+
+  .game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 480px;
+  }
+
+  .hud {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .hud strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  canvas {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    touch-action: none;
+  }
+
+  canvas:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .controls button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.45rem 1.1rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .controls button:hover {
+    color: var(--signal);
+    border-color: var(--signal);
+  }
+
+  .controls button:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  .controls button:disabled {
+    color: var(--rule);
+    cursor: default;
+  }
+
+  .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .speed-control input[type="range"] {
+    flex: 1;
+    accent-color: var(--signal);
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+</style>
+
+<script>
+  import {
+    classifySettlement,
+    countLiveCells,
+    createEmptyGrid,
+    type Grid,
+    nextGeneration,
+    randomizeGrid,
+    setCell,
+    toggleCell,
+  } from "../lib/game-of-life";
+
+  const CANVAS_WIDTH = 480;
+  const CANVAS_HEIGHT = 360;
+  const CELL_SIZE = 8;
+  const COLS = CANVAS_WIDTH / CELL_SIZE;
+  const ROWS = CANVAS_HEIGHT / CELL_SIZE;
+  const FADE_RATE = 10;
+  const COLOR_REFRESH_INTERVAL = 0.25;
+
+  const gameState: { controller: AbortController | undefined } = {
+    controller: undefined,
+  };
+
+  function initLife() {
+    const canvas = document.querySelector<HTMLCanvasElement>("#life-canvas");
+    const context = canvas?.getContext("2d");
+    const toggleRunButton =
+      document.querySelector<HTMLButtonElement>("#toggle-run");
+    const stepButton = document.querySelector<HTMLButtonElement>("#step");
+    const randomizeButton =
+      document.querySelector<HTMLButtonElement>("#randomize");
+    const clearButton =
+      document.querySelector<HTMLButtonElement>("#clear-grid");
+    const speedInput = document.querySelector<HTMLInputElement>("#speed");
+    const speedValue = document.querySelector<HTMLElement>("#speed-value");
+    const generationElement =
+      document.querySelector<HTMLElement>("#generation");
+    const populationElement =
+      document.querySelector<HTMLElement>("#population");
+    if (
+      !canvas ||
+      !context ||
+      !toggleRunButton ||
+      !stepButton ||
+      !randomizeButton ||
+      !clearButton ||
+      !speedInput ||
+      !speedValue ||
+      !generationElement ||
+      !populationElement
+    ) {
+      return;
+    }
+    const statusElement = document.querySelector<HTMLElement>("#life-status");
+
+    gameState.controller?.abort();
+    const controller = new AbortController();
+    gameState.controller = controller;
+    const { signal } = controller;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = CANVAS_WIDTH * dpr;
+    canvas.height = CANVAS_HEIGHT * dpr;
+    context.scale(dpr, dpr);
+
+    let grid: Grid = randomizeGrid(ROWS, COLS);
+    const displayAlpha: number[][] = createEmptyGrid(ROWS, COLS).map((line) =>
+      line.map(() => 0)
+    );
+    let isRunning = true;
+    let speed = Number(speedInput.value);
+    let generation = 0;
+    let cursorRow = Math.floor(ROWS / 2);
+    let cursorCol = Math.floor(COLS / 2);
+    let paintValue: boolean | undefined;
+
+    const announce = (message: string) => {
+      if (statusElement) statusElement.textContent = message;
+    };
+
+    const updateToggleLabel = () => {
+      toggleRunButton.textContent = isRunning ? "Pause" : "Play";
+      stepButton.disabled = isRunning;
+    };
+
+    const updateStats = () => {
+      generationElement.textContent = String(generation);
+      populationElement.textContent = String(countLiveCells(grid));
+    };
+
+    const step = () => {
+      const next = nextGeneration(grid);
+      generation += 1;
+      const settlement = classifySettlement(grid, next);
+      grid = next;
+      updateStats();
+      if (settlement !== "running") {
+        isRunning = false;
+        updateToggleLabel();
+        announce(
+          settlement === "extinct"
+            ? `Extinct at generation ${generation}.`
+            : `Stable at generation ${generation}.`
+        );
+      }
+    };
+
+    const toggleRunning = () => {
+      isRunning = !isRunning;
+      updateToggleLabel();
+    };
+
+    const resetGame = (newGrid: Grid, shouldRun: boolean, message: string) => {
+      grid = newGrid;
+      generation = 0;
+      isRunning = shouldRun;
+      updateToggleLabel();
+      updateStats();
+      announce(message);
+    };
+
+    const randomize = () =>
+      resetGame(randomizeGrid(ROWS, COLS), true, "Randomized.");
+    const clearGrid = () =>
+      resetGame(createEmptyGrid(ROWS, COLS), false, "Cleared.");
+
+    const clampRow = (row: number) => Math.min(Math.max(row, 0), ROWS - 1);
+    const clampCol = (col: number) => Math.min(Math.max(col, 0), COLS - 1);
+
+    const cellFromPointer = (event: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = CANVAS_WIDTH / rect.width;
+      const scaleY = CANVAS_HEIGHT / rect.height;
+      const x = (event.clientX - rect.left) * scaleX;
+      const y = (event.clientY - rect.top) * scaleY;
+      return {
+        row: clampRow(Math.floor(y / CELL_SIZE)),
+        col: clampCol(Math.floor(x / CELL_SIZE)),
+      };
+    };
+
+    toggleRunButton.addEventListener("click", toggleRunning, { signal });
+    stepButton.addEventListener(
+      "click",
+      () => {
+        if (!isRunning) step();
+      },
+      { signal }
+    );
+    randomizeButton.addEventListener("click", randomize, { signal });
+    clearButton.addEventListener("click", clearGrid, { signal });
+
+    speedInput.addEventListener(
+      "input",
+      () => {
+        speed = Number(speedInput.value);
+        speedValue.textContent = `${speed}/s`;
+      },
+      { signal }
+    );
+
+    canvas.addEventListener(
+      "pointerdown",
+      (event) => {
+        const { row, col } = cellFromPointer(event);
+        cursorRow = row;
+        cursorCol = col;
+        const wasAlive = grid[row]![col];
+        paintValue = !wasAlive;
+        grid = toggleCell(grid, row, col);
+        updateStats();
+      },
+      { signal }
+    );
+    canvas.addEventListener(
+      "pointermove",
+      (event) => {
+        if (paintValue === undefined) return;
+        const { row, col } = cellFromPointer(event);
+        grid = setCell(grid, row, col, paintValue);
+        updateStats();
+      },
+      { signal }
+    );
+    addEventListener(
+      "pointerup",
+      () => {
+        paintValue = undefined;
+      },
+      { signal }
+    );
+
+    canvas.addEventListener(
+      "keydown",
+      (event) => {
+        switch (event.key) {
+          case "ArrowUp": {
+            cursorRow = clampRow(cursorRow - 1);
+            event.preventDefault();
+            break;
+          }
+          case "ArrowDown": {
+            cursorRow = clampRow(cursorRow + 1);
+            event.preventDefault();
+            break;
+          }
+          case "ArrowLeft": {
+            cursorCol = clampCol(cursorCol - 1);
+            event.preventDefault();
+            break;
+          }
+          case "ArrowRight": {
+            cursorCol = clampCol(cursorCol + 1);
+            event.preventDefault();
+            break;
+          }
+          case " ":
+          case "Enter": {
+            grid = toggleCell(grid, cursorRow, cursorCol);
+            updateStats();
+            event.preventDefault();
+            break;
+          }
+        }
+      },
+      { signal }
+    );
+
+    /**
+     * Re-read on a timer in the render loop rather than caching forever and
+     * listening for a `prefers-color-scheme` change: the Konami-code easter
+     * egg and `prefers-contrast: more` also alter these custom properties,
+     * and neither fires a matchMedia event this could listen for.
+     */
+    const readThemeColors = () => {
+      const style = getComputedStyle(document.documentElement);
+      return {
+        paper: style.getPropertyValue("--paper").trim(),
+        rule: style.getPropertyValue("--rule").trim(),
+        signal: style.getPropertyValue("--signal").trim(),
+        ink: style.getPropertyValue("--ink").trim(),
+      };
+    };
+    let colors = readThemeColors();
+
+    const render = () => {
+      const { paper, rule, ink } = colors;
+      const signalColor = colors.signal;
+
+      context.fillStyle = paper;
+      context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+      context.strokeStyle = rule;
+      context.lineWidth = 1;
+      context.beginPath();
+      for (let col = 0; col <= COLS; col++) {
+        const x = col * CELL_SIZE + 0.5;
+        context.moveTo(x, 0);
+        context.lineTo(x, CANVAS_HEIGHT);
+      }
+      for (let row = 0; row <= ROWS; row++) {
+        const y = row * CELL_SIZE + 0.5;
+        context.moveTo(0, y);
+        context.lineTo(CANVAS_WIDTH, y);
+      }
+      context.stroke();
+
+      context.fillStyle = signalColor;
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
+          const alpha = displayAlpha[row]![col]!;
+          if (alpha > 0.01) {
+            context.globalAlpha = alpha;
+            context.fillRect(
+              col * CELL_SIZE + 1,
+              row * CELL_SIZE + 1,
+              CELL_SIZE - 1,
+              CELL_SIZE - 1
+            );
+          }
+        }
+      }
+      context.globalAlpha = 1;
+
+      context.strokeStyle = ink;
+      context.lineWidth = 2;
+      context.strokeRect(
+        cursorCol * CELL_SIZE + 1,
+        cursorRow * CELL_SIZE + 1,
+        CELL_SIZE - 2,
+        CELL_SIZE - 2
+      );
+    };
+
+    const updateDisplayAlpha = (dt: number) => {
+      const rate = Math.min(1, dt * FADE_RATE);
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
+          const isAlive = grid[row]![col];
+          const target = isAlive ? 1 : 0;
+          displayAlpha[row]![col]! +=
+            (target - displayAlpha[row]![col]!) * rate;
+        }
+      }
+    };
+
+    let lastTime: number | undefined;
+    let stepAccumulator = 0;
+    let colorRefreshAccumulator = 0;
+    const loop = (timestamp: number) => {
+      if (!canvas.isConnected) return;
+      const dt = Math.min((timestamp - (lastTime ?? timestamp)) / 1000, 1 / 20);
+      lastTime = timestamp;
+
+      if (isRunning) {
+        stepAccumulator += dt;
+        const interval = 1 / speed;
+        while (isRunning && stepAccumulator >= interval) {
+          step();
+          stepAccumulator -= interval;
+        }
+      }
+
+      colorRefreshAccumulator += dt;
+      if (colorRefreshAccumulator >= COLOR_REFRESH_INTERVAL) {
+        colors = readThemeColors();
+        colorRefreshAccumulator = 0;
+      }
+
+      updateDisplayAlpha(dt);
+      render();
+      requestAnimationFrame(loop);
+    };
+
+    updateToggleLabel();
+    updateStats();
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  document.addEventListener("astro:page-load", initLife);
+</script>
