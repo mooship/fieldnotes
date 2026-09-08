@@ -227,6 +227,46 @@ describe("stampPattern", () => {
 });
 
 describe("PATTERNS", () => {
+  it("the block is a still life", () => {
+    const grid = stampPattern(createEmptyGrid(10, 10), PATTERNS.block, 3, 3);
+    expect(areGridsEqual(grid, nextGeneration(grid))).toBe(true);
+  });
+
+  it("the blinker is a period-2 oscillator", () => {
+    const grid = stampPattern(createEmptyGrid(10, 10), PATTERNS.blinker, 3, 3);
+    const first = nextGeneration(grid);
+    const second = nextGeneration(first);
+    expect(areGridsEqual(grid, second)).toBe(true);
+    expect(areGridsEqual(grid, first)).toBe(false);
+  });
+
+  it("the toad is a period-2 oscillator", () => {
+    const grid = stampPattern(createEmptyGrid(10, 10), PATTERNS.toad, 3, 3);
+    const first = nextGeneration(grid);
+    const second = nextGeneration(first);
+    expect(areGridsEqual(grid, second)).toBe(true);
+    expect(areGridsEqual(grid, first)).toBe(false);
+  });
+
+  it("the beacon is a period-2 oscillator", () => {
+    const grid = stampPattern(createEmptyGrid(10, 10), PATTERNS.beacon, 3, 3);
+    const first = nextGeneration(grid);
+    const second = nextGeneration(first);
+    expect(areGridsEqual(grid, second)).toBe(true);
+    expect(areGridsEqual(grid, first)).toBe(false);
+  });
+
+  it("the lightweight spaceship returns to its own shape, translated, after 4 generations", () => {
+    const grid = stampPattern(createEmptyGrid(20, 20), PATTERNS.lwss, 3, 3);
+    let next = grid;
+    for (let generation = 0; generation < 4; generation++) {
+      next = nextGeneration(next);
+    }
+    expect(countLiveCells(next)).toBe(PATTERNS.lwss.length);
+    const shifted = stampPattern(createEmptyGrid(20, 20), PATTERNS.lwss, 3, 5);
+    expect(areGridsEqual(next, shifted)).toBe(true);
+  });
+
   it("the pulsar is a stable period-3 oscillator", () => {
     const grid = stampPattern(createEmptyGrid(20, 20), PATTERNS.pulsar, 3, 3);
     const first = nextGeneration(grid);

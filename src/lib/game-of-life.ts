@@ -174,12 +174,52 @@ A handful of well-known still lifes, oscillators, and spaceship-emitting
 guns to drop onto the grid instead of starting from random soup.
 */
 export const PATTERNS = {
+  block: [
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1],
+  ],
+  blinker: [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ],
+  toad: [
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [1, 0],
+    [1, 1],
+    [1, 2],
+  ],
+  beacon: [
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1],
+    [2, 2],
+    [2, 3],
+    [3, 2],
+    [3, 3],
+  ],
   glider: [
     [0, 1],
     [1, 2],
     [2, 0],
     [2, 1],
     [2, 2],
+  ],
+  lwss: [
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [0, 4],
+    [1, 0],
+    [1, 4],
+    [2, 4],
+    [3, 0],
+    [3, 3],
   ],
   pulsar: [
     ...PULSAR_DASH_ENDS.flatMap((row) =>
