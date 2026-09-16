@@ -15,11 +15,6 @@
     "start": "astro dev",
     "test": "vitest run"
   },
-  "overrides": {
-    "eslint-plugin-jsx-a11y": {
-      "eslint": "$eslint"
-    }
-  },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/compiler-rs": "^0.4.0",
@@ -62,8 +57,17 @@
     "vitest": "^4.1.11",
     "zod": "^4.4.3"
   },
-  "packageManager": "npm@11.12.1",
+  "packageManager": "pnpm@10.33.0",
   "engines": {
     "node": ">=22.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lefthook"
+    ],
+    "overrides": {
+      "eslint-plugin-jsx-a11y>eslint": "$eslint"
+    }
   }
 }
