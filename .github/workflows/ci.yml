@@ -15,12 +15,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
-          cache: "npm"
-      - run: npm ci
-      - run: npm run lint:check
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint:check
 
   ci:
     runs-on: ubuntu-latest
@@ -31,27 +32,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build
-      - run: npm run test
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
+      - run: pnpm run test
 
   lighthouse:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
       - name: Run Lighthouse CI
-        run: npm run lighthouse
+        run: pnpm run lighthouse
         continue-on-error: true
       - uses: actions/upload-artifact@v7
         if: always()
