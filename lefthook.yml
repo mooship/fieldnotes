@@ -1,8 +1,8 @@
 pre-commit:
   jobs:
     - name: lint
-      run: npm run lint
+      run: pnpm run lint
     - name: format
-      run: npm run format
+      run: pnpm run format
     - name: test
-      run: npm run test
+      run: pnpm run test

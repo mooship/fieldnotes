@@ -4,29 +4,29 @@ Personal site and blog built with Astro + TypeScript + CSS. Includes a blog with
 
 ## Quick Start
 
-Prerequisite: Node 22+ and npm.
+Prerequisite: Node 22+ and pnpm.
 
 ```sh
 git clone <your-fork-url> fieldnotes
 cd fieldnotes
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Dev server runs at: http://localhost:4321
 
 ## Common Scripts
 
-| Script               | Purpose                                  |
-| -------------------- | ---------------------------------------- |
-| `npm run dev`        | Start local development server           |
-| `npm run build`      | Type check then production build         |
-| `npm run lint`       | Lint and auto-fix all file types         |
-| `npm run lint:check` | Same lint, no auto-fix — what CI runs    |
-| `npm run preview`    | Preview built site                       |
-| `npm run format`     | Prettier + import sorting                |
-| `npm run test`       | Run Vitest unit tests                    |
-| `npm run lighthouse` | Run Lighthouse CI against the built site |
+| Script            | Purpose                                  |
+| ----------------- | ----------------------------------------- |
+| `pnpm dev`        | Start local development server           |
+| `pnpm build`      | Type check then production build         |
+| `pnpm lint`       | Lint and auto-fix all file types         |
+| `pnpm lint:check` | Same lint, no auto-fix — what CI runs    |
+| `pnpm preview`    | Preview built site                       |
+| `pnpm format`     | Prettier + import sorting                |
+| `pnpm test`       | Run Vitest unit tests                    |
+| `pnpm lighthouse` | Run Lighthouse CI against the built site |
 
 ## Structure (essentials)
 
@@ -90,7 +90,7 @@ public/                  # Static assets (images, favicons, etc.)
 1. Edit home page sections in `src/sections/intro.md`, `src/sections/personal.md`, `src/sections/opensource.md`, and `src/sections/support.md` — rendered in that order by `src/pages/index.astro`, with the blog listing rendered inline between the intro and open-source sections.
 2. Edit `/now`, `/uses`, and `/colophon` content in `src/sections/now.md`, `src/sections/uses.md`, and `src/sections/colophon.md`.
 3. Add blog posts in `src/content/blog/` — frontmatter supports `title`, `description`, `pubDate`, `updatedDate`, `draft`, and `tags` (array). `draft: true` excludes a post from the blog index, all three feeds, the sitemap, and `llms.txt`.
-4. Run `npm run lint`, `npm run test`, and `npm run build` before pushing changes.
+4. Run `pnpm lint`, `pnpm test`, and `pnpm build` before pushing changes.
 
 ### Styling Tweaks
 
@@ -105,8 +105,8 @@ Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declara
 - Astro (static output)
 - TypeScript enabled (`tsconfig.json`)
 - ESLint flat config for Astro, TS, CSS, and Markdown
-- Vitest unit tests with happy-dom (`npm run test`)
-- Lefthook pre-commit hook: runs `lint`, `format`, and `test` on every commit (run `npx lefthook install` after cloning to activate it)
+- Vitest unit tests with happy-dom (`pnpm test`)
+- Lefthook pre-commit hook: runs `lint`, `format`, and `test` on every commit (run `pnpm exec lefthook install` after cloning to activate it)
 - Fonts via `fontProviders.fontsource()` (Geist + Geist Mono)
 - Prettier formatting + import sorting
 - `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations
@@ -125,9 +125,9 @@ Your personal content (links, descriptions) is yours — consider adding a note 
 Run before pushing major changes:
 
 ```sh
-npm run lint
-npm run test
-npm run build
+pnpm lint
+pnpm test
+pnpm build
 ```
 
 That's it — customise your content files, tweak styles, deploy. The static build output can run on most Astro-compatible hosts, but this repo is configured for Cloudflare Pages specifically (`public/_headers` sets Cloudflare-specific CSP and cache headers).
