@@ -9,17 +9,17 @@ Fieldnotes is a personal site and blog built with Astro (static output), hosted 
 ## Commands
 
 ```bash
-npm run dev        # start dev server
-npm run build      # type-check (astro check) then build
-npm run lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
-npm run lint:check # same lint, no auto-fix — what CI runs
-npm run preview    # preview production build
-npm run format     # prettier with auto-fix (also sorts imports, formats package.json)
-npm run test       # run Vitest unit tests
-npm run lighthouse # run Lighthouse CI against the built site (informational, no score gate)
+pnpm dev        # start dev server
+pnpm build      # type-check (astro check) then build
+pnpm lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
+pnpm lint:check # same lint, no auto-fix — what CI runs
+pnpm preview    # preview production build
+pnpm format     # prettier with auto-fix (also sorts imports, formats package.json)
+pnpm test       # run Vitest unit tests
+pnpm lighthouse # run Lighthouse CI against the built site (informational, no score gate)
 ```
 
-`npm run build` is the primary verification step — it runs `astro check` (TypeScript + Astro type checking) before building. Run `npm run test` to verify utility logic. Both must pass before committing.
+`pnpm build` is the primary verification step — it runs `astro check` (TypeScript + Astro type checking) before building. Run `pnpm test` to verify utility logic. Both must pass before committing.
 
 Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Markdown.
 
@@ -51,11 +51,11 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. Run `npx lefthook install` after cloning to activate hooks.
+Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. Run `pnpm exec lefthook install` after cloning to activate hooks.
 
 ## CI
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking — that only runs as part of `npm run build`, which isn't in `lefthook.yml`. Run `npm run build` locally before pushing if you've touched types, or a type error will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking — that only runs as part of `pnpm build`, which isn't in `lefthook.yml`. Run `pnpm build` locally before pushing if you've touched types, or a type error will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one PR. Most npm and GitHub Actions dependencies check monthly (first Saturday); `astro` and `zod` are split into their own weekly-grouped PR instead.
 
@@ -63,7 +63,7 @@ Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one P
 
 The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages config committed — build/deploy settings live in the Cloudflare dashboard, not this repo. `public/_headers` is Cloudflare Pages' native way to set response headers (its CSP allows `cloudflareinsights.com` for Cloudflare Web Analytics). Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
-`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
+`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `pnpm dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
 ## Safety
 
@@ -134,7 +134,7 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 
 - **No inline comments** — never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
 - **British English spelling** in site copy and UI labels (section markdown, blog posts, nav/meta text) — "colour", "optimise", "favourite" — matching the author's other projects.
-- Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `npm run format`.
+- Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `pnpm format`.
 - ESLint uses flat config (`eslint.config.js`) with TypeScript, Astro (including `jsx-a11y-recommended` — accessibility lint rules apply to `.astro` templates), Unicorn, `@eslint/css`, and `@eslint/markdown`, plus `eslint-config-prettier` to defer all formatting decisions to Prettier. Three Unicorn rules are disabled repo-wide: `filename-case` (needed for `[slug].astro`-style bracket filenames and PascalCase components), `prevent-abbreviations`, and `text-encoding-identifier-case`.
 - CSS lint requires new properties/selectors to be **Baseline "newly available"** (`css/use-baseline`) — a very recent CSS feature can get flagged even though it works in current browsers; `text-wrap` and `:selection` are explicitly allowlisted as exceptions.
 - `.github/` and `.claude/` are excluded from linting.
