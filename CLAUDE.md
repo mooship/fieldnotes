@@ -61,7 +61,7 @@ Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one P
 
 ## Deployment
 
-The site is hosted on **Cloudflare Pages**. There's no `wrangler.toml` or Pages config committed — build/deploy settings live in the Cloudflare dashboard, not this repo. `public/_headers` is Cloudflare Pages' native way to set response headers (its CSP allows `cloudflareinsights.com` for Cloudflare Web Analytics). Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
+The site is hosted on **Cloudflare Pages**. Build/deploy settings for the Git-integrated pipeline still live in the Cloudflare dashboard and are unaffected by anything below — but a `wrangler.jsonc` (`pages_build_output_dir: "./dist"`, plus `compatibility_date`/`compatibility_flags`) is now committed, both for version control and so `wrangler pages deploy` works as a CLI/CI alternative if ever needed; `wrangler` is a devDependency for exactly that. `public/_headers` is Cloudflare Pages' native way to set response headers (its CSP allows `cloudflareinsights.com` for Cloudflare Web Analytics). Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
 `public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `pnpm dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
