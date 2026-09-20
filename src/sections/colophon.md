@@ -18,3 +18,7 @@ No tracking scripts beyond [Cloudflare Web Analytics](https://www.cloudflare.com
 ## Source
 
 The whole site is open source: [github.com/mooship/fieldnotes](https://github.com/mooship/fieldnotes), MIT licensed. If something looks broken, that repo is where to say so.
+
+## Before this
+
+It wasn't always Swiss and restrained. [Go back to 1999 →](/1999)
