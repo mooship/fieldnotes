@@ -89,9 +89,7 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         <p class="footer-text">
           {copyrightText}<br />
           This page last updated: never.<br />
-          <a href="mailto:webmaster@example.invalid"
-            >&#9993; Email the webmaster</a
-          >
+          <a href="mailto:" id="webmaster-email">&#9993; Email the webmaster</a>
         </p>
         <p>
           <a href="/" class="escape-link">&larr; Back to the actual site</a>
@@ -108,6 +106,18 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         const count =
           BASE_VISITORS + incrementSessionCount("fieldnotes:1999-visits");
         counter.textContent = String(count).padStart(7, "0");
+      }
+
+      /*
+       * Built at runtime, not written as a literal "mailto:x@y" string in
+       * the page source, so plain-HTML scrapers don't pick it up.
+       */
+      const EMAIL_USER = "timothybrits";
+      const EMAIL_DOMAIN = "icloud.com";
+      const emailLink =
+        document.querySelector<HTMLAnchorElement>("#webmaster-email");
+      if (emailLink) {
+        emailLink.href = `mailto:${EMAIL_USER}@${EMAIL_DOMAIN}`;
       }
     </script>
 
