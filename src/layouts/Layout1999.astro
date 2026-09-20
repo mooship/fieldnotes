@@ -1,0 +1,321 @@
+---
+import { SITE_AUTHOR } from "../lib/blog";
+
+export interface Properties {
+  title?: string;
+  description: string;
+}
+
+const { title, description } = Astro.props as Properties;
+
+const NAV_ITEMS = [
+  { id: "home", href: "/1999", label: "Home" },
+  { id: "about", href: "/1999/about", label: "About Me" },
+  { id: "links", href: "/1999/links", label: "Cool Links" },
+  { id: "guestbook", href: "/1999/guestbook", label: "Guestbook" },
+  { id: "awards", href: "/1999/awards", label: "Awards" },
+] as const;
+
+const activeItem =
+  NAV_ITEMS.find((item) => item.href === Astro.url.pathname) ?? NAV_ITEMS[0];
+const pageTitle = title ?? `${activeItem.label} - ${SITE_AUTHOR}'s Home Page`;
+
+const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
+---
+
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <div class="page">
+      <slot name="hero" />
+
+      <div class="scroller" role="presentation">
+        <div class="scroller-track">
+          Hello and welcome to my personal website!! Best viewed at 800x600
+          resolution with Netscape Navigator!! Please sign my guestbook before
+          you leave!! This site is best experienced with the sound on!!
+        </div>
+      </div>
+
+      <hr />
+
+      <center>
+        <table
+          role="presentation"
+          class="nav-table"
+          border="0"
+          cellpadding="0"
+          cellspacing="6"
+        >
+          <tr>
+            {
+              NAV_ITEMS.map((item) => (
+                <td>
+                  <a
+                    class={`button-link${item.id === activeItem.id ? " current" : ""}`}
+                    href={item.href}
+                    aria-current={
+                      item.id === activeItem.id ? "page" : undefined
+                    }
+                  >
+                    {item.label}
+                  </a>
+                </td>
+              ))
+            }
+          </tr>
+        </table>
+      </center>
+
+      <hr />
+
+      <slot />
+
+      <hr />
+
+      <center>
+        <div class="counter-box">
+          <p>You are visitor number:</p>
+          <div class="counter-digits" id="hit-counter">0000000</div>
+        </div>
+        <p class="footer-text">
+          {copyrightText}<br />
+          This page last updated: never.<br />
+          <a href="mailto:" id="webmaster-email">&#9993; Email the webmaster</a>
+        </p>
+        <p>
+          <a href="/" class="escape-link">&larr; Back to the actual site</a>
+        </p>
+      </center>
+    </div>
+
+    <script>
+      import { incrementSessionCount } from "../lib/easter-eggs";
+
+      const BASE_VISITORS = 133_700;
+      const counter = document.querySelector<HTMLElement>("#hit-counter");
+      if (counter) {
+        const count =
+          BASE_VISITORS + incrementSessionCount("fieldnotes:1999-visits");
+        counter.textContent = String(count).padStart(7, "0");
+      }
+
+      /*
+       * Built at runtime, not written as a literal "mailto:x@y" string in
+       * the page source, so plain-HTML scrapers don't pick it up.
+       */
+      const EMAIL_USER = "timothybrits";
+      const EMAIL_DOMAIN = "icloud.com";
+      const emailLink =
+        document.querySelector<HTMLAnchorElement>("#webmaster-email");
+      if (emailLink) {
+        emailLink.href = `mailto:${EMAIL_USER}@${EMAIL_DOMAIN}`;
+      }
+    </script>
+
+    <style is:global>
+      html {
+        background: #000080;
+      }
+
+      body {
+        margin: 0;
+        padding: 1.5rem 1rem;
+        background-image:
+          radial-gradient(
+            circle at 10% 20%,
+            rgba(255, 255, 255, 0.15) 0,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 70% 60%,
+            rgba(255, 255, 255, 0.12) 0,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 40% 85%,
+            rgba(255, 255, 255, 0.1) 0,
+            transparent 1px
+          );
+        background-size: 60px 60px;
+        background-color: #000080;
+        color: #00ff00;
+        font-family: "Times New Roman", Times, serif;
+      }
+
+      .page {
+        max-width: 760px;
+        margin: 0 auto;
+        background: #000020;
+        border: 4px double #c0c0c0;
+        padding: 1.25rem;
+      }
+
+      h1,
+      h2 {
+        font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+      }
+
+      h2 {
+        color: #00ffff;
+        border-bottom: 2px dashed #ffff00;
+        padding-bottom: 0.2rem;
+      }
+
+      .scroller {
+        overflow: hidden;
+        background: #000000;
+        border: 2px inset #808080;
+        padding: 0.4rem 0;
+        white-space: nowrap;
+      }
+
+      .scroller-track {
+        display: inline-block;
+        padding-left: 100%;
+        color: #00ff00;
+        font-family: "Courier New", monospace;
+        animation: retro-scroll 18s linear infinite;
+      }
+
+      @keyframes retro-scroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .scroller {
+          overflow-x: auto;
+        }
+
+        .scroller-track {
+          padding-left: 0;
+          animation: none;
+        }
+      }
+
+      hr {
+        border: none;
+        border-top: 3px groove #c0c0c0;
+        margin: 1.25rem 0;
+      }
+
+      a {
+        color: #ffff00;
+      }
+
+      a:visited {
+        color: #ff8080;
+      }
+
+      .button-link {
+        display: inline-block;
+        background: #c0c0c0;
+        color: #000080;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 0.35rem 0.7rem;
+        border: 2px outset #eeeeee;
+      }
+
+      .button-link:active {
+        border-style: inset;
+      }
+
+      .button-link.current {
+        background: #ffff00;
+        border-style: inset;
+      }
+
+      p,
+      li {
+        line-height: 1.5;
+        color: #e0e0ff;
+      }
+
+      .nav-table {
+        width: 100%;
+      }
+
+      .nav-table tr {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem;
+      }
+
+      .nav-table td {
+        display: block;
+      }
+
+      .link-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .link-list li {
+        margin-bottom: 0.4rem;
+      }
+
+      .link-list .visiting-hint {
+        font-size: 0.8rem;
+        color: #a0a0ff;
+        font-style: italic;
+      }
+
+      .counter-box {
+        display: inline-block;
+        text-align: center;
+        background: #101040;
+        border: 2px inset #808080;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .counter-box p {
+        margin: 0 0 0.35rem 0;
+        font-size: 0.85rem;
+      }
+
+      .counter-digits {
+        display: inline-block;
+        background: #000000;
+        color: #ff0000;
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+        font-size: 1.25rem;
+        letter-spacing: 0.15em;
+        padding: 0.2rem 0.4rem;
+        border: 1px solid #ff0000;
+      }
+
+      .footer-text {
+        font-size: 0.85rem;
+        color: #a0a0ff;
+      }
+
+      .escape-link {
+        display: inline-block;
+        margin-top: 0.5rem;
+        color: #ffffff;
+        background: #000000;
+        border: 1px solid #ffffff;
+        padding: 0.3rem 0.8rem;
+        text-decoration: none;
+      }
+    </style>
+  </body>
+</html>
