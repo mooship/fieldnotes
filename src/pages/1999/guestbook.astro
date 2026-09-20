@@ -1,0 +1,118 @@
+---
+import Layout1999 from "../../layouts/Layout1999.astro";
+import { SITE_AUTHOR } from "../../lib/blog";
+
+const pageTitle = `Guestbook - ${SITE_AUTHOR}'s Home Page`;
+---
+
+<Layout1999
+  title={pageTitle}
+  description="Sign the guestbook, in the style of a 1999 personal home page."
+  active="guestbook"
+>
+  <h2>Guestbook</h2>
+  <p>
+    Sign my guestbook! There's no server back here in 1999, so your entry is
+    saved right in your own browser — nobody else will see it, but it'll still
+    be here next time you visit this page.
+  </p>
+
+  <form id="guestbook-form" class="guestbook-form">
+    <label for="guestbook-name">Your name</label>
+    <input
+      id="guestbook-name"
+      name="name"
+      type="text"
+      maxlength="40"
+      required
+    />
+    <label for="guestbook-message">Your message</label>
+    <textarea id="guestbook-message" name="message" maxlength="280" required
+    ></textarea>
+    <button type="submit" class="button-link">Sign the Guestbook</button>
+    <p
+      class="guestbook-status"
+      id="guestbook-status"
+      role="status"
+      aria-live="polite"
+    >
+    </p>
+  </form>
+
+  <div id="local-entries"></div>
+
+  <details class="guestbook-entry">
+    <summary>trace — 14 Feb 1999</summary>
+    <p>great site!!! love the background. keep up the good work :)</p>
+  </details>
+  <details class="guestbook-entry">
+    <summary>anonymous — 3 Mar 1999</summary>
+    <p>intelligence agencies sign guestbooks too, apparently. hi.</p>
+  </details>
+  <details class="guestbook-entry">
+    <summary>mico (the dog) — undated</summary>
+    <p>woof.</p>
+  </details>
+
+  <script>
+    import {
+      addGuestbookEntry,
+      getGuestbookEntries,
+    } from "../../lib/guestbook";
+
+    const entriesContainer =
+      document.querySelector<HTMLElement>("#local-entries");
+    const form = document.querySelector<HTMLFormElement>("#guestbook-form");
+    const status = document.querySelector<HTMLElement>("#guestbook-status");
+
+    function formatEntryDate(iso: string): string {
+      return new Date(iso).toLocaleDateString("en-ZA", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    }
+
+    function renderEntries() {
+      if (!entriesContainer) return;
+      entriesContainer.textContent = "";
+      for (const entry of getGuestbookEntries()) {
+        const details = document.createElement("details");
+        details.className = "guestbook-entry";
+        details.open = true;
+
+        const summary = document.createElement("summary");
+        summary.textContent = `${entry.name} — ${formatEntryDate(entry.date)}`;
+
+        const message = document.createElement("p");
+        message.textContent = entry.message;
+
+        details.append(summary, message);
+        entriesContainer.append(details);
+      }
+    }
+
+    renderEntries();
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get("name") ?? "");
+      const message = String(data.get("message") ?? "");
+
+      try {
+        addGuestbookEntry(name, message);
+        form.reset();
+        renderEntries();
+        if (status) {
+          status.textContent =
+            "Thanks for signing!! Your entry has been added above.";
+        }
+      } catch {
+        if (status) {
+          status.textContent = "Please fill in both your name and a message.";
+        }
+      }
+    });
+  </script>
+</Layout1999>

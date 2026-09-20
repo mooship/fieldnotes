@@ -1,0 +1,51 @@
+---
+import Layout1999 from "../../layouts/Layout1999.astro";
+import { SITE_AUTHOR } from "../../lib/blog";
+
+const pageTitle = `${SITE_AUTHOR}'s Home Page - Under Construction!`;
+const heading = `Welcome to ${SITE_AUTHOR}'s Home Page`;
+---
+
+<Layout1999
+  title={pageTitle}
+  description="What fieldnotes might have looked like in 1999, before CSS got sensible."
+  active="home"
+>
+  <Fragment slot="hero">
+    <center>
+      <h1 class="rainbow">
+        <span>&#9734;</span>
+        {heading}
+        <span>&#9734;</span>
+      </h1>
+      <p class="tagline blink-text">UNDER CONSTRUCTION SINCE 1999</p>
+    </center>
+  </Fragment>
+
+  <h2>Site Contents</h2>
+  <p>
+    This isn't a single page pretending to be a website anymore — it's a whole
+    five pages, which in 1999 made you basically Amazon. Have a look around:
+  </p>
+  <ul class="link-list">
+    <li>
+      <a href="/1999/about">About Me</a> — who's behind all this &lt;marquee&gt; tags.
+    </li>
+    <li>
+      <a href="/1999/links">Cool Links</a> — my webring and a short list of places
+      worth clicking.
+    </li>
+    <li>
+      <a href="/1999/guestbook">Guestbook</a> — sign it, it actually works now.
+    </li>
+    <li>
+      <a href="/1999/awards">Awards &amp; Badges</a> — the internet's finest participation
+      trophies.
+    </li>
+  </ul>
+  <p>
+    Thanks for stopping by!! Please sign the <a href="/1999/guestbook"
+      >guestbook</a
+    > before you leave!!
+  </p>
+</Layout1999>

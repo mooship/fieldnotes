@@ -1,0 +1,76 @@
+---
+import Layout1999 from "../../layouts/Layout1999.astro";
+import { SITE_AUTHOR } from "../../lib/blog";
+
+const pageTitle = `Cool Links - ${SITE_AUTHOR}'s Home Page`;
+---
+
+<Layout1999
+  title={pageTitle}
+  description="A webring and a short list of hand-picked links, in the style of a 1999 personal home page."
+  active="links"
+>
+  <h2>Webring</h2>
+  <p>Check out my webring, powered by the finest dial-up modems:</p>
+  <center>
+    <table
+      role="presentation"
+      border="1"
+      cellpadding="4"
+      cellspacing="0"
+      class="webring"
+    >
+      <tr>
+        <td><a href="/1999/about">&larr; Prev Site</a></td>
+        <td><a id="random-site" href="/1999">&#127922; Random Site</a></td>
+        <td><a href="/1999/guestbook">Next Site &rarr;</a></td>
+      </tr>
+    </table>
+    <p class="webring-caption">
+      (it's a very small webring — every site in it is this one, but at least
+      it's five whole pages of it)
+    </p>
+  </center>
+
+  <h2>Link Exchange</h2>
+  <p>
+    And for anyone who wants to leave the time machine, here's where the rest of
+    the site actually lives:
+  </p>
+  <ul class="link-list">
+    <li>
+      <a href="/blog">The Blog</a>
+      <span class="visiting-hint">— writing on software and open source</span>
+    </li>
+    <li>
+      <a href="/now">/now</a>
+      <span class="visiting-hint">— what I'm up to at the moment</span>
+    </li>
+    <li>
+      <a href="/uses">/uses</a>
+      <span class="visiting-hint">— the tools and setup I actually use</span>
+    </li>
+    <li>
+      <a href="/colophon">/colophon</a>
+      <span class="visiting-hint"
+        >— how this site (including this page) is built</span
+      >
+    </li>
+  </ul>
+
+  <script>
+    const OTHER_PAGES = [
+      "/1999",
+      "/1999/about",
+      "/1999/guestbook",
+      "/1999/awards",
+    ];
+    const randomLink =
+      document.querySelector<HTMLAnchorElement>("#random-site");
+    if (randomLink) {
+      const destination =
+        OTHER_PAGES[Math.floor(Math.random() * OTHER_PAGES.length)];
+      randomLink.href = destination;
+    }
+  </script>
+</Layout1999>

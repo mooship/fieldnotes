@@ -1,9 +1,22 @@
 ---
 import { SITE_AUTHOR } from "../lib/blog";
 
-const pageTitle = `${SITE_AUTHOR}'s Home Page - Under Construction!`;
-const heading = `Welcome to ${SITE_AUTHOR}'s Home Page`;
-const aboutText = `Hi there, and thanks for stopping by!! My name is ${SITE_AUTHOR}, and this is my home on the World Wide Web. I like writing code, keeping my dog company, and arguing about politics in forums that no longer exist.`;
+export interface Properties {
+  title: string;
+  description: string;
+  active: "home" | "about" | "links" | "guestbook" | "awards";
+}
+
+const { title, description, active } = Astro.props as Properties;
+
+const NAV_ITEMS = [
+  { id: "home", href: "/1999", label: "Home" },
+  { id: "about", href: "/1999/about", label: "About Me" },
+  { id: "links", href: "/1999/links", label: "Cool Links" },
+  { id: "guestbook", href: "/1999/guestbook", label: "Guestbook" },
+  { id: "awards", href: "/1999/awards", label: "Awards" },
+] as const;
+
 const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
 ---
 
@@ -12,24 +25,14 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{pageTitle}</title>
-    <meta
-      name="description"
-      content="What fieldnotes might have looked like in 1999, before CSS got sensible."
-    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href="data:," />
   </head>
   <body>
     <div class="page">
-      <center>
-        <h1 class="rainbow">
-          <span>&#9734;</span>
-          {heading}
-          <span>&#9734;</span>
-        </h1>
-        <p class="tagline blink-text">UNDER CONSTRUCTION SINCE 1999</p>
-      </center>
+      <slot name="hero" />
 
       <div class="scroller" role="presentation">
         <div class="scroller-track">
@@ -50,82 +53,34 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
           cellspacing="6"
         >
           <tr>
-            <td><a class="button-link" href="#about">About Me</a></td>
-            <td><a class="button-link" href="#links">Cool Links</a></td>
-            <td><a class="button-link" href="#guestbook">Guestbook</a></td>
-            <td><a class="button-link" href="#badges">Awards</a></td>
+            {
+              NAV_ITEMS.map((item) => (
+                <td>
+                  <a
+                    class={`button-link${item.id === active ? " current" : ""}`}
+                    href={item.href}
+                    aria-current={item.id === active ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </td>
+              ))
+            }
           </tr>
         </table>
       </center>
 
       <hr />
 
-      <table role="presentation" class="layout-table" width="100%">
-        <tr>
-          <td style="width: 70%; vertical-align: top;">
-            <h2 id="about">About Me</h2>
-            <p>{aboutText}</p>
-            <p>
-              This page used to be the whole website. Now it's an easter egg
-              buried inside a much more sensible one. Progress, apparently.
-            </p>
-
-            <h2 id="links">Cool Links</h2>
-            <p>Check out my webring, powered by the finest dial-up modems:</p>
-            <center>
-              <table
-                role="presentation"
-                border="1"
-                cellpadding="4"
-                cellspacing="0"
-                class="webring"
-              >
-                <tr>
-                  <td><a href="/">&larr; Prev Site</a></td>
-                  <td><a href="/">&#127922; Random Site</a></td>
-                  <td><a href="/">Next Site &rarr;</a></td>
-                </tr>
-              </table>
-              <p class="webring-caption">
-                (it's a very small webring — every site in it is this one)
-              </p>
-            </center>
-
-            <h2 id="guestbook">Guestbook</h2>
-            <p>Sign my guestbook! Or just read what other people wrote:</p>
-            <details class="guestbook-entry">
-              <summary>trace — 14 Feb 1999</summary>
-              <p>great site!!! love the background. keep up the good work :)</p>
-            </details>
-            <details class="guestbook-entry">
-              <summary>anonymous — 3 Mar 1999</summary>
-              <p>intelligence agencies sign guestbooks too, apparently. hi.</p>
-            </details>
-            <details class="guestbook-entry">
-              <summary>mico (the dog) — undated</summary>
-              <p>woof.</p>
-            </details>
-          </td>
-          <td style="width: 30%; vertical-align: top;" class="sidebar">
-            <div class="counter-box">
-              <p>You are visitor number:</p>
-              <div class="counter-digits" id="hit-counter">0000000</div>
-            </div>
-
-            <h2 id="badges">Awards &amp; Badges</h2>
-            <div class="badge">
-              Best viewed in<br />Netscape Navigator 4.0
-            </div>
-            <div class="badge">800&times;600<br />or better</div>
-            <div class="badge">Y2K Compliant<br />&#10003;</div>
-            <div class="badge">React-Free<br />Since 1999</div>
-          </td>
-        </tr>
-      </table>
+      <slot />
 
       <hr />
 
       <center>
+        <div class="counter-box">
+          <p>You are visitor number:</p>
+          <div class="counter-digits" id="hit-counter">0000000</div>
+        </div>
         <p class="footer-text">
           {copyrightText}<br />
           This page last updated: never.<br />
@@ -151,12 +106,12 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
       }
     </script>
 
-    <style>
-      :global(html) {
+    <style is:global>
+      html {
         background: #000080;
       }
 
-      :global(body) {
+      body {
         margin: 0;
         padding: 1.5rem 1rem;
         background-image:
@@ -296,6 +251,11 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         border-style: inset;
       }
 
+      .button-link.current {
+        background: #ffff00;
+        border-style: inset;
+      }
+
       p,
       li {
         line-height: 1.5;
@@ -321,6 +281,22 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         font-style: italic;
       }
 
+      .link-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .link-list li {
+        margin-bottom: 0.4rem;
+      }
+
+      .link-list .visiting-hint {
+        font-size: 0.8rem;
+        color: #a0a0ff;
+        font-style: italic;
+      }
+
       .guestbook-entry {
         background: #101040;
         border: 1px solid #808080;
@@ -333,7 +309,52 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         color: #ffff00;
       }
 
+      .guestbook-form {
+        background: #101040;
+        border: 2px inset #808080;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .guestbook-form label {
+        display: block;
+        font-size: 0.85rem;
+        margin: 0.5rem 0 0.2rem;
+        color: #e0e0ff;
+      }
+
+      .guestbook-form input,
+      .guestbook-form textarea {
+        width: 100%;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 0.9rem;
+        background: #000000;
+        color: #00ff00;
+        border: 2px inset #808080;
+        padding: 0.35rem;
+      }
+
+      .guestbook-form textarea {
+        resize: vertical;
+        min-height: 4rem;
+      }
+
+      .guestbook-form button {
+        margin-top: 0.6rem;
+        font-family: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+
+      .guestbook-status {
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+        color: #ffff00;
+      }
+
       .counter-box {
+        display: inline-block;
         text-align: center;
         background: #101040;
         border: 2px inset #808080;
@@ -369,6 +390,12 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         padding: 0.4rem;
         margin-bottom: 0.5rem;
         border: 2px outset #eeeeee;
+      }
+
+      .badge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.5rem;
       }
 
       .footer-text {
