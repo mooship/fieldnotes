@@ -1,14 +1,9 @@
 ---
 import Layout1999 from "../../layouts/Layout1999.astro";
-import { SITE_AUTHOR } from "../../lib/blog";
-
-const pageTitle = `Cool Links - ${SITE_AUTHOR}'s Home Page`;
 ---
 
 <Layout1999
-  title={pageTitle}
   description="A webring and a short list of hand-picked links, in the style of a 1999 personal home page."
-  active="links"
 >
   <h2>Webring</h2>
   <p>Check out my webring, powered by the finest dial-up modems:</p>
@@ -74,3 +69,20 @@ const pageTitle = `Cool Links - ${SITE_AUTHOR}'s Home Page`;
     }
   </script>
 </Layout1999>
+
+<style>
+  .webring {
+    background: #101040;
+    border-color: #808080;
+  }
+
+  .webring td {
+    padding: 0.3rem 0.6rem;
+  }
+
+  .webring-caption {
+    font-size: 0.8rem;
+    color: #a0a0ff;
+    font-style: italic;
+  }
+</style>

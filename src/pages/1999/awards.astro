@@ -1,14 +1,11 @@
 ---
 import Layout1999 from "../../layouts/Layout1999.astro";
 import { SITE_AUTHOR } from "../../lib/blog";
-
-const pageTitle = `Awards & Badges - ${SITE_AUTHOR}'s Home Page`;
 ---
 
 <Layout1999
-  title={pageTitle}
+  title={`Awards & Badges - ${SITE_AUTHOR}'s Home Page`}
   description="Awards and badges, in the style of a 1999 personal home page."
-  active="awards"
 >
   <h2>Awards &amp; Badges</h2>
   <p>
@@ -28,3 +25,24 @@ const pageTitle = `Awards & Badges - ${SITE_AUTHOR}'s Home Page`;
     know either way.
   </p>
 </Layout1999>
+
+<style>
+  .badge {
+    display: block;
+    text-align: center;
+    background: #c0c0c0;
+    color: #000080;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 1.3;
+    padding: 0.4rem;
+    margin-bottom: 0.5rem;
+    border: 2px outset #eeeeee;
+  }
+
+  .badge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+  }
+</style>

@@ -9,7 +9,6 @@ const heading = `Welcome to ${SITE_AUTHOR}'s Home Page`;
 <Layout1999
   title={pageTitle}
   description="What fieldnotes might have looked like in 1999, before CSS got sensible."
-  active="home"
 >
   <Fragment slot="hero">
     <center>
@@ -49,3 +48,37 @@ const heading = `Welcome to ${SITE_AUTHOR}'s Home Page`;
     > before you leave!!
   </p>
 </Layout1999>
+
+<style>
+  h1 {
+    color: #ffff00;
+    font-size: 2rem;
+    margin: 0.5rem 0;
+  }
+
+  .rainbow span {
+    color: #ff00ff;
+  }
+
+  .tagline {
+    color: #ff4040;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+  }
+
+  .blink-text {
+    animation: retro-blink 1s steps(1) infinite;
+  }
+
+  @keyframes retro-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blink-text {
+      animation: none;
+    }
+  }
+</style>

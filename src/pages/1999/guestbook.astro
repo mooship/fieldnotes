@@ -1,14 +1,9 @@
 ---
 import Layout1999 from "../../layouts/Layout1999.astro";
-import { SITE_AUTHOR } from "../../lib/blog";
-
-const pageTitle = `Guestbook - ${SITE_AUTHOR}'s Home Page`;
 ---
 
 <Layout1999
-  title={pageTitle}
   description="Sign the guestbook, in the style of a 1999 personal home page."
-  active="guestbook"
 >
   <h2>Guestbook</h2>
   <p>
@@ -58,6 +53,7 @@ const pageTitle = `Guestbook - ${SITE_AUTHOR}'s Home Page`;
     import {
       addGuestbookEntry,
       getGuestbookEntries,
+      type GuestbookEntry,
     } from "../../lib/guestbook";
 
     const entriesContainer =
@@ -73,10 +69,10 @@ const pageTitle = `Guestbook - ${SITE_AUTHOR}'s Home Page`;
       });
     }
 
-    function renderEntries() {
+    function renderEntries(entries: GuestbookEntry[]) {
       if (!entriesContainer) return;
       entriesContainer.textContent = "";
-      for (const entry of getGuestbookEntries()) {
+      for (const entry of entries) {
         const details = document.createElement("details");
         details.className = "guestbook-entry";
         details.open = true;
@@ -92,7 +88,7 @@ const pageTitle = `Guestbook - ${SITE_AUTHOR}'s Home Page`;
       }
     }
 
-    renderEntries();
+    renderEntries(getGuestbookEntries());
 
     form?.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -101,9 +97,9 @@ const pageTitle = `Guestbook - ${SITE_AUTHOR}'s Home Page`;
       const message = String(data.get("message") ?? "");
 
       try {
-        addGuestbookEntry(name, message);
+        const entries = addGuestbookEntry(name, message);
         form.reset();
-        renderEntries();
+        renderEntries(entries);
         if (status) {
           status.textContent =
             "Thanks for signing!! Your entry has been added above.";
@@ -116,3 +112,66 @@ const pageTitle = `Guestbook - ${SITE_AUTHOR}'s Home Page`;
     });
   </script>
 </Layout1999>
+
+<style>
+  /*
+   * `:global()` here because #local-entries's contents are appended by the
+   * script above via `document.createElement`, so they never pick up this
+   * component's scoped-style attribute the way the static entries below do.
+   */
+  :global(.guestbook-entry) {
+    background: #101040;
+    border: 1px solid #808080;
+    padding: 0.3rem 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.guestbook-entry summary) {
+    cursor: pointer;
+    color: #ffff00;
+  }
+
+  .guestbook-form {
+    background: #101040;
+    border: 2px inset #808080;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .guestbook-form label {
+    display: block;
+    font-size: 0.85rem;
+    margin: 0.5rem 0 0.2rem;
+    color: #e0e0ff;
+  }
+
+  .guestbook-form input,
+  .guestbook-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: #000000;
+    color: #00ff00;
+    border: 2px inset #808080;
+    padding: 0.35rem;
+  }
+
+  .guestbook-form textarea {
+    resize: vertical;
+    min-height: 4rem;
+  }
+
+  .guestbook-form button {
+    margin-top: 0.6rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .guestbook-status {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #ffff00;
+  }
+</style>

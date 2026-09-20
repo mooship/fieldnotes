@@ -2,12 +2,11 @@
 import { SITE_AUTHOR } from "../lib/blog";
 
 export interface Properties {
-  title: string;
+  title?: string;
   description: string;
-  active: "home" | "about" | "links" | "guestbook" | "awards";
 }
 
-const { title, description, active } = Astro.props as Properties;
+const { title, description } = Astro.props as Properties;
 
 const NAV_ITEMS = [
   { id: "home", href: "/1999", label: "Home" },
@@ -17,6 +16,10 @@ const NAV_ITEMS = [
   { id: "awards", href: "/1999/awards", label: "Awards" },
 ] as const;
 
+const activeItem =
+  NAV_ITEMS.find((item) => item.href === Astro.url.pathname) ?? NAV_ITEMS[0];
+const pageTitle = title ?? `${activeItem.label} - ${SITE_AUTHOR}'s Home Page`;
+
 const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
 ---
 
@@ -25,7 +28,7 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href="data:," />
@@ -57,9 +60,11 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
               NAV_ITEMS.map((item) => (
                 <td>
                   <a
-                    class={`button-link${item.id === active ? " current" : ""}`}
+                    class={`button-link${item.id === activeItem.id ? " current" : ""}`}
                     href={item.href}
-                    aria-current={item.id === active ? "page" : undefined}
+                    aria-current={
+                      item.id === activeItem.id ? "page" : undefined
+                    }
                   >
                     {item.label}
                   </a>
@@ -149,42 +154,10 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
       }
 
-      h1 {
-        color: #ffff00;
-        font-size: 2rem;
-        margin: 0.5rem 0;
-      }
-
-      .rainbow span {
-        color: #ff00ff;
-      }
-
       h2 {
         color: #00ffff;
         border-bottom: 2px dashed #ffff00;
         padding-bottom: 0.2rem;
-      }
-
-      .tagline {
-        color: #ff4040;
-        font-weight: bold;
-        letter-spacing: 0.05em;
-      }
-
-      .blink-text {
-        animation: retro-blink 1s steps(1) infinite;
-      }
-
-      @keyframes retro-blink {
-        50% {
-          opacity: 0;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .blink-text {
-          animation: none;
-        }
       }
 
       .scroller {
@@ -266,21 +239,6 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         padding: 0 0.75rem;
       }
 
-      .webring {
-        background: #101040;
-        border-color: #808080;
-      }
-
-      .webring td {
-        padding: 0.3rem 0.6rem;
-      }
-
-      .webring-caption {
-        font-size: 0.8rem;
-        color: #a0a0ff;
-        font-style: italic;
-      }
-
       .link-list {
         list-style: none;
         margin: 0;
@@ -295,62 +253,6 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         font-size: 0.8rem;
         color: #a0a0ff;
         font-style: italic;
-      }
-
-      .guestbook-entry {
-        background: #101040;
-        border: 1px solid #808080;
-        padding: 0.3rem 0.6rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .guestbook-entry summary {
-        cursor: pointer;
-        color: #ffff00;
-      }
-
-      .guestbook-form {
-        background: #101040;
-        border: 2px inset #808080;
-        padding: 0.75rem;
-        margin-bottom: 1rem;
-      }
-
-      .guestbook-form label {
-        display: block;
-        font-size: 0.85rem;
-        margin: 0.5rem 0 0.2rem;
-        color: #e0e0ff;
-      }
-
-      .guestbook-form input,
-      .guestbook-form textarea {
-        width: 100%;
-        box-sizing: border-box;
-        font-family: inherit;
-        font-size: 0.9rem;
-        background: #000000;
-        color: #00ff00;
-        border: 2px inset #808080;
-        padding: 0.35rem;
-      }
-
-      .guestbook-form textarea {
-        resize: vertical;
-        min-height: 4rem;
-      }
-
-      .guestbook-form button {
-        margin-top: 0.6rem;
-        font-family: inherit;
-        font-size: 0.9rem;
-        cursor: pointer;
-      }
-
-      .guestbook-status {
-        margin-top: 0.5rem;
-        font-size: 0.85rem;
-        color: #ffff00;
       }
 
       .counter-box {
@@ -377,25 +279,6 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         letter-spacing: 0.15em;
         padding: 0.2rem 0.4rem;
         border: 1px solid #ff0000;
-      }
-
-      .badge {
-        display: block;
-        text-align: center;
-        background: #c0c0c0;
-        color: #000080;
-        font-size: 0.75rem;
-        font-weight: bold;
-        line-height: 1.3;
-        padding: 0.4rem;
-        margin-bottom: 0.5rem;
-        border: 2px outset #eeeeee;
-      }
-
-      .badge-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 0.5rem;
       }
 
       .footer-text {
