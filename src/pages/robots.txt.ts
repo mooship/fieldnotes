@@ -11,6 +11,7 @@ export function GET(context: APIContext) {
     [
       "User-agent: *",
       "Allow: /",
+      "Disallow: /1999",
       "",
       `Sitemap: ${siteUrl}/sitemap-index.xml`,
       "",
