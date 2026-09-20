@@ -151,7 +151,7 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
 
       h1,
       h2 {
-        font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+        font-family: "Comic Sans MS", "Comic Sans", sans-serif;
       }
 
       h2 {
@@ -235,8 +235,19 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         color: #e0e0ff;
       }
 
-      .layout-table td {
-        padding: 0 0.75rem;
+      .nav-table {
+        width: 100%;
+      }
+
+      .nav-table tr {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem;
+      }
+
+      .nav-table td {
+        display: block;
       }
 
       .link-list {
