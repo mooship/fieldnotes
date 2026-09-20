@@ -1,0 +1,48 @@
+---
+import Layout1999 from "../../layouts/Layout1999.astro";
+import { SITE_AUTHOR } from "../../lib/blog";
+---
+
+<Layout1999
+  title={`Awards & Badges - ${SITE_AUTHOR}'s Home Page`}
+  description="Awards and badges, in the style of a 1999 personal home page."
+>
+  <h2>Awards &amp; Badges</h2>
+  <p>
+    Every self-respecting home page needed a wall of badges nobody actually
+    awarded. Here's mine:
+  </p>
+  <div class="badge-grid">
+    <div class="badge">Best viewed in<br />Netscape Navigator 4.0</div>
+    <div class="badge">800&times;600<br />or better</div>
+    <div class="badge">Y2K Compliant<br />&#10003;</div>
+    <div class="badge">React-Free<br />Since 1999</div>
+    <div class="badge">Mico the Dog<br />Approved &#128021;</div>
+    <div class="badge">No Cookies<br />Only Treats</div>
+  </div>
+  <p>
+    Feel free to link back to this page using any of the above. I will never
+    know either way.
+  </p>
+</Layout1999>
+
+<style>
+  .badge {
+    display: block;
+    text-align: center;
+    background: #c0c0c0;
+    color: #000080;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 1.3;
+    padding: 0.4rem;
+    margin-bottom: 0.5rem;
+    border: 2px outset #eeeeee;
+  }
+
+  .badge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+  }
+</style>

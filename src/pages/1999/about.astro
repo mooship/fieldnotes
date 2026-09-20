@@ -1,0 +1,28 @@
+---
+import Layout1999 from "../../layouts/Layout1999.astro";
+import { SITE_AUTHOR } from "../../lib/blog";
+
+const aboutText = `Hi there, and thanks for stopping by!! My name is ${SITE_AUTHOR}, and this is my home on the World Wide Web. I like writing code, keeping my dog company, and arguing about politics in forums that no longer exist.`;
+---
+
+<Layout1999
+  description={`About ${SITE_AUTHOR}, in the style of a 1999 personal home page.`}
+>
+  <h2>About Me</h2>
+  <p>{aboutText}</p>
+  <p>
+    This is an easter egg buried inside a much more sensible site. Draw your own
+    conclusions about where the priorities are.
+  </p>
+  <p>
+    A few facts for the record, ICQ-profile style: I live in Pretoria, South
+    Africa. My dog, Mico, is a Pekingese mix and my most reliable code reviewer.
+    I build things with Astro these days, though in this particular corner of
+    the site we're pretending that's still a few years off.
+  </p>
+  <p>
+    Want the non-nostalgic version? <a href="/">Visit the actual site</a>, or
+    read <a href="/1999/guestbook">what people have written in the guestbook</a
+    >.
+  </p>
+</Layout1999>
