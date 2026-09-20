@@ -55,5 +55,10 @@ export default defineConfig({
       defaultColor: false,
     },
   },
-  integrations: [sitemap(), pagefind()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes("/1999"),
+    }),
+    pagefind(),
+  ],
 });
