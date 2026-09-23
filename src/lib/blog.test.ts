@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   computeReadingTime,
   formatDate,
+  formatMonthYear,
   getAdjacentPosts,
   getAllTags,
   getBlogPosts,
@@ -262,6 +263,16 @@ describe("formatDate", () => {
 
   it("formats a leap-year date correctly", () => {
     expect(formatDate(new Date("2024-02-29"))).toBe("29 February 2024");
+  });
+});
+
+describe("formatMonthYear", () => {
+  it("formats a known date in en-ZA locale", () => {
+    expect(formatMonthYear(new Date("2024-03-15"))).toBe("March 2024");
+  });
+
+  it("omits the day even for the first of the month", () => {
+    expect(formatMonthYear(new Date("2024-01-01"))).toBe("January 2024");
   });
 });
 
