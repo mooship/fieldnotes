@@ -64,7 +64,7 @@ Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one P
 
 ## Deployment
 
-The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, migrated off Cloudflare Pages). `wrangler.jsonc` at the project root is the source of truth — deployment isn't Git-integrated via the Cloudflare dashboard; it's `pnpm deploy` (build, then `wrangler deploy`) run manually. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
+The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, migrated off Cloudflare Pages). `wrangler.jsonc` at the project root is the source of truth. Deployment **is** Git-integrated via Cloudflare Workers Builds: **a push to `main` automatically builds and deploys to production**, and a push to any other branch (including a PR branch) gets its own isolated preview deployment at a `<hash>-fieldnotes.timothybrits.workers.dev` URL, posted as a PR comment by the `cloudflare-workers-and-pages` bot. `pnpm deploy` (build, then `wrangler deploy`) still works as a manual CLI alternative, but **merging a PR to `main` is itself a production deploy** — treat it with the same caution as running `wrangler deploy` directly, see Safety. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
 Astro's build produces `dist/client` (static assets) and `dist/server` (the Worker script). `wrangler.jsonc`'s `main` points at `@astrojs/cloudflare/entrypoints/server` and `assets.directory` at `./dist/client` — the adapter also writes its own `dist/server/wrangler.json` mirroring the root config with paths relativized to `dist/server`; that's a build artifact for the adapter's own tooling, not something to edit or deploy from directly.
 
@@ -83,7 +83,7 @@ Two adapter features are deliberately turned off in `astro.config.mjs` rather th
 
 ## Safety
 
-- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation. This covers `wrangler deploy`/`pnpm deploy` and anything else that changes the live Worker or its production data — including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
+- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation. This covers `wrangler deploy`/`pnpm deploy`, **merging a PR into `main`** (Cloudflare Workers Builds auto-deploys on every push there — confirm this is still true before assuming otherwise), and anything else that changes the live Worker or its production data — including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
 
 ## Architecture
 
