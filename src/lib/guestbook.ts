@@ -5,10 +5,7 @@ export interface GuestbookEntry {
   createdAt: string;
 }
 
-export interface GuestbookInput {
-  name: string;
-  message: string;
-}
+export type GuestbookInput = Pick<GuestbookEntry, "name" | "message">;
 
 export const MAX_NAME_LENGTH = 40;
 export const MAX_MESSAGE_LENGTH = 280;

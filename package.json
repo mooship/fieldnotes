@@ -5,16 +5,17 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "build": "wrangler types --include-runtime=false && astro check && astro build",
+    "build": "pnpm types && astro check && astro build",
     "deploy": "pnpm build && wrangler deploy",
-    "dev": "wrangler types --include-runtime=false && astro dev",
+    "dev": "pnpm types && astro dev",
     "format": "prettier --write --experimental-cli src/ package.json",
     "lighthouse": "lhci autorun",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
-    "preview": "wrangler types --include-runtime=false && astro build && wrangler dev",
-    "start": "wrangler types --include-runtime=false && astro dev",
-    "test": "vitest run"
+    "preview": "pnpm types && astro build && wrangler dev",
+    "start": "pnpm types && astro dev",
+    "test": "vitest run",
+    "types": "wrangler types --include-runtime=false"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

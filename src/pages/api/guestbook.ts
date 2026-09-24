@@ -41,8 +41,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   let normalized;
   try {
     normalized = normalizeGuestbookInput(name, message);
-  } catch {
-    return jsonError("Name and message are required.", 400);
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : "Invalid input.";
+    return jsonError(reason, 400);
   }
 
   await insertGuestbookEntry(env.DB, normalized);

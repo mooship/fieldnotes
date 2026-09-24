@@ -1,4 +1,4 @@
-import type { GuestbookEntry } from "./guestbook";
+import type { GuestbookEntry, GuestbookInput } from "./guestbook";
 import { MAX_ENTRIES } from "./guestbook";
 
 export interface GuestbookBoundStatement {
@@ -33,7 +33,7 @@ export async function listGuestbookEntries(
 
 export async function insertGuestbookEntry(
   database: GuestbookDatabase,
-  entry: { name: string; message: string }
+  entry: GuestbookInput
 ): Promise<void> {
   await database
     .prepare("INSERT INTO guestbook_entries (name, message) VALUES (?, ?)")
