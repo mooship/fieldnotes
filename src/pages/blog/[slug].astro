@@ -54,9 +54,9 @@ const isTocVisible = tocHeadings.length > 0;
     <a href="/blog" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All posts
     </a>
-    <article>
-      <header>
-        <h1>{post.data.title}</h1>
+    <div class="post-grid">
+      <h1 class="post-title">{post.data.title}</h1>
+      <aside class="post-rail" aria-label="Article details">
         <p class="meta-label">
           <time datetime={post.data.pubDate.toISOString()}>
             <span class="visually-hidden">Published: </span>
@@ -75,23 +75,25 @@ const isTocVisible = tocHeadings.length > 0;
           )
         }
         <TagList tags={post.data.tags} />
-      </header>
-      {
-        isTocVisible && (
-          <details class="toc no-print" open>
-            <summary class="meta-label">Contents</summary>
-            <ul>
-              {tocHeadings.map((heading) => (
-                <li class={`toc-depth-${heading.depth}`}>
-                  <a href={`#${heading.slug}`}>{heading.text}</a>
-                </li>
-              ))}
-            </ul>
-          </details>
-        )
-      }
-      <Content />
-    </article>
+        {
+          isTocVisible && (
+            <details class="toc no-print" open>
+              <summary class="meta-label">Contents</summary>
+              <ul>
+                {tocHeadings.map((heading) => (
+                  <li class={`toc-depth-${heading.depth}`}>
+                    <a href={`#${heading.slug}`}>{heading.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )
+        }
+      </aside>
+      <article class="post-body">
+        <Content />
+      </article>
+    </div>
     <div class="post-footer">
       <button
         class="share-btn no-print"
@@ -372,31 +374,74 @@ const isTocVisible = tocHeadings.length > 0;
     margin-bottom: 1.6rem;
   }
 
-  header {
-    margin-bottom: 3.2rem;
+  @media screen and (min-width: 960px) {
+    :global(body) {
+      max-width: 960px;
+    }
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-areas:
+      "title"
+      "rail"
+      "body";
+    row-gap: 0;
+  }
+
+  @media (min-width: 960px) {
+    .post-grid {
+      grid-template-columns: 220px 1fr;
+      grid-template-areas:
+        "title title"
+        "rail  body";
+      column-gap: 3rem;
+      align-items: start;
+    }
+
+    .post-rail {
+      position: sticky;
+      top: 2rem;
+    }
+  }
+
+  .post-title {
+    grid-area: title;
+    font-size: 2.75rem;
+    margin: 0 0 2rem 0;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
     padding-bottom: 1.6rem;
     border-bottom: 1px solid var(--rule);
   }
 
-  header .meta-label {
-    margin: 0;
-  }
-
-  h1 {
-    font-size: 2.75rem;
-    margin: 0 0 0.8rem 0;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
-
   @media (max-width: 480px) {
-    h1 {
+    .post-title {
       font-size: 2rem;
     }
   }
 
-  header .updated {
+  .post-rail {
+    grid-area: rail;
+    margin-bottom: 2.8rem;
+  }
+
+  .post-rail .meta-label {
+    margin: 0;
+  }
+
+  .post-rail .updated {
+    display: block;
     margin-top: 0.25rem;
+  }
+
+  .post-rail :global(.post-tags) {
+    margin-top: 0.8rem;
+  }
+
+  .post-body {
+    grid-area: body;
+    max-width: 680px;
   }
 
   .toc {

@@ -7,31 +7,53 @@ const slug = getPostSlug(post.id);
 ---
 
 <li>
-  <p class="post-meta meta-label">
-    <time datetime={post.data.pubDate.toISOString()}>
+  <div class="post-meta">
+    <time class="meta-label" datetime={post.data.pubDate.toISOString()}>
       {formatDate(post.data.pubDate)}
     </time>
-    {readingTime && <span> · {readingTime}</span>}
-  </p>
-  <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
-  <p class="post-desc">{post.data.description}</p>
-  <TagList tags={post.data.tags} />
+    {readingTime && <span class="meta-label reading-time">{readingTime}</span>}
+  </div>
+  <div class="post-content">
+    <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
+    <p class="post-desc">{post.data.description}</p>
+    <TagList tags={post.data.tags} />
+  </div>
 </li>
 
 <style>
   li {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    column-gap: 1.5rem;
+    align-items: baseline;
     padding: 1.6rem 0;
     border-bottom: 1px solid var(--rule);
     margin-bottom: 0;
   }
 
+  @media (max-width: 480px) {
+    li {
+      grid-template-columns: 1fr;
+      row-gap: 0.4rem;
+    }
+  }
+
   .post-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .post-meta .meta-label {
     margin: 0;
+  }
+
+  .reading-time {
+    color: var(--ink-soft);
   }
 
   .post-title {
     display: inline-block;
-    margin-top: 0.4rem;
     font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: -0.01em;
