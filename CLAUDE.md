@@ -68,6 +68,8 @@ The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, mig
 
 Astro's build produces `dist/client` (static assets) and `dist/server` (the Worker script). `wrangler.jsonc`'s `main` points at `@astrojs/cloudflare/entrypoints/server` and `assets.directory` at `./dist/client` — the adapter also writes its own `dist/server/wrangler.json` mirroring the root config with paths relativized to `dist/server`; that's a build artifact for the adapter's own tooling, not something to edit or deploy from directly.
 
+`wrangler.jsonc`'s `routes` declares `timothybrits.co.za` and `www.timothybrits.co.za` as Custom Domains on this Worker — moved here from the Cloudflare Pages project the site used to run on. Cloudflare only lets one destination (a Pages project or a Worker) own a given custom domain at a time, so deploying this config reassigns the domain to the Worker automatically; no manual DNS edit needed. The old Pages project can only be deleted safely once this reassignment has happened and the domain is confirmed serving from the Worker — deleting it first would take the live site down.
+
 **Bindings** (all declared in `wrangler.jsonc`, typed via `wrangler types` into `worker-configuration.d.ts`, accessed in server code via `import { env } from "cloudflare:workers"`):
 
 - `DB` — a D1 database (`fieldnotes-guestbook`, provisioned in the `weur` region) backing the guestbook. Schema lives in `migrations/`; apply with `wrangler d1 migrations apply fieldnotes-guestbook --local` (dev) or `--remote` (production — production data, treat like a deploy, see Safety).

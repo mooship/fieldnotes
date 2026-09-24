@@ -10,6 +10,15 @@
   "compatibility_date": "2026-09-24",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 
+  // Custom Domains, moved here from the Cloudflare Pages project this site
+  // used to run on. Cloudflare only lets one destination own a given custom
+  // domain at a time, so deploying this reassigns it from Pages to this
+  // Worker automatically — no manual DNS change needed.
+  "routes": [
+    { "pattern": "timothybrits.co.za", "custom_domain": true },
+    { "pattern": "www.timothybrits.co.za", "custom_domain": true }
+  ],
+
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist/client",
