@@ -1,5 +1,7 @@
 ---
 import Layout1999 from "../../layouts/Layout1999.astro";
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <Layout1999
@@ -23,6 +25,7 @@ import Layout1999 from "../../layouts/Layout1999.astro";
     <label for="guestbook-message">Your message</label>
     <textarea id="guestbook-message" name="message" maxlength="280" required
     ></textarea>
+    <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
     <button type="submit" class="button-link">Sign the Guestbook</button>
     <p
       class="guestbook-status"
@@ -33,10 +36,20 @@ import Layout1999 from "../../layouts/Layout1999.astro";
     </p>
   </form>
 
+  <script
+    is:inline
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async></script>
+
   <div id="guestbook-entries"></div>
 
   <script>
     import type { GuestbookEntry } from "../../lib/guestbook";
+
+    declare global {
+      var turnstile:
+        { reset: (widget?: string | HTMLElement) => void } | undefined;
+    }
 
     const entriesContainer =
       document.querySelector<HTMLElement>("#guestbook-entries");
@@ -88,6 +101,7 @@ import Layout1999 from "../../layouts/Layout1999.astro";
       const data = new FormData(form);
       const name = String(data.get("name") ?? "");
       const message = String(data.get("message") ?? "");
+      const turnstileToken = String(data.get("cf-turnstile-response") ?? "");
 
       if (status) status.textContent = "Signing…";
 
@@ -95,8 +109,10 @@ import Layout1999 from "../../layouts/Layout1999.astro";
         const response = await fetch("/api/guestbook", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ name, message }),
+          body: JSON.stringify({ name, message, turnstileToken }),
         });
+
+        globalThis.turnstile?.reset();
 
         if (!response.ok) {
           const { error } = (await response.json()) as { error?: string };
@@ -114,6 +130,7 @@ import Layout1999 from "../../layouts/Layout1999.astro";
             "Thanks for signing!! Your entry has been added above.";
         }
       } catch {
+        globalThis.turnstile?.reset();
         if (status) {
           status.textContent = "Couldn't reach the guestbook — try again.";
         }
@@ -171,6 +188,10 @@ import Layout1999 from "../../layouts/Layout1999.astro";
   .guestbook-form textarea {
     resize: vertical;
     min-height: 4rem;
+  }
+
+  .guestbook-form :global(.cf-turnstile) {
+    margin-top: 0.6rem;
   }
 
   .guestbook-form button {
