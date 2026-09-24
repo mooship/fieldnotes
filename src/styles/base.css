@@ -17,7 +17,7 @@ body {
   font-optical-sizing: auto;
   color: var(--ink);
   transition: color 0.25s ease;
-  max-width: 660px;
+  max-width: var(--content-width);
   margin: 0 auto;
   padding: calc(40px + env(safe-area-inset-top))
     calc(20px + env(safe-area-inset-right))

@@ -11,7 +11,7 @@ const slug = getPostSlug(post.id);
     <time class="meta-label" datetime={post.data.pubDate.toISOString()}>
       {formatDate(post.data.pubDate)}
     </time>
-    {readingTime && <span class="meta-label reading-time">{readingTime}</span>}
+    {readingTime && <span class="meta-label">{readingTime}</span>}
   </div>
   <div class="post-content">
     <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
@@ -42,14 +42,6 @@ const slug = getPostSlug(post.id);
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
-  }
-
-  .post-meta .meta-label {
-    margin: 0;
-  }
-
-  .reading-time {
-    color: var(--ink-soft);
   }
 
   .post-title {

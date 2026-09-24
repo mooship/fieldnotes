@@ -374,22 +374,19 @@ const isTocVisible = tocHeadings.length > 0;
     margin-bottom: 1.6rem;
   }
 
-  @media screen and (min-width: 960px) {
-    :global(body) {
-      max-width: 960px;
-    }
-  }
-
   .post-grid {
     display: grid;
     grid-template-areas:
       "title"
       "rail"
       "body";
-    row-gap: 0;
   }
 
-  @media (min-width: 960px) {
+  @media screen and (min-width: 960px) {
+    :global(body) {
+      --content-width: 960px;
+    }
+
     .post-grid {
       grid-template-columns: 220px 1fr;
       grid-template-areas:
@@ -431,7 +428,6 @@ const isTocVisible = tocHeadings.length > 0;
   }
 
   .post-rail .updated {
-    display: block;
     margin-top: 0.25rem;
   }
 
