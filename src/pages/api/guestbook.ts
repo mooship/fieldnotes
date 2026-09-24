@@ -5,6 +5,7 @@ import {
   insertGuestbookEntry,
   listGuestbookEntries,
 } from "../../lib/guestbook-database";
+import { isTurnstileTokenValid } from "../../lib/turnstile";
 
 // eslint-disable-next-line unicorn/consistent-boolean-name -- `prerender` is Astro's own required export name for opting a route out of static rendering
 export const prerender = false;
@@ -33,9 +34,22 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return jsonError("Invalid request body.", 400);
   }
 
-  const { name, message } = body as { name?: unknown; message?: unknown };
+  const { name, message, turnstileToken } = body as {
+    name?: unknown;
+    message?: unknown;
+    turnstileToken?: unknown;
+  };
   if (typeof name !== "string" || typeof message !== "string") {
     return jsonError("Name and message are required.", 400);
+  }
+
+  const isHuman = await isTurnstileTokenValid(
+    typeof turnstileToken === "string" ? turnstileToken : "",
+    env.TURNSTILE_SECRET_KEY,
+    clientAddress
+  );
+  if (!isHuman) {
+    return jsonError("Verification failed — please try again.", 400);
   }
 
   let normalized;
