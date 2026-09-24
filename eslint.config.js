@@ -10,7 +10,14 @@ import tseslint from "typescript-eslint";
  */
 export default [
   {
-    ignores: ["dist/", ".astro/", ".astro-cache/", ".github/", ".claude/"],
+    ignores: [
+      "dist/",
+      ".astro/",
+      ".astro-cache/",
+      ".github/",
+      ".claude/",
+      "worker-configuration.d.ts",
+    ],
   },
   ...tseslint.configs.recommended,
   ...astroPlugin.configs.recommended,
