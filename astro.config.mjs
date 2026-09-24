@@ -1,3 +1,4 @@
+import cloudflare from "@astrojs/cloudflare";
 import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
 import pagefind from "astro-pagefind";
@@ -13,6 +14,18 @@ export default defineConfig({
   site: "https://timothybrits.co.za",
   trailingSlash: "never",
   output: "static",
+  session: false,
+  adapter: cloudflare({
+    // Prerendered pages (everything except the guestbook API route) build
+    // through plain Node rather than a workerd sandbox — og/[slug].png.ts
+    // uses satori+sharp, and node:fs for font loading, neither compatible
+    // with workerd's build-time restrictions (no native modules).
+    prerenderEnvironment: "node",
+    // The site doesn't use Astro's image pipeline (astro:assets is only
+    // used for Font, not <Image>), so skip provisioning a Cloudflare
+    // Images binding the adapter would otherwise enable by default.
+    imageService: "passthrough",
+  }),
   fonts: [
     {
       provider: fontProviders.fontsource(),

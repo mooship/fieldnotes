@@ -23,7 +23,8 @@ Dev server runs at: http://localhost:4321
 | `pnpm build`      | Type check then production build         |
 | `pnpm lint`       | Lint and auto-fix all file types         |
 | `pnpm lint:check` | Same lint, no auto-fix — what CI runs    |
-| `pnpm preview`    | Preview built site                       |
+| `pnpm preview`    | Build, then run it locally with `wrangler dev` (real Cloudflare bindings) |
+| `pnpm deploy`     | Build, then `wrangler deploy` to Cloudflare Workers |
 | `pnpm format`     | Prettier + import sorting                |
 | `pnpm test`       | Run Vitest unit tests                    |
 | `pnpm lighthouse` | Run Lighthouse CI against the built site |
@@ -43,6 +44,8 @@ src/
     rss.xml.ts
     atom.xml.ts
     feed.json.ts
+    api/
+      guestbook.ts        # On-demand route (D1 + Rate Limiting binding) for the /1999 guestbook
     blog/
       index.astro        # Blog index (includes pagefind search)
       [slug].astro       # Blog post page
@@ -74,6 +77,10 @@ src/
     markdown-config.ts   # Shared remark/rehype plugin options
     xml.ts               # XML character escaping (atom feed)
     xml.test.ts
+    guestbook.ts          # Guestbook input validation (normalizeGuestbookInput)
+    guestbook.test.ts
+    guestbook-database.ts        # D1 queries for the guestbook (structurally typed, testable with a fake)
+    guestbook-database.test.ts
   __mocks__/
     astro-content.ts     # Vitest stub for astro:content virtual module
   styles/
@@ -102,7 +109,7 @@ Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declara
 
 ## Tech Notes
 
-- Astro (static output)
+- Astro (static output, plus one on-demand API route for the guestbook)
 - TypeScript enabled (`tsconfig.json`)
 - ESLint flat config for Astro, TS, CSS, and Markdown
 - Vitest unit tests with happy-dom (`pnpm test`)
@@ -112,7 +119,8 @@ Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declara
 - `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations
 - OG image generation via `satori` + `sharp`
 - RSS, Atom, and JSON feed endpoints
-- Hosted on Cloudflare Pages — `public/_headers` sets a strict CSP and cache rules specific to that host; adding a new external resource (script, font, image, API call) needs a matching entry there too
+- Guestbook (`/1999/guestbook`) backed by Cloudflare D1, with Cloudflare's native Rate Limiting binding capping submissions
+- Hosted on Cloudflare Workers (`@astrojs/cloudflare` adapter) — `public/_headers` sets a strict CSP and cache rules specific to that host; adding a new external resource (script, font, image, API call) needs a matching entry there too
 
 ## License
 
@@ -130,6 +138,6 @@ pnpm test
 pnpm build
 ```
 
-That's it — customise your content files, tweak styles, deploy. The static build output can run on most Astro-compatible hosts, but this repo is configured for Cloudflare Pages specifically (`public/_headers` sets Cloudflare-specific CSP and cache headers).
+That's it — customise your content files, tweak styles, deploy. The build output can run on most Astro-compatible hosts, but this repo is configured for Cloudflare Workers specifically (`wrangler.jsonc` declares the D1 and Rate Limiting bindings the guestbook needs; `public/_headers` sets Cloudflare-specific CSP and cache headers).
 
 Enjoy your lean, fast link hub.

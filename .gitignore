@@ -4,6 +4,10 @@ dist/
 # generated types
 .astro/
 .astro-cache/
+worker-configuration.d.ts
+
+# wrangler local state (local D1 database, dev cache)
+.wrangler/
 
 # dependencies
 node_modules/

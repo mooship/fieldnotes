@@ -2,14 +2,61 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "fieldnotes",
 
-  // Cloudflare Pages, not a Workers deploy: this points wrangler at the
-  // same static build Astro already produces (`pnpm build` -> `./dist`).
-  // The Git-integrated dashboard pipeline doesn't read this file -- it
-  // keeps building/deploying exactly as it already does. This just makes
-  // `wrangler pages deploy` available as a CLI/CI alternative and brings
-  // the project name/compatibility settings under version control, in
-  // line with the other timothybrits.co.za sites.
-  "pages_build_output_dir": "./dist",
-  "compatibility_date": "2026-09-08",
-  "compatibility_flags": ["nodejs_compat"]
+  // Cloudflare Workers with static assets: astro build (via @astrojs/cloudflare)
+  // emits a server entry that serves prerendered pages straight from the
+  // assets binding and only runs the guestbook API route (the one page with
+  // `prerender = false`) as an actual Worker invocation.
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-09-24",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+
+  // Custom Domains (timothybrits.co.za, www.timothybrits.co.za) are
+  // deliberately NOT declared here. This project's build pipeline deploys
+  // from an @astrojs/cloudflare-generated dist/server/wrangler.json, not
+  // this file directly, and neither the classic `routes` + custom_domain
+  // shape nor a top-level `domains` array made it through to that generated
+  // config in testing — so a wrangler.jsonc-driven cutover isn't confirmed
+  // to work with this adapter/plugin combination. Separately, the apex
+  // domain has pre-existing DNS records Cloudflare's Custom Domain API
+  // refuses to take over automatically, so the domain move from the old
+  // Pages project has to happen by hand in the Cloudflare dashboard
+  // (Workers & Pages → fieldnotes → Settings → Domains & Routes) regardless.
+
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/client",
+    // Matches astro.config.mjs's trailingSlash: "never" — without this,
+    // Workers' default ("auto-trailing-slash") redirects e.g.
+    // /1999/guestbook to /1999/guestbook/.
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "fieldnotes-guestbook",
+      "database_id": "730f141e-9d36-4418-8033-8795e3f09aba"
+    }
+  ],
+
+  // Anonymous guestbook posts are capped at 5 per client IP per 60s window.
+  "ratelimits": [
+    {
+      "name": "GUESTBOOK_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
+
+  "observability": {
+    "enabled": true
+  },
+
+  "placement": {
+    "mode": "smart"
+  }
 }

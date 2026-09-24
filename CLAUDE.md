@@ -4,22 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## About
 
-Fieldnotes is a personal site and blog built with Astro (static output), hosted on Cloudflare Pages. The home page renders at `/` and the blog lives at `/blog`.
+Fieldnotes is a personal site and blog built with Astro, hosted on Cloudflare Workers via the `@astrojs/cloudflare` adapter. The home page renders at `/` and the blog lives at `/blog`. Almost every page is still prerendered to static HTML at build time (`output: "static"`) — the one exception is `/api/guestbook`, an on-demand route backed by D1 that powers the guestbook at `/1999/guestbook`.
 
 ## Commands
 
 ```bash
-pnpm dev        # start dev server
-pnpm build      # type-check (astro check) then build
+pnpm dev        # start dev server (wrangler types, then astro dev)
+pnpm build      # wrangler types, type-check (astro check), then build
 pnpm lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
 pnpm lint:check # same lint, no auto-fix — what CI runs
-pnpm preview    # preview production build
+pnpm preview    # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
+pnpm deploy     # build, then `wrangler deploy` — never run without the user's explicit go-ahead, see Safety
 pnpm format     # prettier with auto-fix (also sorts imports, formats package.json)
 pnpm test       # run Vitest unit tests
 pnpm lighthouse # run Lighthouse CI against the built site (informational, no score gate)
 ```
 
-`pnpm build` is the primary verification step — it runs `astro check` (TypeScript + Astro type checking) before building. Run `pnpm test` to verify utility logic. Both must pass before committing.
+`pnpm build` is the primary verification step — it regenerates Cloudflare binding types (`wrangler types --include-runtime=false`) and runs `astro check` (TypeScript + Astro type checking) before building. Run `pnpm test` to verify utility logic. Both must pass before committing. `wrangler types` is run with `--include-runtime=false`: the full runtime type set pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block in the project. With runtime types off, `Env` is still generated (used by the guestbook API route), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
 
 Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Markdown.
 
@@ -46,6 +47,8 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 - `src/lib/blog.test.ts` — `getPostSlug`, `getSiteUrl`, `renderMarkdownToHtml`, `getBlogPosts`, `getAdjacentPosts`, `getTocHeadings`, `computeReadingTime`, `formatDate`, `formatMonthYear`
 - `src/lib/feed.test.ts` — `getFeedItems`
 - `src/lib/xml.test.ts` — `xmlEscape`
+- `src/lib/guestbook.test.ts` — `normalizeGuestbookInput`
+- `src/lib/guestbook-database.test.ts` — `listGuestbookEntries`, `insertGuestbookEntry`, against a fake object implementing D1's `prepare`/`bind`/`all`/`run` chain (no real D1 binding needed for unit tests)
 
 `astro:content` is a virtual Astro module that doesn't exist outside the Astro runtime. Tests that import from `src/lib/blog.ts` use `vi.hoisted` + `vi.mock` to intercept it. The alias in `vitest.config.ts` resolves it to `src/__mocks__/astro-content.ts` so Vite can find the module during test runs.
 
@@ -61,13 +64,25 @@ Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one P
 
 ## Deployment
 
-The site is hosted on **Cloudflare Pages**. Build/deploy settings for the Git-integrated pipeline still live in the Cloudflare dashboard and are unaffected by anything below — but a `wrangler.jsonc` (`pages_build_output_dir: "./dist"`, plus `compatibility_date`/`compatibility_flags`) is now committed, both for version control and so `wrangler pages deploy` works as a CLI/CI alternative if ever needed; `wrangler` is a devDependency for exactly that. `public/_headers` is Cloudflare Pages' native way to set response headers (its CSP allows `cloudflareinsights.com` for Cloudflare Web Analytics). Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
+The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, migrated off Cloudflare Pages). `wrangler.jsonc` at the project root is the source of truth — deployment isn't Git-integrated via the Cloudflare dashboard; it's `pnpm deploy` (build, then `wrangler deploy`) run manually. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
-`public/_headers` sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `pnpm dev`. Update the matching `-src` directive in `public/_headers` at the same time.
+Astro's build produces `dist/client` (static assets) and `dist/server` (the Worker script). `wrangler.jsonc`'s `main` points at `@astrojs/cloudflare/entrypoints/server` and `assets.directory` at `./dist/client` — the adapter also writes its own `dist/server/wrangler.json` mirroring the root config with paths relativized to `dist/server`; that's a build artifact for the adapter's own tooling, not something to edit or deploy from directly.
+
+**Bindings** (all declared in `wrangler.jsonc`, typed via `wrangler types` into `worker-configuration.d.ts`, accessed in server code via `import { env } from "cloudflare:workers"`):
+
+- `DB` — a D1 database (`fieldnotes-guestbook`, provisioned in the `weur` region) backing the guestbook. Schema lives in `migrations/`; apply with `wrangler d1 migrations apply fieldnotes-guestbook --local` (dev) or `--remote` (production — production data, treat like a deploy, see Safety).
+- `GUESTBOOK_RATE_LIMITER` — Cloudflare's native Rate Limiting binding, capping guestbook POSTs at 5 per client IP per 60-second window (the only supported period granularity is 10 or 60 seconds).
+- `ASSETS` — the static assets binding serving everything under `dist/client`.
+
+Two adapter features are deliberately turned off in `astro.config.mjs` rather than left at their defaults: `session: false` (the site has no per-user state, so there's no reason to provision a KV namespace for Astro's Sessions API) and `imageService: "passthrough"` (the site doesn't use `astro:assets`' `<Image>`/`getImage()` — only its `Font` API — so there's no reason to provision a Cloudflare Images binding). Both would otherwise be auto-provisioned on deploy.
+
+**Observability, Smart Placement:** `wrangler.jsonc` sets `observability.enabled: true` (Workers Logs, and live tailing via `wrangler tail` once deployed) and `placement.mode: "smart"` (Cloudflare picks the Worker's execution location per request; takes up to ~15 minutes after deploy to start taking effect).
+
+`public/_headers` is unchanged from the Pages days — Workers with static assets supports `_headers`/`_redirects` natively, same syntax. It sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `pnpm dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
 ## Safety
 
-- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation.
+- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation. This covers `wrangler deploy`/`pnpm deploy` and anything else that changes the live Worker or its production data — including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
 
 ## Architecture
 
@@ -90,6 +105,8 @@ The site is hosted on **Cloudflare Pages**. Build/deploy settings for the Git-in
 **Build pipeline:** Astro integrations run at build time — `@astrojs/sitemap` (sitemap generation) and `astro-pagefind` (full-text search index; search UI rendered in the blog index via `astro-pagefind/components/Search`, implemented as a genuine Web Component so it re-initializes correctly across view-transition navigations with no extra glue code). `@astrojs/rss` is used by `rss.xml.ts` for the RSS feed.
 
 **OG images:** `/og/[slug].png.ts` generates Open Graph images at build time using `satori` (SVG layout) and `sharp` (PNG conversion). The layout mirrors the Swiss site design — white field, black flush-left title in Geist, a signal-red accent bar, and a caps masthead label; Geist `.woff` files are read from `@fontsource/geist`.
+
+**Guestbook:** `/1999/guestbook` is part of the `/1999` retro easter-egg section, styled by `Layout1999.astro`. Its form and entry list are plain client-side `fetch` calls to `/api/guestbook` (`src/pages/api/guestbook.ts`, the site's only on-demand route — `export const prerender = false`). Validation (trim, length caps, reject-if-empty) is `normalizeGuestbookInput` in `src/lib/guestbook.ts`, shared so the API route doesn't duplicate it; D1 access is `src/lib/guestbook-database.ts` (`listGuestbookEntries`, `insertGuestbookEntry`), typed against a structural `GuestbookDatabase` interface rather than D1's own types so it can be unit-tested with a fake in `guestbook-database.test.ts` instead of a real binding. `GET` lists entries newest-first (capped at `MAX_ENTRIES`); `POST` checks the `GUESTBOOK_RATE_LIMITER` binding first, then validates, then inserts and returns the refreshed list. The three seed entries (trace / anonymous / mico) live in `migrations/0001_create_guestbook_entries.sql` with backdated `created_at` values rather than as markup in the page.
 
 **Standalone pages:** `/now`, `/uses`, and `/colophon` are static pages (`src/pages/now.astro`, `src/pages/uses.astro`, `src/pages/colophon.astro`) that import their content from the matching `.md` file in `src/sections/`.
 
@@ -121,6 +138,8 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 
 - `load` and `DOMContentLoaded` only fire once, on the very first hard load — they won't fire again after a client-side navigation. Use the `astro:page-load` event instead; it fires on the initial load *and* after every subsequent navigation. Every inline script in this repo (`EasterEggs.astro`, `CarbonBadge.astro`, `blog/[slug].astro`) follows this pattern.
 - Elements not marked `transition:persist` are destroyed and recreated fresh on every navigation, so a listener attached directly to one of them (e.g. the wordmark click handler in `EasterEggs.astro`) is safe to reattach unconditionally on each `astro:page-load` — the old node and its listener are simply gone. But anything bound to `window` or `document` itself *survives* navigation, so re-running that registration on every `astro:page-load` without cleanup stacks a new listener/observer on top of the old one every time. `blog/[slug].astro`'s reading-progress bar (bound to `window`'s `scroll` event and a `ResizeObserver`) guards against this with an `AbortController` aborted at the top of its init function before re-registering.
+
+**Prerendering runs inside a `workerd` sandbox by default, not Node.** Since Astro 6 / `@astrojs/cloudflare` v13, prerendered (static) pages are built by actually executing the Worker inside a `workerd`/Miniflare sandbox to match production as closely as possible — not plain Node, even though the output is 100% static HTML. Any prerendered route that depends on a native addon (`sharp`) or other `workerd`-incompatible Node/npm code will fail the build with an unhelpful `No such module` or WASM-compile error, even though it worked fine before the adapter was added. `astro.config.mjs` sets `adapter: cloudflare({ prerenderEnvironment: "node" })` for exactly this reason — `/og/[slug].png.ts` uses `sharp`. On-demand routes (`prerender = false`, i.e. `/api/guestbook`) always run in `workerd` regardless of this setting, since that's the real production runtime for them.
 
 ## Engineering principles
 
