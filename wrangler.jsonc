@@ -10,14 +10,17 @@
   "compatibility_date": "2026-09-24",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 
-  // Custom Domains, moved here from the Cloudflare Pages project this site
-  // used to run on. Cloudflare only lets one destination own a given custom
-  // domain at a time, so deploying this reassigns it from Pages to this
-  // Worker automatically — no manual DNS change needed.
-  "routes": [
-    { "pattern": "timothybrits.co.za", "custom_domain": true },
-    { "pattern": "www.timothybrits.co.za", "custom_domain": true }
-  ],
+  // Custom Domains (timothybrits.co.za, www.timothybrits.co.za) are
+  // deliberately NOT declared here. This project's build pipeline deploys
+  // from an @astrojs/cloudflare-generated dist/server/wrangler.json, not
+  // this file directly, and neither the classic `routes` + custom_domain
+  // shape nor a top-level `domains` array made it through to that generated
+  // config in testing — so a wrangler.jsonc-driven cutover isn't confirmed
+  // to work with this adapter/plugin combination. Separately, the apex
+  // domain has pre-existing DNS records Cloudflare's Custom Domain API
+  // refuses to take over automatically, so the domain move from the old
+  // Pages project has to happen by hand in the Cloudflare dashboard
+  // (Workers & Pages → fieldnotes → Settings → Domains & Routes) regardless.
 
   "assets": {
     "binding": "ASSETS",
