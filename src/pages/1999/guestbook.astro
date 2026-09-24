@@ -7,9 +7,8 @@ import Layout1999 from "../../layouts/Layout1999.astro";
 >
   <h2>Guestbook</h2>
   <p>
-    Sign my guestbook! There's no server back here in 1999, so your entry is
-    saved right in your own browser — nobody else will see it, but it'll still
-    be here next time you visit this page.
+    Sign my guestbook! Entries are shared with everyone who stops by this page —
+    please keep it kind.
   </p>
 
   <form id="guestbook-form" class="guestbook-form">
@@ -34,30 +33,13 @@ import Layout1999 from "../../layouts/Layout1999.astro";
     </p>
   </form>
 
-  <div id="local-entries"></div>
-
-  <details class="guestbook-entry">
-    <summary>trace — 14 Feb 1999</summary>
-    <p>great site!!! love the background. keep up the good work :)</p>
-  </details>
-  <details class="guestbook-entry">
-    <summary>anonymous — 3 Mar 1999</summary>
-    <p>intelligence agencies sign guestbooks too, apparently. hi.</p>
-  </details>
-  <details class="guestbook-entry">
-    <summary>mico (the dog) — undated</summary>
-    <p>woof.</p>
-  </details>
+  <div id="guestbook-entries"></div>
 
   <script>
-    import {
-      addGuestbookEntry,
-      getGuestbookEntries,
-      type GuestbookEntry,
-    } from "../../lib/guestbook";
+    import type { GuestbookEntry } from "../../lib/guestbook";
 
     const entriesContainer =
-      document.querySelector<HTMLElement>("#local-entries");
+      document.querySelector<HTMLElement>("#guestbook-entries");
     const form = document.querySelector<HTMLFormElement>("#guestbook-form");
     const status = document.querySelector<HTMLElement>("#guestbook-status");
 
@@ -78,7 +60,7 @@ import Layout1999 from "../../layouts/Layout1999.astro";
         details.open = true;
 
         const summary = document.createElement("summary");
-        summary.textContent = `${entry.name} — ${formatEntryDate(entry.date)}`;
+        summary.textContent = `${entry.name} — ${formatEntryDate(entry.createdAt)}`;
 
         const message = document.createElement("p");
         message.textContent = entry.message;
@@ -88,36 +70,65 @@ import Layout1999 from "../../layouts/Layout1999.astro";
       }
     }
 
-    renderEntries(getGuestbookEntries());
+    async function loadEntries() {
+      try {
+        const response = await fetch("/api/guestbook");
+        if (!response.ok) throw new Error("Failed to load entries.");
+        renderEntries(await response.json());
+      } catch {
+        if (status) {
+          status.textContent =
+            "Couldn't load the guestbook right now — try refreshing.";
+        }
+      }
+    }
 
-    form?.addEventListener("submit", (event) => {
+    form?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const data = new FormData(form);
       const name = String(data.get("name") ?? "");
       const message = String(data.get("message") ?? "");
 
+      if (status) status.textContent = "Signing…";
+
       try {
-        const entries = addGuestbookEntry(name, message);
+        const response = await fetch("/api/guestbook", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ name, message }),
+        });
+
+        if (!response.ok) {
+          const { error } = (await response.json()) as { error?: string };
+          if (status) {
+            status.textContent =
+              error ?? "Please fill in both your name and a message.";
+          }
+          return;
+        }
+
         form.reset();
-        renderEntries(entries);
+        renderEntries(await response.json());
         if (status) {
           status.textContent =
             "Thanks for signing!! Your entry has been added above.";
         }
       } catch {
         if (status) {
-          status.textContent = "Please fill in both your name and a message.";
+          status.textContent = "Couldn't reach the guestbook — try again.";
         }
       }
     });
+
+    await loadEntries();
   </script>
 </Layout1999>
 
 <style>
   /*
-   * `:global()` here because #local-entries's contents are appended by the
-   * script above via `document.createElement`, so they never pick up this
-   * component's scoped-style attribute the way the static entries below do.
+   * `:global()` here because #guestbook-entries's contents are appended by
+   * the script above via `document.createElement`, so they never pick up
+   * this component's scoped-style attribute.
    */
   :global(.guestbook-entry) {
     background: #101040;
