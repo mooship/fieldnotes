@@ -61,6 +61,12 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
   </div>
 </dialog>
 
+<!--
+  Handed to the client script below via a JSON blob rather than `define:vars`:
+  that directive forces the script it's attached to into non-module inline
+  JS, which can't `import` the shared `filterCommandPaletteItems` this
+  component's script relies on.
+-->
 <script
   is:inline
   type="application/json"
@@ -115,10 +121,44 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
     color: var(--ink);
     background: var(--paper);
     box-shadow: 0 0 0 1px var(--rule);
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease,
+      overlay 0.15s ease allow-discrete,
+      display 0.15s ease allow-discrete;
+  }
+
+  .command-palette[open] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @starting-style {
+    .command-palette[open] {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
   }
 
   .command-palette::backdrop {
     background: rgba(10, 10, 10, 0.6);
+    opacity: 0;
+    transition:
+      opacity 0.15s ease,
+      overlay 0.15s ease allow-discrete,
+      display 0.15s ease allow-discrete;
+  }
+
+  .command-palette[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .command-palette[open]::backdrop {
+      opacity: 0;
+    }
   }
 
   .command-palette-shell {
@@ -176,6 +216,9 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
     padding: 0.6rem 1.2rem;
     text-decoration: none;
     color: var(--ink);
+    transition:
+      background-color 0.1s ease,
+      color 0.1s ease;
   }
 
   :global(.command-palette-option-main) {
@@ -206,6 +249,7 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
     text-transform: uppercase;
     letter-spacing: var(--letter-spacing-meta);
     color: var(--ink-soft);
+    transition: color 0.1s ease;
   }
 
   :global(.command-palette-option:hover),
@@ -244,21 +288,21 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
   const shortcutState: { controller: AbortController | undefined } = {
     controller: undefined,
   };
+  const itemsState: { cached: CommandPaletteItem[] | undefined } = {
+    cached: undefined,
+  };
 
   function isOpenShortcut(event: KeyboardEvent): boolean {
     return (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
   }
 
-  function readItems(): CommandPaletteItem[] {
-    const script = document.querySelector<HTMLScriptElement>(
-      "[data-command-palette-data]"
-    );
-    if (!script?.textContent) return [];
-    try {
-      return JSON.parse(script.textContent) as CommandPaletteItem[];
-    } catch {
-      return [];
-    }
+  /**
+   * Parses the item list embedded by this same component at build time
+   * (`JSON.stringify`d server-side, never user input), so there's no
+   * malformed-JSON case to guard against here.
+   */
+  function readItems(script: HTMLScriptElement): CommandPaletteItem[] {
+    return JSON.parse(script.textContent ?? "[]") as CommandPaletteItem[];
   }
 
   function renderResults(
@@ -326,7 +370,10 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
     const empty = document.querySelector<HTMLElement>(
       "[data-command-palette-empty]"
     );
-    if (!dialog || !trigger || !input || !results || !empty) return;
+    const data = document.querySelector<HTMLScriptElement>(
+      "[data-command-palette-data]"
+    );
+    if (!dialog || !trigger || !input || !results || !empty || !data) return;
 
     const shortcutHint = document.querySelector<HTMLElement>(
       "[data-command-palette-shortcut]"
@@ -336,37 +383,37 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
       shortcutHint.textContent = isApple ? "⌘K" : "Ctrl K";
     }
 
-    const items = readItems();
+    const items = (itemsState.cached ??= readItems(data));
 
-    function open() {
-      input!.value = "";
+    const open = () => {
+      input.value = "";
       renderResults(
-        results!,
-        empty!,
+        results,
+        empty,
         filterCommandPaletteItems(items, "", DEFAULT_LIMIT)
       );
       document.documentElement.classList.add("command-palette-open");
-      dialog!.showModal();
-      input!.focus();
-    }
+      dialog.showModal();
+      input.focus();
+    };
 
-    function close() {
-      if (dialog!.open) dialog!.close();
-    }
+    const close = () => {
+      dialog.close();
+    };
 
     trigger.addEventListener("click", open);
 
     input.addEventListener("input", () => {
       renderResults(
-        results!,
-        empty!,
-        filterCommandPaletteItems(items, input!.value, SEARCH_LIMIT)
+        results,
+        empty,
+        filterCommandPaletteItems(items, input.value, SEARCH_LIMIT)
       );
     });
 
     input.addEventListener("keydown", (event) => {
       if (event.key !== "ArrowDown") return;
-      const first = results!.querySelector("a");
+      const first = results.querySelector("a");
       if (!first) return;
       event.preventDefault();
       first.focus();
@@ -376,7 +423,7 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
       if (!(event instanceof KeyboardEvent)) return;
       if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
 
-      const options = [...results!.querySelectorAll("a")];
+      const options = [...results.querySelectorAll("a")];
       const index = options.indexOf(
         document.activeElement as HTMLAnchorElement
       );
@@ -386,7 +433,7 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
       if (event.key === "ArrowDown") {
         options[index + 1]?.focus();
       } else if (index === 0) {
-        input!.focus();
+        input.focus();
       } else {
         options[index - 1].focus();
       }
@@ -409,7 +456,7 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
       (event) => {
         if (!isOpenShortcut(event)) return;
         event.preventDefault();
-        if (dialog!.open) close();
+        if (dialog.open) close();
         else open();
       },
       { signal: controller.signal }

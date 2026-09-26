@@ -5,31 +5,30 @@ export interface CommandPaletteItem {
   description?: string;
 }
 
-const TITLE_WEIGHT = 1000;
-const DESCRIPTION_WEIGHT = 1;
+/**
+ * Scores an exact substring match, or returns `undefined` when `query`
+ * doesn't appear in `text` at all. Matching at a word boundary scores
+ * higher, and an earlier match scores higher than a later one.
+ */
+function scoreSubstringMatch(query: string, text: string): number | undefined {
+  const substringIndex = text.indexOf(query);
+  if (substringIndex === -1) return undefined;
+
+  const isAtWordBoundary =
+    substringIndex === 0 || /[\s/-]/.test(text[substringIndex - 1]);
+  return (isAtWordBoundary ? 200 : 100) - substringIndex;
+}
 
 /**
- * Scores how well `query` matches `text`, or returns `undefined` when it
- * doesn't match at all. An exact substring match scores highest (more so at
- * a word boundary). When `canFuzzyMatch` is set, a query with no substring
- * match falls back to a fuzzy in-order subsequence match scored by how
- * tightly the matched characters are clustered — reserved for short titles,
- * since running it against prose (a description) turns any handful of
- * common letters into a spurious match.
+ * Scores a fuzzy in-order subsequence match (e.g. "ssg" against "static
+ * site generators"), or `undefined` if `query`'s characters don't all
+ * appear in `text` in order. Scored by how tightly the matched characters
+ * are clustered together.
  */
-function scoreMatch(
+function scoreFuzzySubsequenceMatch(
   query: string,
-  text: string,
-  canFuzzyMatch: boolean
+  text: string
 ): number | undefined {
-  const substringIndex = text.indexOf(query);
-  if (substringIndex !== -1) {
-    const isAtWordBoundary =
-      substringIndex === 0 || /[\s/-]/.test(text[substringIndex - 1]);
-    return (isAtWordBoundary ? 200 : 100) - substringIndex;
-  }
-  if (!canFuzzyMatch) return undefined;
-
   let searchFrom = 0;
   let firstMatch = -1;
   let lastMatch = -1;
@@ -41,8 +40,57 @@ function scoreMatch(
     searchFrom = found + 1;
   }
 
-  const spread = lastMatch - firstMatch;
-  return Math.max(1, 50 - spread);
+  return Math.max(1, 50 - (lastMatch - firstMatch));
+}
+
+/**
+ * Scores `query` against a title: an exact substring match, falling back to
+ * a fuzzy subsequence match for short abbreviation-style queries (e.g. "ssg"
+ * for "static site generators").
+ */
+function scoreTitleMatch(query: string, title: string): number | undefined {
+  return (
+    scoreSubstringMatch(query, title) ??
+    scoreFuzzySubsequenceMatch(query, title)
+  );
+}
+
+/**
+ * Scores `query` against a description: an exact substring match only.
+ * Fuzzy subsequence matching is deliberately not used here — against prose
+ * as long as a description, a handful of common letters will almost always
+ * appear in order somewhere, turning "fuzzy" into "matches everything."
+ */
+function scoreDescriptionMatch(
+  query: string,
+  description: string
+): number | undefined {
+  return scoreSubstringMatch(query, description);
+}
+
+interface ScoredItem {
+  item: CommandPaletteItem;
+  isTitleMatch: boolean;
+  score: number;
+}
+
+function scoreItem(
+  item: CommandPaletteItem,
+  query: string
+): ScoredItem | undefined {
+  const titleScore = scoreTitleMatch(query, item.title.toLowerCase());
+  if (titleScore !== undefined) {
+    return { item, isTitleMatch: true, score: titleScore };
+  }
+
+  const descriptionScore = item.description
+    ? scoreDescriptionMatch(query, item.description.toLowerCase())
+    : undefined;
+  if (descriptionScore !== undefined) {
+    return { item, isTitleMatch: false, score: descriptionScore };
+  }
+
+  return undefined;
 }
 
 /**
@@ -60,26 +108,13 @@ export function filterCommandPaletteItems(
   const trimmed = query.trim().toLowerCase();
   if (!trimmed) return items.slice(0, limit);
 
-  const scored = items
-    .map((item) => {
-      const titleScore = scoreMatch(trimmed, item.title.toLowerCase(), true);
-      const descriptionScore = item.description
-        ? scoreMatch(trimmed, item.description.toLowerCase(), false)
-        : undefined;
-
-      let score: number | undefined;
-      if (titleScore !== undefined) {
-        score = titleScore * TITLE_WEIGHT;
-      } else if (descriptionScore !== undefined) {
-        score = descriptionScore * DESCRIPTION_WEIGHT;
-      }
-
-      return score === undefined ? undefined : { item, score };
-    })
-    .filter((entry) => entry !== undefined);
-
-  return scored
-    .toSorted((a, b) => b.score - a.score)
+  return items
+    .map((item) => scoreItem(item, trimmed))
+    .filter((entry) => entry !== undefined)
+    .toSorted(
+      (a, b) =>
+        Number(b.isTitleMatch) - Number(a.isTitleMatch) || b.score - a.score
+    )
     .slice(0, limit)
     .map((entry) => entry.item);
 }

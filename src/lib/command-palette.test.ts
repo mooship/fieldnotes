@@ -20,11 +20,8 @@ const items = [
 ];
 
 describe("filterCommandPaletteItems", () => {
-  it("returns the first `limit` items unchanged when the query is empty", () => {
+  it("returns the first `limit` items unchanged when the query is empty or whitespace-only", () => {
     expect(filterCommandPaletteItems(items, "", 3)).toEqual(items.slice(0, 3));
-  });
-
-  it("returns the first `limit` items unchanged when the query is whitespace", () => {
     expect(filterCommandPaletteItems(items, " ".repeat(3), 3)).toEqual(
       items.slice(0, 3)
     );
@@ -55,6 +52,12 @@ describe("filterCommandPaletteItems", () => {
     expect(results.map((item) => item.title)).toContain(
       "Static site generators compared"
     );
+  });
+
+  it("breaks ties between two title matches by score", () => {
+    const results = filterCommandPaletteItems(items, "o");
+    expect(results[0].title).toBe("On writing fieldnotes");
+    expect(results.map((item) => item.title)).toContain("Blog");
   });
 
   it("ranks a title match above a description-only match", () => {
