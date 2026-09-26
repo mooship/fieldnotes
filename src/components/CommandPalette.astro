@@ -216,7 +216,9 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
   }
 
   :global(.command-palette-option:hover .command-palette-option-section),
-  :global(.command-palette-option:focus-visible .command-palette-option-section) {
+  :global(
+    .command-palette-option:focus-visible .command-palette-option-section
+  ) {
     color: var(--signal);
   }
 
