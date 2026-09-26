@@ -51,6 +51,18 @@ export default defineConfig({
   build: {
     inlineStylesheets: "never",
   },
+  vite: {
+    build: {
+      // Force every component script to its own external, immutable-cached
+      // /_astro/*.js file rather than inlined into the page. A page with any
+      // inline `<script type="module">` (no src) makes the ClientRouter
+      // inject a `data:application/javascript,` synchronization barrier on
+      // every soft navigation, which this site's CSP (script-src has no
+      // data:) then blocks. Keeping every script external avoids the
+      // barrier entirely instead of relaxing the CSP to allow it.
+      assetsInlineLimit: (file) => (file.endsWith(".js") ? false : undefined),
+    },
+  },
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "viewport",

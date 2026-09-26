@@ -12,6 +12,7 @@ export default [
   {
     ignores: [
       "dist/",
+      "coverage/",
       ".astro/",
       ".astro-cache/",
       ".github/",
@@ -38,10 +39,7 @@ export default [
     plugins: css.configs.recommended.plugins,
     rules: {
       ...css.configs.recommended.rules,
-      "css/no-invalid-properties": [
-        "error",
-        { allowUnknownVariables: true },
-      ],
+      "css/no-invalid-properties": ["error", { allowUnknownVariables: true }],
       "css/no-important": "off",
       "css/use-baseline": [
         "error",

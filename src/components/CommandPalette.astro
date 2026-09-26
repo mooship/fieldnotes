@@ -1,0 +1,467 @@
+---
+import { getBlogPosts, getPostSlug } from "../lib/blog";
+import type { CommandPaletteItem } from "../lib/command-palette";
+
+const posts = await getBlogPosts();
+
+const pageItems: CommandPaletteItem[] = [
+  { title: "Home", url: "/", section: "Page" },
+  { title: "Blog", url: "/blog", section: "Page" },
+  { title: "Browse posts by tag", url: "/blog/tags", section: "Page" },
+  { title: "Now", url: "/now", section: "Page" },
+  { title: "Uses", url: "/uses", section: "Page" },
+  { title: "Colophon", url: "/colophon", section: "Page" },
+  { title: "Guestbook", url: "/1999/guestbook", section: "Page" },
+];
+
+const postItems: CommandPaletteItem[] = posts.map((post) => ({
+  title: post.data.title,
+  url: `/blog/${getPostSlug(post.id)}`,
+  section: "Post",
+  description: post.data.description,
+}));
+
+const items: CommandPaletteItem[] = [...pageItems, ...postItems];
+---
+
+<button
+  type="button"
+  class="command-palette-trigger no-print"
+  aria-haspopup="dialog"
+  data-command-palette-trigger
+>
+  <span>Search</span>
+  <kbd data-command-palette-shortcut>Ctrl K</kbd>
+</button>
+
+<dialog
+  class="command-palette no-print"
+  aria-label="Search pages and posts"
+  data-command-palette
+>
+  <div class="command-palette-shell">
+    <div class="command-palette-field">
+      <label for="command-palette-input" class="visually-hidden"
+        >Search pages and posts</label
+      >
+      <input
+        id="command-palette-input"
+        type="text"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="Search pages and posts…"
+        data-command-palette-input
+      />
+    </div>
+    <ul class="command-palette-results" data-command-palette-results></ul>
+    <p class="command-palette-empty" data-command-palette-empty hidden>
+      No matches.
+    </p>
+  </div>
+</dialog>
+
+<!--
+  Handed to the client script below via a JSON blob rather than `define:vars`:
+  that directive forces the script it's attached to into non-module inline
+  JS, which can't `import` the shared `filterCommandPaletteItems` this
+  component's script relies on.
+-->
+<script
+  is:inline
+  type="application/json"
+  data-command-palette-data
+  set:html={JSON.stringify(items)}
+/>
+
+<style>
+  .command-palette-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: var(--letter-spacing-meta);
+    text-transform: uppercase;
+    padding: 0.4rem 0;
+    color: var(--ink-soft);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .command-palette-trigger:hover {
+    color: var(--ink);
+  }
+
+  .command-palette-trigger kbd {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0;
+    text-transform: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.1rem 0.35rem;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 480px) {
+    .command-palette-trigger kbd {
+      display: none;
+    }
+  }
+
+  .command-palette {
+    padding: 0;
+    border: none;
+    border-radius: var(--radius);
+    width: min(560px, calc(100vw - 2.4rem));
+    max-height: min(70vh, 480px);
+    color: var(--ink);
+    background: var(--paper);
+    box-shadow: 0 0 0 1px var(--rule);
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease,
+      overlay 0.15s ease allow-discrete,
+      display 0.15s ease allow-discrete;
+  }
+
+  .command-palette[open] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @starting-style {
+    .command-palette[open] {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+  }
+
+  .command-palette::backdrop {
+    background: rgba(10, 10, 10, 0.6);
+    opacity: 0;
+    transition:
+      opacity 0.15s ease,
+      overlay 0.15s ease allow-discrete,
+      display 0.15s ease allow-discrete;
+  }
+
+  .command-palette[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .command-palette[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .command-palette-shell {
+    display: flex;
+    flex-direction: column;
+    max-height: inherit;
+  }
+
+  .command-palette-field {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .command-palette-field input {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    padding: 1rem 1.2rem;
+  }
+
+  .command-palette-field input:focus {
+    outline: none;
+  }
+
+  .command-palette-field input::placeholder {
+    color: var(--ink-soft);
+  }
+
+  .command-palette-results {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem 0;
+    overflow-y: auto;
+  }
+
+  /*
+   * The result rows below are created client-side (`document.createElement`)
+   * rather than rendered by this component's template, so Astro's scoped
+   * `data-astro-*` attribute never lands on them — every selector that
+   * targets them has to be `:global()`, one per selector (see "Known Astro
+   * quirks" in CLAUDE.md), or the rules silently never match.
+   */
+  :global(.command-palette-result-item) {
+    margin-bottom: 0;
+  }
+
+  :global(.command-palette-option) {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition:
+      background-color 0.1s ease,
+      color 0.1s ease;
+  }
+
+  :global(.command-palette-option-main) {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  :global(.command-palette-option-title) {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.command-palette-option-description) {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.command-palette-option-section) {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-meta);
+    color: var(--ink-soft);
+    transition: color 0.1s ease;
+  }
+
+  :global(.command-palette-option:hover),
+  :global(.command-palette-option:focus-visible) {
+    background: var(--paper-deep);
+    color: var(--signal);
+    outline: none;
+  }
+
+  :global(.command-palette-option:hover .command-palette-option-section),
+  :global(
+    .command-palette-option:focus-visible .command-palette-option-section
+  ) {
+    color: var(--signal);
+  }
+
+  .command-palette-empty {
+    padding: 1.2rem;
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  :global(html.command-palette-open) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  import { filterCommandPaletteItems } from "../lib/command-palette";
+  import type { CommandPaletteItem } from "../lib/command-palette";
+
+  const DEFAULT_LIMIT = 10;
+  const SEARCH_LIMIT = 8;
+
+  const shortcutState: { controller: AbortController | undefined } = {
+    controller: undefined,
+  };
+  const itemsState: { cached: CommandPaletteItem[] | undefined } = {
+    cached: undefined,
+  };
+
+  function isOpenShortcut(event: KeyboardEvent): boolean {
+    return (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
+  }
+
+  /**
+   * Parses the item list embedded by this same component at build time
+   * (`JSON.stringify`d server-side, never user input), so there's no
+   * malformed-JSON case to guard against here.
+   */
+  function readItems(script: HTMLScriptElement): CommandPaletteItem[] {
+    return JSON.parse(script.textContent ?? "[]") as CommandPaletteItem[];
+  }
+
+  function renderResults(
+    list: HTMLElement,
+    empty: HTMLElement,
+    results: CommandPaletteItem[]
+  ) {
+    list.replaceChildren();
+    empty.hidden = results.length > 0;
+
+    for (const item of results) {
+      const option = document.createElement("a");
+      option.href = item.url;
+      option.className = "command-palette-option";
+
+      const main = document.createElement("span");
+      main.className = "command-palette-option-main";
+
+      const title = document.createElement("span");
+      title.className = "command-palette-option-title";
+      title.textContent = item.title;
+      main.append(title);
+
+      if (item.description) {
+        const description = document.createElement("span");
+        description.className = "command-palette-option-description";
+        description.textContent = item.description;
+        main.append(description);
+      }
+
+      const section = document.createElement("span");
+      section.className = "command-palette-option-section";
+      section.textContent = item.section;
+
+      option.append(main, section);
+
+      const listItem = document.createElement("li");
+      listItem.className = "command-palette-result-item";
+      listItem.append(option);
+      list.append(listItem);
+    }
+  }
+
+  /**
+   * Wires the command palette: the visible trigger button, the global
+   * Ctrl/Cmd+K shortcut, and keyboard/search behaviour inside the dialog.
+   * Re-run on every `astro:page-load` since the dialog markup itself is
+   * destroyed and recreated on each view-transition navigation — only the
+   * `window`-bound shortcut listener needs the AbortController guard against
+   * stacking across navigations.
+   */
+  function initCommandPalette() {
+    const dialog = document.querySelector<HTMLDialogElement>(
+      "[data-command-palette]"
+    );
+    const trigger = document.querySelector<HTMLButtonElement>(
+      "[data-command-palette-trigger]"
+    );
+    const input = document.querySelector<HTMLInputElement>(
+      "[data-command-palette-input]"
+    );
+    const results = document.querySelector<HTMLElement>(
+      "[data-command-palette-results]"
+    );
+    const empty = document.querySelector<HTMLElement>(
+      "[data-command-palette-empty]"
+    );
+    const data = document.querySelector<HTMLScriptElement>(
+      "[data-command-palette-data]"
+    );
+    if (!dialog || !trigger || !input || !results || !empty || !data) return;
+
+    const shortcutHint = document.querySelector<HTMLElement>(
+      "[data-command-palette-shortcut]"
+    );
+    if (shortcutHint) {
+      const isApple = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
+      shortcutHint.textContent = isApple ? "⌘K" : "Ctrl K";
+    }
+
+    const items = (itemsState.cached ??= readItems(data));
+
+    const open = () => {
+      input.value = "";
+      renderResults(
+        results,
+        empty,
+        filterCommandPaletteItems(items, "", DEFAULT_LIMIT)
+      );
+      document.documentElement.classList.add("command-palette-open");
+      dialog.showModal();
+      input.focus();
+    };
+
+    const close = () => {
+      dialog.close();
+    };
+
+    trigger.addEventListener("click", open);
+
+    input.addEventListener("input", () => {
+      renderResults(
+        results,
+        empty,
+        filterCommandPaletteItems(items, input.value, SEARCH_LIMIT)
+      );
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown") return;
+      const first = results.querySelector("a");
+      if (!first) return;
+      event.preventDefault();
+      first.focus();
+    });
+
+    results.addEventListener("keydown", (event) => {
+      if (!(event instanceof KeyboardEvent)) return;
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+
+      const options = [...results.querySelectorAll("a")];
+      const index = options.indexOf(
+        document.activeElement as HTMLAnchorElement
+      );
+      if (index === -1) return;
+
+      event.preventDefault();
+      if (event.key === "ArrowDown") {
+        options[index + 1]?.focus();
+      } else if (index === 0) {
+        input.focus();
+      } else {
+        options[index - 1].focus();
+      }
+    });
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) close();
+    });
+
+    dialog.addEventListener("close", () => {
+      document.documentElement.classList.remove("command-palette-open");
+    });
+
+    shortcutState.controller?.abort();
+    const controller = new AbortController();
+    shortcutState.controller = controller;
+
+    addEventListener(
+      "keydown",
+      (event) => {
+        if (!isOpenShortcut(event)) return;
+        event.preventDefault();
+        if (dialog.open) close();
+        else open();
+      },
+      { signal: controller.signal }
+    );
+  }
+
+  document.addEventListener("astro:page-load", initCommandPalette);
+</script>

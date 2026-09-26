@@ -39,3 +39,6 @@ pnpm-debug.log*
 
 # lighthouse ci
 .lighthouseci/
+
+# vitest coverage reports
+coverage/
