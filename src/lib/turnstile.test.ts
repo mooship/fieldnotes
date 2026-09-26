@@ -1,7 +1,26 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { isTurnstileTokenValid } from "./turnstile";
 
 describe("isTurnstileTokenValid", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("falls back to the global fetch when no verifier is given", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(Response.json({ success: true }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await isTurnstileTokenValid("token", "secret", "1.2.3.4");
+
+    expect(result).toBe(true);
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      expect.objectContaining({ method: "POST" })
+    );
+  });
+
   it("returns false without calling out when the token is empty", async () => {
     const fetchMock = vi.fn();
     const result = await isTurnstileTokenValid("", "secret", "1.2.3.4", {
