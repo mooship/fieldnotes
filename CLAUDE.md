@@ -9,15 +9,16 @@ Fieldnotes is a personal site and blog built with Astro, hosted on Cloudflare Wo
 ## Commands
 
 ```bash
-pnpm dev        # start dev server (wrangler types, then astro dev)
-pnpm build      # wrangler types, type-check (astro check), then build
-pnpm lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
-pnpm lint:check # same lint, no auto-fix — what CI runs
-pnpm preview    # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
-pnpm deploy     # build, then `wrangler deploy` — never run without the user's explicit go-ahead, see Safety
-pnpm format     # prettier with auto-fix (also sorts imports, formats package.json)
-pnpm test       # run Vitest unit tests
-pnpm lighthouse # run Lighthouse CI against the built site (informational, no score gate)
+pnpm dev           # start dev server (wrangler types, then astro dev)
+pnpm build         # wrangler types, type-check (astro check), then build
+pnpm lint          # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
+pnpm lint:check    # same lint, no auto-fix — what CI runs
+pnpm preview       # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
+pnpm deploy        # build, then `wrangler deploy` — never run without the user's explicit go-ahead, see Safety
+pnpm format        # prettier with auto-fix (also sorts imports, formats package.json)
+pnpm test          # run Vitest unit tests
+pnpm test:coverage # run Vitest with coverage — CI fails under 100% lines/branches/functions/statements in src/lib
+pnpm lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
 ```
 
 `pnpm build` is the primary verification step — it regenerates Cloudflare binding types (`wrangler types --include-runtime=false`) and runs `astro check` (TypeScript + Astro type checking) before building. Run `pnpm test` to verify utility logic. Both must pass before committing. `wrangler types` is run with `--include-runtime=false`: the full runtime type set pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block in the project. With runtime types off, `Env` is still generated (used by the guestbook API route), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
@@ -49,8 +50,13 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 - `src/lib/xml.test.ts` — `xmlEscape`
 - `src/lib/guestbook.test.ts` — `normalizeGuestbookInput`
 - `src/lib/guestbook-database.test.ts` — `listGuestbookEntries`, `insertGuestbookEntry`, against a fake object implementing D1's `prepare`/`bind`/`all`/`run` chain (no real D1 binding needed for unit tests)
+- `src/lib/turnstile.test.ts` — `isTurnstileTokenValid`, against a fake `fetch` (and, for the no-verifier path, `vi.stubGlobal("fetch", ...)`)
+- `src/lib/easter-eggs.test.ts` — `incrementSessionCount`
+- `src/lib/command-palette.test.ts` — `filterCommandPaletteItems`
 
 `astro:content` is a virtual Astro module that doesn't exist outside the Astro runtime. Tests that import from `src/lib/blog.ts` use `vi.hoisted` + `vi.mock` to intercept it. The alias in `vitest.config.ts` resolves it to `src/__mocks__/astro-content.ts` so Vite can find the module during test runs.
+
+**Coverage:** `vitest.config.ts` configures `@vitest/coverage-v8` scoped to `src/lib/**/*.ts`, with lines/branches/functions/statements thresholds all set to 100. Vitest 4's v8 provider reports on every file matching `include` by default (a new file with no test shows up as 0% rather than being silently excluded), so no `all: true` flag is needed. Test files are already excluded from coverage by Vitest's own default (it appends the `test.include` glob to `coverage.exclude` automatically), so `vitest.config.ts` doesn't repeat that exclusion. `pnpm test:coverage` runs it locally; CI runs it as part of the `ci` job's Node 22 leg only (Node 24 runs the plain `pnpm test` instead — coverage can't meaningfully differ between Node versions here, so instrumenting twice would just double the cost for no signal). Astro components, pages, and layouts are deliberately out of scope — they need the Astro/browser runtime to execute meaningfully, which is what manual browser verification and Lighthouse are for, not Vitest. Keep coverage at 100% by writing the missing test case, not by carving out an exclusion or reaching for a `/* v8 ignore */` comment — those should stay rare enough to need justifying on sight.
 
 ## Lefthook
 
@@ -58,7 +64,7 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 ## CI
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking — that only runs as part of `pnpm build`, which isn't in `lefthook.yml`. Run `pnpm build` locally before pushing if you've touched types, or a type error will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric — see Tests. Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking or coverage — those only run as part of `pnpm build`/`pnpm test:coverage`, neither of which is in `lefthook.yml` (coverage instrumentation adds overhead not worth paying on every commit). Run `pnpm build` and `pnpm test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one PR. Most npm and GitHub Actions dependencies check monthly (first Saturday); `astro` and `zod` are split into their own weekly-grouped PR instead.
 
@@ -137,8 +143,10 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 
 **View transitions swap `<body>` without a page reload.** `Layout.astro` renders Astro's `ClientRouter`, so navigating between pages does client-side navigation instead of a full reload. This breaks two common assumptions in inline `<script>` tags:
 
-- `load` and `DOMContentLoaded` only fire once, on the very first hard load — they won't fire again after a client-side navigation. Use the `astro:page-load` event instead; it fires on the initial load *and* after every subsequent navigation. Every inline script in this repo (`EasterEggs.astro`, `CarbonBadge.astro`, `blog/[slug].astro`) follows this pattern.
-- Elements not marked `transition:persist` are destroyed and recreated fresh on every navigation, so a listener attached directly to one of them (e.g. the wordmark click handler in `EasterEggs.astro`) is safe to reattach unconditionally on each `astro:page-load` — the old node and its listener are simply gone. But anything bound to `window` or `document` itself *survives* navigation, so re-running that registration on every `astro:page-load` without cleanup stacks a new listener/observer on top of the old one every time. `blog/[slug].astro`'s reading-progress bar (bound to `window`'s `scroll` event and a `ResizeObserver`) guards against this with an `AbortController` aborted at the top of its init function before re-registering.
+- `load` and `DOMContentLoaded` only fire once, on the very first hard load — they won't fire again after a client-side navigation. Use the `astro:page-load` event instead; it fires on the initial load _and_ after every subsequent navigation. Every inline script in this repo (`EasterEggs.astro`, `CarbonBadge.astro`, `blog/[slug].astro`) follows this pattern.
+- Elements not marked `transition:persist` are destroyed and recreated fresh on every navigation, so a listener attached directly to one of them (e.g. the wordmark click handler in `EasterEggs.astro`) is safe to reattach unconditionally on each `astro:page-load` — the old node and its listener are simply gone. But anything bound to `window` or `document` itself _survives_ navigation, so re-running that registration on every `astro:page-load` without cleanup stacks a new listener/observer on top of the old one every time. `blog/[slug].astro`'s reading-progress bar (bound to `window`'s `scroll` event and a `ResizeObserver`) guards against this with an `AbortController` aborted at the top of its init function before re-registering.
+
+**A client-side navigation can trip the CSP if any page has an inline module script.** `ClientRouter`'s soft-navigation code injects a `<script type="module" src="data:application/javascript,"/>` synchronization barrier whenever the page being navigated to has any `<script type="module">` with no `src` attribute — the barrier itself has no `src` this site's CSP allows, so it gets blocked and logs a CSP violation on every such navigation. `astro.config.mjs` sets `vite.build.assetsInlineLimit` to a function that returns `false` for `.js` files specifically to prevent that: it forces every component's compiled script to its own external, immutably-cached `/_astro/*.js` file (`src="..."` rather than inlined) so the trigger condition never occurs, rather than relaxing `script-src` to allow `data:` — the latter would work too, but `data:` in `script-src` is a known bypass vector for any future markup-injection bug, and the correct fix is to stop tripping the barrier, not to widen the CSP to tolerate it. If a new component's client script ever needs its own escape hatch from this, check that setting first.
 
 **Prerendering runs inside a `workerd` sandbox by default, not Node.** Since Astro 6 / `@astrojs/cloudflare` v13, prerendered (static) pages are built by actually executing the Worker inside a `workerd`/Miniflare sandbox to match production as closely as possible — not plain Node, even though the output is 100% static HTML. Any prerendered route that depends on a native addon (`sharp`) or other `workerd`-incompatible Node/npm code will fail the build with an unhelpful `No such module` or WASM-compile error, even though it worked fine before the adapter was added. `astro.config.mjs` sets `adapter: cloudflare({ prerenderEnvironment: "node" })` for exactly this reason — `/og/[slug].png.ts` uses `sharp`. On-demand routes (`prerender = false`, i.e. `/api/guestbook`) always run in `workerd` regardless of this setting, since that's the real production runtime for them.
 
