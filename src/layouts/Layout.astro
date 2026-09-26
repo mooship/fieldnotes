@@ -7,6 +7,7 @@ import "../styles/print.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import CarbonBadge from "../components/CarbonBadge.astro";
+import CommandPalette from "../components/CommandPalette.astro";
 import EasterEggs from "../components/EasterEggs.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
@@ -159,6 +160,7 @@ const jsonLd = {
             aria-current={pathname === "/colophon" ? "page" : undefined}
             >Colophon</a
           >
+          <CommandPalette />
         </nav>
       </div>
     </header>
@@ -273,7 +275,8 @@ const jsonLd = {
   nav {
     display: flex;
     align-items: center;
-    gap: 1.6rem;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.6rem;
   }
 
   nav a {
