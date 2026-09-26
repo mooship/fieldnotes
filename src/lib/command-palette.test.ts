@@ -35,6 +35,11 @@ describe("filterCommandPaletteItems", () => {
     expect(results).toEqual([]);
   });
 
+  it("matches a substring that isn't at a word boundary", () => {
+    const results = filterCommandPaletteItems(items, "log");
+    expect(results.map((item) => item.title)).toContain("Blog");
+  });
+
   it("matches case-insensitively", () => {
     const results = filterCommandPaletteItems(items, "BLOG");
     expect(results.map((item) => item.title)).toContain("Blog");

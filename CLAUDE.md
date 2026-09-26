@@ -9,15 +9,16 @@ Fieldnotes is a personal site and blog built with Astro, hosted on Cloudflare Wo
 ## Commands
 
 ```bash
-pnpm dev        # start dev server (wrangler types, then astro dev)
-pnpm build      # wrangler types, type-check (astro check), then build
-pnpm lint       # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
-pnpm lint:check # same lint, no auto-fix — what CI runs
-pnpm preview    # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
-pnpm deploy     # build, then `wrangler deploy` — never run without the user's explicit go-ahead, see Safety
-pnpm format     # prettier with auto-fix (also sorts imports, formats package.json)
-pnpm test       # run Vitest unit tests
-pnpm lighthouse # run Lighthouse CI against the built site (informational, no score gate)
+pnpm dev           # start dev server (wrangler types, then astro dev)
+pnpm build         # wrangler types, type-check (astro check), then build
+pnpm lint          # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
+pnpm lint:check    # same lint, no auto-fix — what CI runs
+pnpm preview       # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
+pnpm deploy        # build, then `wrangler deploy` — never run without the user's explicit go-ahead, see Safety
+pnpm format        # prettier with auto-fix (also sorts imports, formats package.json)
+pnpm test          # run Vitest unit tests
+pnpm test:coverage # run Vitest with coverage — CI fails under 100% lines/branches/functions/statements in src/lib
+pnpm lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
 ```
 
 `pnpm build` is the primary verification step — it regenerates Cloudflare binding types (`wrangler types --include-runtime=false`) and runs `astro check` (TypeScript + Astro type checking) before building. Run `pnpm test` to verify utility logic. Both must pass before committing. `wrangler types` is run with `--include-runtime=false`: the full runtime type set pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block in the project. With runtime types off, `Env` is still generated (used by the guestbook API route), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
@@ -49,8 +50,13 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 - `src/lib/xml.test.ts` — `xmlEscape`
 - `src/lib/guestbook.test.ts` — `normalizeGuestbookInput`
 - `src/lib/guestbook-database.test.ts` — `listGuestbookEntries`, `insertGuestbookEntry`, against a fake object implementing D1's `prepare`/`bind`/`all`/`run` chain (no real D1 binding needed for unit tests)
+- `src/lib/turnstile.test.ts` — `isTurnstileTokenValid`, against a fake `fetch` (and, for the no-verifier path, `vi.stubGlobal("fetch", ...)`)
+- `src/lib/easter-eggs.test.ts` — `incrementSessionCount`
+- `src/lib/command-palette.test.ts` — `filterCommandPaletteItems`
 
 `astro:content` is a virtual Astro module that doesn't exist outside the Astro runtime. Tests that import from `src/lib/blog.ts` use `vi.hoisted` + `vi.mock` to intercept it. The alias in `vitest.config.ts` resolves it to `src/__mocks__/astro-content.ts` so Vite can find the module during test runs.
+
+**Coverage:** `vitest.config.ts` configures `@vitest/coverage-v8` scoped to `src/lib/**/*.ts` (`all: true`, so a new file with no test shows up as 0% rather than being silently excluded) with lines/branches/functions/statements thresholds all set to 100. `pnpm test:coverage` runs it locally; CI runs it as part of the `ci` job (replacing the plain `pnpm test`) on both Node versions. Astro components, pages, and layouts are deliberately out of scope — they need the Astro/browser runtime to execute meaningfully, which is what manual browser verification and Lighthouse are for, not Vitest. Keep coverage at 100% by writing the missing test case, not by carving out an exclusion or reaching for a `/* v8 ignore */` comment — those should stay rare enough to need justifying on sight.
 
 ## Lefthook
 
@@ -58,7 +64,7 @@ Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on ev
 
 ## CI
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking — that only runs as part of `pnpm build`, which isn't in `lefthook.yml`. Run `pnpm build` locally before pushing if you've touched types, or a type error will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test:coverage` on Node 22 and 24, and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric — see Tests. Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking or coverage — those only run as part of `pnpm build`/`pnpm test:coverage`, neither of which is in `lefthook.yml` (coverage instrumentation adds overhead not worth paying on every commit). Run `pnpm build` and `pnpm test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one PR. Most npm and GitHub Actions dependencies check monthly (first Saturday); `astro` and `zod` are split into their own weekly-grouped PR instead.
 
