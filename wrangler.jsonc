@@ -10,6 +10,9 @@
   "compatibility_date": "2026-09-24",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 
+  "workers_dev": false,
+  "preview_urls": true,
+
   // Custom Domains (timothybrits.co.za, www.timothybrits.co.za) are
   // deliberately NOT declared here. This project's build pipeline deploys
   // from an @astrojs/cloudflare-generated dist/server/wrangler.json, not
