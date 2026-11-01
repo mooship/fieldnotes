@@ -297,10 +297,10 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
   }
 
   /**
-   * Parses the item list embedded by this same component at build time
-   * (`JSON.stringify`d server-side, never user input), so there's no
-   * malformed-JSON case to guard against here.
-   */
+Parses the item list embedded by this same component at build time
+(`JSON.stringify`d server-side, never user input), so there's no
+malformed-JSON case to guard against here.
+*/
   function readItems(script: HTMLScriptElement): CommandPaletteItem[] {
     return JSON.parse(script.textContent ?? "[]") as CommandPaletteItem[];
   }
@@ -347,13 +347,13 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
   }
 
   /**
-   * Wires the command palette: the visible trigger button, the global
-   * Ctrl/Cmd+K shortcut, and keyboard/search behaviour inside the dialog.
-   * Re-run on every `astro:page-load` since the dialog markup itself is
-   * destroyed and recreated on each view-transition navigation — only the
-   * `window`-bound shortcut listener needs the AbortController guard against
-   * stacking across navigations.
-   */
+Wires the command palette: the visible trigger button, the global
+Ctrl/Cmd+K shortcut, and keyboard/search behaviour inside the dialog.
+Re-run on every `astro:page-load` since the dialog markup itself is
+destroyed and recreated on each view-transition navigation — only the
+`window`-bound shortcut listener needs the AbortController guard against
+stacking across navigations.
+*/
   function initCommandPalette() {
     const dialog = document.querySelector<HTMLDialogElement>(
       "[data-command-palette]"

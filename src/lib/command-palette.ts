@@ -6,10 +6,10 @@ export interface CommandPaletteItem {
 }
 
 /**
- * Scores an exact substring match, or returns `undefined` when `query`
- * doesn't appear in `text` at all. Matching at a word boundary scores
- * higher, and an earlier match scores higher than a later one.
- */
+Scores an exact substring match, or returns `undefined` when `query`
+doesn't appear in `text` at all. Matching at a word boundary scores
+higher, and an earlier match scores higher than a later one.
+*/
 function scoreSubstringMatch(query: string, text: string): number | undefined {
   const substringIndex = text.indexOf(query);
   if (substringIndex === -1) return undefined;
@@ -20,11 +20,11 @@ function scoreSubstringMatch(query: string, text: string): number | undefined {
 }
 
 /**
- * Scores a fuzzy in-order subsequence match (e.g. "ssg" against "static
- * site generators"), or `undefined` if `query`'s characters don't all
- * appear in `text` in order. Scored by how tightly the matched characters
- * are clustered together.
- */
+Scores a fuzzy in-order subsequence match (e.g. "ssg" against "static
+site generators"), or `undefined` if `query`'s characters don't all
+appear in `text` in order. Scored by how tightly the matched characters
+are clustered together.
+*/
 function scoreFuzzySubsequenceMatch(
   query: string,
   text: string
@@ -44,10 +44,10 @@ function scoreFuzzySubsequenceMatch(
 }
 
 /**
- * Scores `query` against a title: an exact substring match, falling back to
- * a fuzzy subsequence match for short abbreviation-style queries (e.g. "ssg"
- * for "static site generators").
- */
+Scores `query` against a title: an exact substring match, falling back to
+a fuzzy subsequence match for short abbreviation-style queries (e.g. "ssg"
+for "static site generators").
+*/
 function scoreTitleMatch(query: string, title: string): number | undefined {
   return (
     scoreSubstringMatch(query, title) ??
@@ -56,11 +56,11 @@ function scoreTitleMatch(query: string, title: string): number | undefined {
 }
 
 /**
- * Scores `query` against a description: an exact substring match only.
- * Fuzzy subsequence matching is deliberately not used here — against prose
- * as long as a description, a handful of common letters will almost always
- * appear in order somewhere, turning "fuzzy" into "matches everything."
- */
+Scores `query` against a description: an exact substring match only.
+Fuzzy subsequence matching is deliberately not used here — against prose
+as long as a description, a handful of common letters will almost always
+appear in order somewhere, turning "fuzzy" into "matches everything."
+*/
 function scoreDescriptionMatch(
   query: string,
   description: string
@@ -86,29 +86,23 @@ function scoreItem(
   const descriptionScore = item.description
     ? scoreDescriptionMatch(query, item.description.toLowerCase())
     : undefined;
-  if (descriptionScore !== undefined) {
-    return { item, isTitleMatch: false, score: descriptionScore };
-  }
-
-  return undefined;
+  return descriptionScore === undefined ? undefined : { item, isTitleMatch: false, score: descriptionScore };
 }
 
 /**
- * Filters and ranks `items` by how well `query` matches their title or
- * description, title matches always outranking description-only matches. An
- * empty (or whitespace-only) query short-circuits to the first `limit` items
- * in their given order, so the palette has a sensible default listing before
- * the visitor types anything.
- */
+Filters and ranks `items` by how well `query` matches their title or
+description, title matches always outranking description-only matches. An
+empty (or whitespace-only) query short-circuits to the first `limit` items
+in their given order, so the palette has a sensible default listing before
+the visitor types anything.
+*/
 export function filterCommandPaletteItems(
   items: CommandPaletteItem[],
   query: string,
   limit = 8
 ): CommandPaletteItem[] {
   const trimmed = query.trim().toLowerCase();
-  if (!trimmed) return items.slice(0, limit);
-
-  return items
+  return trimmed ? items
     .map((item) => scoreItem(item, trimmed))
     .filter((entry) => entry !== undefined)
     .toSorted(
@@ -116,5 +110,5 @@ export function filterCommandPaletteItems(
         Number(b.isTitleMatch) - Number(a.isTitleMatch) || b.score - a.score
     )
     .slice(0, limit)
-    .map((entry) => entry.item);
+    .map((entry) => entry.item) : items.slice(0, limit);
 }

@@ -3,10 +3,10 @@ import { defineCollection } from "astro:content";
 import { z } from "zod";
 
 /**
- * The blog post collection, loaded from `src/content/blog/*.md`. Frontmatter
- * `draft: true` posts pass this schema but are filtered out everywhere by
- * `getBlogPosts()` (`src/lib/blog.ts`), not here.
- */
+The blog post collection, loaded from `src/content/blog/*.md`. Frontmatter
+`draft: true` posts pass this schema but are filtered out everywhere by
+`getBlogPosts()` (`src/lib/blog.ts`), not here.
+*/
 const tagsSchema = z.array(z.string()).optional().default([]);
 
 const blog = defineCollection({

@@ -53,20 +53,20 @@ export function getPostUrl(siteUrl: string, id: string): string {
 }
 
 /**
- * Normalizes Astro's `site` config value to a trailing-slash-free origin
- * string. Throws if `site` isn't set, since every caller needs an absolute
- * URL (feeds, sitemap, OG images, `llms.txt`).
- */
+Normalizes Astro's `site` config value to a trailing-slash-free origin
+string. Throws if `site` isn't set, since every caller needs an absolute
+URL (feeds, sitemap, OG images, `llms.txt`).
+*/
 export function getSiteUrl(site?: URL): string {
   if (!site) throw new Error("site must be set in astro.config.mjs");
   return site.href.replace(/\/$/, "");
 }
 
 /**
- * Shared remark/rehype pipeline for post bodies. Built once at module scope
- * so its plugin configuration is identical everywhere it's used (post pages,
- * feeds, reading-time estimation) and isn't rebuilt per call.
- */
+Shared remark/rehype pipeline for post bodies. Built once at module scope
+so its plugin configuration is identical everywhere it's used (post pages,
+feeds, reading-time estimation) and isn't rebuilt per call.
+*/
 const mdProcessor = unified()
   .use(remarkParse)
   .use(remarkGfm)
@@ -78,8 +78,8 @@ const mdProcessor = unified()
 /**
 Renders a post's Markdown body to an HTML string using the shared pipeline.
 */
-export async function renderMarkdownToHtml(markdown?: string): Promise<string> {
-  return String(await mdProcessor.process(markdown ?? ""));
+export async function renderMarkdownToHtml(markdown = ""): Promise<string> {
+  return String(await mdProcessor.process(markdown));
 }
 
 /**
@@ -93,12 +93,12 @@ export async function getBlogPosts() {
 }
 
 /**
- * Estimates reading time (e.g. "3 min read") for a post body. Parses the
- * Markdown to a syntax tree first so formatting characters aren't counted
- * as words.
- */
-export function computeReadingTime(body?: string): string {
-  const tree = mdProcessor.parse(body ?? "");
+Estimates reading time (e.g. "3 min read") for a post body. Parses the
+Markdown to a syntax tree first so formatting characters aren't counted
+as words.
+*/
+export function computeReadingTime(body = ""): string {
+  const tree = mdProcessor.parse(body);
   return readingTime(mdastToString(tree)).text;
 }
 
@@ -124,11 +124,11 @@ interface TaggedPost {
 }
 
 /**
- * Returns every distinct tag used across `posts`, alphabetically sorted,
- * with a URL slug and how many posts carry it. Two differently-cased or
- * -spaced tags that slugify to the same value are counted together, under
- * whichever spelling was seen first.
- */
+Returns every distinct tag used across `posts`, alphabetically sorted,
+with a URL slug and how many posts carry it. Two differently-cased or
+-spaced tags that slugify to the same value are counted together, under
+whichever spelling was seen first.
+*/
 export function getAllTags(posts: TaggedPost[]): TagSummary[] {
   const bySlug = new Map<string, TagSummary>();
   for (const post of posts) {
@@ -173,11 +173,11 @@ interface NavigablePost {
 }
 
 /**
- * Finds the posts adjacent to `currentSlug` within an already-sorted list.
- * Because `posts` is newest-first, `prev` (older) sits at the next index and
- * `next` (newer) sits at the previous index. Returns both as `undefined`
- * when `currentSlug` isn't found, or when at either end of the list.
- */
+Finds the posts adjacent to `currentSlug` within an already-sorted list.
+Because `posts` is newest-first, `prev` (older) sits at the next index and
+`next` (newer) sits at the previous index. Returns both as `undefined`
+when `currentSlug` isn't found, or when at either end of the list.
+*/
 export function getAdjacentPosts(
   posts: NavigablePost[],
   currentSlug: string
@@ -205,10 +205,10 @@ interface TocHeading {
 }
 
 /**
- * Picks the h2/h3 headings worth showing in a post's table of contents.
- * Returns an empty array below `TOC_MIN_HEADINGS` — a couple of headings
- * read as clutter, not navigation.
- */
+Picks the h2/h3 headings worth showing in a post's table of contents.
+Returns an empty array below `TOC_MIN_HEADINGS` — a couple of headings
+read as clutter, not navigation.
+*/
 export function getTocHeadings<T extends TocHeading>(headings: T[]): T[] {
   const tocHeadings = headings.filter((heading) => heading.depth <= 3);
   return tocHeadings.length >= TOC_MIN_HEADINGS ? tocHeadings : [];
