@@ -189,11 +189,11 @@ const isTocVisible = tocHeadings.length > 0;
   }
 
   /**
-   * Wires the share button. Prefers the native share sheet on coarse
-   * (touch) pointers when the payload is shareable; otherwise, and as the
-   * fallback if the user cancels or the share sheet errors, copies the URL
-   * to the clipboard.
-   */
+Wires the share button. Prefers the native share sheet on coarse
+(touch) pointers when the payload is shareable; otherwise, and as the
+fallback if the user cancels or the share sheet errors, copies the URL
+to the clipboard.
+*/
   function initShareButton() {
     const button = document.querySelector<HTMLButtonElement>(".share-btn");
     if (!button) return;
@@ -235,11 +235,11 @@ const isTocVisible = tocHeadings.length > 0;
   };
 
   /**
-   * Wires the reading-progress bar to `window`'s `scroll` event and a
-   * `ResizeObserver`, both of which survive view-transition navigations.
-   * Aborts and replaces any listeners from a previous navigation first, so
-   * repeat calls (once per `astro:page-load`) don't stack duplicates.
-   */
+Wires the reading-progress bar to `window`'s `scroll` event and a
+`ResizeObserver`, both of which survive view-transition navigations.
+Aborts and replaces any listeners from a previous navigation first, so
+repeat calls (once per `astro:page-load`) don't stack duplicates.
+*/
   function initReadingProgress() {
     const bar = document.querySelector<HTMLElement>("#reading-progress");
     if (!bar) return;
@@ -291,10 +291,10 @@ const isTocVisible = tocHeadings.length > 0;
   };
 
   /**
-   * Highlights the ToC link for the heading currently nearest the top of
-   * the viewport as the reader scrolls. Guards against stacking observers
-   * across navigations the same way `initReadingProgress` does.
-   */
+Highlights the ToC link for the heading currently nearest the top of
+the viewport as the reader scrolls. Guards against stacking observers
+across navigations the same way `initReadingProgress` does.
+*/
   function initTocScrollspy() {
     const toc = document.querySelector<HTMLElement>(".toc");
     if (!toc) return;

@@ -6,8 +6,8 @@ import unicorn from "eslint-plugin-unicorn";
 import tseslint from "typescript-eslint";
 
 /**
- * @type {import("eslint").Linter.Config[]}
- */
+@type {import("eslint").Linter.Config[]}
+*/
 export default [
   {
     ignores: [

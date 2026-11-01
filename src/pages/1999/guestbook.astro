@@ -115,10 +115,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         globalThis.turnstile?.reset();
 
         if (!response.ok) {
-          const { error } = (await response.json()) as { error?: string };
+          const { error = "Please fill in both your name and a message." } =
+            (await response.json()) as { error?: string };
           if (status) {
-            status.textContent =
-              error ?? "Please fill in both your name and a message.";
+            status.textContent = error;
           }
           return;
         }

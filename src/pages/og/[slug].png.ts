@@ -18,10 +18,10 @@ const fonts = {
 };
 
 /**
- * Reads the Geist font files needed by satori, caching the read as a
- * module-level promise so each font is only loaded from disk once no matter
- * how many OG images are generated during the build.
- */
+Reads the Geist font files needed by satori, caching the read as a
+module-level promise so each font is only loaded from disk once no matter
+how many OG images are generated during the build.
+*/
 async function loadFonts(): Promise<{ regular: Buffer; bold: Buffer }> {
   if (!fonts.promise) {
     const regularPath =
@@ -51,9 +51,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 /**
- * Renders a post's Open Graph image at build time: lays out the Swiss-style
- * card as an SVG with satori, then rasterizes it to PNG with sharp.
- */
+Renders a post's Open Graph image at build time: lays out the Swiss-style
+card as an SVG with satori, then rasterizes it to PNG with sharp.
+*/
 export const GET: APIRoute = async ({ props, site }) => {
   const { title } = props as { title: string };
   const hostname = new URL(getSiteUrl(site)).hostname;
