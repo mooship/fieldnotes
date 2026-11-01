@@ -41,9 +41,9 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
 >
   <div class="command-palette-shell">
     <div class="command-palette-field">
-      <label for="command-palette-input" class="visually-hidden"
-        >Search pages and posts</label
-      >
+      <label for="command-palette-input" class="visually-hidden">
+        Search pages and posts
+      </label>
       <input
         id="command-palette-input"
         type="text"
@@ -73,7 +73,6 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
   data-command-palette-data
   set:html={JSON.stringify(items)}
 />
-
 <style>
   .command-palette-trigger {
     display: inline-flex;
@@ -202,7 +201,7 @@ const items: CommandPaletteItem[] = [...pageItems, ...postItems];
    * rather than rendered by this component's template, so Astro's scoped
    * `data-astro-*` attribute never lands on them — every selector that
    * targets them has to be `:global()`, one per selector (see "Known Astro
-   * quirks" in CLAUDE.md), or the rules silently never match.
+   * quirks" in AGENTS.md), or the rules silently never match.
    */
   :global(.command-palette-result-item) {
     margin-bottom: 0;
