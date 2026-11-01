@@ -42,3 +42,6 @@ pnpm-debug.log*
 
 # vitest coverage reports
 coverage/
+
+# Cloudflare API token
+.env.cloudflare
