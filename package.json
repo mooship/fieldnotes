@@ -5,18 +5,28 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "build": "pnpm types && astro check && astro build",
-    "deploy": "pnpm build && wrangler deploy",
-    "dev": "pnpm types && astro dev",
+    "build": "npm run types && astro check && astro build",
+    "deploy": "npm run build && wrangler deploy",
+    "dev": "npm run types && astro dev",
     "format": "prettier --write --experimental-cli src/ package.json",
     "lighthouse": "lhci autorun",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
-    "preview": "pnpm types && astro build && wrangler dev",
-    "start": "pnpm types && astro dev",
+    "preview": "npm run types && astro build && wrangler dev",
+    "start": "npm run types && astro dev",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "types": "wrangler types --include-runtime=false"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "lefthook": true,
+    "workerd": true
+  },
+  "overrides": {
+    "eslint-plugin-jsx-a11y": {
+      "eslint": "$eslint"
+    }
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
@@ -64,18 +74,7 @@
     "wrangler": "^4.155.0",
     "zod": "^4.6.7"
   },
-  "packageManager": "pnpm@10.33.0",
   "engines": {
     "node": ">=22.0.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lefthook",
-      "workerd"
-    ],
-    "overrides": {
-      "eslint-plugin-jsx-a11y>eslint": "$eslint"
-    }
   }
 }

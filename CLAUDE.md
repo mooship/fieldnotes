@@ -9,19 +9,19 @@ Fieldnotes is a personal site and blog built with Astro, hosted on Cloudflare Wo
 ## Commands
 
 ```bash
-pnpm dev           # start dev server (wrangler types, then astro dev)
-pnpm build         # wrangler types, type-check (astro check), then build
-pnpm lint          # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
-pnpm lint:check    # same lint, no auto-fix — what CI runs
-pnpm preview       # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
-pnpm deploy        # build, then `wrangler deploy` — never run without the user's explicit go-ahead, see Safety
-pnpm format        # prettier with auto-fix (also sorts imports, formats package.json)
-pnpm test          # run Vitest unit tests
-pnpm test:coverage # run Vitest with coverage — CI fails under 100% lines/branches/functions/statements in src/lib
-pnpm lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
+npm run dev           # start dev server (wrangler types, then astro dev)
+npm run build         # wrangler types, type-check (astro check), then build
+npm run lint          # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
+npm run lint:check    # same lint, no auto-fix — what CI runs
+npm run preview       # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
+npm run deploy        # build, then `wrangler deploy` — never run without the user's explicit go-ahead, see Safety
+npm run format        # prettier with auto-fix (also sorts imports, formats package.json)
+npm test              # run Vitest unit tests
+npm run test:coverage # run Vitest with coverage — CI fails under 100% lines/branches/functions/statements in src/lib
+npm run lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
 ```
 
-`pnpm build` is the primary verification step — it regenerates Cloudflare binding types (`wrangler types --include-runtime=false`) and runs `astro check` (TypeScript + Astro type checking) before building. Run `pnpm test` to verify utility logic. Both must pass before committing. `wrangler types` is run with `--include-runtime=false`: the full runtime type set pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block in the project. With runtime types off, `Env` is still generated (used by the guestbook API route), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
+`npm run build` is the primary verification step — it regenerates Cloudflare binding types (`wrangler types --include-runtime=false`) and runs `astro check` (TypeScript + Astro type checking) before building. Run `npm test` to verify utility logic. Both must pass before committing. `wrangler types` is run with `--include-runtime=false`: the full runtime type set pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block in the project. With runtime types off, `Env` is still generated (used by the guestbook API route), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
 
 Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Markdown.
 
@@ -56,21 +56,21 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 
 `astro:content` is a virtual Astro module that doesn't exist outside the Astro runtime. Tests that import from `src/lib/blog.ts` use `vi.hoisted` + `vi.mock` to intercept it. The alias in `vitest.config.ts` resolves it to `src/__mocks__/astro-content.ts` so Vite can find the module during test runs.
 
-**Coverage:** `vitest.config.ts` configures `@vitest/coverage-v8` scoped to `src/lib/**/*.ts`, with lines/branches/functions/statements thresholds all set to 100. Vitest 4's v8 provider reports on every file matching `include` by default (a new file with no test shows up as 0% rather than being silently excluded), so no `all: true` flag is needed. Test files are already excluded from coverage by Vitest's own default (it appends the `test.include` glob to `coverage.exclude` automatically), so `vitest.config.ts` doesn't repeat that exclusion. `pnpm test:coverage` runs it locally; CI runs it as part of the `ci` job's Node 22 leg only (Node 24 runs the plain `pnpm test` instead — coverage can't meaningfully differ between Node versions here, so instrumenting twice would just double the cost for no signal). Astro components, pages, and layouts are deliberately out of scope — they need the Astro/browser runtime to execute meaningfully, which is what manual browser verification and Lighthouse are for, not Vitest. Keep coverage at 100% by writing the missing test case, not by carving out an exclusion or reaching for a `/* v8 ignore */` comment — those should stay rare enough to need justifying on sight.
+**Coverage:** `vitest.config.ts` configures `@vitest/coverage-v8` scoped to `src/lib/**/*.ts`, with lines/branches/functions/statements thresholds all set to 100. Vitest 4's v8 provider reports on every file matching `include` by default (a new file with no test shows up as 0% rather than being silently excluded), so no `all: true` flag is needed. Test files are already excluded from coverage by Vitest's own default (it appends the `test.include` glob to `coverage.exclude` automatically), so `vitest.config.ts` doesn't repeat that exclusion. `npm run test:coverage` runs it locally; CI runs it as part of the `ci` job's Node 22 leg only (Node 24 runs the plain `npm test` instead — coverage can't meaningfully differ between Node versions here, so instrumenting twice would just double the cost for no signal). Astro components, pages, and layouts are deliberately out of scope — they need the Astro/browser runtime to execute meaningfully, which is what manual browser verification and Lighthouse are for, not Vitest. Keep coverage at 100% by writing the missing test case, not by carving out an exclusion or reaching for a `/* v8 ignore */` comment — those should stay rare enough to need justifying on sight.
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. Run `pnpm exec lefthook install` after cloning to activate hooks.
+Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. Run `npx lefthook install` after cloning to activate hooks.
 
 ## CI
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric — see Tests. Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking or coverage — those only run as part of `pnpm build`/`pnpm test:coverage`, neither of which is in `lefthook.yml` (coverage instrumentation adds overhead not worth paying on every commit). Run `pnpm build` and `pnpm test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric — see Tests. Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking or coverage — those only run as part of `npm run build`/`npm run test:coverage`, neither of which is in `lefthook.yml` (coverage instrumentation adds overhead not worth paying on every commit). Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one PR. Most npm and GitHub Actions dependencies check monthly (first Saturday); `astro` and `zod` are split into their own weekly-grouped PR instead.
 
 ## Deployment
 
-The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, migrated off Cloudflare Pages). `wrangler.jsonc` at the project root is the source of truth. Deployment **is** Git-integrated via Cloudflare Workers Builds: **a push to `main` automatically builds and deploys to production**, and a push to any other branch (including a PR branch) gets its own isolated preview deployment at a `<hash>-fieldnotes.timothybrits.workers.dev` URL, posted as a PR comment by the `cloudflare-workers-and-pages` bot. `pnpm deploy` (build, then `wrangler deploy`) still works as a manual CLI alternative, but **merging a PR to `main` is itself a production deploy** — treat it with the same caution as running `wrangler deploy` directly, see Safety. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
+The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, migrated off Cloudflare Pages). `wrangler.jsonc` at the project root is the source of truth. Deployment **is** Git-integrated via Cloudflare Workers Builds: **a push to `main` automatically builds and deploys to production**, and a push to any other branch (including a PR branch) gets its own isolated preview deployment at a `<hash>-fieldnotes.timothybrits.workers.dev` URL, posted as a PR comment by the `cloudflare-workers-and-pages` bot. `npm run deploy` (build, then `wrangler deploy`) still works as a manual CLI alternative, but **merging a PR to `main` is itself a production deploy** — treat it with the same caution as running `wrangler deploy` directly, see Safety. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
 Astro's build produces `dist/client` (static assets) and `dist/server` (the Worker script). `wrangler.jsonc`'s `main` points at `@astrojs/cloudflare/entrypoints/server` and `assets.directory` at `./dist/client` — the adapter also writes its own `dist/server/wrangler.json` mirroring the root config with paths relativized to `dist/server`; that's a build artifact for the adapter's own tooling, not something to edit or deploy from directly.
 
@@ -85,11 +85,11 @@ Two adapter features are deliberately turned off in `astro.config.mjs` rather th
 
 **Observability, Smart Placement:** `wrangler.jsonc` sets `observability.enabled: true` (Workers Logs, and live tailing via `wrangler tail` once deployed) and `placement.mode: "smart"` (Cloudflare picks the Worker's execution location per request; takes up to ~15 minutes after deploy to start taking effect).
 
-`public/_headers` is unchanged from the Pages days — Workers with static assets supports `_headers`/`_redirects` natively, same syntax. It sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `pnpm dev`. Update the matching `-src` directive in `public/_headers` at the same time.
+`public/_headers` is unchanged from the Pages days — Workers with static assets supports `_headers`/`_redirects` natively, same syntax. It sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
 ## Safety
 
-- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation. This covers `wrangler deploy`/`pnpm deploy`, **merging a PR into `main`** (Cloudflare Workers Builds auto-deploys on every push there — confirm this is still true before assuming otherwise), and anything else that changes the live Worker or its production data — including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
+- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation. This covers `wrangler deploy`/`npm run deploy`, **merging a PR into `main`** (Cloudflare Workers Builds auto-deploys on every push there — confirm this is still true before assuming otherwise), and anything else that changes the live Worker or its production data — including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
 
 ## Architecture
 
@@ -161,7 +161,7 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 
 - **No inline comments** — never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
 - **British English spelling** in site copy and UI labels (section markdown, blog posts, nav/meta text) — "colour", "optimise", "favourite" — matching the author's other projects.
-- Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `pnpm format`.
+- Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `npm run format`.
 - ESLint uses flat config (`eslint.config.js`) with TypeScript, Astro (including `jsx-a11y-recommended` — accessibility lint rules apply to `.astro` templates), Unicorn, `@eslint/css`, and `@eslint/markdown`, plus `eslint-config-prettier` to defer all formatting decisions to Prettier. Three Unicorn rules are disabled repo-wide: `filename-case` (needed for `[slug].astro`-style bracket filenames and PascalCase components), `prevent-abbreviations`, and `text-encoding-identifier-case`.
 - CSS lint requires new properties/selectors to be **Baseline "newly available"** (`css/use-baseline`) — a very recent CSS feature can get flagged even though it works in current browsers; `text-wrap` and `:selection` are explicitly allowlisted as exceptions.
 - `.github/` and `.claude/` are excluded from linting.
