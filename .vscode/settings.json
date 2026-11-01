@@ -1,0 +1,20 @@
+{
+  "files.exclude": {
+    ".astro": true,
+    ".astro-cache": true,
+    ".lighthouseci": true,
+    ".playwright-mcp": true,
+    ".wrangler": true,
+    "coverage": true,
+    "dist": true,
+    "playwright-report": true,
+    "test-results": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json, tsconfig.json, astro.config.mjs, wrangler.jsonc, worker-configuration.d.ts, vitest.config.ts, playwright.config.ts, eslint.config.js, .prettierrc.json, .prettierignore, lefthook.yml, lighthouserc.json, .mcp.json, skills-lock.json",
+    "README.md": "AGENTS.md, CLAUDE.md, LICENSE",
+    ".gitignore": ".env*, .dev.vars*, .editorconfig, .gitattributes"
+  }
+}
