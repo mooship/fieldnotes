@@ -83,7 +83,7 @@ Astro's build produces `dist/client` (static assets) and `dist/server` (the Work
 
 Two adapter features are deliberately turned off in `astro.config.mjs` rather than left at their defaults: `session: false` (the site has no per-user state, so there's no reason to provision a KV namespace for Astro's Sessions API) and `imageService: "passthrough"` (the site doesn't use `astro:assets`' `<Image>`/`getImage()` — only its `Font` API — so there's no reason to provision a Cloudflare Images binding). Both would otherwise be auto-provisioned on deploy.
 
-**Observability, Smart Placement:** `wrangler.jsonc` sets `observability.enabled: true` (Workers Logs, and live tailing via `wrangler tail` once deployed) and `placement.mode: "smart"` (Cloudflare picks the Worker's execution location per request; takes up to ~15 minutes after deploy to start taking effect).
+**Observability:** `wrangler.jsonc` sets `observability.enabled: true` (Workers Logs, and live tailing via `wrangler tail` once deployed). There is no Smart Placement: the guestbook makes one or two D1 queries per request, and Cloudflare reported too few invocations for it to ever take effect.
 
 `public/_headers` is unchanged from the Pages days — Workers with static assets supports `_headers`/`_redirects` natively, same syntax. It sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource** — a script, font, image, or API call from a new origin — the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
