@@ -7,10 +7,10 @@ import {
 } from "../lib/blog";
 
 /**
- * Serves `/llms.txt`, an AI-crawler-friendly Markdown index of every page
- * and published post. Draft posts are excluded automatically since it's
- * built from `getBlogPosts()`.
- */
+Serves `/llms.txt`, an AI-crawler-friendly Markdown index of every page
+and published post. Draft posts are excluded automatically since it's
+built from `getBlogPosts()`.
+*/
 export async function GET(context: APIContext) {
   const site = getSiteUrl(context.site);
   const posts = await getBlogPosts();

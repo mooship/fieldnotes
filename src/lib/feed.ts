@@ -13,10 +13,10 @@ export interface FeedItem {
 }
 
 /**
- * Builds the feed items shared by `/rss.xml`, `/atom.xml`, and `/feed.json`
- * so all three stay in sync. `updatedDate` falls back to `pubDate` for posts
- * that have never been updated.
- */
+Builds the feed items shared by `/rss.xml`, `/atom.xml`, and `/feed.json`
+so all three stay in sync. `updatedDate` falls back to `pubDate` for posts
+that have never been updated.
+*/
 export async function getFeedItems(siteUrl: string): Promise<FeedItem[]> {
   const posts = await getBlogPosts();
   return Promise.all(
