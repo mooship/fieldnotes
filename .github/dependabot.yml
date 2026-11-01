@@ -33,7 +33,7 @@ updates:
       # TS ships a stable replacement for the removed Strada API,
       # expected in 7.1. Drop this once @astrojs/check supports it.
       - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
+        versions: [">=7.0.0"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
