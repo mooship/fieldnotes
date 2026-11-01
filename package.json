@@ -12,6 +12,7 @@
     "lighthouse": "lhci autorun",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
+    "prepare": "lefthook install --force",
     "preview": "npm run types && astro build && wrangler dev",
     "start": "npm run types && astro dev",
     "test": "vitest run",
