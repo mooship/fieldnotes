@@ -18,6 +18,7 @@ npm run deploy        # build, then `wrangler deploy` — never run without the 
 npm run format        # prettier with auto-fix (also sorts imports, formats package.json)
 npm test              # run Vitest unit tests
 npm run test:coverage # run Vitest with coverage — CI fails under 100% lines/branches/functions/statements in src/lib
+npm run test:e2e      # run Playwright against the built Worker (`npm run preview` on port 8788); not in CI yet
 npm run lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
 ```
 

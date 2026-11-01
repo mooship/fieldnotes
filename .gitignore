@@ -43,5 +43,9 @@ yarn-error.log*
 # vitest coverage reports
 coverage/
 
+# playwright
+test-results/
+playwright-report/
+
 # Cloudflare API token
 .env.cloudflare

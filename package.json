@@ -17,6 +17,7 @@
     "start": "npm run types && astro dev",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
     "types": "wrangler types --include-runtime=false"
   },
   "allowScripts": {
@@ -41,6 +42,7 @@
     "@fontsource/geist": "^5.2.9",
     "@lhci/cli": "^0.15.1",
     "@lucide/astro": "^1.64.0",
+    "@playwright/test": "1.64.1",
     "@types/mdast": "^4.0.4",
     "@types/node": "^26.6.6",
     "@vitest/coverage-v8": "^5.0.5",
