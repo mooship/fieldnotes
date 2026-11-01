@@ -17,17 +17,17 @@ Dev server runs at: http://localhost:4321
 
 ## Common Scripts
 
-| Script                   | Purpose                                  |
-| ------------------------ | ----------------------------------------- |
-| `npm run dev`            | Start local development server           |
-| `npm run build`          | Type check then production build         |
-| `npm run lint`           | Lint and auto-fix all file types         |
-| `npm run lint:check`     | Same lint, no auto-fix — what CI runs    |
-| `npm run preview`        | Build, then run it locally with `wrangler dev` (real Cloudflare bindings) |
-| `npm run deploy`         | Build, then `wrangler deploy` to Cloudflare Workers |
-| `npm run format`         | Prettier + import sorting                |
-| `npm test`               | Run Vitest unit tests                    |
-| `npm run lighthouse`     | Run Lighthouse CI against the built site |
+| Script               | Purpose                                                                   |
+| -------------------- | ------------------------------------------------------------------------- |
+| `npm run dev`        | Start local development server                                            |
+| `npm run build`      | Type check then production build                                          |
+| `npm run lint`       | Lint and auto-fix all file types                                          |
+| `npm run lint:check` | Same lint, no auto-fix — what CI runs                                     |
+| `npm run preview`    | Build, then run it locally with `wrangler dev` (real Cloudflare bindings) |
+| `npm run deploy`     | Build, then `wrangler deploy` to Cloudflare Workers                       |
+| `npm run format`     | Prettier + import sorting                                                 |
+| `npm test`           | Run Vitest unit tests                                                     |
+| `npm run lighthouse` | Run Lighthouse CI against the built site                                  |
 
 ## Structure (essentials)
 
@@ -113,7 +113,7 @@ Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declara
 - TypeScript enabled (`tsconfig.json`)
 - ESLint flat config for Astro, TS, CSS, and Markdown
 - Vitest unit tests with happy-dom (`npm test`)
-- Lefthook pre-commit hook: runs `lint`, `format`, and `test` on every commit (run `npx lefthook install` after cloning to activate it)
+- Lefthook pre-commit hook: formats and lints the staged files, then runs the unit tests (`npm install` installs it)
 - Fonts via `fontProviders.fontsource()` (Geist + Geist Mono)
 - Prettier formatting + import sorting
 - `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations

@@ -60,7 +60,7 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook that executes `lint`, `format`, and `test` on every commit. Configuration is in `lefthook.yml`. The hook auto-fixes and reformats staged files — changed files must be re-staged manually before the commit proceeds. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. Run `npx lefthook install` after cloning to activate hooks.
+Lefthook runs a pre-commit hook on the staged files: Prettier with `--write`, ESLint with `--fix`, then the Vitest suite. Configuration is in `lefthook.yml`. Files the formatter or linter change are re-staged automatically. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. `npm install` installs the hooks (the `prepare` script runs `lefthook install --force`, which works even with a global `core.hooksPath`).
 
 ## CI
 

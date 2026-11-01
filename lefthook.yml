@@ -1,8 +1,12 @@
 pre-commit:
   jobs:
-    - name: lint
-      run: npm run lint
     - name: format
-      run: npm run format
+      glob: "*.{ts,mjs,js,json,css,astro,md,yml,yaml}"
+      run: npx prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
+    - name: lint
+      glob: "*.{ts,mjs,js,astro,css,md}"
+      run: npx eslint --fix --no-warn-ignored {staged_files}
+      stage_fixed: true
     - name: test
-      run: npm run test
+      run: npm test
