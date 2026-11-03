@@ -215,6 +215,68 @@ test("no JavaScript leaves a usable conventional document", async ({
   await context.close();
 });
 
+const EMAIL_PAGES = ["/", "/work", "/1999"];
+
+for (const path of EMAIL_PAGES) {
+  test(`the served HTML of ${path} never contains an email address`, async ({
+    request,
+  }) => {
+    const response = await request.get(path);
+    const html = await response.text();
+    expect(html).not.toMatch(/mailto:/i);
+    expect(html).not.toMatch(/icloud\.com/i);
+    expect(html).not.toMatch(/contact@timothybrits/i);
+    expect(html).not.toMatch(/[\w.+-]+@[\w-]+\.[a-z]{2,}/i);
+  });
+
+  test(`email links on ${path} become mailto links once JavaScript runs`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const links = page.locator("a[data-email]");
+    await expect(links.first()).toHaveAttribute(
+      "href",
+      "mailto:timothybrits@icloud.com"
+    );
+    const hrefs = await links.evaluateAll((anchors) =>
+      anchors.map((anchor) => anchor.getAttribute("href"))
+    );
+    for (const href of hrefs) {
+      expect(href).toBe("mailto:timothybrits@icloud.com");
+    }
+  });
+}
+
+test("email links still resolve after a client-side navigation", async ({
+  page,
+}) => {
+  await page.goto("/?view=plain");
+  await page
+    .getByRole("navigation", { name: "Main" })
+    .getByRole("link", { name: "Work" })
+    .click();
+  await expect(page).toHaveURL(/\/work$/);
+  await expect(
+    page.getByRole("link", { name: "timothybrits@icloud.com" })
+  ).toHaveAttribute("href", "mailto:timothybrits@icloud.com");
+});
+
+test("without JavaScript the work page says the address needs JavaScript", async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    baseURL,
+  });
+  const page = await context.newPage();
+  await page.goto("/work");
+  await expect(
+    page.getByRole("link", { name: "Email me (needs JavaScript)" })
+  ).toBeVisible();
+  await context.close();
+});
+
 for (const width of [320, 1280]) {
   for (const path of [
     "/?view=desktop",
