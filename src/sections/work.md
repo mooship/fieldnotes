@@ -4,10 +4,12 @@ I'm a full-stack software engineer based in Pretoria, South Africa. I've worked 
 
 ### Agile Bridge
 
+I work through Agile Bridge on contract with Lightstone, contributing to its Property and Retail teams.
+
 **Intermediate Software Engineer · November 2024 to present**
 
 - **Lightstone Property:** extended EzVal, a multi-tenant automated property valuation system, to onboard Capitec and deliver New Developments functionality for Nedbank Home Loans.
-- **Lightstone Retail:** maintain and improve Lightstone Explore Online, a geospatial platform built with ASP.NET MVC 5, WebForms, ThinkGeo, C# and SQL Server. Upgraded .NET Framework, integrated Carbone for Excel and PDF reports, redesigned the maps interface and introduced CI/CD pipelines to replace manual file-copy deployments.
+- **Lightstone Retail:** delivered major security, UI/UX and performance improvements to Lightstone Explore Online while working within its legacy ASP.NET MVC 5 and WebForms stack, with ThinkGeo, C# and SQL Server. Upgraded .NET Framework, integrated Carbone for Excel and PDF reports, redesigned the maps interface and introduced CI/CD pipelines to replace manual file-copy deployments.
 
 ### Entelect Software
 
@@ -17,7 +19,7 @@ I'm a full-stack software engineer based in Pretoria, South Africa. I've worked 
 - **Standard Bank:** built .NET integrations for credit-risk calculations and tools to digitise credit applications. Led the migration of the CMT projects from .NET Core 3.1 to .NET 6.
 - **De Beers Group:** delivered the Sales Planning System and Sightholder Portal end-to-end using .NET, React, Docker and SQL Server.
 - **Munich RE:** delivered compliance features for Flowin and Fly-Buy, expanded international reinsurance support and maintained on-demand flight insurance functionality.
-- **PSG Wealth:** integrated with Sanlam Glacier for offshore investments and updated the platform for South Africa's two-pot retirement system.
+- **PSG Wealth:** helped update the platform to comply with South Africa's two-pot retirement system.
 
 ## Skills
 
