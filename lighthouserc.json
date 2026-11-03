@@ -1,7 +1,12 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": "./dist",
+      "staticDistDir": "./dist/client",
+      "url": [
+        "http://localhost/",
+        "http://localhost/blog/",
+        "http://localhost/work/"
+      ],
       "numberOfRuns": 1,
       "settings": {
         "chromeFlags": "--no-sandbox --disable-gpu --headless=new"
