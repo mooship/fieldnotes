@@ -65,13 +65,13 @@ Browser regressions live in `e2e/desktop.spec.ts`: keyboard move/close/reopen an
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook on the staged files: Prettier with `--write`, ESLint with `--fix`, then the Vitest suite. Configuration is in `lefthook.yml`. Files the formatter or linter change are re-staged automatically. `test` runs the Vitest suite (currently ~1s) and blocks the commit on failure. `npm install` installs the hooks (the `prepare` script runs `lefthook install --force`, which works even with a global `core.hooksPath`).
+Lefthook runs a pre-commit hook on the staged files: Prettier with `--write` and ESLint with `--fix`. Configuration is in `lefthook.yml`. Files the formatter or linter change are re-staged automatically. Unit tests run separately and in CI. `npm install` installs the hooks (the `prepare` script runs `lefthook install --force`, which works even with a global `core.hooksPath`).
 
 ## CI
 
 The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 22. Keep browser regressions and axe scans green as well as the lint/build/unit gates.
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric — see Tests. Pre-commit hooks cover lint/format/test locally but not `astro check` type-checking or coverage — those only run as part of `npm run build`/`npm run test:coverage`, neither of which is in `lefthook.yml` (coverage instrumentation adds overhead not worth paying on every commit). Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric — see Tests. Pre-commit hooks cover lint and format locally, not unit tests, `astro check` type-checking or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one PR. Most npm and GitHub Actions dependencies check monthly (first Saturday); `astro` and `zod` are split into their own weekly-grouped PR instead.
 
@@ -170,7 +170,7 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 
 ## Commit Messages
 
-Use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for every commit: `<type>[optional scope][!]: <description>`.
+Use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for every commit: `<type>[optional scope][!]: <description>`. Use lowercase types such as `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `build`, `ci` and `chore`. Mark breaking changes with `!` or a `BREAKING CHANGE:` footer and explain the impact.
 
 - Use `feat` for new features and `fix` for bug fixes. Other useful types are `docs`, `test`, `refactor`, `perf`, `build`, `ci`, `style` and `chore`.
 - Use lowercase types, an optional short scope such as `desktop` or `deps`, and a concise imperative description, for example `feat(desktop): add accessible reading windows` or `chore(deps): update compatible npm dependencies`.
