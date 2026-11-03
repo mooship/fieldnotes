@@ -430,9 +430,30 @@ body .os-menu a[aria-current="page"] {
 
 body .window-close:hover,
 body .move-controls button:hover,
-body .window-actions summary:hover {
+body .window-actions summary:hover,
+body .email-copy:hover {
   background: var(--ink);
   color: var(--paper);
+}
+
+.email-copy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin-left: 0.4rem;
+  padding: 0 0.45rem;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font: 600 0.6875rem / 1 var(--font-mono);
+  letter-spacing: var(--letter-spacing-meta);
+  text-transform: uppercase;
+  vertical-align: baseline;
+  cursor: pointer;
+}
+
+.email-copy[hidden] {
+  display: none;
 }
 
 @media (min-width: 1500px) {

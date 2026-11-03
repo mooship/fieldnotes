@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { getEmailAddress, revealEmailLinks } from "./email";
 
 describe("getEmailAddress", () => {
@@ -8,6 +8,11 @@ describe("getEmailAddress", () => {
 });
 
 describe("revealEmailLinks", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
   it("sets a mailto href on every data-email link", () => {
     document.body.innerHTML = `
       <a id="one" href="/work#contact" data-email>Email</a>
@@ -48,5 +53,62 @@ describe("revealEmailLinks", () => {
     revealEmailLinks(document);
 
     expect(document.querySelector("a")?.getAttribute("href")).toBe("/blog");
+  });
+
+  it("reveals copy buttons, copies the address, announces status, and resets the label", async () => {
+    vi.useFakeTimers();
+    const writeText = vi
+      .spyOn(navigator.clipboard, "writeText")
+      .mockResolvedValue();
+
+    document.body.innerHTML = `
+      <button type="button" data-copy-email hidden>Copy</button>
+      <span data-desktop-status></span>
+    `;
+
+    revealEmailLinks(document);
+
+    const button = document.querySelector<HTMLButtonElement>(
+      "button[data-copy-email]"
+    )!;
+    const status = document.querySelector<HTMLElement>(
+      "[data-desktop-status]"
+    )!;
+
+    expect(button.hidden).toBe(false);
+
+    button.click();
+    await vi.waitFor(() => {
+      expect(button.textContent).toBe("Copied!");
+    });
+
+    expect(writeText).toHaveBeenCalledWith("timothybrits@icloud.com");
+    expect(status.textContent).toBe("Copied email address");
+
+    vi.advanceTimersByTime(2000);
+    expect(button.textContent).toBe("Copy");
+  });
+
+  it("shows Failed when copying rejects and works without a status element", async () => {
+    vi.useFakeTimers();
+    vi.spyOn(navigator.clipboard, "writeText").mockRejectedValue(
+      new Error("denied")
+    );
+
+    document.body.innerHTML = `<button type="button" data-copy-email hidden>Copy</button>`;
+
+    revealEmailLinks(document);
+
+    const button = document.querySelector<HTMLButtonElement>(
+      "button[data-copy-email]"
+    )!;
+
+    button.click();
+    await vi.waitFor(() => {
+      expect(button.textContent).toBe("Failed");
+    });
+
+    vi.advanceTimersByTime(2000);
+    expect(button.textContent).toBe("Copy");
   });
 });

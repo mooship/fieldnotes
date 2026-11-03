@@ -13,13 +13,13 @@
 
 ## Languages & Frameworks
 
-- TypeScript with React — my daily driver for everything on the web
+- TypeScript with React or [Astro](https://astro.build) — my daily driver for everything on the web
 - .NET / C# — my professional stack
 
 ## Infrastructure
 
-- PostgreSQL via [Neon](https://neon.tech) — serverless Postgres that just works
-- Cloudflare Workers — fast deploys, generous free tier
+- Cloudflare (Workers, D1, R2) — my default for web hosting and edge storage, with fast deploys and a generous free tier
+- PostgreSQL via [Neon](https://neon.tech) — serverless Postgres when a project calls for it
 
 ## AI
 
