@@ -4,10 +4,12 @@ I'm a full-stack software engineer based in Pretoria, South Africa. I've worked 
 
 ### a software consultancy
 
+I work through a software consultancy on contract with a property data and analytics company, contributing to its Property and Retail teams.
+
 **Intermediate Software Engineer · November 2024 to present**
 
 - **a property data and analytics company Property:** extended Property valuation platform, a multi-tenant automated property valuation system, to onboard a major South African retail bank and deliver New Developments functionality for a home-loans lender.
-- **a property data and analytics company Retail:** maintain and improve a property data and analytics company Retail data platform, a geospatial platform built with ASP.NET MVC 5, WebForms, ThinkGeo, C# and SQL Server. Upgraded .NET Framework, integrated for Excel and PDF reports, redesigned the maps interface and introduced CI/CD pipelines to replace manual file-copy deployments.
+- **a property data and analytics company Retail:** delivered major security, UI/UX and performance improvements to a property data and analytics company Retail data platform while working within its legacy ASP.NET MVC 5 and WebForms stack, with ThinkGeo, C# and SQL Server. Upgraded .NET Framework, integrated for Excel and PDF reports, redesigned the maps interface and introduced CI/CD pipelines to replace manual file-copy deployments.
 
 ### Entelect Software
 
