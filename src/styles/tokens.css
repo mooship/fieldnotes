@@ -1,59 +1,19 @@
+/* Oat & Petrol: desktop #c5bfb1, surface #f5f1e8, ink #302e29, accent #17635d. */
 :root {
-  --paper: #ffffff;
-  --paper-deep: #f2f2f2;
-  --ink: #0a0a0a;
-  --ink-soft: #6b6b6b;
-  --rule: #d8d8d8;
-  --signal: #e2231a;
+  --desktop: #c5bfb1;
+  --paper: #f5f1e8;
+  --ink: #302e29;
+  --signal: #17635d;
+  --paper-deep: var(--desktop);
+  --ink-soft: var(--ink);
+  --rule: var(--ink);
   --link: var(--ink);
-  --link-hover: var(--signal);
+  --link-hover: var(--paper);
   --selection-bg: var(--signal);
-  --selection-fg: #ffffff;
-
-  --letter-spacing-meta: 0.06em;
-  --content-width: 660px;
-
+  --selection-fg: var(--paper);
+  --letter-spacing-meta: 0.08em;
+  --content-width: 720px;
   --radius: 0;
   --z-skip-link: 9999;
   --z-reading-progress: 20;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #0a0a0a;
-    --paper-deep: #161616;
-    --ink: #f2f2f2;
-    --ink-soft: #9a9a9a;
-    --rule: #2a2a2a;
-    --signal: #ff453a;
-    --link: var(--ink);
-    --link-hover: var(--signal);
-    --selection-bg: var(--signal);
-    --selection-fg: #0a0a0a;
-  }
-}
-
-:root.konami-active {
-  --paper: #e2231a;
-  --paper-deep: #c81f17;
-  --ink: #ffffff;
-  --ink-soft: #ffd9d6;
-  --rule: #ffffff;
-  --signal: #0a0a0a;
-}
-
-@media (prefers-contrast: more) {
-  :root {
-    --ink-soft: #3a3a3a;
-    --rule: #8a8a8a;
-    --signal: #c00d05;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink-soft: #cccccc;
-      --rule: #6b6b6b;
-      --signal: #ff6b62;
-    }
-  }
 }

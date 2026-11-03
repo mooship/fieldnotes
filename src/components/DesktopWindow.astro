@@ -1,0 +1,85 @@
+---
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, X } from "@lucide/astro";
+
+interface Properties {
+  id: string;
+  title: string;
+  position?: string;
+}
+
+const { id, title, position = "reader" } = Astro.props as Properties;
+---
+
+<section
+  id={`window-${id}`}
+  class:list={["os-window", `window-${position}`]}
+  data-window
+  aria-label={title}
+  tabindex="-1"
+>
+  <div class="window-bar no-print" data-drag-handle>
+    <button
+      type="button"
+      class="window-close"
+      data-close
+      aria-label={`Close ${title}`}
+      title={`Close ${title}`}
+    >
+      <X size={14} stroke-width={2} aria-hidden="true" />
+    </button>
+    <button
+      type="button"
+      class="window-title"
+      data-window-title
+      aria-label={`Move ${title} with arrow keys; Escape to close`}
+      title="Move with arrow keys; Escape to close"
+    >
+      {title}
+    </button>
+    <details class="window-actions">
+      <summary
+        aria-label={`Window actions for ${title}`}
+        title="Window actions"
+      >
+        +
+      </summary>
+      <div class="move-controls" role="group" aria-label={`Move ${title}`}>
+        <button
+          type="button"
+          data-move="left"
+          aria-label="Move left"
+          title="Move left"
+        >
+          <ArrowLeft size={16} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          data-move="up"
+          aria-label="Move up"
+          title="Move up"
+        >
+          <ArrowUp size={16} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          data-move="down"
+          aria-label="Move down"
+          title="Move down"
+        >
+          <ArrowDown size={16} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          data-move="right"
+          aria-label="Move right"
+          title="Move right"
+        >
+          <ArrowRight size={16} aria-hidden="true" />
+        </button>
+      </div>
+    </details>
+  </div>
+  <div class="window-content">
+    <slot />
+  </div>
+</section>

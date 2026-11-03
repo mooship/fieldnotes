@@ -7,11 +7,11 @@ import { getBlogPosts, getPostSlug, getSiteUrl } from "../../lib/blog";
 
 const require = createRequire(import.meta.url);
 
-const PAPER = "#ffffff";
-const INK = "#0a0a0a";
-const INK_SOFT = "#6b6b6b";
-const RULE = "#d8d8d8";
-const SIGNAL = "#e2231a";
+const PAPER = "#f5f1e8";
+const INK = "#302e29";
+const INK_SOFT = INK;
+const RULE = INK;
+const SIGNAL = "#17635d";
 
 const fonts = {
   promise: undefined as Promise<{ regular: Buffer; bold: Buffer }> | undefined,
@@ -103,7 +103,7 @@ export const GET: APIRoute = async ({ props, site }) => {
                       color: INK,
                       letterSpacing: "0.14em",
                     },
-                    children: "TIMOTHY BRITS — FIELDNOTES",
+                    children: "TIMOTHY BRITS",
                   },
                 },
               ],

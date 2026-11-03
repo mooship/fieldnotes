@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import DesktopWindow from "../components/DesktopWindow.astro";
 import { Content as IntroContent } from "../sections/intro.md";
 import { Content as PersonalContent } from "../sections/personal.md";
 import { Content as OpenSourceContent } from "../sections/opensource.md";
@@ -7,95 +8,47 @@ import { Content as SupportContent } from "../sections/support.md";
 import { formatDate, getBlogPosts, getPostSlug, SITE_TITLE } from "../lib/blog";
 
 const posts = await getBlogPosts();
-const recentPosts = posts.slice(0, 5);
+const recentPosts = posts.slice(0, 4);
 ---
 
 <Layout
   title={SITE_TITLE}
   description="Timothy Brits — software developer in Pretoria, South Africa. Writing on software and open source."
   type="website"
+  desktop
 >
   <main id="main-content" tabindex="-1">
-    <h1 class="visually-hidden">{SITE_TITLE}</h1>
-    <div class="lead">
-      <IntroContent />
-    </div>
-    {
-      recentPosts.length > 0 && (
-        <>
-          <h2>Blog</h2>
-          <ul class="recent-posts">
-            {recentPosts.map((post) => (
-              <li>
-                <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
-                <time
-                  class="meta-label post-date"
-                  datetime={post.data.pubDate.toISOString()}
-                >
-                  {formatDate(post.data.pubDate)}
-                </time>
-              </li>
-            ))}
-          </ul>
-          <a href="/blog" class="nav-link all-posts">
-            All posts <span aria-hidden="true">&rarr;</span>
-          </a>
-        </>
-      )
-    }
-    <OpenSourceContent />
-    <SupportContent />
-    <PersonalContent />
+    <DesktopWindow id="welcome" title="About me" position="welcome">
+      <div class="desktop-intro">
+        <p class="desktop-eyebrow">Personal home</p>
+        <h1>Timothy Brits</h1>
+        <IntroContent />
+        <p class="intro-location">Pretoria, South Africa</p>
+      </div>
+    </DesktopWindow>
+    <DesktopWindow id="writing" title="Writing" position="writing">
+      <h2 class="visually-hidden">Writing</h2>
+      <p class="desktop-eyebrow">Latest entries</p>
+      <ul class="desktop-posts">
+        {recentPosts.map((post) => (
+          <li>
+            <a href={`/blog/${getPostSlug(post.id)}`}>{post.data.title}</a>
+            <time datetime={post.data.pubDate.toISOString()}>
+              {formatDate(post.data.pubDate)}
+            </time>
+          </li>
+        ))}
+      </ul>
+      <a href="/blog">
+        All writing <span aria-hidden="true">&rarr;</span>
+      </a>
+    </DesktopWindow>
+    <DesktopWindow id="projects" title="Projects" position="projects">
+      <OpenSourceContent />
+      <SupportContent />
+    </DesktopWindow>
+    <DesktopWindow id="personal" title="Personal" position="personal">
+      <PersonalContent />
+    </DesktopWindow>
   </main>
 </Layout>
-
-<style>
-  main {
-    margin: auto;
-  }
-
-  .lead :global(p) {
-    color: var(--ink);
-    margin-bottom: 3.2rem;
-    font-size: 1.5rem;
-    font-weight: 500;
-    font-style: normal;
-    line-height: 1.4;
-    letter-spacing: 0;
-    text-wrap: pretty;
-  }
-
-  main :global(h2) {
-    border-top: 1px solid var(--rule);
-    padding-top: 1.6rem;
-  }
-
-  main :global(h2) + :global(p) {
-    color: var(--ink-soft);
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1rem;
-  }
-
-  main :global(ul) {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0 0 0;
-  }
-
-  main :global(li) {
-    margin-bottom: 0.5rem;
-  }
-
-  main :global(a) {
-    font-size: 1.0625rem;
-  }
-
-  main :global(.project-desc) {
-    margin: 0.1rem 0 0 0;
-    font-size: 0.9rem;
-    font-style: normal;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-</style>

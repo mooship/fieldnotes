@@ -63,3 +63,4 @@ Where these differ from the instructions above, these win.
 - Take copy from `src/sections`, `src/content` and `src/lib/blog.ts` rather than writing the strings out, unless the
   test is about the wording itself.
 - Save plans in `specs/`.
+- Read `e2e/desktop.spec.ts` to avoid duplicate regressions. Shell plans must cover keyboard focus/move/close/reopen, click movement, main/skip-link focus, footer clearance, plain preference, 320px reflow, native touch scrolling, reduced motion and no-JavaScript content. Axe scans do not replace manual screen-reader, zoom and touch checks.
