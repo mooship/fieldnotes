@@ -14,7 +14,9 @@ const slug = getPostSlug(post.id);
     {readingTime && <span class="meta-label">{readingTime}</span>}
   </div>
   <div class="post-content">
-    <a class="post-title" href={`/blog/${slug}`}>{post.data.title}</a>
+    <a class="post-title" href={`/blog/${slug}`}>
+      {post.data.title}
+    </a>
     <p class="post-desc">{post.data.description}</p>
     <TagList tags={post.data.tags} />
   </div>

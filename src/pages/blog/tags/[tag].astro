@@ -34,11 +34,9 @@ const postsWithMeta = posts.map((post) => ({
     <p class="meta-label eyebrow">Tag</p>
     <h1 class="page-title">{tag}</h1>
     <ul>
-      {
-        postsWithMeta.map(({ post, readingTime }) => (
-          <PostListItem post={post} readingTime={readingTime} />
-        ))
-      }
+      {postsWithMeta.map(({ post, readingTime }) => (
+        <PostListItem post={post} readingTime={readingTime} />
+      ))}
     </ul>
     <a href="/blog/tags" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All tags

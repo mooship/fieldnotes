@@ -4,9 +4,7 @@ import Layout1999 from "../../layouts/Layout1999.astro";
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
-<Layout1999
-  description="Sign the guestbook, in the style of a 1999 personal home page."
->
+<Layout1999 description="Sign the guestbook, in the style of a 1999 personal home page.">
   <h2>Guestbook</h2>
   <p>
     Sign my guestbook! Entries are shared with everyone who stops by this page —
@@ -23,23 +21,29 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       required
     />
     <label for="guestbook-message">Your message</label>
-    <textarea id="guestbook-message" name="message" maxlength="280" required
+    <textarea
+      id="guestbook-message"
+      name="message"
+      maxlength="280"
+      required
     ></textarea>
     <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
-    <button type="submit" class="button-link">Sign the Guestbook</button>
+    <button type="submit" class="button-link">
+      Sign the Guestbook
+    </button>
     <p
       class="guestbook-status"
       id="guestbook-status"
       role="status"
       aria-live="polite"
-    >
-    </p>
+    ></p>
   </form>
 
   <script
     is:inline
     src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-    async></script>
+    async
+  ></script>
 
   <div id="guestbook-entries"></div>
 

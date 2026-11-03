@@ -2,9 +2,7 @@
 import Layout1999 from "../../layouts/Layout1999.astro";
 ---
 
-<Layout1999
-  description="A webring and a short list of hand-picked links, in the style of a 1999 personal home page."
->
+<Layout1999 description="A webring and a short list of hand-picked links, in the style of a 1999 personal home page.">
   <h2>Webring</h2>
   <p>Check out my webring, powered by the finest dial-up modems:</p>
   <center>
@@ -16,9 +14,17 @@ import Layout1999 from "../../layouts/Layout1999.astro";
       class="webring"
     >
       <tr>
-        <td><a href="/1999/about">&larr; Prev Site</a></td>
-        <td><a id="random-site" href="/1999">&#127922; Random Site</a></td>
-        <td><a href="/1999/guestbook">Next Site &rarr;</a></td>
+        <td>
+          <a href="/1999/about">&larr; Prev Site</a>
+        </td>
+        <td>
+          <a id="random-site" href="/1999">
+            &#127922; Random Site
+          </a>
+        </td>
+        <td>
+          <a href="/1999/guestbook">Next Site &rarr;</a>
+        </td>
       </tr>
     </table>
     <p class="webring-caption">
@@ -47,9 +53,9 @@ import Layout1999 from "../../layouts/Layout1999.astro";
     </li>
     <li>
       <a href="/colophon">/colophon</a>
-      <span class="visiting-hint"
-        >— how this site (including this page) is built</span
-      >
+      <span class="visiting-hint">
+        — how this site (including this page) is built
+      </span>
     </li>
   </ul>
 

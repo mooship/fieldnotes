@@ -86,7 +86,9 @@ function scoreItem(
   const descriptionScore = item.description
     ? scoreDescriptionMatch(query, item.description.toLowerCase())
     : undefined;
-  return descriptionScore === undefined ? undefined : { item, isTitleMatch: false, score: descriptionScore };
+  return descriptionScore === undefined
+    ? undefined
+    : { item, isTitleMatch: false, score: descriptionScore };
 }
 
 /**
@@ -102,13 +104,15 @@ export function filterCommandPaletteItems(
   limit = 8
 ): CommandPaletteItem[] {
   const trimmed = query.trim().toLowerCase();
-  return trimmed ? items
-    .map((item) => scoreItem(item, trimmed))
-    .filter((entry) => entry !== undefined)
-    .toSorted(
-      (a, b) =>
-        Number(b.isTitleMatch) - Number(a.isTitleMatch) || b.score - a.score
-    )
-    .slice(0, limit)
-    .map((entry) => entry.item) : items.slice(0, limit);
+  return trimmed
+    ? items
+        .map((item) => scoreItem(item, trimmed))
+        .filter((entry) => entry !== undefined)
+        .toSorted(
+          (a, b) =>
+            Number(b.isTitleMatch) - Number(a.isTitleMatch) || b.score - a.score
+        )
+        .slice(0, limit)
+        .map((entry) => entry.item)
+    : items.slice(0, limit);
 }

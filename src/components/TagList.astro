@@ -4,20 +4,18 @@ import { getTagSlug } from "../lib/blog";
 const { tags } = Astro.props as { tags: string[] };
 ---
 
-{
-  tags.length > 0 && (
-    <p class="post-tags">
-      {tags.map((tag: string, index: number) => (
-        <>
-          {index > 0 && " / "}
-          <a class="nav-link" href={`/blog/tags/${getTagSlug(tag)}`}>
-            {tag}
-          </a>
-        </>
-      ))}
-    </p>
-  )
-}
+{tags.length > 0 && (
+  <p class="post-tags">
+    {tags.map((tag: string, index: number) => (
+      <>
+        {index > 0 && " / "}
+        <a class="nav-link" href={`/blog/tags/${getTagSlug(tag)}`}>
+          {tag}
+        </a>
+      </>
+    ))}
+  </p>
+)}
 
 <style>
   .post-tags {
