@@ -21,11 +21,11 @@ I'm a full-stack software engineer based in Pretoria, South Africa. I've worked 
 
 ## Skills
 
-- **Languages:** TypeScript, JavaScript, C#, T-SQL.
+- **Languages:** TypeScript, JavaScript, C#, SQL.
 - **Frameworks and runtimes:** .NET, Node.js, Express, React, Vue, Astro.
-- **Databases:** SQL Server, PostgreSQL, Neon.
-- **Cloud and infrastructure:** Cloudflare platform, Azure Bicep, Terraform.
-- **Delivery and tooling:** Git, GitLab, Vite, Azure DevOps Pipelines, GitHub Actions.
+- **Databases:** SQL Server, PostgreSQL.
+- **Cloud and infrastructure:** Cloudflare, Azure, Bicep, Terraform.
+- **Delivery and tooling:** Git, Vite, GitHub Actions, Azure DevOps, GitLab CI/CD.
 
 ## Education & Certification
 
@@ -36,4 +36,4 @@ Awarded with distinction. Golden Key International Honour Society inductee.
 
 ## Contact
 
-<a href="/work#contact" data-email data-email-text>Email me (needs JavaScript)</a>
+<a href="/work#contact" data-email data-email-text>Email me (needs JavaScript)</a> <button type="button" class="email-copy no-print" data-copy-email aria-label="Copy email address" hidden>Copy</button>

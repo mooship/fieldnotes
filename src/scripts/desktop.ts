@@ -29,7 +29,6 @@ function initialiseDesktop() {
   const workspace = document.querySelector<HTMLElement>(".desktop-workspace");
   const mobile = matchMedia("(max-width: 760px)");
   const home = workspace?.querySelector<HTMLElement>(":scope > main");
-  const minimumHeight = workspace?.clientHeight ?? 0;
   const launchers = [
     ...document.querySelectorAll<HTMLButtonElement>("[data-open]"),
   ];
@@ -56,17 +55,23 @@ function initialiseDesktop() {
     if (!home || !workspace) {
       return;
     }
+    workspace.style.removeProperty("min-height");
     if (isPlain || mobile.matches) {
-      workspace.style.removeProperty("min-height");
       return;
     }
     const bottom = Math.max(
-      0,
+      workspace.clientHeight,
       ...windows
         .filter((item) => !item.hidden)
-        .map((item) => item.offsetTop + item.offsetHeight + 24)
+        .map(
+          (item) =>
+            item.offsetTop +
+            item.offsetHeight +
+            Number(item.dataset.y ?? 0) +
+            24
+        )
     );
-    workspace.style.minHeight = `${Math.max(minimumHeight, bottom)}px`;
+    workspace.style.minHeight = `${bottom}px`;
   }
 
   function updateLaunchers() {
@@ -87,25 +92,26 @@ function initialiseDesktop() {
     if (isPlain || !workspace || mobile.matches) {
       return;
     }
-    const bounds = workspace.getBoundingClientRect();
-    const rect = window.getBoundingClientRect();
     const currentX = Number(window.dataset.x ?? 0);
     const currentY = Number(window.dataset.y ?? 0);
-    const nextX =
-      currentX +
-      Math.max(
-        bounds.left - rect.left,
-        Math.min(dx, bounds.right - rect.right - 7)
-      );
-    const nextY =
-      currentY +
-      Math.max(
-        bounds.top - rect.top,
-        Math.min(dy, bounds.bottom - rect.bottom - 7)
-      );
+    const left = window.offsetLeft + currentX;
+    const top = window.offsetTop + currentY;
+    const minDx = Math.min(0, -left);
+    const maxDx = Math.max(
+      0,
+      workspace.clientWidth - left - window.offsetWidth - 7
+    );
+    const minDy = Math.min(0, -top);
+    const maxDy = Math.max(
+      0,
+      workspace.clientHeight - top - window.offsetHeight - 7
+    );
+    const nextX = currentX + Math.max(minDx, Math.min(dx, maxDx));
+    const nextY = currentY + Math.max(minDy, Math.min(dy, maxDy));
     window.dataset.x = String(nextX);
     window.dataset.y = String(nextY);
     window.style.transform = `translate(${nextX}px, ${nextY}px)`;
+    updateWorkspace();
   }
 
   function closeWindow(window: HTMLElement) {
