@@ -18,24 +18,22 @@ const tags = getAllTags(posts);
 >
   <main id="main-content" tabindex="-1">
     <h1 class="page-title">Tags</h1>
-    {
-      tags.length === 0 ? (
-        <p class="empty">No tags yet.</p>
-      ) : (
-        <ul>
-          {tags.map(({ tag, slug, count }) => (
-            <li>
-              <a class="tag-title" href={`/blog/tags/${slug}`}>
-                {tag}
-              </a>
-              <span class="tag-count meta-label">
-                {count} {count === 1 ? "post" : "posts"}
-              </span>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+    {tags.length === 0 ? (
+      <p class="empty">No tags yet.</p>
+    ) : (
+      <ul>
+        {tags.map(({ tag, slug, count }) => (
+          <li>
+            <a class="tag-title" href={`/blog/tags/${slug}`}>
+              {tag}
+            </a>
+            <span class="tag-count meta-label">
+              {count} {count === 1 ? "post" : "posts"}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )}
     <a href="/blog" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All posts
     </a>

@@ -48,8 +48,7 @@ const isTocVisible = tocHeadings.length > 0;
     id="reading-progress"
     class="reading-progress no-print"
     aria-hidden="true"
-  >
-  </div>
+  ></div>
   <main id="main-content" tabindex="-1">
     <a href="/blog" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All posts
@@ -64,31 +63,27 @@ const isTocVisible = tocHeadings.length > 0;
           </time>
           {readingTime && <span> · {readingTime}</span>}
         </p>
-        {
-          post.data.updatedDate && (
-            <time
-              class="meta-label updated"
-              datetime={post.data.updatedDate.toISOString()}
-            >
-              Updated: {formatDate(post.data.updatedDate)}
-            </time>
-          )
-        }
+        {post.data.updatedDate && (
+          <time
+            class="meta-label updated"
+            datetime={post.data.updatedDate.toISOString()}
+          >
+            Updated: {formatDate(post.data.updatedDate)}
+          </time>
+        )}
         <TagList tags={post.data.tags} />
-        {
-          isTocVisible && (
-            <details class="toc no-print" open>
-              <summary class="meta-label">Contents</summary>
-              <ul>
-                {tocHeadings.map((heading) => (
-                  <li class={`toc-depth-${heading.depth}`}>
-                    <a href={`#${heading.slug}`}>{heading.text}</a>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          )
-        }
+        {isTocVisible && (
+          <details class="toc no-print" open>
+            <summary class="meta-label">Contents</summary>
+            <ul>
+              {tocHeadings.map((heading) => (
+                <li class={`toc-depth-${heading.depth}`}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
       </aside>
       <article class="post-body">
         <Content />
@@ -109,30 +104,27 @@ const isTocVisible = tocHeadings.length > 0;
       role="status"
       aria-live="polite"
       id="action-status"
-    >
-    </p>
-    {
-      (adjacent.prev || adjacent.next) && (
-        <nav class="post-nav no-print" aria-label="Post navigation">
-          {adjacent.prev ? (
-            <a href={`/blog/${adjacent.prev.slug}`} class="post-nav-link prev">
-              <ArrowLeft size={16} aria-hidden="true" />
-              <span>{adjacent.prev.title}</span>
-            </a>
-          ) : (
-            <span />
-          )}
-          {adjacent.next ? (
-            <a href={`/blog/${adjacent.next.slug}`} class="post-nav-link next">
-              <span>{adjacent.next.title}</span>
-              <ArrowRight size={16} aria-hidden="true" />
-            </a>
-          ) : (
-            <span />
-          )}
-        </nav>
-      )
-    }
+    ></p>
+    {(adjacent.prev || adjacent.next) && (
+      <nav class="post-nav no-print" aria-label="Post navigation">
+        {adjacent.prev ? (
+          <a href={`/blog/${adjacent.prev.slug}`} class="post-nav-link prev">
+            <ArrowLeft size={16} aria-hidden="true" />
+            <span>{adjacent.prev.title}</span>
+          </a>
+        ) : (
+          <span />
+        )}
+        {adjacent.next ? (
+          <a href={`/blog/${adjacent.next.slug}`} class="post-nav-link next">
+            <span>{adjacent.next.title}</span>
+            <ArrowRight size={16} aria-hidden="true" />
+          </a>
+        ) : (
+          <span />
+        )}
+      </nav>
+    )}
   </main>
 </Layout>
 
