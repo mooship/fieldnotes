@@ -8,5 +8,3 @@ pre-commit:
       glob: "*.{ts,mjs,js,astro,css,md}"
       run: npx eslint --fix --no-warn-ignored {staged_files}
       stage_fixed: true
-    - name: test
-      run: npm test

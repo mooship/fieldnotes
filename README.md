@@ -133,7 +133,7 @@ Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declara
 - TypeScript 6 with `astro check` retained for TypeScript and Astro templates
 - ESLint flat config for Astro, TS, CSS, and Markdown
 - Vitest unit tests with happy-dom (`npm test`)
-- Lefthook pre-commit hook: formats and lints the staged files, then runs the unit tests (`npm install` installs it)
+- Lefthook pre-commit hook: formats and lints the staged files (`npm install` installs it); unit tests run separately and in CI
 - Locally served fonts via `fontProviders.fontsource()` (VT323 display + IBM Plex Mono body/code)
 - Prettier formatting + import sorting
 - `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations
