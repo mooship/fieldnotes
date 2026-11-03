@@ -4,11 +4,18 @@ import "../styles/base.css";
 import "../styles/typography.css";
 import "../styles/code.css";
 import "../styles/print.css";
+import "../styles/desktop.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import CarbonBadge from "../components/CarbonBadge.astro";
-import CommandPalette from "../components/CommandPalette.astro";
-import EasterEggs from "../components/EasterEggs.astro";
+import {
+  BriefcaseBusiness,
+  FileText,
+  Folder,
+  House,
+  Library,
+  Monitor,
+} from "@lucide/astro";
+import DesktopWindow from "../components/DesktopWindow.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
 /**
@@ -29,6 +36,7 @@ export interface Properties {
   type?: "website" | "article";
   datePublished?: Date;
   dateModified?: Date;
+  desktop?: boolean;
 }
 
 const {
@@ -42,8 +50,8 @@ const {
   type = "website",
   datePublished,
   dateModified,
+  desktop = false,
 } = Astro.props as Properties;
-
 
 const url = Astro.url;
 const pathname = url.pathname;
@@ -68,7 +76,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en-ZA">
+<html lang="en-ZA" data-view="plain">
   <head>
     <meta charset="UTF-8" />
     <!--
@@ -85,12 +93,12 @@ const jsonLd = {
     <meta name="robots" content={robots} />
     <meta
       name="theme-color"
-      content="#ffffff"
+      content="#c5bfb1"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#0a0a0a"
+      content="#c5bfb1"
       media="(prefers-color-scheme: dark)"
     />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -105,16 +113,14 @@ const jsonLd = {
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={SITE_TITLE} />
     <meta property="og:locale" content="en_ZA" />
-    {
-      image && (
-        <>
-          <meta property="og:image" content={image} />
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-          {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
-        </>
-      )
-    }
+    {image && (
+      <>
+        <meta property="og:image" content={image} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+      </>
+    )}
     <meta
       name="twitter:card"
       content={image ? "summary_large_image" : "summary"}
@@ -131,49 +137,129 @@ const jsonLd = {
     <ClientRouter />
   </head>
   <body>
-    <a href="#main-content" class="skip-link visually-hidden no-print"
-      >Skip to main content</a
-    >
-    <header>
-      <div class="masthead">
-        <a href="/" class="wordmark">
-          <span class="wordmark-mark" aria-hidden="true"></span>
-          <span class="wordmark-title">{SITE_TITLE}</span>
-          <span class="wordmark-byline">by {SITE_AUTHOR}</span>
+    <a href="#main-content" class="skip-link visually-hidden no-print">
+      Skip to main content
+    </a>
+    <header class="os-menubar no-print">
+      <a href="/" class="os-brand">
+        <span class="os-brand-mark" aria-hidden="true"></span>
+        {SITE_TITLE}
+      </a>
+      <nav class="os-menu" aria-label="Main">
+        <a
+          href="/blog"
+          aria-current={pathname.startsWith("/blog") ? "page" : undefined}
+        >
+          Writing
         </a>
-        <nav aria-label="Main" class="no-print">
-          <a
-            href="/blog"
-            aria-current={pathname.startsWith("/blog") ? "page" : undefined}
-            >Blog</a
-          >
-          <a href="/now" aria-current={pathname === "/now" ? "page" : undefined}
-            >Now</a
-          >
-          <a
-            href="/uses"
-            aria-current={pathname === "/uses" ? "page" : undefined}>Uses</a
-          >
-          <a
-            href="/colophon"
-            aria-current={pathname === "/colophon" ? "page" : undefined}
-            >Colophon</a
-          >
-          <CommandPalette />
-        </nav>
-      </div>
+        <a
+          href="/now"
+          class="menu-secondary"
+          aria-current={pathname === "/now" ? "page" : undefined}
+        >
+          Now
+        </a>
+        <a
+          href="/work"
+          aria-current={pathname === "/work" ? "page" : undefined}
+        >
+          Work
+        </a>
+        <a
+          href="/uses"
+          class="menu-secondary"
+          aria-current={pathname === "/uses" ? "page" : undefined}
+        >
+          Uses
+        </a>
+        <a
+          href="/colophon"
+          class="menu-secondary"
+          aria-current={pathname === "/colophon" ? "page" : undefined}
+        >
+          Colophon
+        </a>
+        <a href={`${pathname}?view=plain`} data-view-toggle>
+          Skip the OS
+        </a>
+      </nav>
     </header>
-    <slot />
-    <footer class="no-print">
-      <nav class="feed-links" aria-label="Feed subscriptions">
-        <span>Subscribe:</span>
+    <div class="os-desktop">
+      <nav class="desktop-icons no-print" aria-label="Desktop">
+        {desktop ? (
+          <>
+            <button type="button" class="desktop-icon" data-open="welcome">
+              <House aria-hidden="true" />
+              <span>About me</span>
+            </button>
+            <button type="button" class="desktop-icon" data-open="writing">
+              <Folder aria-hidden="true" />
+              <span>Writing</span>
+            </button>
+            <button type="button" class="desktop-icon" data-open="projects">
+              <Folder aria-hidden="true" />
+              <span>Projects</span>
+            </button>
+            <button type="button" class="desktop-icon" data-open="personal">
+              <FileText aria-hidden="true" />
+              <span>Personal</span>
+            </button>
+          </>
+        ) : (
+          <>
+            <a href="/" class="desktop-icon">
+              <House aria-hidden="true" />
+              <span>Desktop</span>
+            </a>
+            <button type="button" class="desktop-icon" data-open="reader">
+              <FileText aria-hidden="true" />
+              <span>Open page</span>
+            </button>
+            <a href="/blog" class="desktop-icon">
+              <Folder aria-hidden="true" />
+              <span>Writing</span>
+            </a>
+          </>
+        )}
+        <a href="/now" class="desktop-icon">
+          <FileText aria-hidden="true" />
+          <span>Now</span>
+        </a>
+        <a href="/work" class="desktop-icon">
+          <BriefcaseBusiness aria-hidden="true" />
+          <span>Work</span>
+        </a>
+        <a href="/uses" class="desktop-icon">
+          <Monitor aria-hidden="true" />
+          <span>Uses</span>
+        </a>
+        <a href="/colophon" class="desktop-icon">
+          <Library aria-hidden="true" />
+          <span>Colophon</span>
+        </a>
+      </nav>
+      <div class="desktop-workspace">
+        {desktop ? (
+          <slot />
+        ) : (
+          <DesktopWindow id="reader" title={ogTitle}>
+            <slot />
+          </DesktopWindow>
+        )}
+      </div>
+    </div>
+    <footer class="os-footer no-print">
+      <span>Timothy Brits · Pretoria, South Africa</span>
+      <nav aria-label="Feed subscriptions">
         <a href="/atom.xml">Atom</a>
         <a href="/rss.xml">RSS</a>
-        <a href="/feed.json">JSON Feed</a>
+        <a href="/feed.json">JSON</a>
       </nav>
-      <CarbonBadge />
+      <span class="visually-hidden" role="status" data-desktop-status></span>
     </footer>
-    <EasterEggs />
+    <script>
+      import "../scripts/desktop";
+    </script>
   </body>
 </html>
 
@@ -196,137 +282,5 @@ const jsonLd = {
     font-size: 0.9rem;
     z-index: var(--z-skip-link);
     text-decoration: none;
-  }
-
-  header {
-    margin-bottom: 3.2rem;
-  }
-
-  .masthead {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.8rem 1.6rem;
-    padding: 1.2rem 0 1.6rem 0;
-    border-top: 4px solid var(--ink);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .wordmark {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: 0.5rem;
-    row-gap: 0.25rem;
-    align-items: center;
-    text-decoration: none;
-  }
-
-  .wordmark:hover {
-    text-decoration: none;
-  }
-
-  .wordmark-mark {
-    width: 0.9rem;
-    height: 0.9rem;
-    background: var(--signal);
-  }
-
-  .wordmark-mark.mark-pulse {
-    animation: mark-pulse 0.4s ease;
-  }
-
-  @keyframes mark-pulse {
-    0% {
-      transform: scale(1) rotate(0deg);
-    }
-    50% {
-      transform: scale(1.6) rotate(15deg);
-    }
-    100% {
-      transform: scale(1) rotate(0deg);
-    }
-  }
-
-  .wordmark-title {
-    grid-column: 2;
-    font-family: var(--font-sans);
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-    line-height: 1;
-  }
-
-  .wordmark-byline {
-    grid-column: 2;
-    font-family: var(--font-sans);
-    font-style: normal;
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-meta);
-    color: var(--ink-soft);
-    line-height: 1;
-  }
-
-  nav {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.6rem 1.6rem;
-  }
-
-  nav a {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 0.8125rem;
-    letter-spacing: var(--letter-spacing-meta);
-    text-transform: uppercase;
-    padding: 0.4rem 0;
-    color: var(--ink-soft);
-    text-decoration: none;
-  }
-
-  nav a:hover {
-    color: var(--ink);
-    text-decoration: none;
-  }
-
-  nav a[aria-current="page"],
-  nav a[aria-current="page"]:hover {
-    color: var(--signal);
-    text-decoration: underline;
-    text-decoration-color: var(--signal);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
-
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 3.2rem;
-    padding-top: 1.6rem;
-    border-top: 1px solid var(--rule);
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    letter-spacing: 0;
-    color: var(--ink-soft);
-  }
-
-  footer a {
-    color: var(--ink-soft);
-    text-decoration: none;
-  }
-
-  footer a:hover {
-    color: var(--ink);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
   }
 </style>

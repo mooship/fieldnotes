@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE_TITLE } from "../lib/blog";
+import { Content as WorkContent } from "../sections/work.md";
+---
+
+<Layout
+  title={`Work — ${SITE_TITLE}`}
+  ogTitle="Work"
+  description="Timothy Brits' software engineering experience, skills and education. Based in Pretoria, South Africa."
+  type="website"
+>
+  <main id="main-content" tabindex="-1">
+    <h1 class="page-title">Work</h1>
+    <WorkContent />
+    <a href="/" class="nav-link back-link no-print">
+      <span aria-hidden="true">&larr;</span> Back
+    </a>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding-top: 1.6rem;
+  }
+
+  main :global(ul) {
+    padding-left: 1.5rem;
+    list-style: square;
+    margin-top: 0;
+  }
+
+  main :global(li) {
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+
+  .back-link {
+    margin-top: 2rem;
+  }
+</style>

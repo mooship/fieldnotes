@@ -66,6 +66,7 @@ Where these differ from the instructions above, these win.
 - The tests live in `e2e/` and import `test` and `expect` from `@playwright/test`. `playwright.config.ts` runs
   `npm run preview`, which builds the site and serves the real Worker with `wrangler dev` on port 8788.
 - Start from `e2e/seed.spec.ts`.
+- Reuse `e2e/desktop.spec.ts` for shell regressions. Assert focus restoration, launcher ARIA state, keyboard/click movement, mobile scrolling and plain/no-JavaScript content. Use `@axe-core/playwright` for WCAG A/AA scans through 2.2; never exclude failing controls or replace keyboard actions with forced clicks.
 - Take copy from `src/sections`, `src/content` and `src/lib/blog.ts` rather than writing the strings out, unless the
   test is about the wording itself.
 - `generator_write_test` writes a file of its own: put it in `e2e/`, then run `npx prettier --write` and

@@ -49,6 +49,7 @@ Key principles:
 Where these differ from the instructions above, these win.
 
 - Read `AGENTS.md` first.
+- Preserve main visibility, focus restoration, launcher ARIA state, movement alternatives, plain/no-JavaScript reading, mobile reflow and reduced motion. Never silence axe violations with exclusions or hide controls to pass a scan; fix the owning component/controller/stylesheet when the app is wrong.
 - The tests live in `e2e/` and import `test` and `expect` from `@playwright/test`. `playwright.config.ts` runs
   `npm run preview`, which builds the site and serves the real Worker with `wrangler dev` on port 8788.
 - Never weaken an assertion, add a fixed wait (`waitForTimeout`, a sleep) or skip a test (`test.skip`, `test.fixme`)

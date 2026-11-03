@@ -28,7 +28,7 @@
 ## This site
 
 - [Astro](https://astro.build) — static output, love this framework
-- Cloudflare Pages — fast edge deploys, zero config
+- Cloudflare Workers — fast edge deploys
 - Cloudflare Web Analytics — privacy-first, no cookies
-- [Geist](https://vercel.com/font) for everything — neo-grotesque, pairs naturally with Geist Mono
-- [Geist Mono](https://vercel.com/font) for code
+- [VT323](https://fontsource.org/fonts/vt323) for headings and window titles
+- [IBM Plex Mono](https://fontsource.org/fonts/ibm-plex-mono) for reading and code

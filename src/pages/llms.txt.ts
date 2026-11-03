@@ -4,6 +4,7 @@ import {
   getBlogPosts,
   getPostUrl,
   getSiteUrl,
+  SITE_TITLE,
 } from "../lib/blog";
 
 /**
@@ -16,7 +17,7 @@ export async function GET(context: APIContext) {
   const posts = await getBlogPosts();
 
   const lines = [
-    "# Fieldnotes",
+    `# ${SITE_TITLE}`,
     "",
     `> ${BLOG_DESCRIPTION}`,
     "",
@@ -25,6 +26,7 @@ export async function GET(context: APIContext) {
     `- [Blog](${site}/blog): ${BLOG_DESCRIPTION}`,
     `- [Tags](${site}/blog/tags): Browse posts by tag.`,
     `- [Now](${site}/now): What I'm currently working on, reading, and learning.`,
+    `- [Work](${site}/work): Software engineering experience, skills, education and contact details.`,
     `- [Uses](${site}/uses): The tools, hardware, and software I use daily.`,
     `- [Colophon](${site}/colophon): How this site is built, designed, and hosted.`,
     "",

@@ -29,14 +29,16 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: "Geist Mono",
+      name: "IBM Plex Mono",
       cssVariable: "--font-mono",
+      weights: [400, 600],
+      styles: ["normal"],
     },
     {
       provider: fontProviders.fontsource(),
-      name: "Geist",
+      name: "VT323",
       cssVariable: "--font-sans",
-      weights: [400, 500, 600, 700],
+      weights: [400],
       styles: ["normal"],
       fallbacks: [
         "-apple-system",
