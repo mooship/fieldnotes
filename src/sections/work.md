@@ -36,4 +36,4 @@ Awarded with distinction. Golden Key International Honour Society inductee.
 
 ## Contact
 
-[timothybrits@icloud.com](mailto:timothybrits@icloud.com)
+<a href="/work#contact" data-email data-email-text>Email me (needs JavaScript)</a>

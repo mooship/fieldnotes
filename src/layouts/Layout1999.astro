@@ -56,21 +56,17 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
           cellspacing="6"
         >
           <tr>
-            {
-              NAV_ITEMS.map((item) => (
-                <td>
-                  <a
-                    class={`button-link${item.id === activeItem.id ? " current" : ""}`}
-                    href={item.href}
-                    aria-current={
-                      item.id === activeItem.id ? "page" : undefined
-                    }
-                  >
-                    {item.label}
-                  </a>
-                </td>
-              ))
-            }
+            {NAV_ITEMS.map((item) => (
+              <td>
+                <a
+                  class={`button-link${item.id === activeItem.id ? " current" : ""}`}
+                  href={item.href}
+                  aria-current={item.id === activeItem.id ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </td>
+            ))}
           </tr>
         </table>
       </center>
@@ -84,21 +80,30 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
       <center>
         <div class="counter-box">
           <p>You are visitor number:</p>
-          <div class="counter-digits" id="hit-counter">0000000</div>
+          <div class="counter-digits" id="hit-counter">
+            0000000
+          </div>
         </div>
         <p class="footer-text">
-          {copyrightText}<br />
-          This page last updated: never.<br />
-          <a href="mailto:" id="webmaster-email">&#9993; Email the webmaster</a>
+          {copyrightText}
+          <br />
+          This page last updated: never.
+          <br />
+          <a href="/work#contact" data-email>
+            &#9993; Email the webmaster
+          </a>
         </p>
         <p>
-          <a href="/" class="escape-link">&larr; Back to the actual site</a>
+          <a href="/" class="escape-link">
+            &larr; Back to the actual site
+          </a>
         </p>
       </center>
     </div>
 
     <script>
       import { incrementSessionCount } from "../lib/easter-eggs";
+      import { revealEmailLinks } from "../lib/email";
 
       const BASE_VISITORS = 133_700;
       const counter = document.querySelector<HTMLElement>("#hit-counter");
@@ -108,17 +113,7 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
         counter.textContent = String(count).padStart(7, "0");
       }
 
-      /*
-       * Built at runtime, not written as a literal "mailto:x@y" string in
-       * the page source, so plain-HTML scrapers don't pick it up.
-       */
-      const EMAIL_USER = "timothybrits";
-      const EMAIL_DOMAIN = "icloud.com";
-      const emailLink =
-        document.querySelector<HTMLAnchorElement>("#webmaster-email");
-      if (emailLink) {
-        emailLink.href = `mailto:${EMAIL_USER}@${EMAIL_DOMAIN}`;
-      }
+      revealEmailLinks(document);
     </script>
 
     <style is:global>
