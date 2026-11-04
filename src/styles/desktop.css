@@ -122,7 +122,7 @@ body .os-menu [data-view-toggle] {
   width: min(540px, 68%);
   border: 2px solid var(--ink);
   background: var(--paper);
-  box-shadow: 7px 7px 0 var(--ink);
+  box-shadow: 7px 7px 0 var(--shadow);
   transition: transform 120ms linear;
   scroll-margin-top: 1rem;
 }
@@ -454,6 +454,16 @@ body .email-copy:hover {
 
 .email-copy[hidden] {
   display: none;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .os-desktop {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath fill='%23ece6d8' fill-opacity='.08' d='M0 0h1v1H0z'/%3E%3C/svg%3E");
+  }
+
+  .window-bar {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%23ece6d8' stroke-opacity='.45' d='M0 .5h2'/%3E%3C/svg%3E");
+  }
 }
 
 @media (min-width: 1500px) {

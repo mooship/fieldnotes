@@ -115,7 +115,7 @@ Small changes: adjust CSS variables in `src/styles/tokens.css` or element rules 
 
 Layout changes: shell in `src/layouts/Layout.astro`, reusable controls in `src/components/DesktopWindow.astro`, geometry in `src/styles/desktop.css`, interaction in `src/scripts/desktop.ts`.
 
-**Oat & Petrol** has four colours, declared with a one-line comment in `tokens.css`: desktop `#c5bfb1`, surface `#f5f1e8`, ink `#302e29`, accent `#17635d`. Keep square corners, 2px borders, 7px hard shadows and inverted hover links. No dark-mode palette, glass, gradients, blur or decorative animation.
+**Oat & Petrol** has four colours, declared with a one-line comment in `tokens.css`: desktop `#c5bfb1`, surface `#f5f1e8`, ink `#302e29`, accent `#17635d`. A dark counterpart follows the system `prefers-color-scheme` setting: desktop `#1d1c19`, surface `#292723`, ink `#ece6d8`, accent `#7cc4b8`, with a near-black `#0e0d0b` hard shadow. There is no manual toggle; print always uses black on white. Keep square corners, 2px borders, 7px hard shadows and inverted hover links. No glass, gradients, blur or decorative animation.
 
 ### Accessible Views
 
@@ -161,4 +161,4 @@ npm run test:e2e
 
 That's it — customise your content files, tweak styles, deploy. The build output can run on most Astro-compatible hosts, but this repo is configured for Cloudflare Workers specifically (`wrangler.jsonc` declares the D1 and Rate Limiting bindings the guestbook needs; `public/_headers` sets Cloudflare-specific CSP and cache headers).
 
-Browser checks cover keyboard controls, main/skip-link focus, footer clearance, plain preference, mobile reflow, reduced motion, no-JavaScript content and WCAG A/AA axe scans at phone/desktop widths, including `/work`. They run in CI alongside lint, builds and utility tests on Node 22/24. They do not establish full accessibility compliance; manual screen-reader, zoom and touch checks remain necessary. Deploying or merging to `main` requires explicit permission: Cloudflare automatically deploys pushes there.
+Browser checks cover keyboard controls, main/skip-link focus, footer clearance, plain preference, mobile reflow, reduced motion, no-JavaScript content and WCAG A/AA axe scans at phone/desktop widths in light and dark colour schemes, including `/work`. They run in CI alongside lint, builds and utility tests on Node 22/24. They do not establish full accessibility compliance; manual screen-reader, zoom and touch checks remain necessary. Deploying or merging to `main` requires explicit permission: Cloudflare automatically deploys pushes there.
