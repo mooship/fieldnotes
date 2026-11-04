@@ -448,13 +448,13 @@ for (const path of EMAIL_PAGES) {
     const links = page.locator("a[data-email]");
     await expect(links.first()).toHaveAttribute(
       "href",
-      "mailto:timothybrits@icloud.com"
+      "mailto:hello@timothybrits.co.za"
     );
     const hrefs = await links.evaluateAll((anchors) =>
       anchors.map((anchor) => anchor.getAttribute("href"))
     );
     for (const href of hrefs) {
-      expect(href).toBe("mailto:timothybrits@icloud.com");
+      expect(href).toBe("mailto:hello@timothybrits.co.za");
     }
   });
 }
@@ -469,8 +469,8 @@ test("email links still resolve after a client-side navigation", async ({
     .click();
   await expect(page).toHaveURL(/\/work$/);
   await expect(
-    page.getByRole("link", { name: "timothybrits@icloud.com" })
-  ).toHaveAttribute("href", "mailto:timothybrits@icloud.com");
+    page.getByRole("link", { name: "hello@timothybrits.co.za" })
+  ).toHaveAttribute("href", "mailto:hello@timothybrits.co.za");
   await expect(
     page.getByRole("button", { name: "Copy email address" })
   ).toBeVisible();
@@ -507,7 +507,7 @@ test("copy email button copies the address to the clipboard", async ({
   await expect(button).toHaveText("Copied!");
   expect(
     await page.evaluate(() => globalThis.navigator.clipboard.readText())
-  ).toBe("timothybrits@icloud.com");
+  ).toBe("hello@timothybrits.co.za");
 });
 
 for (const width of [320, 1280]) {
