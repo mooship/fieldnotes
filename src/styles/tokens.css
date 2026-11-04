@@ -1,9 +1,12 @@
 /* Oat & Petrol: desktop #c5bfb1, surface #f5f1e8, ink #302e29, accent #17635d. */
+/* Dark: desktop #1d1c19, surface #292723, ink #ece6d8, accent #7cc4b8. */
 :root {
+  color-scheme: light dark;
   --desktop: #c5bfb1;
   --paper: #f5f1e8;
   --ink: #302e29;
   --signal: #17635d;
+  --shadow: var(--ink);
   --paper-deep: var(--desktop);
   --ink-soft: var(--ink);
   --rule: var(--ink);
@@ -16,4 +19,14 @@
   --radius: 0;
   --z-skip-link: 9999;
   --z-reading-progress: 20;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --desktop: #1d1c19;
+    --paper: #292723;
+    --ink: #ece6d8;
+    --signal: #7cc4b8;
+    --shadow: #0e0d0b;
+  }
 }

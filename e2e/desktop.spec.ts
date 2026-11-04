@@ -383,6 +383,42 @@ test("print media exposes closed windows in static flow and hides interactive ch
     .toBe(true);
 });
 
+test("dark system preference switches the palette and print stays light", async ({
+  page,
+}) => {
+  const surfaces = () =>
+    page.evaluate(() => {
+      const { document, getComputedStyle } = globalThis;
+      const panel = document.querySelector("#window-welcome")!;
+      return {
+        scheme: getComputedStyle(document.documentElement).colorScheme,
+        paper: getComputedStyle(panel).backgroundColor,
+        ink: getComputedStyle(panel).color,
+      };
+    });
+
+  await page.emulateMedia({ colorScheme: "light" });
+  await gotoReady(page, "/?view=desktop");
+  expect(await surfaces()).toEqual({
+    scheme: "light dark",
+    paper: "rgb(245, 241, 232)",
+    ink: "rgb(48, 46, 41)",
+  });
+
+  await page.emulateMedia({ colorScheme: "dark" });
+  await expect.poll(surfaces).toEqual({
+    scheme: "light dark",
+    paper: "rgb(41, 39, 35)",
+    ink: "rgb(236, 230, 216)",
+  });
+
+  await page.emulateMedia({ media: "print" });
+  await expect.poll(surfaces).toMatchObject({
+    paper: "rgb(255, 255, 255)",
+    ink: "rgb(0, 0, 0)",
+  });
+});
+
 test("reduced motion removes desktop transitions", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await gotoReady(page, "/?view=desktop");
@@ -510,55 +546,60 @@ test("copy email button copies the address to the clipboard", async ({
   ).toBe("hello@timothybrits.co.za");
 });
 
-for (const width of [320, 1280]) {
-  for (const path of [
-    "/?view=desktop",
-    "/?view=plain",
-    "/blog",
-    "/blog/local-elections-4-november",
-    "/now",
-    "/work",
-    "/uses",
-    "/colophon",
-  ]) {
-    test(`WCAG A/AA scan at ${width}px: ${path}`, async ({ page }) => {
-      await page.setViewportSize({ width, height: 900 });
-      await gotoReady(page, path);
-      await expect(page.getByRole("main")).toBeVisible();
-      await expect
-        .poll(() =>
-          page.evaluate(() => {
-            const { document, innerWidth } = globalThis;
-            const main = document
-              .querySelector("main")!
-              .getBoundingClientRect();
-            const footer = document
-              .querySelector("footer")!
-              .getBoundingClientRect();
-            const windows = [
-              ...document.querySelectorAll<HTMLElement>("[data-window]"),
-            ].filter((item) => !item.hidden);
-            return (
-              document.documentElement.scrollWidth <= innerWidth &&
-              main.width > 0 &&
-              main.height > 0 &&
-              windows.every(
-                (item) => item.getBoundingClientRect().bottom <= footer.top
-              )
-            );
-          })
-        )
-        .toBe(true);
-      const results = await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
-        .analyze();
-      expect(results.violations).toEqual([]);
-      if (path.startsWith("/?view=")) {
-        await page.screenshot({
-          path: test.info().outputPath("layout.png"),
-          fullPage: true,
-        });
-      }
-    });
+for (const colorScheme of ["light", "dark"] as const) {
+  for (const width of [320, 1280]) {
+    for (const path of [
+      "/?view=desktop",
+      "/?view=plain",
+      "/blog",
+      "/blog/local-elections-4-november",
+      "/now",
+      "/work",
+      "/uses",
+      "/colophon",
+    ]) {
+      test(`WCAG A/AA scan (${colorScheme}) at ${width}px: ${path}`, async ({
+        page,
+      }) => {
+        await page.emulateMedia({ colorScheme });
+        await page.setViewportSize({ width, height: 900 });
+        await gotoReady(page, path);
+        await expect(page.getByRole("main")).toBeVisible();
+        await expect
+          .poll(() =>
+            page.evaluate(() => {
+              const { document, innerWidth } = globalThis;
+              const main = document
+                .querySelector("main")!
+                .getBoundingClientRect();
+              const footer = document
+                .querySelector("footer")!
+                .getBoundingClientRect();
+              const windows = [
+                ...document.querySelectorAll<HTMLElement>("[data-window]"),
+              ].filter((item) => !item.hidden);
+              return (
+                document.documentElement.scrollWidth <= innerWidth &&
+                main.width > 0 &&
+                main.height > 0 &&
+                windows.every(
+                  (item) => item.getBoundingClientRect().bottom <= footer.top
+                )
+              );
+            })
+          )
+          .toBe(true);
+        const results = await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+          .analyze();
+        expect(results.violations).toEqual([]);
+        if (path.startsWith("/?view=")) {
+          await page.screenshot({
+            path: test.info().outputPath("layout.png"),
+            fullPage: true,
+          });
+        }
+      });
+    }
   }
 }
