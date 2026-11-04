@@ -1,5 +1,5 @@
-const EMAIL_USER = "timothybrits";
-const EMAIL_DOMAIN = "icloud.com";
+const EMAIL_USER = "hello";
+const EMAIL_DOMAIN = "timothybrits.co.za";
 const RESET_DELAY_MS = 2000;
 
 /**

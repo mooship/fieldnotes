@@ -3,7 +3,7 @@ import { getEmailAddress, revealEmailLinks } from "./email";
 
 describe("getEmailAddress", () => {
   it("returns the contact address", () => {
-    expect(getEmailAddress()).toBe("timothybrits@icloud.com");
+    expect(getEmailAddress()).toBe("hello@timothybrits.co.za");
   });
 });
 
@@ -22,10 +22,10 @@ describe("revealEmailLinks", () => {
     revealEmailLinks(document);
 
     expect(document.querySelector("#one")?.getAttribute("href")).toBe(
-      "mailto:timothybrits@icloud.com"
+      "mailto:hello@timothybrits.co.za"
     );
     expect(document.querySelector("#two")?.getAttribute("href")).toBe(
-      "mailto:timothybrits@icloud.com"
+      "mailto:hello@timothybrits.co.za"
     );
   });
 
@@ -43,7 +43,7 @@ describe("revealEmailLinks", () => {
     revealEmailLinks(document);
 
     expect(document.querySelector("a")?.textContent).toBe(
-      "timothybrits@icloud.com"
+      "hello@timothybrits.co.za"
     );
   });
 
@@ -82,7 +82,7 @@ describe("revealEmailLinks", () => {
       expect(button.textContent).toBe("Copied!");
     });
 
-    expect(writeText).toHaveBeenCalledWith("timothybrits@icloud.com");
+    expect(writeText).toHaveBeenCalledWith("hello@timothybrits.co.za");
     expect(status.textContent).toBe("Copied email address");
 
     vi.advanceTimersByTime(2000);
