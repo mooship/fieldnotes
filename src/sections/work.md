@@ -1,4 +1,4 @@
-I'm a full-stack software engineer based in Pretoria, South Africa. I've worked on financial services, property and geospatial applications since 2021, using .NET, TypeScript, React and SQL. I work in hybrid and remote teams.
+I'm a Pretoria-based full-stack engineer with experience in financial services, property and geospatial products. Since 2021, my work has included valuation platforms, credit-risk tooling, customer-facing portals and regulatory features using .NET, TypeScript, React and SQL.
 
 ## Experience
 
@@ -8,8 +8,8 @@ I work through a software consultancy on contract with a property data and analy
 
 **Intermediate Software Engineer · November 2024 to present**
 
-- **a property data and analytics company Property:** extended Property valuation platform, a multi-tenant automated property valuation system, to onboard a major South African retail bank and deliver New Developments functionality for a home-loans lender.
-- **a property data and analytics company Retail:** delivered major security, UI/UX and performance improvements to a property data and analytics company Retail data platform while working within its legacy ASP.NET MVC 5 and WebForms stack, with ThinkGeo, C# and SQL Server. Upgraded .NET Framework, integrated for Excel and PDF reports, redesigned the maps interface and introduced CI/CD pipelines to replace manual file-copy deployments.
+- **a property data and analytics company Property — Property valuation platform:** extended the multi-tenant valuation system to onboard a major South African retail bank and delivered New Developments functionality for a home-loans lender.
+- **a property data and analytics company Retail — Retail data platform:** improved security, usability and performance in a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Excel and PDF reports, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
 
 ### Entelect Software
 
