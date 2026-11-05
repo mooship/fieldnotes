@@ -1,4 +1,4 @@
-I'm a full-stack software engineer based in Pretoria, South Africa. I've worked on financial services, property and geospatial applications since 2021, using .NET, TypeScript, React and SQL. I work in hybrid and remote teams.
+I'm a Pretoria-based full-stack engineer with experience in financial services, property and geospatial products. Since 2021, my work has included valuation platforms, credit-risk tooling, customer-facing portals and regulatory features using .NET, TypeScript, React and SQL.
 
 ## Experience
 
@@ -8,8 +8,8 @@ I work through Agile Bridge on contract with Lightstone, contributing to its Pro
 
 **Intermediate Software Engineer · November 2024 to present**
 
-- **Lightstone Property:** extended EzVal, a multi-tenant automated property valuation system, to onboard Capitec and deliver New Developments functionality for Nedbank Home Loans.
-- **Lightstone Retail:** delivered major security, UI/UX and performance improvements to Lightstone Explore Online while working within its legacy ASP.NET MVC 5 and WebForms stack, with ThinkGeo, C# and SQL Server. Upgraded .NET Framework, integrated Carbone for Excel and PDF reports, redesigned the maps interface and introduced CI/CD pipelines to replace manual file-copy deployments.
+- **Lightstone Property — EzVal:** extended the multi-tenant valuation system to onboard Capitec and delivered New Developments functionality for Nedbank Home Loans.
+- **Lightstone Retail — Explore Online:** improved security, usability and performance in a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Carbone Excel and PDF reports, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
 
 ### Entelect Software
 

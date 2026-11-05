@@ -77,13 +77,18 @@ const postsWithMeta = posts.map((post) => ({
   }
 
   .search-wrapper :global(.pagefind-ui) {
-    --pagefind-ui-scale: 0.85;
-    --pagefind-ui-primary: var(--link);
-    --pagefind-ui-text: var(--ink);
-    --pagefind-ui-background: var(--paper);
-    --pagefind-ui-border: var(--rule);
-    --pagefind-ui-border-width: 1px;
-    --pagefind-ui-border-radius: var(--radius);
-    --pagefind-ui-font: var(--font-sans), system-ui, sans-serif;
+    --pf-background: var(--paper);
+    --pf-border: var(--ink);
+    --pf-border-focus: var(--signal);
+    --pf-border-radius: 0;
+    --pf-font: var(--font-mono);
+    --pf-hover: var(--desktop);
+    --pf-input-font-size: 16px;
+    --pf-outline-focus: var(--signal);
+    --pf-outline-offset: 2px;
+    --pf-outline-width: 3px;
+    --pf-text: var(--ink);
+    --pf-text-muted: var(--ink);
+    --pf-text-secondary: var(--ink);
   }
 </style>
