@@ -38,6 +38,7 @@ const isTocVisible = tocHeadings.length > 0;
   title={`${post.data.title} · ${SITE_TITLE}`}
   ogTitle={post.data.title}
   description={post.data.description}
+  windowLabel={`blog/${slug}.md`}
   image={ogImage}
   imageAlt={`Title card: ${post.data.title}`}
   type="article"
@@ -359,11 +360,11 @@ across navigations the same way `initReadingProgress` does.
 
   .page {
     margin: auto;
-    padding-top: 1.6rem;
+    padding-top: var(--s6);
   }
 
   .back-link {
-    margin-bottom: 1.6rem;
+    margin-bottom: var(--s6);
   }
 
   .post-grid {
@@ -384,23 +385,22 @@ across navigations the same way `initReadingProgress` does.
       grid-template-areas:
         "title title"
         "rail  body";
-      column-gap: 3rem;
+      column-gap: var(--s12);
       align-items: start;
     }
 
     .post-rail {
       position: sticky;
-      top: 2rem;
+      top: var(--s8);
     }
   }
 
   .post-title {
     grid-area: title;
     font-size: 2.75rem;
-    margin: 0 0 2rem 0;
+    margin: 0 0 var(--s8) 0;
     line-height: 1.05;
-    letter-spacing: -0.02em;
-    padding-bottom: 1.6rem;
+    padding-bottom: var(--s6);
     border-bottom: 1px solid var(--rule);
   }
 
@@ -412,7 +412,7 @@ across navigations the same way `initReadingProgress` does.
 
   .post-rail {
     grid-area: rail;
-    margin-bottom: 2.8rem;
+    margin-bottom: var(--s12);
   }
 
   .post-rail .meta-label {
@@ -420,11 +420,11 @@ across navigations the same way `initReadingProgress` does.
   }
 
   .post-rail .updated {
-    margin-top: 0.25rem;
+    margin-top: var(--s1);
   }
 
   .post-rail :global(.post-tags) {
-    margin-top: 0.8rem;
+    margin-top: var(--s3);
   }
 
   .post-body {
@@ -433,8 +433,8 @@ across navigations the same way `initReadingProgress` does.
   }
 
   .toc {
-    margin-bottom: 2.8rem;
-    padding: 1rem 1.25rem;
+    margin-bottom: var(--s12);
+    padding: var(--s4) var(--s5);
     border: 1px solid var(--rule);
   }
 
@@ -451,11 +451,11 @@ across navigations the same way `initReadingProgress` does.
   .toc ul {
     list-style: none;
     padding: 0;
-    margin: 0.9rem 0 0 0;
+    margin: var(--s4) 0 0 0;
   }
 
   .toc li {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--s2);
     line-height: 1.4;
   }
 
@@ -464,7 +464,7 @@ across navigations the same way `initReadingProgress` does.
   }
 
   .toc .toc-depth-3 {
-    padding-left: 1.25rem;
+    padding-left: var(--s5);
   }
 
   .toc a {
@@ -484,14 +484,14 @@ across navigations the same way `initReadingProgress` does.
   }
 
   .post-footer {
-    margin-top: 3.2rem;
+    margin-top: var(--s12);
   }
 
   .share-btn {
     background: var(--paper);
     border: 1px solid var(--ink);
     border-radius: var(--radius);
-    padding: 8px 16px;
+    padding: var(--s2) var(--s4);
     font: 600 0.75rem / 1.2 var(--font-mono);
     letter-spacing: var(--letter-spacing-meta);
     text-transform: uppercase;
@@ -510,7 +510,7 @@ across navigations the same way `initReadingProgress` does.
   }
 
   article :global(p) {
-    margin: 0 0 1.25rem 0;
+    margin: 0 0 var(--s5) 0;
     line-height: 1.65;
   }
 
@@ -518,27 +518,27 @@ across navigations the same way `initReadingProgress` does.
   article :global(h3),
   article :global(h4) {
     color: var(--ink);
-    margin: 3.2rem 0 0.8rem 0;
+    margin: var(--s12) 0 var(--s3) 0;
     text-wrap: pretty;
     line-height: 1.15;
   }
 
   article :global(h2) {
-    font-size: 1.625rem;
+    font-size: 2rem;
   }
 
   article :global(h3) {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: 600;
   }
 
   article :global(h4) {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 
   article :global(blockquote) {
-    margin: 1.75rem 0;
-    padding: 0.25rem 0 0.25rem 1.5rem;
+    margin: var(--s8) 0;
+    padding: var(--s1) 0 var(--s1) var(--s6);
     border-left: 3px solid var(--signal);
     color: var(--ink-soft);
     font-size: 1.05rem;
@@ -559,11 +559,11 @@ across navigations the same way `initReadingProgress` does.
   article :global(pre) {
     font-family: var(--font-mono), ui-monospace, monospace;
     background: var(--paper);
-    padding: 1.25rem;
+    padding: var(--s5);
     border-radius: var(--radius);
     border: 1px solid var(--rule);
     overflow-x: auto;
-    margin: 1.5rem 0;
+    margin: var(--s6) 0;
     font-size: 0.9rem;
     line-height: 1.6;
   }
@@ -575,12 +575,12 @@ across navigations the same way `initReadingProgress` does.
 
   article :global(.copy-btn) {
     position: absolute;
-    top: 8px;
+    top: var(--s2);
     right: 8px;
     background: var(--paper);
     border: 1px solid var(--ink);
     border-radius: var(--radius);
-    padding: 4px 8px;
+    padding: var(--s1) var(--s2);
     font: 600 0.75rem / 1.2 var(--font-mono);
     letter-spacing: var(--letter-spacing-meta);
     text-transform: uppercase;
@@ -600,8 +600,8 @@ across navigations the same way `initReadingProgress` does.
 
   article :global(ul),
   article :global(ol) {
-    padding-left: 1.5rem;
-    margin: 0 0 1rem 0;
+    padding-left: var(--s6);
+    margin: 0 0 var(--s4) 0;
   }
 
   article :global(ul) {
@@ -609,7 +609,7 @@ across navigations the same way `initReadingProgress` does.
   }
 
   article :global(li) {
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--s2);
     line-height: 1.5;
     color: var(--ink);
   }
@@ -617,22 +617,22 @@ across navigations the same way `initReadingProgress` does.
   article :global(hr) {
     border: none;
     border-top: 1px solid var(--rule);
-    margin: 2.5rem 0;
+    margin: var(--s10) 0;
   }
 
   .post-nav {
     display: flex;
     justify-content: space-between;
-    gap: 1.6rem;
-    margin-top: 3.2rem;
-    padding-top: 1.6rem;
+    gap: var(--s6);
+    margin-top: var(--s12);
+    padding-top: var(--s6);
     border-top: 1px solid var(--rule);
   }
 
   .post-nav-link {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--s2);
     font-size: 0.95rem;
     max-width: 48%;
   }

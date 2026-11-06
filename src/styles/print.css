@@ -21,15 +21,6 @@
     display: none !important;
   }
 
-  .masthead {
-    border-top: none;
-    padding: 0 0 0.8rem 0;
-  }
-
-  .wordmark-byline::after {
-    content: " — printed from timothybrits.co.za";
-  }
-
   article pre {
     white-space: pre-wrap;
     overflow-wrap: break-word;

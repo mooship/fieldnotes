@@ -1,5 +1,6 @@
-/* Oat & Petrol: desktop #c5bfb1, surface #f5f1e8, ink #302e29, accent #17635d. */
-/* Dark: desktop #1d1c19, surface #292723, ink #ece6d8, accent #7cc4b8. */
+/* Oat & Petrol. Light: desktop #c5bfb1, paper #f5f1e8, ink #302e29, petrol #17635d. */
+/* Dark: desktop #3a3731, paper #22201c, ink #ece6d8, petrol #7cc4b8. */
+/* Spacing runs on a 4px unit: the 2px border doubled, controls at 7u, phone close boxes at 11u. */
 :root {
   color-scheme: light dark;
   --desktop: #c5bfb1;
@@ -17,14 +18,25 @@
   --letter-spacing-meta: 0.08em;
   --content-width: 720px;
   --radius: 0;
+  --u: 4px;
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s8: 32px;
+  --s10: 40px;
+  --s12: 48px;
+  --shadow-offset: 8px;
   --z-skip-link: 9999;
   --z-reading-progress: 20;
 }
 
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --desktop: #1d1c19;
-    --paper: #292723;
+    --desktop: #3a3731;
+    --paper: #22201c;
     --ink: #ece6d8;
     --signal: #7cc4b8;
     --shadow: #0e0d0b;

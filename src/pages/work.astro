@@ -8,6 +8,7 @@ import { Content as WorkContent } from "../sections/work.md";
   title={`Work · ${SITE_TITLE}`}
   ogTitle="Work"
   description="Timothy Brits' software engineering experience, skills and education. Based in Pretoria, South Africa."
+  windowLabel="work.md"
   type="website"
 >
   <div class="page">
@@ -22,21 +23,21 @@ import { Content as WorkContent } from "../sections/work.md";
 <style>
   .page {
     margin: auto;
-    padding-top: 1.6rem;
+    padding-top: var(--s6);
   }
 
   .page :global(ul) {
-    padding-left: 1.5rem;
+    padding-left: var(--s6);
     list-style: square;
     margin-top: 0;
   }
 
   .page :global(li) {
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--s3);
     color: var(--ink);
   }
 
   .back-link {
-    margin-top: 2rem;
+    margin-top: var(--s8);
   }
 </style>

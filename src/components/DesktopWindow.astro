@@ -5,9 +5,17 @@ interface Properties {
   id: string;
   title: string;
   position?: string;
+  label?: string;
+  info?: string;
 }
 
-const { id, title, position = "reader" } = Astro.props as Properties;
+const {
+  id,
+  title,
+  position = "reader",
+  label = title,
+  info,
+} = Astro.props as Properties;
 ---
 
 <section
@@ -34,7 +42,7 @@ const { id, title, position = "reader" } = Astro.props as Properties;
       aria-describedby="window-hint"
       title="Arrow keys move the window. Escape closes it."
     >
-      {title}
+      {label}
     </button>
     <details class="window-actions">
       <summary
@@ -79,6 +87,7 @@ const { id, title, position = "reader" } = Astro.props as Properties;
       </div>
     </details>
   </div>
+  {info && <p class="window-info">{info}</p>}
   <div class="window-content">
     <slot />
   </div>

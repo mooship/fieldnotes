@@ -7,6 +7,7 @@ import { SITE_TITLE } from "../lib/blog";
 <Layout
   title={`Uses · ${SITE_TITLE}`}
   description="The hardware and software I use every day."
+  windowLabel="uses.md"
   type="website"
 >
   <div class="page">
@@ -21,21 +22,21 @@ import { SITE_TITLE } from "../lib/blog";
 <style>
   .page {
     margin: auto;
-    padding-top: 1.6rem;
+    padding-top: var(--s6);
   }
 
   .page :global(ul) {
-    padding-left: 1.5rem;
+    padding-left: var(--s6);
     list-style: square;
     margin-top: 0;
   }
 
   .page :global(li) {
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--s2);
     color: var(--ink);
   }
 
   .back-link {
-    margin-top: 2rem;
+    margin-top: var(--s8);
   }
 </style>

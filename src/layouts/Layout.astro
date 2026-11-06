@@ -37,6 +37,8 @@ export interface Properties {
   datePublished?: Date;
   dateModified?: Date;
   desktop?: boolean;
+  windowLabel?: string;
+  windowInfo?: string;
 }
 
 const {
@@ -51,6 +53,8 @@ const {
   datePublished,
   dateModified,
   desktop = false,
+  windowLabel,
+  windowInfo,
 } = Astro.props as Properties;
 
 const url = Astro.url;
@@ -84,7 +88,7 @@ const jsonLd = {
       it's all just markdown and Astro components. nothing hidden
       but a couple of easter eggs. https://github.com/mooship/fieldnotes
     -->
-    <Font cssVariable="--font-sans" preload />
+    <Font cssVariable="--font-display" preload />
     <Font cssVariable="--font-mono" />
     <meta name="viewport" content="width=device-width, viewport-fit=cover" />
     <title>{title}</title>
@@ -99,7 +103,7 @@ const jsonLd = {
     />
     <meta
       name="theme-color"
-      content="#1d1c19"
+      content="#3a3731"
       media="(prefers-color-scheme: dark)"
     />
     <link
@@ -157,7 +161,16 @@ const jsonLd = {
     </a>
     <header class="os-menubar no-print">
       <a href="/" class="os-brand">
-        <span class="os-brand-mark" aria-hidden="true"></span>
+        <svg
+          class="os-brand-mark"
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          aria-hidden="true"
+        >
+          <rect class="mark-ground" width="16" height="16"></rect>
+          <path class="mark-letter" d="M3 3h10v3H10v7H6V6H3z"></path>
+        </svg>
         {SITE_TITLE}
       </a>
       <nav class="os-menu" aria-label="Main">
@@ -258,7 +271,12 @@ const jsonLd = {
           <slot />
         ) : (
           <main id="main-content" tabindex="-1">
-            <DesktopWindow id="reader" title={ogTitle}>
+            <DesktopWindow
+              id="reader"
+              title={ogTitle}
+              label={windowLabel}
+              info={windowInfo}
+            >
               <slot />
             </DesktopWindow>
           </main>
@@ -287,20 +305,20 @@ const jsonLd = {
 <style>
   .skip-link:focus-visible {
     position: fixed;
-    top: 1rem;
-    left: 1rem;
+    top: var(--s4);
+    left: var(--s4);
     width: auto;
     height: auto;
     clip-path: none;
     margin: 0;
     overflow: visible;
     white-space: normal;
-    padding: 0.5rem 1rem;
+    padding: var(--s2) var(--s4);
     background: var(--paper);
     color: var(--link);
     border: 2px solid var(--link);
     border-radius: var(--radius);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     z-index: var(--z-skip-link);
     text-decoration: none;
   }

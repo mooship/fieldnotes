@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -14,7 +14,6 @@ body {
     "kern" 1,
     "liga" 1,
     "calt" 1;
-  font-optical-sizing: auto;
   color: var(--ink);
   transition: color 0.25s ease;
   max-width: var(--content-width);
@@ -25,25 +24,17 @@ body {
     calc(20px + env(safe-area-inset-left));
 }
 
-h1 {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  text-rendering: optimizeLegibility;
-  letter-spacing: -0.01em;
-  line-height: 1.05;
-}
-
+h1,
 h2 {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  text-rendering: optimizeLegibility;
+  font-family: var(--font-display);
+  font-weight: 400;
   letter-spacing: 0;
-  line-height: 1.15;
+  line-height: 1.05;
 }
 
 h3,
 h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -87,7 +78,7 @@ p {
 }
 
 li {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--s2);
   color: var(--ink-soft);
   text-wrap: pretty;
 }

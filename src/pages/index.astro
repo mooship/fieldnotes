@@ -9,6 +9,10 @@ import { formatDate, getBlogPosts, getPostSlug, SITE_TITLE } from "../lib/blog";
 
 const posts = await getBlogPosts();
 const recentPosts = posts.slice(0, 4);
+const latest = posts[0];
+const writingInfo = latest
+  ? `${posts.length} posts · latest ${formatDate(latest.data.pubDate)}`
+  : undefined;
 ---
 
 <Layout
@@ -24,7 +28,12 @@ const recentPosts = posts.slice(0, 4);
         <IntroContent />
       </div>
     </DesktopWindow>
-    <DesktopWindow id="writing" title="Writing" position="writing">
+    <DesktopWindow
+      id="writing"
+      title="Writing"
+      position="writing"
+      info={writingInfo}
+    >
       <h2 class="visually-hidden">Writing</h2>
       <ul class="desktop-posts">
         {recentPosts.map((post) => (

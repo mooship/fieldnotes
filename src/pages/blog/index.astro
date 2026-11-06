@@ -5,6 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 import {
   BLOG_DESCRIPTION,
   computeReadingTime,
+  formatDate,
   getBlogPosts,
   SITE_TITLE,
 } from "../../lib/blog";
@@ -14,11 +15,17 @@ const postsWithMeta = posts.map((post) => ({
   post,
   readingTime: computeReadingTime(post.body),
 }));
+const latest = posts[0];
+const windowInfo = latest
+  ? `${posts.length} posts · latest ${formatDate(latest.data.pubDate)}`
+  : undefined;
 ---
 
 <Layout
   title={`Writing · ${SITE_TITLE}`}
   description={BLOG_DESCRIPTION}
+  windowLabel="blog/"
+  {windowInfo}
   type="website"
 >
   <div class="page">
@@ -47,13 +54,13 @@ const postsWithMeta = posts.map((post) => ({
 <style>
   .page {
     margin: auto;
-    padding-top: 1.6rem;
+    padding-top: var(--s6);
   }
 
   ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 3.2rem 0;
+    margin: 0 0 var(--s12) 0;
     border-top: 1px solid var(--rule);
   }
 
@@ -63,17 +70,17 @@ const postsWithMeta = posts.map((post) => ({
   }
 
   .back-link {
-    margin-top: 1.6rem;
+    margin-top: var(--s6);
   }
 
   .search-wrapper {
     min-height: 36px;
-    margin-bottom: 1.6rem;
+    margin-bottom: var(--s6);
   }
 
   .tags-link {
     display: inline-block;
-    margin-bottom: 1.6rem;
+    margin-bottom: var(--s6);
   }
 
   .search-wrapper :global(.pagefind-ui) {
