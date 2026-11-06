@@ -49,7 +49,7 @@ const isTocVisible = tocHeadings.length > 0;
     class="reading-progress no-print"
     aria-hidden="true"
   ></div>
-  <main id="main-content" tabindex="-1">
+  <div class="page">
     <a href="/blog" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All posts
     </a>
@@ -125,7 +125,7 @@ const isTocVisible = tocHeadings.length > 0;
         )}
       </nav>
     )}
-  </main>
+  </div>
 </Layout>
 
 <script>
@@ -357,7 +357,7 @@ across navigations the same way `initReadingProgress` does.
     z-index: var(--z-reading-progress);
   }
 
-  main {
+  .page {
     margin: auto;
     padding-top: 1.6rem;
   }
@@ -473,10 +473,6 @@ across navigations the same way `initReadingProgress` does.
     font-size: 0.9rem;
   }
 
-  .toc a:hover {
-    color: var(--signal);
-  }
-
   .toc a[aria-current="true"] {
     color: var(--signal);
     font-weight: 600;
@@ -487,25 +483,20 @@ across navigations the same way `initReadingProgress` does.
   }
 
   .share-btn {
-    background: none;
-    border: 1px solid var(--rule);
+    background: var(--paper);
+    border: 1px solid var(--ink);
     border-radius: var(--radius);
-    padding: 0.45rem 1rem;
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
+    padding: 8px 16px;
+    font: 600 0.75rem / 1.2 var(--font-mono);
     letter-spacing: var(--letter-spacing-meta);
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--ink);
     cursor: pointer;
-    transition:
-      color 0.15s ease,
-      border-color 0.15s ease;
   }
 
   .share-btn:hover {
-    color: var(--signal);
-    border-color: var(--signal);
+    background: var(--ink);
+    color: var(--paper);
   }
 
   .share-btn:focus-visible {
@@ -579,28 +570,17 @@ across navigations the same way `initReadingProgress` does.
 
   article :global(.copy-btn) {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 8px;
+    right: 8px;
     background: var(--paper);
-    border: 1px solid var(--rule);
+    border: 1px solid var(--ink);
     border-radius: var(--radius);
-    padding: 0.4rem 0.6rem;
-    font-family: var(--font-sans), system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 500;
+    padding: 4px 8px;
+    font: 600 0.75rem / 1.2 var(--font-mono);
     letter-spacing: var(--letter-spacing-meta);
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--ink);
     cursor: pointer;
-    opacity: 0.6;
-    transition:
-      opacity 0.2s ease,
-      color 0.2s ease;
-  }
-
-  article :global(pre:hover .copy-btn),
-  article :global(.copy-btn:focus-visible) {
-    opacity: 1;
   }
 
   article :global(.copy-btn:focus-visible) {
@@ -609,13 +589,8 @@ across navigations the same way `initReadingProgress` does.
   }
 
   article :global(.copy-btn:hover) {
-    color: var(--ink);
-  }
-
-  @media (pointer: coarse) {
-    article :global(.copy-btn) {
-      opacity: 1;
-    }
+    background: var(--ink);
+    color: var(--paper);
   }
 
   article :global(ul),

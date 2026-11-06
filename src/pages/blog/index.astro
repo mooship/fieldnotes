@@ -21,7 +21,7 @@ const postsWithMeta = posts.map((post) => ({
   description={BLOG_DESCRIPTION}
   type="website"
 >
-  <main id="main-content" tabindex="-1">
+  <div class="page">
     <h1 class="page-title">Blog</h1>
     <div class="search-wrapper">
       <Search className="pagefind-ui" />
@@ -41,11 +41,11 @@ const postsWithMeta = posts.map((post) => ({
     <a href="/" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> Back
     </a>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  main {
+  .page {
     margin: auto;
     padding-top: 1.6rem;
   }

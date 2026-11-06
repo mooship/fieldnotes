@@ -16,7 +16,7 @@ const tags = getAllTags(posts);
   description={BLOG_DESCRIPTION}
   type="website"
 >
-  <main id="main-content" tabindex="-1">
+  <div class="page">
     <h1 class="page-title">Tags</h1>
     {tags.length === 0 ? (
       <p class="empty">No tags yet.</p>
@@ -37,11 +37,11 @@ const tags = getAllTags(posts);
     <a href="/blog" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All posts
     </a>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  main {
+  .page {
     margin: auto;
     padding-top: 1.6rem;
   }

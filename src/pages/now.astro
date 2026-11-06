@@ -16,16 +16,14 @@ const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
   description="What I'm currently working on, reading, and learning."
   type="website"
 >
-  <main id="main-content" tabindex="-1">
+  <div class="page">
     <h1 class="page-title">Now</h1>
     <p class="meta-label updated">
       Last updated:{" "}
-      <time
-        datetime={lastUpdatedDatetime}
-        title="also known as: whenever I last remembered this file exists"
-      >
-        {lastUpdatedDisplay}
-      </time>
+      <time datetime={lastUpdatedDatetime}>{lastUpdatedDisplay}</time>
+      <small class="updated-note">
+        also known as: whenever I last remembered this file exists
+      </small>
     </p>
     <NowContent />
     <p class="nownownow">
@@ -34,11 +32,11 @@ const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
     <a href="/" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> Back
     </a>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  main {
+  .page {
     margin: auto;
     padding-top: 1.6rem;
   }
@@ -51,18 +49,27 @@ const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
     margin: 0 0 2rem 0;
   }
 
-  main :global(p) {
+  .updated-note {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .page :global(p) {
     line-height: 1.6;
     margin: 0 0 1rem 0;
   }
 
-  main :global(ul) {
+  .page :global(ul) {
     padding-left: 1.5rem;
     list-style: square;
     margin-top: 0;
   }
 
-  main :global(li) {
+  .page :global(li) {
     margin-bottom: 0.4rem;
     color: var(--ink);
   }

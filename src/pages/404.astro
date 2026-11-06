@@ -4,10 +4,11 @@ import { SITE_TITLE } from "../lib/blog";
 ---
 
 <Layout title={`Page not found — ${SITE_TITLE}`} robots="noindex">
-  <main id="main-content" tabindex="-1">
+  <div class="page">
     <h1 class="page-title">404</h1>
     <p data-role="404-message">
-      ?FILE NOT FOUND ERROR<br>
+      ?FILE NOT FOUND ERROR
+      <br />
       READY.
     </p>
     <nav class="links" aria-label="Suggested pages">
@@ -26,11 +27,11 @@ import { SITE_TITLE } from "../lib/blog";
         </li>
       </ul>
     </nav>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  main {
+  .page {
     margin: auto;
     padding-top: 1.6rem;
   }

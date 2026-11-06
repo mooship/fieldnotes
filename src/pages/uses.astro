@@ -9,28 +9,28 @@ import { SITE_TITLE } from "../lib/blog";
   description="The tools, hardware, and software I use daily."
   type="website"
 >
-  <main id="main-content" tabindex="-1">
+  <div class="page">
     <h1 class="page-title">Uses</h1>
     <UsesContent />
     <a href="/" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> Back
     </a>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  main {
+  .page {
     margin: auto;
     padding-top: 1.6rem;
   }
 
-  main :global(ul) {
+  .page :global(ul) {
     padding-left: 1.5rem;
     list-style: square;
     margin-top: 0;
   }
 
-  main :global(li) {
+  .page :global(li) {
     margin-bottom: 0.4rem;
     color: var(--ink);
   }

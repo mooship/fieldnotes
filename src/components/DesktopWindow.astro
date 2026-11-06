@@ -31,8 +31,8 @@ const { id, title, position = "reader" } = Astro.props as Properties;
       type="button"
       class="window-title"
       data-window-title
-      aria-label={`Move ${title} with arrow keys; Escape to close`}
-      title="Move with arrow keys; Escape to close"
+      aria-describedby="window-hint"
+      title="Arrow keys move the window. Escape closes it."
     >
       {title}
     </button>

@@ -15,8 +15,8 @@ export function getEmailAddress(): string {
 Fills in every `a[data-email]` under `root` with a `mailto:` link and wires
 every `button[data-copy-email]` to copy the address to the clipboard. Links
 that also carry `data-email-text` show the address as their text. Without
-JavaScript the link keeps its fallback href and text and the copy button stays
-hidden, so the address is never in the served HTML.
+JavaScript the link keeps its fallback href and spelled-out text and the copy
+button stays hidden, so the usable address is never in the served HTML.
 */
 export function revealEmailLinks(root: ParentNode): void {
   const address = getEmailAddress();
