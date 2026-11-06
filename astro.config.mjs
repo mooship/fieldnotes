@@ -17,7 +17,7 @@ export default defineConfig({
   session: false,
   adapter: cloudflare({
     // Prerendered pages (everything except the guestbook API route) build
-    // through plain Node rather than a workerd sandbox — og/[slug].png.ts
+    // through plain Node rather than a workerd sandbox: og/[slug].png.ts
     // uses satori+sharp, and node:fs for font loading, neither compatible
     // with workerd's build-time restrictions (no native modules).
     prerenderEnvironment: "node",

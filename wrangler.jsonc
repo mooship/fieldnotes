@@ -18,7 +18,7 @@
   // from an @astrojs/cloudflare-generated dist/server/wrangler.json, not
   // this file directly, and neither the classic `routes` + custom_domain
   // shape nor a top-level `domains` array made it through to that generated
-  // config in testing — so a wrangler.jsonc-driven cutover isn't confirmed
+  // config in testing, so a wrangler.jsonc-driven cutover isn't confirmed
   // to work with this adapter/plugin combination. Separately, the apex
   // domain has pre-existing DNS records Cloudflare's Custom Domain API
   // refuses to take over automatically, so the domain move from the old
@@ -28,19 +28,19 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist/client",
-    // Matches astro.config.mjs's trailingSlash: "never" — without this,
+    // Matches astro.config.mjs's trailingSlash: "never"; without this,
     // Workers' default ("auto-trailing-slash") redirects e.g.
     // /1999/guestbook to /1999/guestbook/.
     "html_handling": "drop-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
   },
 
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "fieldnotes-guestbook",
-      "database_id": "730f141e-9d36-4418-8033-8795e3f09aba"
-    }
+      "database_id": "730f141e-9d36-4418-8033-8795e3f09aba",
+    },
   ],
 
   // Anonymous guestbook posts are capped at 5 per client IP per 60s window.
@@ -50,12 +50,12 @@
       "namespace_id": "1001",
       "simple": {
         "limit": 5,
-        "period": 60
-      }
-    }
+        "period": 60,
+      },
+    },
   ],
 
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 }
