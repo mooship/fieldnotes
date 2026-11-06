@@ -36,6 +36,21 @@ test("keyboard users can move, close and reopen a window", async ({ page }) => {
   await expect(launcher).toHaveAttribute("aria-expanded", "true");
 });
 
+test("Escape inside window content leaves the window open", async ({
+  page,
+}) => {
+  await gotoReady(page, "/blog");
+  const reader = page.locator("#window-reader");
+  const search = reader.locator(".pagefind-ui__search-input");
+  await search.fill("empires");
+  await search.press("Escape");
+  await expect(reader).toBeVisible();
+  const firstPost = reader.locator(".post-content a").first();
+  await firstPost.focus();
+  await firstPost.press("Escape");
+  await expect(reader).toBeVisible();
+});
+
 test("actions provide click movement, clamp to workspace bounds and dismiss before the window", async ({
   page,
 }) => {
