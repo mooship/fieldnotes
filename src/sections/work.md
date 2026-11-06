@@ -38,4 +38,4 @@ Awarded with distinction. Golden Key International Honour Society inductee.
 
 ## Contact
 
-<a href="/work#contact" data-email data-email-text>Email me (needs JavaScript)</a> <button type="button" class="email-copy no-print" data-copy-email aria-label="Copy email address" hidden>Copy</button>
+<a href="/work#contact" data-email data-email-text>hello at timothybrits dot co dot za</a> <button type="button" class="email-copy no-print" data-copy-email aria-label="Copy email address" hidden>Copy</button>

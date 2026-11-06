@@ -113,7 +113,7 @@ body .os-menu [data-view-toggle] {
   min-height: 930px;
 }
 
-.desktop-workspace > main {
+.desktop-home {
   min-height: inherit;
 }
 
@@ -282,7 +282,7 @@ body .os-menu [data-view-toggle] {
   margin-bottom: 0;
 }
 
-.window-content main {
+.window-content .page {
   max-width: var(--content-width);
   margin: auto;
 }

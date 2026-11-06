@@ -35,70 +35,91 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
   </head>
   <body>
     <div class="page">
-      <slot name="hero" />
+      <header>
+        <slot name="hero" />
 
-      <div class="scroller" role="presentation">
-        <div class="scroller-track">
-          Hello and welcome to my personal website!! Best viewed at 800x600
-          resolution with Netscape Navigator!! Please sign my guestbook before
-          you leave!! This site is best experienced with the sound on!!
-        </div>
-      </div>
-
-      <hr />
-
-      <center>
-        <table
-          role="presentation"
-          class="nav-table"
-          border="0"
-          cellpadding="0"
-          cellspacing="6"
-        >
-          <tr>
-            {NAV_ITEMS.map((item) => (
-              <td>
-                <a
-                  class={`button-link${item.id === activeItem.id ? " current" : ""}`}
-                  href={item.href}
-                  aria-current={item.id === activeItem.id ? "page" : undefined}
-                >
-                  {item.label}
-                </a>
-              </td>
-            ))}
-          </tr>
-        </table>
-      </center>
-
-      <hr />
-
-      <slot />
-
-      <hr />
-
-      <center>
-        <div class="counter-box">
-          <p>You are visitor number:</p>
-          <div class="counter-digits" id="hit-counter">
-            0000000
+        <div class="scroller" role="presentation">
+          <div class="scroller-track">
+            Hello and welcome to my personal website!! Best viewed at 800x600
+            resolution with Netscape Navigator!! Please sign my guestbook before
+            you leave!! This site is best experienced with the sound on!!
           </div>
         </div>
-        <p class="footer-text">
-          {copyrightText}
-          <br />
-          This page last updated: never.
-          <br />
-          <a href="/work#contact" data-email>
-            &#9993; Email the webmaster
-          </a>
+        <p class="motion-toggle-row">
+          <button
+            type="button"
+            class="motion-toggle"
+            data-motion-toggle
+            aria-pressed="false"
+            hidden
+          >
+            [ Stop scrolling ]
+          </button>
         </p>
-        <p>
-          <a href="/" class="escape-link">
-            &larr; Back to the actual site
-          </a>
-        </p>
-      </center>
+      </header>
+
+      <hr />
+
+      <nav aria-label="1999 pages">
+        <center>
+          <table
+            role="presentation"
+            class="nav-table"
+            border="0"
+            cellpadding="0"
+            cellspacing="6"
+          >
+            <tr>
+              {NAV_ITEMS.map((item) => (
+                <td>
+                  <a
+                    class={`button-link${item.id === activeItem.id ? " current" : ""}`}
+                    href={item.href}
+                    aria-current={
+                      item.id === activeItem.id ? "page" : undefined
+                    }
+                  >
+                    {item.label}
+                  </a>
+                </td>
+              ))}
+            </tr>
+          </table>
+        </center>
+      </nav>
+
+      <hr />
+
+      <main id="main-content">
+        <slot />
+      </main>
+
+      <hr />
+
+      <footer>
+        <center>
+          <div class="counter-box">
+            <p>You are visitor number:</p>
+            <div class="counter-digits" id="hit-counter">
+              0000000
+            </div>
+          </div>
+          <p class="footer-text">
+            {copyrightText}
+            <br />
+            This page last updated: never.
+            <br />
+            <a href="/work#contact" data-email>
+              &#9993; Email the webmaster
+            </a>
+          </p>
+          <p>
+            <a href="/" class="escape-link">
+              &larr; Back to the actual site
+            </a>
+          </p>
+        </center>
+      </footer>
     </div>
 
     <script>
@@ -114,6 +135,21 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
       }
 
       revealEmailLinks(document);
+
+      const motionToggle = document.querySelector<HTMLButtonElement>(
+        "[data-motion-toggle]"
+      );
+      if (motionToggle) {
+        motionToggle.hidden = false;
+        motionToggle.addEventListener("click", () => {
+          const isStopped =
+            document.documentElement.classList.toggle("motion-stopped");
+          motionToggle.setAttribute("aria-pressed", String(isStopped));
+          motionToggle.textContent = isStopped
+            ? "[ Start scrolling ]"
+            : "[ Stop scrolling ]";
+        });
+      }
     </script>
 
     <style is:global>
@@ -199,6 +235,47 @@ const copyrightText = `Copyright 1999 ${SITE_AUTHOR}. All rights reserved.`;
           padding-left: 0;
           animation: none;
         }
+
+        .motion-toggle-row {
+          display: none;
+        }
+      }
+
+      .motion-stopped .scroller {
+        overflow-x: auto;
+      }
+
+      .motion-stopped .scroller-track {
+        padding-left: 0;
+      }
+
+      .motion-stopped .scroller-track,
+      .motion-stopped .blink-text {
+        animation: none;
+      }
+
+      .motion-toggle-row {
+        margin: 0.4rem 0 0;
+        text-align: right;
+      }
+
+      .motion-toggle {
+        background: #000000;
+        color: #00ff00;
+        font-family: "Courier New", monospace;
+        font-size: 0.85rem;
+        border: 1px solid #00ff00;
+        padding: 0.2rem 0.5rem;
+        cursor: pointer;
+      }
+
+      .motion-toggle[hidden] {
+        display: none;
+      }
+
+      .motion-toggle:focus-visible {
+        outline: 2px solid #ffff00;
+        outline-offset: 2px;
       }
 
       hr {

@@ -30,7 +30,7 @@ const postsWithMeta = posts.map((post) => ({
   description={`Posts tagged "${tag}" on ${SITE_TITLE}.`}
   type="website"
 >
-  <main id="main-content" tabindex="-1">
+  <div class="page">
     <p class="meta-label eyebrow">Tag</p>
     <h1 class="page-title">{tag}</h1>
     <ul>
@@ -41,11 +41,11 @@ const postsWithMeta = posts.map((post) => ({
     <a href="/blog/tags" class="nav-link back-link no-print">
       <span aria-hidden="true">&larr;</span> All tags
     </a>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  main {
+  .page {
     margin: auto;
     padding-top: 1.6rem;
   }

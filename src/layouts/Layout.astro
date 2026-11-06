@@ -257,12 +257,17 @@ const jsonLd = {
         {desktop ? (
           <slot />
         ) : (
-          <DesktopWindow id="reader" title={ogTitle}>
-            <slot />
-          </DesktopWindow>
+          <main id="main-content" tabindex="-1">
+            <DesktopWindow id="reader" title={ogTitle}>
+              <slot />
+            </DesktopWindow>
+          </main>
         )}
       </div>
     </div>
+    <p id="window-hint" class="visually-hidden">
+      Arrow keys move the window. Escape closes it.
+    </p>
     <footer class="os-footer no-print">
       <span>Timothy Brits · Pretoria, South Africa</span>
       <nav aria-label="Feed subscriptions">

@@ -16,7 +16,7 @@ async function gotoReady(page: Page, path: string) {
 test("keyboard users can move, close and reopen a window", async ({ page }) => {
   await gotoReady(page, "/?view=desktop");
   const panel = page.getByRole("region", { name: "About me", exact: true });
-  const title = panel.getByRole("button", { name: /Move About me/ });
+  const title = panel.getByRole("button", { name: "About me", exact: true });
   const launcher = page.getByRole("button", { name: "About me", exact: true });
   await title.focus();
   await expect(panel).toHaveClass(/is-active/);
@@ -187,7 +187,7 @@ test("pointer dragging moves a window, clamps at workspace edges and releases cl
 }) => {
   await gotoReady(page, "/?view=desktop");
   const panel = page.getByRole("region", { name: "About me", exact: true });
-  const title = panel.getByRole("button", { name: /Move About me/ });
+  const title = panel.getByRole("button", { name: "About me", exact: true });
   const bounds = await title.boundingBox();
   expect(bounds).not.toBeNull();
   const startX = bounds!.x + bounds!.width / 2;
@@ -527,7 +527,7 @@ test("email links still resolve after a client-side navigation", async ({
   ).toBeVisible();
 });
 
-test("without JavaScript the work page says the address needs JavaScript", async ({
+test("without JavaScript the work page spells out the address", async ({
   browser,
   baseURL,
 }) => {
@@ -538,7 +538,9 @@ test("without JavaScript the work page says the address needs JavaScript", async
   const page = await context.newPage();
   await page.goto("/work");
   await expect(
-    page.getByRole("link", { name: "Email me (needs JavaScript)" })
+    page.getByRole("link", {
+      name: "hello at timothybrits dot co dot za",
+    })
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Copy email address" })

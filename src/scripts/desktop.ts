@@ -28,7 +28,7 @@ function initialiseDesktop() {
   const windows = [...document.querySelectorAll<HTMLElement>("[data-window]")];
   const workspace = document.querySelector<HTMLElement>(".desktop-workspace");
   const mobile = matchMedia("(max-width: 760px)");
-  const home = workspace?.querySelector<HTMLElement>(":scope > main");
+  const home = workspace?.querySelector<HTMLElement>(".desktop-home");
   const launchers = [
     ...document.querySelectorAll<HTMLButtonElement>("[data-open]"),
   ];
