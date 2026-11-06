@@ -2,7 +2,7 @@
 import { render } from "astro:content";
 import TagList from "../../components/TagList.astro";
 import Layout from "../../layouts/Layout.astro";
-import { ArrowLeft, ArrowRight } from "@lucide/astro";
+import Icon from "../../components/Icon.astro";
 import {
   computeReadingTime,
   formatDate,
@@ -110,7 +110,7 @@ const isTocVisible = tocHeadings.length > 0;
       <nav class="post-nav no-print" aria-label="Post navigation">
         {adjacent.prev ? (
           <a href={`/blog/${adjacent.prev.slug}`} class="post-nav-link prev">
-            <ArrowLeft size={16} aria-hidden="true" />
+            <Icon name="arrow-left" />
             <span>{adjacent.prev.title}</span>
           </a>
         ) : (
@@ -119,7 +119,7 @@ const isTocVisible = tocHeadings.length > 0;
         {adjacent.next ? (
           <a href={`/blog/${adjacent.next.slug}`} class="post-nav-link next">
             <span>{adjacent.next.title}</span>
-            <ArrowRight size={16} aria-hidden="true" />
+            <Icon name="arrow-right" />
           </a>
         ) : (
           <span />

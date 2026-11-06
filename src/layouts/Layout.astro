@@ -7,15 +7,8 @@ import "../styles/print.css";
 import "../styles/desktop.css";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import {
-  BriefcaseBusiness,
-  FileText,
-  Folder,
-  House,
-  Library,
-  Monitor,
-} from "@lucide/astro";
 import DesktopWindow from "../components/DesktopWindow.astro";
+import Icon from "../components/Icon.astro";
 import { SITE_AUTHOR, SITE_TITLE } from "../lib/blog";
 
 /**
@@ -217,52 +210,52 @@ const jsonLd = {
         {desktop ? (
           <>
             <button type="button" class="desktop-icon" data-open="welcome">
-              <House aria-hidden="true" />
+              <Icon name="house" size={48} />
               <span>About me</span>
             </button>
             <button type="button" class="desktop-icon" data-open="writing">
-              <Folder aria-hidden="true" />
+              <Icon name="folder" size={48} />
               <span>Writing</span>
             </button>
             <button type="button" class="desktop-icon" data-open="projects">
-              <Folder aria-hidden="true" />
+              <Icon name="folder" size={48} />
               <span>Projects</span>
             </button>
             <button type="button" class="desktop-icon" data-open="personal">
-              <FileText aria-hidden="true" />
+              <Icon name="document" size={48} />
               <span>Personal</span>
             </button>
           </>
         ) : (
           <>
             <a href="/" class="desktop-icon">
-              <House aria-hidden="true" />
+              <Icon name="house" size={48} />
               <span>Desktop</span>
             </a>
             <button type="button" class="desktop-icon" data-open="reader">
-              <FileText aria-hidden="true" />
+              <Icon name="document" size={48} />
               <span>Open page</span>
             </button>
             <a href="/blog" class="desktop-icon">
-              <Folder aria-hidden="true" />
+              <Icon name="folder" size={48} />
               <span>Writing</span>
             </a>
           </>
         )}
         <a href="/now" class="desktop-icon">
-          <FileText aria-hidden="true" />
+          <Icon name="document" size={48} />
           <span>Now</span>
         </a>
         <a href="/work" class="desktop-icon">
-          <BriefcaseBusiness aria-hidden="true" />
+          <Icon name="briefcase" size={48} />
           <span>Work</span>
         </a>
         <a href="/uses" class="desktop-icon">
-          <Monitor aria-hidden="true" />
+          <Icon name="monitor" size={48} />
           <span>Uses</span>
         </a>
         <a href="/colophon" class="desktop-icon">
-          <Library aria-hidden="true" />
+          <Icon name="books" size={48} />
           <span>Colophon</span>
         </a>
       </nav>

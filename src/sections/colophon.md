@@ -9,7 +9,7 @@
 
 ## Design
 
-A small desktop environment: overlapping windows, striped title bars, square corners and hard offset shadows. The Oat & Petrol palette pairs a warm oat desktop with pale window surfaces, charcoal ink and a single petrol accent. When your system prefers dark, it switches to a charcoal desktop with oat ink and a lighter petrol.
+A small desktop environment: overlapping windows, striped title bars, square corners and hard offset shadows. The icons are drawn by hand on a 16 by 16 pixel grid, one colour plus the window paper. The Oat & Petrol palette pairs a warm oat desktop with pale window surfaces, charcoal ink and a single petrol accent. When your system prefers dark, it switches to a charcoal desktop with oat ink and a lighter petrol.
 
 The menu bar's **Skip the OS** link switches to a conventional reading view. That preference is stored locally in your browser, not sent to a server. On phones, windows stack in a simple vertical flow. Without JavaScript, the site defaults to the conventional view.
 
