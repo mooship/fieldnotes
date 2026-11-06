@@ -14,6 +14,7 @@ const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
 <Layout
   title={`Now · ${SITE_TITLE}`}
   description="What I'm working on, reading, playing and thinking about."
+  windowLabel="now.md"
   type="website"
 >
   <div class="page">
@@ -38,20 +39,20 @@ const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
 <style>
   .page {
     margin: auto;
-    padding-top: 1.6rem;
+    padding-top: var(--s6);
   }
 
   .page-title {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--s2);
   }
 
   .updated {
-    margin: 0 0 2rem 0;
+    margin: 0 0 var(--s8) 0;
   }
 
   .updated-note {
     display: block;
-    margin-top: 4px;
+    margin-top: var(--s1);
     font-size: 0.75rem;
     font-weight: 400;
     letter-spacing: 0;
@@ -60,27 +61,27 @@ const lastUpdatedDatetime = lastUpdated.toISOString().slice(0, 7);
 
   .page :global(p) {
     line-height: 1.6;
-    margin: 0 0 1rem 0;
+    margin: 0 0 var(--s4) 0;
   }
 
   .page :global(ul) {
-    padding-left: 1.5rem;
+    padding-left: var(--s6);
     list-style: square;
     margin-top: 0;
   }
 
   .page :global(li) {
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--s2);
     color: var(--ink);
   }
 
   .nownownow {
     font-size: 0.85rem;
     color: var(--ink-soft);
-    margin-top: 2rem;
+    margin-top: var(--s8);
   }
 
   .back-link {
-    margin-top: 1rem;
+    margin-top: var(--s4);
   }
 </style>

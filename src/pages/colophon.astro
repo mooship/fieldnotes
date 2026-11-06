@@ -7,6 +7,7 @@ import { SITE_TITLE } from "../lib/blog";
 <Layout
   title={`Colophon · ${SITE_TITLE}`}
   description="How this site is built, designed, and hosted."
+  windowLabel="colophon.md"
   type="website"
 >
   <div class="page">
@@ -21,26 +22,26 @@ import { SITE_TITLE } from "../lib/blog";
 <style>
   .page {
     margin: auto;
-    padding-top: 1.6rem;
+    padding-top: var(--s6);
   }
 
   .page :global(p) {
     line-height: 1.6;
-    margin: 0 0 1rem 0;
+    margin: 0 0 var(--s4) 0;
   }
 
   .page :global(ul) {
-    padding-left: 1.5rem;
+    padding-left: var(--s6);
     list-style: square;
     margin-top: 0;
   }
 
   .page :global(li) {
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--s2);
     color: var(--ink);
   }
 
   .back-link {
-    margin-top: 2rem;
+    margin-top: var(--s8);
   }
 </style>

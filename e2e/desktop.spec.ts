@@ -17,7 +17,9 @@ test("keyboard users can move, close and reopen a window", async ({ page }) => {
   await gotoReady(page, "/?view=desktop");
   const panel = page.getByRole("region", { name: "About me", exact: true });
   const title = panel.getByRole("button", { name: "About me", exact: true });
-  const launcher = page.getByRole("button", { name: "About me", exact: true });
+  const launcher = page
+    .getByRole("navigation", { name: "Desktop" })
+    .getByRole("button", { name: "About me", exact: true });
   await title.focus();
   await expect(panel).toHaveClass(/is-active/);
   await title.press("ArrowRight");
@@ -41,7 +43,7 @@ test("Escape inside window content leaves the window open", async ({
 }) => {
   await gotoReady(page, "/blog");
   const reader = page.locator("#window-reader");
-  const search = reader.locator(".pagefind-ui__search-input");
+  const search = reader.getByRole("combobox", { name: "Search" });
   await search.fill("empires");
   await search.press("Escape");
   await expect(reader).toBeVisible();
@@ -63,9 +65,9 @@ test("actions provide click movement, clamp to workspace bounds and dismiss befo
   await left.click();
   await expect(panel).toHaveAttribute("data-x", "0");
   await up.click();
-  await expect(panel).toHaveAttribute("data-y", "-10");
+  await expect(panel).toHaveAttribute("data-y", "-8");
   await up.click();
-  await expect(panel).toHaveAttribute("data-y", "-10");
+  await expect(panel).toHaveAttribute("data-y", "-8");
   await right.click();
   await expect(panel).toHaveAttribute("data-x", "16");
   await right.press("Escape");
@@ -73,7 +75,10 @@ test("actions provide click movement, clamp to workspace bounds and dismiss befo
   await expect(panel).toBeVisible();
 
   const writing = page.locator("#window-writing");
-  await page.getByRole("button", { name: "Writing", exact: true }).click();
+  await page
+    .getByRole("navigation", { name: "Desktop" })
+    .getByRole("button", { name: "Writing", exact: true })
+    .click();
   await writing.locator("summary").click();
   await writing
     .getByRole("button", { name: "Move right", exact: true })
@@ -121,7 +126,7 @@ test("desktop cascades windows, keeps icons clear and reveals focused content ab
             (item) =>
               item.left >= workspace.left &&
               item.right <= workspace.right &&
-              item.bottom + 7 <= footer.top
+              item.bottom + 8 <= footer.top
           ),
           verticalCascade: windows.every(
             (item, index) => index === 0 || item.top > windows[index - 1].top
@@ -144,7 +149,10 @@ test("desktop cascades windows, keeps icons clear and reveals focused content ab
       targetsAtLeast28px: true,
     });
 
-  await page.getByRole("button", { name: "Personal", exact: true }).click();
+  await page
+    .getByRole("navigation", { name: "Desktop" })
+    .getByRole("button", { name: "Personal", exact: true })
+    .click();
   await expect(
     page.getByRole("region", { name: "Personal", exact: true })
   ).toHaveClass(/is-active/);
@@ -227,7 +235,7 @@ test("intermediate desktop width keeps windows inside the workspace", async ({
             return (
               bounds.left >= workspace.left &&
               bounds.right <= innerWidth &&
-              bounds.bottom + 7 <= footer.top
+              bounds.bottom + 8 <= footer.top
             );
           })
         );
@@ -300,7 +308,7 @@ test("phone windows stack without overflow and allow title-bar scrolling", async
           overflow: document.documentElement.scrollWidth > innerWidth,
           stacked: panels.every(
             (item, index) =>
-              index === 0 || item.top >= panels[index - 1].bottom + 7
+              index === 0 || item.top >= panels[index - 1].bottom + 8
           ),
           touch: getComputedStyle(document.querySelector(".window-bar")!)
             .touchAction,
@@ -342,7 +350,7 @@ test("blog post reader window aligns rail beside article on desktop and stacks o
           rail.left >= reader.left &&
           rail.right <= body.left &&
           body.right <= reader.right &&
-          reader.bottom + 7 <= footer.top
+          reader.bottom + 8 <= footer.top
         );
       })
     )
@@ -423,7 +431,7 @@ test("dark system preference switches the palette and print stays light", async 
   await page.emulateMedia({ colorScheme: "dark" });
   await expect.poll(surfaces).toEqual({
     scheme: "light dark",
-    paper: "rgb(41, 39, 35)",
+    paper: "rgb(34, 32, 28)",
     ink: "rgb(236, 230, 216)",
   });
 

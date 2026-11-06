@@ -15,10 +15,10 @@ body .os-menubar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  min-height: 46px;
+  gap: var(--s4);
+  min-height: 48px;
   margin: 0;
-  padding: 0.25rem 1.25rem;
+  padding: var(--s1) var(--s5);
   border-bottom: 2px solid var(--ink);
   background: var(--paper);
 }
@@ -26,22 +26,31 @@ body .os-menubar {
 .os-brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  font-family: var(--font-sans);
+  gap: var(--s3);
+  font-family: var(--font-display);
   font-size: 1.9rem;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .os-brand-mark {
-  width: 13px;
-  height: 13px;
-  background: var(--signal);
+  display: block;
+  width: 16px;
+  height: 16px;
+  shape-rendering: crispEdges;
+}
+
+.os-brand-mark .mark-ground {
+  fill: var(--signal);
+}
+
+.os-brand-mark .mark-letter {
+  fill: var(--paper);
 }
 
 body .os-menu {
   display: flex;
-  gap: 1.25rem;
+  gap: var(--s5);
   align-items: center;
 }
 
@@ -53,7 +62,7 @@ body .os-menu a {
   letter-spacing: 0;
   color: var(--ink);
   text-decoration: none;
-  padding: 0.25rem;
+  padding: var(--s1);
 }
 
 body .os-menu [data-view-toggle] {
@@ -64,8 +73,8 @@ body .os-menu [data-view-toggle] {
 .os-desktop {
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
-  gap: 28px;
-  padding: 32px 40px 24px 24px;
+  gap: var(--s8);
+  padding: var(--s8) var(--s10) var(--s6) var(--s6);
   min-height: calc(100svh - 120px);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath fill='%23302e29' fill-opacity='.13' d='M0 0h1v1H0z'/%3E%3C/svg%3E");
 }
@@ -74,7 +83,7 @@ body .os-menu [data-view-toggle] {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 22px;
+  gap: var(--s6);
 }
 
 .desktop-icon {
@@ -82,9 +91,9 @@ body .os-menu [data-view-toggle] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-height: 74px;
-  padding: 4px;
+  gap: var(--s2);
+  min-height: 76px;
+  padding: var(--s1);
   border: 0;
   background: none;
   color: var(--ink);
@@ -95,16 +104,14 @@ body .os-menu [data-view-toggle] {
 }
 
 .desktop-icon svg {
-  width: 42px;
-  height: 42px;
-  fill: var(--paper);
-  stroke: var(--ink);
-  stroke-width: 2px;
+  width: 48px;
+  height: 48px;
+  shape-rendering: crispEdges;
 }
 
 .desktop-icon span {
   background: var(--desktop);
-  padding: 1px 4px;
+  padding: 0 var(--s1);
 }
 
 .desktop-workspace {
@@ -122,9 +129,9 @@ body .os-menu [data-view-toggle] {
   width: min(540px, 68%);
   border: 2px solid var(--ink);
   background: var(--paper);
-  box-shadow: 7px 7px 0 var(--shadow);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow);
   transition: transform 120ms linear;
-  scroll-margin-top: 1rem;
+  scroll-margin-top: var(--s4);
 }
 
 .os-window[hidden] {
@@ -132,42 +139,42 @@ body .os-menu [data-view-toggle] {
 }
 
 .window-welcome {
-  top: 10px;
+  top: var(--s2);
   left: 0;
   z-index: 4;
 }
 
 .window-writing {
-  top: 170px;
+  top: calc(var(--u) * 42);
   right: 0;
   z-index: 3;
 }
 
 .window-projects {
-  top: 485px;
-  left: 2%;
+  top: calc(var(--u) * 120);
+  left: var(--s6);
   z-index: 2;
 }
 
 .window-personal {
-  top: 680px;
-  right: 2%;
+  top: calc(var(--u) * 170);
+  right: var(--s6);
   z-index: 3;
 }
 
 .window-reader {
   position: relative;
   width: min(860px, 100%);
-  margin: 10px auto 36px;
+  margin: var(--s2) auto var(--s10);
 }
 
 .window-bar {
   display: grid;
   grid-template-columns: 28px minmax(0, 1fr) 28px;
   align-items: center;
-  gap: 8px;
+  gap: var(--s2);
   min-height: 36px;
-  padding: 0 8px;
+  padding: 0 var(--s2);
   border-bottom: 2px solid var(--ink);
   cursor: grab;
   touch-action: none;
@@ -177,11 +184,11 @@ body .os-menu [data-view-toggle] {
 .window-title {
   justify-self: center;
   max-width: 100%;
-  padding: 0 10px;
+  padding: 0 var(--s3);
   border: 0;
   background: var(--paper);
   color: var(--ink);
-  font: 400 1.65rem / 1.1 var(--font-sans);
+  font: 400 1.75rem / 1.1 var(--font-display);
   letter-spacing: 0;
   overflow-wrap: anywhere;
   cursor: grab;
@@ -197,6 +204,18 @@ body .os-menu [data-view-toggle] {
   background: var(--paper);
   color: var(--ink);
   cursor: pointer;
+}
+
+.is-active .window-bar {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%2317635d' d='M0 .5h2'/%3E%3C/svg%3E");
+}
+
+.window-info {
+  margin: 0;
+  padding: var(--s1) var(--s3);
+  border-bottom: 2px solid var(--ink);
+  font: 400 0.75rem / 1.5 var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .is-active .window-close {
@@ -226,10 +245,10 @@ body .os-menu [data-view-toggle] {
 .move-controls {
   position: absolute;
   right: 0;
-  top: 30px;
+  top: 32px;
   display: flex;
-  gap: 4px;
-  padding: 6px;
+  gap: var(--s1);
+  padding: var(--s2);
   border: 2px solid var(--ink);
   background: var(--paper);
   z-index: 1;
@@ -247,19 +266,19 @@ body .os-menu [data-view-toggle] {
 }
 
 .window-content {
-  padding: 24px 28px 28px;
+  padding: var(--s6) var(--s8) var(--s8);
   overflow-wrap: anywhere;
 }
 
 .window-content h1,
 .window-content .page-title {
-  font: 400 3.25rem / 0.95 var(--font-sans);
+  font: 400 3.25rem / 0.95 var(--font-display);
   letter-spacing: 0;
 }
 
 .window-content h2 {
-  margin: 1.5rem 0 0.6rem;
-  font: 400 2rem / 1 var(--font-sans);
+  margin: var(--s6) 0 var(--s2);
+  font: 400 2rem / 1 var(--font-display);
 }
 
 .window-content h3,
@@ -278,6 +297,13 @@ body .os-menu [data-view-toggle] {
   line-height: 1.7;
 }
 
+.window-content article.post-body p,
+.window-content article.post-body li {
+  max-width: 66ch;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
 .window-content p:last-child {
   margin-bottom: 0;
 }
@@ -288,23 +314,23 @@ body .os-menu [data-view-toggle] {
 }
 
 .desktop-intro h1 {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--s4);
 }
 
 .desktop-posts {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--s4);
 }
 
 .desktop-posts li {
-  padding: 0.65rem 0;
+  padding: var(--s3) 0;
   margin: 0;
   border-bottom: 1px solid var(--ink);
 }
 
 .desktop-posts time {
   display: block;
-  margin-top: 0.25rem;
-  font-size: 0.625rem;
+  margin-top: var(--s1);
+  font-size: 0.75rem;
   letter-spacing: var(--letter-spacing-meta);
 }
 
@@ -312,17 +338,17 @@ body .os-footer {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--s3);
   margin: 0;
-  padding: 12px 24px;
+  padding: var(--s3) var(--s6);
   border-top: 2px solid var(--ink);
   background: var(--paper);
-  font: 400 0.6875rem / 1.5 var(--font-mono);
+  font: 400 0.75rem / 1.5 var(--font-mono);
 }
 
 .os-footer nav {
   display: flex;
-  gap: 1rem;
+  gap: var(--s4);
 }
 
 body a:hover,
@@ -366,7 +392,7 @@ html[data-view="plain"] {
   max-width: 760px;
   min-height: auto;
   margin: auto;
-  padding: 32px 24px;
+  padding: var(--s8) var(--s6);
   background: none;
 }
 
@@ -383,7 +409,7 @@ html[data-view="plain"] {
   display: block;
   position: static;
   width: auto;
-  margin: 0 0 2rem;
+  margin: 0 0 var(--s8);
   border: 0;
   box-shadow: none;
   transform: none !important;
@@ -394,7 +420,7 @@ html[data-view="plain"] {
 }
 
 [data-view="plain"] .window-content h2 {
-  padding-top: 1rem;
+  padding-top: var(--s4);
   border-top: 1px solid var(--ink);
 }
 
@@ -402,7 +428,7 @@ html[data-view="plain"] {
   position: static;
   width: auto;
   height: auto;
-  margin: 1.5rem 0 0.6rem;
+  margin: var(--s6) 0 var(--s2);
   clip-path: none;
   white-space: normal;
 }
@@ -423,12 +449,12 @@ body .email-copy:hover {
   display: inline-flex;
   align-items: center;
   min-height: 24px;
-  margin-left: 0.4rem;
-  padding: 0 0.45rem;
+  margin-left: var(--s2);
+  padding: 0 var(--s2);
   border: 1px solid var(--ink);
   background: var(--paper);
   color: var(--ink);
-  font: 600 0.6875rem / 1 var(--font-mono);
+  font: 600 0.75rem / 1 var(--font-mono);
   letter-spacing: var(--letter-spacing-meta);
   text-transform: uppercase;
   vertical-align: baseline;
@@ -446,6 +472,10 @@ body .email-copy:hover {
 
   .window-bar {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%23ece6d8' stroke-opacity='.45' d='M0 .5h2'/%3E%3C/svg%3E");
+  }
+
+  .is-active .window-bar {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%237cc4b8' d='M0 .5h2'/%3E%3C/svg%3E");
   }
 }
 
@@ -466,11 +496,11 @@ body .email-copy:hover {
   }
 
   .window-projects {
-    top: 650px;
+    top: calc(var(--u) * 162);
   }
 
   .window-personal {
-    top: 850px;
+    top: calc(var(--u) * 212);
   }
 
   .window-reader {
@@ -480,13 +510,13 @@ body .email-copy:hover {
 
 @media (max-width: 760px) {
   body .os-menubar {
-    padding: 6px 12px;
+    padding: var(--s2) var(--s3);
     flex-wrap: wrap;
-    gap: 4px 12px;
+    gap: var(--s1) var(--s3);
   }
 
   body .os-menu {
-    gap: 8px;
+    gap: var(--s2);
     flex-wrap: wrap;
   }
 
@@ -500,26 +530,26 @@ body .email-copy:hover {
 
   .os-desktop {
     display: block;
-    padding: 20px 16px 24px;
+    padding: var(--s5) var(--s4) var(--s6);
     min-height: auto;
   }
 
   .desktop-icons {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 4px;
-    margin-bottom: 12px;
+    gap: var(--s1);
+    margin-bottom: var(--s3);
   }
 
   .desktop-icon {
-    min-height: 62px;
-    gap: 4px;
+    min-height: 64px;
+    gap: var(--s1);
     padding: 2px;
   }
 
   .desktop-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 
   .desktop-workspace {
@@ -532,35 +562,29 @@ body .email-copy:hover {
     left: auto;
     right: auto;
     width: auto;
-    margin: 0 7px 28px 0;
+    margin: 0 var(--shadow-offset) var(--s8) 0;
     transform: none !important;
   }
 
   .window-content {
-    padding: 20px;
-  }
-
-  .window-title {
-    font-size: 1.5rem;
+    padding: var(--s5);
   }
 
   .window-bar {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    min-height: 52px;
     touch-action: auto;
     cursor: default;
   }
 
   .window-title {
+    font-size: 1.5rem;
     cursor: default;
   }
 
   .window-close {
     width: 44px;
     height: 44px;
-  }
-
-  .window-bar {
-    grid-template-columns: 44px minmax(0, 1fr) 44px;
-    min-height: 52px;
   }
 
   .window-content h1,

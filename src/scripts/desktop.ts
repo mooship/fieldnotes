@@ -99,12 +99,12 @@ function initialiseDesktop() {
     const minDx = Math.min(0, -left);
     const maxDx = Math.max(
       0,
-      workspace.clientWidth - left - window.offsetWidth - 7
+      workspace.clientWidth - left - window.offsetWidth - 8
     );
     const minDy = Math.min(0, -top);
     const maxDy = Math.max(
       0,
-      workspace.clientHeight - top - window.offsetHeight - 7
+      workspace.clientHeight - top - window.offsetHeight - 8
     );
     const nextX = currentX + Math.max(minDx, Math.min(dx, maxDx));
     const nextY = currentY + Math.max(minDy, Math.min(dy, maxDy));
