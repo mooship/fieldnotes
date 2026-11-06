@@ -1,5 +1,5 @@
 ---
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, X } from "@lucide/astro";
+import Icon from "./Icon.astro";
 
 interface Properties {
   id: string;
@@ -33,7 +33,7 @@ const {
       aria-label={`Close ${title}`}
       title={`Close ${title}`}
     >
-      <X size={14} stroke-width={2} aria-hidden="true" />
+      <Icon name="close" />
     </button>
     <button
       type="button"
@@ -58,7 +58,7 @@ const {
           aria-label="Move left"
           title="Move left"
         >
-          <ArrowLeft size={16} aria-hidden="true" />
+          <Icon name="arrow-left" />
         </button>
         <button
           type="button"
@@ -66,7 +66,7 @@ const {
           aria-label="Move up"
           title="Move up"
         >
-          <ArrowUp size={16} aria-hidden="true" />
+          <Icon name="arrow-up" />
         </button>
         <button
           type="button"
@@ -74,7 +74,7 @@ const {
           aria-label="Move down"
           title="Move down"
         >
-          <ArrowDown size={16} aria-hidden="true" />
+          <Icon name="arrow-down" />
         </button>
         <button
           type="button"
@@ -82,7 +82,7 @@ const {
           aria-label="Move right"
           title="Move right"
         >
-          <ArrowRight size={16} aria-hidden="true" />
+          <Icon name="arrow-right" />
         </button>
       </div>
     </details>

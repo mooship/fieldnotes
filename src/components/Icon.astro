@@ -1,0 +1,210 @@
+---
+/*
+Hand-drawn one-bit icons. Each glyph is a pixel grid: X is ink, o is
+paper, a dot is transparent. Desktop icons sit on a 16px grid and the
+small controls on an 8px grid, so every size used on the site is a whole
+multiple and the edges stay sharp.
+*/
+
+const leftArrow = [
+  "........",
+  "..X.....",
+  ".XX.....",
+  "XXXXXXXX",
+  "XXXXXXXX",
+  ".XX.....",
+  "..X.....",
+  "........",
+];
+
+const rightArrow = leftArrow.map((row) => [...row].toReversed().join(""));
+const upArrow = [...leftArrow[0]].map((_, x) =>
+  leftArrow.map((row) => row[x]).join("")
+);
+
+const glyphs = {
+  house: [
+    "................",
+    ".......XX.......",
+    "......XooX......",
+    ".....XooooX.....",
+    "....XooooooX....",
+    "...XooooooooX...",
+    "..XooooooooooX..",
+    ".XXXXXXXXXXXXXX.",
+    "..XooooooooooX..",
+    "..XoXXXooXXXoX..",
+    "..XoXoXooXoXoX..",
+    "..XoXoXooXXXoX..",
+    "..XoXoXooooooX..",
+    "..XoXoXooooooX..",
+    "..XXXXXXXXXXXX..",
+    "................",
+  ],
+  folder: [
+    "................",
+    "................",
+    ".XXXXX..........",
+    "XoooooXXXXXXXXX.",
+    "XoooooooooooooX.",
+    "XXXXXXXXXXXXXXX.",
+    "XoooooooooooooX.",
+    "XoooooooooooooX.",
+    "XoooooooooooooX.",
+    "XoooooooooooooX.",
+    "XoooooooooooooX.",
+    "XoooooooooooooX.",
+    "XoooooooooooooX.",
+    "XXXXXXXXXXXXXXX.",
+    "................",
+    "................",
+  ],
+  document: [
+    "................",
+    "..XXXXXXXX......",
+    "..XooooooXX.....",
+    "..XooooooXoX....",
+    "..XooooooXXXX...",
+    "..XoooooooooX...",
+    "..XoXXXXXXXoX...",
+    "..XoooooooooX...",
+    "..XoXXXXXXXoX...",
+    "..XoooooooooX...",
+    "..XoXXXXXoooX...",
+    "..XoooooooooX...",
+    "..XoXXXXXXXoX...",
+    "..XoooooooooX...",
+    "..XXXXXXXXXXX...",
+    "................",
+  ],
+  briefcase: [
+    "................",
+    "................",
+    "................",
+    ".....XXXXXX.....",
+    ".....X....X.....",
+    ".XXXXXXXXXXXXXX.",
+    ".XooooooooooooX.",
+    ".XooooooooooooX.",
+    ".XooooooooooooX.",
+    ".XXXXXXXXXXXXXX.",
+    ".XoooooXXoooooX.",
+    ".XooooooooooooX.",
+    ".XooooooooooooX.",
+    ".XXXXXXXXXXXXXX.",
+    "................",
+    "................",
+  ],
+  monitor: [
+    "................",
+    ".XXXXXXXXXXXXXX.",
+    ".XooooooooooooX.",
+    ".XoXXXXXXXXXXoX.",
+    ".XoXooooooooXoX.",
+    ".XoXoXooooooXoX.",
+    ".XoXooXoooooXoX.",
+    ".XoXoXoXXXooXoX.",
+    ".XoXooooooooXoX.",
+    ".XoXXXXXXXXXXoX.",
+    ".XooooooooooooX.",
+    ".XXXXXXXXXXXXXX.",
+    "......XXXX......",
+    "......XooX......",
+    "...XXXXXXXXXX...",
+    "................",
+  ],
+  books: [
+    "................",
+    "................",
+    ".XXX.XXXX.......",
+    ".XoX.XooX.XXX...",
+    ".XXX.XooX.XoX...",
+    ".XoX.XXXX.XoX...",
+    ".XoX.XooX.XXX...",
+    ".XoX.XooX.XoX...",
+    ".XoX.XooX.XoX...",
+    ".XoX.XooX.XoX...",
+    ".XXX.XXXX.XXX...",
+    ".XoX.XooX.XoX...",
+    ".XXX.XXXX.XXX...",
+    "XXXXXXXXXXXXXXXX",
+    "................",
+    "................",
+  ],
+  close: [
+    "X......X",
+    ".X....X.",
+    "..X..X..",
+    "...XX...",
+    "...XX...",
+    "..X..X..",
+    ".X....X.",
+    "X......X",
+  ],
+  "arrow-left": leftArrow,
+  "arrow-right": rightArrow,
+  "arrow-up": upArrow,
+  "arrow-down": upArrow.toReversed(),
+} satisfies Record<string, string[]>;
+
+export type IconName = keyof typeof glyphs;
+
+interface Properties {
+  name: IconName;
+  size?: number;
+}
+
+const { name, size = 16 } = Astro.props as Properties;
+const rows = glyphs[name];
+const grid = rows.length;
+
+function trace(mark: string) {
+  let path = "";
+  for (const [y, row] of rows.entries()) {
+    let x = 0;
+    while (x < grid) {
+      if (row[x] === mark) {
+        const start = x;
+        while (row[x] === mark) {
+          x += 1;
+        }
+        path += `M${start} ${y}h${x - start}v1h${start - x}z`;
+      } else {
+        x += 1;
+      }
+    }
+  }
+  return path;
+}
+
+const paper = trace("o");
+const ink = trace("X");
+---
+
+<svg
+  class="icon"
+  viewBox={`0 0 ${grid} ${grid}`}
+  width={size}
+  height={size}
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+  focusable="false"
+>
+  {paper && <path class="icon-paper" d={paper} />}
+  <path class="icon-ink" d={ink} />
+</svg>
+
+<style>
+  .icon {
+    display: block;
+    flex: none;
+  }
+
+  .icon-paper {
+    fill: var(--paper);
+  }
+
+  .icon-ink {
+    fill: currentColor;
+  }
+</style>
