@@ -178,7 +178,7 @@ body .os-menu [data-view-toggle] {
   border-bottom: 2px solid var(--ink);
   cursor: grab;
   touch-action: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%23302e29' d='M0 .5h2'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%23302e29' stroke-opacity='.4' d='M0 .5h2'/%3E%3C/svg%3E");
 }
 
 .window-title {
@@ -471,7 +471,7 @@ body .email-copy:hover {
   }
 
   .window-bar {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%23ece6d8' stroke-opacity='.45' d='M0 .5h2'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='4'%3E%3Cpath stroke='%23ece6d8' stroke-opacity='.3' d='M0 .5h2'/%3E%3C/svg%3E");
   }
 
   .is-active .window-bar {
