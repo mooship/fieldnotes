@@ -3,14 +3,12 @@ import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import satori from "satori";
 import sharp from "sharp";
-import { getBlogPosts, getPostSlug, getSiteUrl } from "../../lib/blog";
+import { getBlogPosts, getPostSlug } from "../../lib/blog";
 
 const require = createRequire(import.meta.url);
 
 const PAPER = "#f5f1e8";
 const INK = "#302e29";
-const INK_SOFT = INK;
-const RULE = INK;
 const SIGNAL = "#17635d";
 
 type OgFonts = { display: Buffer; regular: Buffer; bold: Buffer };
@@ -56,9 +54,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 Renders a post's Open Graph image at build time: lays out the card as an SVG
 with satori, then rasterizes it to PNG with sharp.
 */
-export const GET: APIRoute = async ({ props, site }) => {
+export const GET: APIRoute = async ({ props }) => {
   const { title } = props as { title: string };
-  const hostname = new URL(getSiteUrl(site)).hostname;
   const { display, regular, bold } = await loadFonts();
 
   const svg = await satori(
@@ -141,38 +138,6 @@ export const GET: APIRoute = async ({ props, site }) => {
                       height: "8px",
                       backgroundColor: SIGNAL,
                       marginTop: "34px",
-                    },
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "div",
-            props: {
-              style: {
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: "18px",
-                fontWeight: 700,
-                color: INK_SOFT,
-                letterSpacing: "0.1em",
-                borderTop: `1px solid ${RULE}`,
-                paddingTop: "24px",
-              },
-              children: [
-                {
-                  type: "div",
-                  props: { children: hostname.toUpperCase() },
-                },
-                {
-                  type: "div",
-                  props: {
-                    style: {
-                      width: "14px",
-                      height: "14px",
-                      backgroundColor: SIGNAL,
                     },
                   },
                 },
