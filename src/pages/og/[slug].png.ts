@@ -13,27 +13,29 @@ const INK_SOFT = INK;
 const RULE = INK;
 const SIGNAL = "#17635d";
 
+type OgFonts = { display: Buffer; regular: Buffer; bold: Buffer };
+
 const fonts = {
-  promise: undefined as Promise<{ regular: Buffer; bold: Buffer }> | undefined,
+  promise: undefined as Promise<OgFonts> | undefined,
 };
 
 /**
-Reads the Geist font files needed by satori, caching the read as a
-module-level promise so each font is only loaded from disk once no matter
-how many OG images are generated during the build.
+Reads the VT323 and IBM Plex Mono files satori needs (the same faces as the
+site), caching the read as a module-level promise so each font is only loaded
+from disk once no matter how many OG images are generated during the build.
 */
-async function loadFonts(): Promise<{ regular: Buffer; bold: Buffer }> {
+async function loadFonts(): Promise<OgFonts> {
   if (!fonts.promise) {
-    const regularPath =
-      require.resolve("@fontsource/geist/files/geist-latin-400-normal.woff");
-    const boldPath =
-      require.resolve("@fontsource/geist/files/geist-latin-700-normal.woff");
+    const paths = [
+      require.resolve("@fontsource/vt323/files/vt323-latin-400-normal.woff"),
+      require.resolve("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff"),
+      require.resolve("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff"),
+    ];
     fonts.promise = (async () => {
-      const [regular, bold] = await Promise.all([
-        readFile(regularPath),
-        readFile(boldPath),
-      ]);
-      return { regular, bold };
+      const [display, regular, bold] = await Promise.all(
+        paths.map((p) => readFile(p))
+      );
+      return { display, regular, bold };
     })();
   }
   return fonts.promise;
@@ -51,13 +53,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 /**
-Renders a post's Open Graph image at build time: lays out the Swiss-style
-card as an SVG with satori, then rasterizes it to PNG with sharp.
+Renders a post's Open Graph image at build time: lays out the card as an SVG
+with satori, then rasterizes it to PNG with sharp.
 */
 export const GET: APIRoute = async ({ props, site }) => {
   const { title } = props as { title: string };
   const hostname = new URL(getSiteUrl(site)).hostname;
-  const { regular, bold } = await loadFonts();
+  const { display, regular, bold } = await loadFonts();
 
   const svg = await satori(
     {
@@ -71,7 +73,7 @@ export const GET: APIRoute = async ({ props, site }) => {
           justifyContent: "space-between",
           backgroundColor: PAPER,
           padding: "80px 90px",
-          fontFamily: "Geist",
+          fontFamily: "IBM Plex Mono",
         },
         children: [
           {
@@ -121,11 +123,11 @@ export const GET: APIRoute = async ({ props, site }) => {
                   type: "div",
                   props: {
                     style: {
-                      fontSize: "76px",
-                      fontWeight: 700,
+                      fontFamily: "VT323",
+                      fontSize: "96px",
+                      fontWeight: 400,
                       lineHeight: 1,
                       color: INK,
-                      letterSpacing: "-0.035em",
                       maxWidth: "100%",
                     },
                     children: title,
@@ -185,13 +187,19 @@ export const GET: APIRoute = async ({ props, site }) => {
       height: 630,
       fonts: [
         {
-          name: "Geist",
+          name: "VT323",
+          data: display,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "IBM Plex Mono",
           data: regular,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Geist",
+          name: "IBM Plex Mono",
           data: bold,
           weight: 700,
           style: "normal",
