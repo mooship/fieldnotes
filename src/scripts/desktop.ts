@@ -157,10 +157,13 @@ function initialiseDesktop() {
       },
       { signal }
     );
-    window.addEventListener(
+    window.querySelector(".window-bar")?.addEventListener(
       "keydown",
       (event) => {
-        if (event.defaultPrevented || event.key !== "Escape") {
+        if (
+          event.defaultPrevented ||
+          (event as KeyboardEvent).key !== "Escape"
+        ) {
           return;
         }
         event.preventDefault();
