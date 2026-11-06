@@ -1,156 +1,96 @@
 # Timothy Brits
 
-Personal site and blog presented as a restrained retro desktop, built with Astro, TypeScript 6 and CSS. Real content lives in draggable, focusable windows, with a visible **Skip the OS** link to conventional reading. Includes tags, full-text search, feeds and generated share images. Repository and Cloudflare resources retain the `fieldnotes` name.
+My personal site and blog, set out as a quiet retro desktop. It's built with Astro, TypeScript 6 and plain CSS. Content sits in windows you can drag and focus, and a visible **Skip the OS** link switches to ordinary reading. There are tags, full-text search, three feeds and generated share images. The repository and the Cloudflare resources still use the old `fieldnotes` name.
 
-## Quick Start
+## Running it
 
-Prerequisite: Node 22+ and npm.
+You need Node 22 or later and npm.
 
 ```sh
-git clone <your-fork-url> fieldnotes
+git clone https://github.com/mooship/fieldnotes.git
 cd fieldnotes
 npm install
 npm run dev
 ```
 
-Dev server runs at: http://localhost:4321
+The dev server runs at http://localhost:4321.
 
-## Common Scripts
+## Scripts
 
-| Script                  | Purpose                                                                   |
-| ----------------------- | ------------------------------------------------------------------------- |
-| `npm run dev`           | Start local development server                                            |
-| `npm run build`         | Type check then production build                                          |
-| `npm run lint`          | Lint and auto-fix all file types                                          |
-| `npm run lint:check`    | Same lint, no auto-fix — what CI runs                                     |
-| `npm run preview`       | Build, then run it locally with `wrangler dev` (real Cloudflare bindings) |
-| `npm run deploy`        | Build, then `wrangler deploy` to Cloudflare Workers                       |
-| `npm run format`        | Prettier + import sorting                                                 |
-| `npm test`              | Run Vitest unit tests                                                     |
-| `npm run test:coverage` | Verify 100% coverage in `src/lib`                                         |
-| `npm run test:e2e`      | Browser regressions and axe scans against the built Worker                |
-| `npm run lighthouse`    | Run Lighthouse CI against the built site                                  |
+| Script                  | What it does                                                        |
+| ----------------------- | ------------------------------------------------------------------- |
+| `npm run dev`           | Local dev server                                                    |
+| `npm run build`         | Type check, then production build                                   |
+| `npm run lint`          | Lint and auto-fix every file type                                   |
+| `npm run lint:check`    | The same lint without auto-fix (what CI runs)                       |
+| `npm run preview`       | Build, then run it with `wrangler dev` and real Cloudflare bindings |
+| `npm run deploy`        | Build, then `wrangler deploy` to Cloudflare Workers                 |
+| `npm run format`        | Prettier and import sorting                                         |
+| `npm test`              | Vitest unit tests                                                   |
+| `npm run test:coverage` | Check 100% coverage in `src/lib`                                    |
+| `npm run test:e2e`      | Browser regressions and axe scans against the built Worker          |
+| `npm run lighthouse`    | Lighthouse CI against the built site                                |
 
-## Structure (essentials)
+## Layout of the repo
 
 ```text
 src/
-  pages/
-    index.astro          # Four windows, section markdown and recent posts
-    now.astro            # /now page
-    work.astro           # Professional experience, skills and education
-    uses.astro           # /uses page
-    colophon.astro       # /colophon page
-    404.astro
-    robots.txt.ts
-    llms.txt.ts
-    rss.xml.ts
-    atom.xml.ts
-    feed.json.ts
-    api/
-      guestbook.ts        # On-demand route (D1 + Rate Limiting binding) for the /1999 guestbook
-    blog/
-      index.astro        # Blog index (includes pagefind search)
-      [slug].astro       # Blog post page
-      tags/
-        index.astro      # All tags
-        [tag].astro      # Posts for a tag
-    og/
-      [slug].png.ts      # OG image generation (satori + sharp)
-  sections/
-    intro.md             # Home page: introduction
-    personal.md          # Home page: personal links
-    opensource.md        # Home page: open source
-    support.md           # Home page: support
-    now.md               # /now page content
-    work.md              # Condensed CV for /work
-    uses.md              # /uses page content
-    colophon.md          # /colophon page content
-  components/
-    PostListItem.astro   # Single post row in blog listings
-    DesktopWindow.astro # Semantic window and close/move controls
-    TagList.astro        # Blog tags
-  content/
-    blog/                # Blog posts (.md)
-  layouts/
-    Layout.astro         # Desktop shell and reading pages
-    Layout1999.astro     # Separate /1999 experiment
-  scripts/
-    desktop.ts           # Interaction, view preference and workspace sizing
-  lib/
-    blog.ts              # Blog helpers (fetch, sort, slug, constants)
-    blog.test.ts
-    feed.ts              # Shared feed item builder (used by rss/atom/json endpoints)
-    feed.test.ts
-    markdown-config.ts   # Shared remark/rehype plugin options
-    xml.ts               # XML character escaping (atom feed)
-    xml.test.ts
-    guestbook.ts          # Guestbook input validation (normalizeGuestbookInput)
-    guestbook.test.ts
-    guestbook-database.ts        # D1 queries for the guestbook (structurally typed, testable with a fake)
-    guestbook-database.test.ts
-  __mocks__/
-    astro-content.ts     # Vitest stub for astro:content virtual module
-  styles/
-    tokens.css           # CSS custom properties
-    base.css             # Resets and base element styles
-    typography.css       # Type scale
-    code.css             # Code block styles
-    print.css            # @media print rules
-    desktop.css          # Shell, windows, plain view and phone reflow
-public/                  # Static assets (images, favicons, etc.)
-e2e/                     # Playwright seed and desktop accessibility/UX regressions
+  pages/            Routes: home, /now, /work, /uses, /colophon, 404, feeds,
+                    robots.txt, llms.txt, the blog and tags, OG images,
+                    the /1999 experiment and its guestbook API
+  sections/         Markdown for the home windows and the standalone pages
+  content/blog/     Blog posts
+  components/       DesktopWindow, Icon, PostListItem, TagList
+  layouts/          Layout.astro (desktop and reading pages), Layout1999.astro
+  scripts/          desktop.ts (windows, view preference, sizing), email.ts
+  lib/              Blog, feed, XML, guestbook, email, Turnstile and easter-egg
+                    helpers, each with a test file
+  styles/           tokens, base, typography, code, print, desktop
+  __mocks__/        Vitest stub for astro:content
+public/             Favicons, _headers and other static files
+e2e/                Playwright seed and desktop accessibility checks
 ```
 
-## Customising Content
+## Editing content
 
-1. Edit home sections in `src/sections/`: About me uses `intro.md`, Projects combines `opensource.md` and `support.md`, Personal uses `personal.md`. Writing lists four latest posts from the collection. `src/pages/index.astro` owns the mapping.
-2. Edit `/now`, `/work`, `/uses`, and `/colophon` content in their matching markdown files in `src/sections/`. The Work page is a condensed CV, not a separate source of employment details to keep in sync.
-3. Add blog posts in `src/content/blog/` — frontmatter supports `title`, `description`, `pubDate`, `updatedDate`, `draft`, and `tags` (array). `draft: true` excludes a post from the blog index, all three feeds, the sitemap, and `llms.txt`.
-4. Run `npm run lint`, `npm test`, and `npm run build` before pushing changes.
+1. Home windows come from `src/sections/`. About me is `intro.md`, Projects combines `opensource.md` and `support.md`, and Personal is `personal.md`. Writing lists the four latest posts. `src/pages/index.astro` maps sections to windows.
+2. `/now`, `/work`, `/uses` and `/colophon` read the markdown file of the same name in `src/sections/`. The Work page is a short CV, not a second record of employment details.
+3. Posts go in `src/content/blog/`. Frontmatter takes `title`, `description`, `pubDate`, `updatedDate`, `draft` and `tags` (an array). `draft: true` keeps a post out of the blog index, all three feeds, the sitemap and `llms.txt`.
+4. Run `npm run lint`, `npm test` and `npm run build` before pushing.
 
-### Styling Tweaks
+### Styles
 
-Small changes: adjust CSS variables in `src/styles/tokens.css` or element rules in `src/styles/base.css`.
+Colours and spacing are custom properties in `src/styles/tokens.css`; element rules live in `src/styles/base.css`. The shell is `src/layouts/Layout.astro`, window controls are `src/components/DesktopWindow.astro`, geometry is `src/styles/desktop.css` and behaviour is `src/scripts/desktop.ts`.
 
-Layout changes: shell in `src/layouts/Layout.astro`, reusable controls in `src/components/DesktopWindow.astro`, geometry in `src/styles/desktop.css`, interaction in `src/scripts/desktop.ts`.
+The palette is called Oat and Petrol and has four colours. Light: desktop `#c5bfb1`, paper `#f5f1e8`, ink `#302e29`, petrol `#17635d`. Dark follows the system `prefers-color-scheme` setting: desktop `#3a3731`, paper `#22201c`, ink `#ece6d8`, petrol `#7cc4b8`, with a `#0e0d0b` hard shadow. There's no manual toggle, and print is always black on white. Corners stay square, borders 2px, shadows hard and offset, and links invert on hover. No glass, gradients, blur or decorative animation.
 
-**Oat & Petrol** has four colours, declared with a one-line comment in `tokens.css`: desktop `#c5bfb1`, surface `#f5f1e8`, ink `#302e29`, accent `#17635d`. A dark counterpart follows the system `prefers-color-scheme` setting: desktop `#1d1c19`, surface `#292723`, ink `#ece6d8`, accent `#7cc4b8`, with a near-black `#0e0d0b` hard shadow. There is no manual toggle; print always uses black on white. Keep square corners, 2px borders, 7px hard shadows and inverted hover links. No glass, gradients, blur or decorative animation.
+Type is VT323 for display and IBM Plex Mono for body and code, served locally through Astro's font API (`fontProviders.fontsource()`), which injects the declarations at build time.
 
-### Accessible Views
+### Accessible views
 
-`?view=plain` shows the same content in normal flow; `?view=desktop` restores windows. The menu-bar link switches the current route; `fieldnotes-view` stores the preference locally. No JavaScript defaults to plain. Below 761px, windows stack and touch scrolling stays native. Print includes all content without chrome.
+`?view=plain` shows the same content in normal flow and `?view=desktop` brings the windows back. The menu-bar link switches the current route, and `fieldnotes-view` stores the choice locally. Without JavaScript the site defaults to plain. Below 761px the windows stack and touch scrolling stays native. Print includes all content without the chrome.
 
-Focus a title and use arrow keys to move, or use the actions menu's directional buttons. Escape dismisses that menu first, then closes the window. Closing returns focus to the launcher; reopening reveals the window. Focus brings windows forward without trapping the keyboard. Reduced motion removes transitions.
+Focus a window's title bar and use the arrow keys to move it, or use the directional buttons in its actions menu. Escape on the title bar closes the actions menu if it's open, and otherwise closes the window. Escape inside the window body (the blog search field, for example) is left alone. Closing returns focus to the launcher, and reopening brings the window back. Focus brings a window forward without trapping the keyboard. Reduced motion removes transitions.
 
-Ink/surface contrast is 12.03:1; petrol/surface is 6.25:1. Petrol/desktop is 3.85:1: suitable for focus outlines, not small text. Desktop targets must be at least 24px; phone close targets are 44px. Run browser checks after changing focus, controls or layout.
+Ink on paper is 12.03:1 and petrol on paper is 6.25:1. Petrol on the desktop colour is 3.85:1, which is fine for focus outlines but not for small text. Desktop targets are at least 24px and phone close boxes 44px. Run the browser checks after changing focus, controls or layout.
 
-Fonts are loaded via Astro's font API (`fontProviders.fontsource()`) — declarations are injected automatically at build time.
+## Stack
 
-## Tech Notes
+- Astro with static output, plus one on-demand API route for the guestbook
+- TypeScript 6, with `astro check` for TypeScript and Astro templates
+- ESLint flat config for Astro, TS, CSS and Markdown
+- Vitest with happy-dom
+- A Lefthook pre-commit hook that formats and lints staged files (`npm install` sets it up); unit tests run separately and in CI
+- Prettier with import sorting
+- `@astrojs/sitemap` and `astro-pagefind` for the sitemap and search
+- Share images drawn with `satori` and `sharp` in the site's own VT323 and IBM Plex Mono
+- RSS, Atom and JSON feeds
+- A guestbook at `/1999/guestbook`, stored in Cloudflare D1 and capped by Cloudflare's Rate Limiting binding
+- Cloudflare Workers through `@astrojs/cloudflare`. `public/_headers` sets a strict CSP and cache rules for that host, so any new external script, font, image or API call needs an entry there too.
 
-- Astro (static output, plus one on-demand API route for the guestbook)
-- TypeScript 6 with `astro check` retained for TypeScript and Astro templates
-- ESLint flat config for Astro, TS, CSS, and Markdown
-- Vitest unit tests with happy-dom (`npm test`)
-- Lefthook pre-commit hook: formats and lints the staged files (`npm install` installs it); unit tests run separately and in CI
-- Locally served fonts via `fontProviders.fontsource()` (VT323 display + IBM Plex Mono body/code)
-- Prettier formatting + import sorting
-- `@astrojs/sitemap` (sitemap) + `astro-pagefind` (full-text search) integrations
-- OG image generation via `satori` + `sharp` (Geist remains a build-time font; palette and branding match the redesign)
-- RSS, Atom, and JSON feed endpoints
-- Guestbook (`/1999/guestbook`) backed by Cloudflare D1, with Cloudflare's native Rate Limiting binding capping submissions
-- Hosted on Cloudflare Workers (`@astrojs/cloudflare` adapter) — `public/_headers` sets a strict CSP and cache rules specific to that host; adding a new external resource (script, font, image, API call) needs a matching entry there too
+The build would run on most Astro hosts, but this repo is set up for Cloudflare Workers: `wrangler.jsonc` declares the D1 and Rate Limiting bindings the guestbook needs.
 
-## License
-
-[MIT License](LICENSE)
-
-Your personal content (links, descriptions) is yours — consider adding a note if you want to explicitly release it (e.g., CC0) or keep all-rights-reserved.
-
-## Maintenance Checklist
-
-Run before pushing major changes:
+## Before a big push
 
 ```sh
 npm run lint
@@ -159,6 +99,10 @@ npm run build
 npm run test:e2e
 ```
 
-That's it — customise your content files, tweak styles, deploy. The build output can run on most Astro-compatible hosts, but this repo is configured for Cloudflare Workers specifically (`wrangler.jsonc` declares the D1 and Rate Limiting bindings the guestbook needs; `public/_headers` sets Cloudflare-specific CSP and cache headers).
+The browser checks cover keyboard controls, main and skip-link focus, footer clearance, the plain-view preference, mobile reflow, reduced motion, content without JavaScript, and WCAG A and AA axe scans at phone and desktop widths in light and dark. They also run in CI with lint, builds and unit tests on Node 22 and 24. They don't prove full accessibility; screen-reader, zoom and touch checks still have to be done by hand.
 
-Browser checks cover keyboard controls, main/skip-link focus, footer clearance, plain preference, mobile reflow, reduced motion, no-JavaScript content and WCAG A/AA axe scans at phone/desktop widths in light and dark colour schemes, including `/work`. They run in CI alongside lint, builds and utility tests on Node 22/24. They do not establish full accessibility compliance; manual screen-reader, zoom and touch checks remain necessary. Deploying or merging to `main` requires explicit permission: Cloudflare automatically deploys pushes there.
+Pushes to `main` deploy automatically through Cloudflare, so don't deploy or merge to `main` without explicit permission.
+
+## Licence
+
+[MIT](LICENSE)
