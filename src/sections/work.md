@@ -8,8 +8,8 @@ I work through Agile Bridge on contract with Lightstone, contributing to its Pro
 
 **Intermediate Software Engineer · November 2024 to present**
 
-- **Lightstone Property — EzVal:** extended the multi-tenant valuation system to onboard Capitec and delivered New Developments functionality for Nedbank Home Loans.
-- **Lightstone Retail — Explore Online:** improved security, usability and performance in a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Carbone Excel and PDF reports, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
+- **EzVal (Lightstone Property):** extended the multi-tenant valuation system to onboard Capitec and delivered New Developments functionality for Nedbank Home Loans.
+- **Explore Online (Lightstone Retail):** worked on a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Carbone Excel and PDF reports, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
 
 ### Entelect Software
 
@@ -29,7 +29,7 @@ I work through Agile Bridge on contract with Lightstone, contributing to its Pro
 - **Cloud and infrastructure:** Cloudflare, Azure, Bicep, Terraform.
 - **Delivery and tooling:** Git, Vite, GitHub Actions, Azure DevOps, GitLab CI/CD.
 
-## Education & Certification
+## Education and certification
 
 **BSc Information Technology, North-West University · 2020**
 Awarded with distinction. Golden Key International Honour Society inductee.

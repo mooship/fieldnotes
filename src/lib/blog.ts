@@ -35,8 +35,7 @@ export function formatMonthYear(date: Date): string {
 
 export const SITE_TITLE = "Timothy Brits";
 export const SITE_AUTHOR = "Timothy Brits";
-export const BLOG_DESCRIPTION =
-  "Writing by Timothy Brits on software and open source.";
+export const BLOG_DESCRIPTION = "Writing by Timothy Brits.";
 
 /**
 Derives a post's URL slug from its content collection id, e.g. "my-post.md" -> "my-post".
@@ -206,7 +205,7 @@ interface TocHeading {
 
 /**
 Picks the h2/h3 headings worth showing in a post's table of contents.
-Returns an empty array below `TOC_MIN_HEADINGS` — a couple of headings
+Returns an empty array below `TOC_MIN_HEADINGS`: a couple of headings
 read as clutter, not navigation.
 */
 export function getTocHeadings<T extends TocHeading>(headings: T[]): T[] {

@@ -35,11 +35,11 @@ const isTocVisible = tocHeadings.length > 0;
 ---
 
 <Layout
-  title={`${post.data.title} — ${SITE_TITLE}`}
+  title={`${post.data.title} · ${SITE_TITLE}`}
   ogTitle={post.data.title}
   description={post.data.description}
   image={ogImage}
-  imageAlt={`${post.data.title} — ${SITE_TITLE}`}
+  imageAlt={`Title card: ${post.data.title}`}
   type="article"
   datePublished={post.data.pubDate}
   dateModified={post.data.updatedDate ?? post.data.pubDate}

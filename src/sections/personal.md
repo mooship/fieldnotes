@@ -1,6 +1,6 @@
 ## Personal
 
-Connect with me!
+Elsewhere:
 
 - [GitHub](https://github.com/Mooship)
 - [Instagram](https://www.instagram.com/mossandmarx/)

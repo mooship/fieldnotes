@@ -13,7 +13,7 @@ declare module "cloudflare:workers" {
 
 // `wrangler types` only knows about secrets (TURNSTILE_SECRET_KEY isn't in
 // wrangler.jsonc, since secrets never are) if a local `.dev.vars` happens to
-// declare them — which it does locally, but `.dev.vars` is gitignored, so CI
+// declare them, which it does locally, but `.dev.vars` is gitignored, so CI
 // has none and the generated Env interface silently omits it there. Declared
 // explicitly here so the type holds regardless of `.dev.vars`.
 // eslint-disable-next-line unicorn/name-replacements -- `Env` is the fixed interface name `wrangler types` generates, not our naming to pick

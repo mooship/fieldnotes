@@ -7,8 +7,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 <Layout1999 description="Sign the guestbook, in the style of a 1999 personal home page.">
   <h2>Guestbook</h2>
   <p>
-    Sign my guestbook! Entries are shared with everyone who stops by this page —
-    please keep it kind.
+    Sign my guestbook! Entries are shared with everyone who stops by this page,
+    so please keep it kind.
   </p>
 
   <form id="guestbook-form" class="guestbook-form">
@@ -77,7 +77,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         details.open = true;
 
         const summary = document.createElement("summary");
-        summary.textContent = `${entry.name} — ${formatEntryDate(entry.createdAt)}`;
+        summary.textContent = `${entry.name} - ${formatEntryDate(entry.createdAt)}`;
 
         const message = document.createElement("p");
         message.textContent = entry.message;
@@ -95,7 +95,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       } catch {
         if (status) {
           status.textContent =
-            "Couldn't load the guestbook right now — try refreshing.";
+            "Couldn't load the guestbook right now. Try refreshing.";
         }
       }
     }
@@ -131,12 +131,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         renderEntries(await response.json());
         if (status) {
           status.textContent =
-            "Thanks for signing!! Your entry has been added above.";
+            "Thanks for signing!! Your entry has been added below.";
         }
       } catch {
         globalThis.turnstile?.reset();
         if (status) {
-          status.textContent = "Couldn't reach the guestbook — try again.";
+          status.textContent = "Couldn't reach the guestbook. Try again.";
         }
       }
     });

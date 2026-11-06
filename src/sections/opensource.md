@@ -1,4 +1,4 @@
-## Open Source
+## Open source
 
 <ul>
   <li>
