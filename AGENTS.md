@@ -55,7 +55,6 @@ Tests use Vitest with happy-dom. Test files live next to the source files they t
 - `src/lib/guestbook-database.test.ts` — `listGuestbookEntries`, `insertGuestbookEntry`, against a fake object implementing D1's `prepare`/`bind`/`all`/`run` chain (no real D1 binding needed for unit tests)
 - `src/lib/turnstile.test.ts` — `isTurnstileTokenValid`, against a fake `fetch` (and, for the no-verifier path, `vi.stubGlobal("fetch", ...)`)
 - `src/lib/easter-eggs.test.ts` — `incrementSessionCount`
-- `src/lib/command-palette.test.ts` — `filterCommandPaletteItems`
 
 Browser regressions live in `e2e/desktop.spec.ts`: keyboard move/close/reopen and focus restoration, click movement, Escape dismissing action menus first, skip-link focus, desktop/footer clearance, plain-view persistence, mobile stacking/touch targets, reduced motion, dark colour scheme and no-JavaScript content. Axe scans cover desktop/plain home, blog index, a post and standalone pages at 320px/1280px in both light and dark colour schemes using WCAG A/AA tags through 2.2. Run `npm run test:e2e` after shell changes. Automated scans do not establish full compliance; manually check screen-reader announcements, keyboard-only navigation, zoom/reflow and touch too.
 
@@ -128,7 +127,7 @@ Two adapter features are deliberately turned off in `astro.config.mjs` rather th
 
 **Standalone pages:** `/now`, `/work`, `/uses`, and `/colophon` import content from matching markdown files in `src/sections/` and render in the shared reading window. Keep them reachable from desktop launchers and the plain-view menu, including on phones. Add new routes to `llms.txt` and the browser scan list; the sitemap and search index are generated automatically.
 
-**Components:** `DesktopWindow.astro` renders windows/controls; `src/scripts/desktop.ts` owns interaction and view mode. `PostListItem.astro` and `TagList.astro` render blog rows/tags. `CommandPalette.astro`, `CarbonBadge.astro`, `EasterEggs.astro` remain in the repository but are not mounted by the main layout; do not accidentally restore them. `/1999` retains its separate existing features.
+**Components:** `DesktopWindow.astro` renders windows/controls; `src/scripts/desktop.ts` owns interaction and view mode. `PostListItem.astro` and `TagList.astro` render blog rows/tags. The old command palette, carbon badge and easter-egg components were removed; do not bring them back. `/1999` retains its separate existing features.
 
 **SEO:** `Layout.astro` accepts `title`, `description`, `image`, `canonical`, `robots`, and `type` props. It generates Open Graph tags, Twitter card tags, and JSON-LD schema (hand-built, no external package).
 
