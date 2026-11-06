@@ -13,22 +13,19 @@ const recentPosts = posts.slice(0, 4);
 
 <Layout
   title={SITE_TITLE}
-  description="Timothy Brits — software developer in Pretoria, South Africa. Writing on software and open source."
+  description="Timothy Brits is a software developer in Pretoria, South Africa."
   type="website"
   desktop
 >
   <main id="main-content" class="desktop-home" tabindex="-1">
     <DesktopWindow id="welcome" title="About me" position="welcome">
       <div class="desktop-intro">
-        <p class="desktop-eyebrow">Personal home</p>
         <h1>Timothy Brits</h1>
         <IntroContent />
-        <p class="intro-location">Pretoria, South Africa</p>
       </div>
     </DesktopWindow>
     <DesktopWindow id="writing" title="Writing" position="writing">
       <h2 class="visually-hidden">Writing</h2>
-      <p class="desktop-eyebrow">Latest entries</p>
       <ul class="desktop-posts">
         {recentPosts.map((post) => (
           <li>

@@ -24,7 +24,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     key: clientAddress,
   });
   if (!success) {
-    return jsonError("Too many entries — try again in a minute.", 429);
+    return jsonError("Too many entries. Try again in a minute.", 429);
   }
 
   let body: unknown;
@@ -49,7 +49,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     clientAddress
   );
   if (!isHuman) {
-    return jsonError("Verification failed — please try again.", 400);
+    return jsonError("Verification failed. Please try again.", 400);
   }
 
   let normalized;

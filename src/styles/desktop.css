@@ -287,25 +287,8 @@ body .os-menu [data-view-toggle] {
   margin: auto;
 }
 
-.desktop-eyebrow {
-  margin: 0 0 0.75rem;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: var(--letter-spacing-meta);
-  text-transform: uppercase;
-}
-
 .desktop-intro h1 {
   margin: 0 0 1rem;
-}
-
-.desktop-intro .intro-location {
-  margin-top: 1.5rem;
-  padding-top: 0.75rem;
-  border-top: 2px solid var(--ink);
-  font-size: 0.6875rem;
-  letter-spacing: var(--letter-spacing-meta);
-  text-transform: uppercase;
 }
 
 .desktop-posts {

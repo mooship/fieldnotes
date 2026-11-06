@@ -3,21 +3,22 @@ import Layout from "../layouts/Layout.astro";
 import { SITE_TITLE } from "../lib/blog";
 ---
 
-<Layout title={`Page not found — ${SITE_TITLE}`} robots="noindex">
+<Layout title={`Page not found · ${SITE_TITLE}`} robots="noindex">
   <div class="page">
     <h1 class="page-title">404</h1>
-    <p data-role="404-message">
+    <p class="c64">
       ?FILE NOT FOUND ERROR
       <br />
       READY.
     </p>
+    <p data-role="404-message" hidden></p>
     <nav class="links" aria-label="Suggested pages">
       <ul>
         <li>
           <a href="/">Home</a>
         </li>
         <li>
-          <a href="/blog">Blog</a>
+          <a href="/blog">Writing</a>
         </li>
         <li>
           <a href="/now">Now</a>
@@ -67,14 +68,17 @@ import { SITE_TITLE } from "../lib/blog";
   import { incrementSessionCount } from "../lib/easter-eggs";
 
   const messages = [
-    "This page doesn't exist — it must have been collectivised.",
+    "This page doesn't exist. It must have been collectivised.",
     "Gone again? At this point it's a pattern, not an accident.",
     "Still not here. Maybe try the sitemap, or acceptance.",
   ];
   const visits = incrementSessionCount("fieldnotes:404-visits");
 
-  const message = document.querySelector('[data-role="404-message"]');
+  const message = document.querySelector<HTMLElement>(
+    '[data-role="404-message"]'
+  );
   if (message) {
     message.textContent = messages[Math.min(visits, messages.length) - 1];
+    message.hidden = false;
   }
 </script>

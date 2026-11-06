@@ -8,8 +8,8 @@ I work through a software consultancy on contract with a property data and analy
 
 **Intermediate Software Engineer · November 2024 to present**
 
-- **a property data and analytics company Property — Property valuation platform:** extended the multi-tenant valuation system to onboard a major South African retail bank and delivered New Developments functionality for a home-loans lender.
-- **a property data and analytics company Retail — Retail data platform:** improved security, usability and performance in a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Excel and PDF reports, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
+- **Property valuation platform:** extended the multi-tenant valuation system to onboard a major South African retail bank and delivered New Developments functionality for a home-loans lender.
+- **Retail data platform:** worked on a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Excel and PDF reports, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
 
 ### Entelect Software
 
@@ -28,7 +28,7 @@ I work through a software consultancy on contract with a property data and analy
 - **Cloud and infrastructure:** Cloudflare, Azure, Bicep, Terraform.
 - **Delivery and tooling:** Git, Vite, GitHub Actions, Azure DevOps, GitLab CI/CD.
 
-## Education & Certification
+## Education and certification
 
 **BSc Information Technology, North-West University · 2020**
 Awarded with distinction. Golden Key International Honour Society inductee.

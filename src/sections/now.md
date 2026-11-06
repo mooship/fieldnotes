@@ -8,7 +8,7 @@ Working as a mid-level software engineer. Outside of work, looking for an open-s
 
 ## What I'm reading
 
-The Expanse novels by James S. A. Corey — well, listening to the audiobooks.
+The Expanse novels by James S. A. Corey (well, the audiobooks).
 
 ## What I'm playing
 
@@ -16,7 +16,7 @@ Age of Empires II: Definitive Edition, Stardew Valley, and Star Wars: Knights of
 
 ## What I'm interested in
 
-Buddhist philosophy. Eco-socialist thought — why fixing the climate means fixing the economy. The intersection of technology and ethics: who it serves, what it costs, and whether it's worth building at all.
+Buddhist philosophy. Eco-socialist thought, especially the argument that fixing the climate means fixing the economy. Technology and ethics: who a piece of technology serves, what it costs, and whether it should be built at all.
 
 ## Where I am
 
