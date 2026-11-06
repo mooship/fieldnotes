@@ -15,10 +15,10 @@ Here's what it does:
 
 - `"straight quotes"` become "curly quotes"
 - `'single quotes'` become 'single quotes'
-- `--` becomes an em dash, `---` becomes an en dash
+- `--` becomes an em dash and `---` an en dash (with the `inverted` option shown below)
 - `...` becomes a proper ellipsis
 
-That's the entire pitch: no configuration, no decisions to make. It processes your Markdown at build time and outputs the right characters.
+That's the entire pitch. There's one option (`dashes`) if you care which dash `--` produces, and otherwise nothing to decide. It processes your Markdown at build time and outputs the right characters.
 
 ## Why bother?
 
@@ -38,7 +38,7 @@ export default defineConfig({
 });
 ```
 
-That's it. Every Markdown file Astro processes (blog posts, content collections, standalone pages) gets proper typographic punctuation for free.
+Every Markdown file Astro processes (blog posts, content collections, standalone pages) gets proper typographic punctuation for free.
 
 Under the hood, remark-smartypants uses [retext-smartypants](https://github.com/retextjs/retext-smartypants), which itself is a port of John Gruber's [SmartyPants](https://daringfireball.net/projects/smartypants/), the same algorithm that's been cleaning up punctuation since 2003. Whatever edge case you're worried about, it has almost certainly seen it.
 

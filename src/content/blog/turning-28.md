@@ -20,4 +20,4 @@ The thing I actually learned, more than anything else, is how much family matter
 
 What gets me about ten years is how slowly it moved, so slowly I didn't notice it happening, and now when I look back the gap is enormous, with no single moment I can point to. I just ended up here.
 
-Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time, felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. I don't know what to do with that except pay better attention. A decade passed, and it feels like both yesterday and a lifetime ago.
+Twenty-eight is a nothing age. Nobody writes songs about it. But it's the first birthday where I've really felt time, felt it as something that moves whether you're paying attention or not. The next ten years will go just as fast. I don't know what to do with that except pay better attention.
