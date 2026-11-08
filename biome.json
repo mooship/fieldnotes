@@ -73,6 +73,7 @@
     }
   },
   "assist": {
+    "includes": ["**", "!**/*.astro"],
     "actions": {
       "source": {
         "organizeImports": "on"
