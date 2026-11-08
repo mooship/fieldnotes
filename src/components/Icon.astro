@@ -149,12 +149,12 @@ const glyphs = {
 
 export type IconName = keyof typeof glyphs;
 
-interface Properties {
+interface Props {
   name: IconName;
   size?: number;
 }
 
-const { name, size = 16 } = Astro.props as Properties;
+const { name, size = 16 } = Astro.props;
 const rows = glyphs[name];
 const grid = rows.length;
 

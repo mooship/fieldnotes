@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { formatMonthYear, SITE_TITLE } from "../lib/blog";
 import {
   Content as NowContent,
   frontmatter as nowFrontmatter,
 } from "../sections/now.md";
-import { formatMonthYear, SITE_TITLE } from "../lib/blog";
 
 const lastUpdated = new Date(nowFrontmatter.lastUpdated as string);
 const lastUpdatedDisplay = formatMonthYear(lastUpdated);

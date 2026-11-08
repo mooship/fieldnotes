@@ -1,8 +1,8 @@
 import cloudflare from "@astrojs/cloudflare";
 import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
-import pagefind from "astro-pagefind";
 import { defineConfig, fontProviders } from "astro/config";
+import pagefind from "astro-pagefind";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkSmartypants from "remark-smartypants";
 import {

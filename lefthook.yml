@@ -1,10 +1,9 @@
 pre-commit:
-  jobs:
-    - name: format
-      glob: "*.{ts,mjs,js,json,css,astro,md,yml,yaml}"
-      run: npx prettier --write --ignore-unknown {staged_files}
+  commands:
+    biome:
+      run: npx biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
-    - name: lint
-      glob: "*.{ts,mjs,js,astro,css,md}"
+    eslint:
+      glob: "*.{css,md}"
       run: npx eslint --fix --no-warn-ignored {staged_files}
       stage_fixed: true

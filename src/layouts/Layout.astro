@@ -18,7 +18,7 @@ when omitted. `type: "article"` adds article-specific JSON-LD fields
 (headline, author, publisher, dates) alongside the base WebSite/Article
 schema.
 */
-export interface Properties {
+export interface Props {
   title: string;
   ogTitle?: string;
   description?: string;
@@ -48,7 +48,7 @@ const {
   desktop = false,
   windowLabel,
   windowInfo,
-} = Astro.props as Properties;
+} = Astro.props;
 
 const url = Astro.url;
 const pathname = url.pathname;

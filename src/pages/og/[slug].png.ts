@@ -1,6 +1,6 @@
-import type { APIRoute, GetStaticPaths } from "astro";
 import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
+import type { APIRoute, GetStaticPaths } from "astro";
 import satori from "satori";
 import sharp from "sharp";
 import { getBlogPosts, getPostSlug } from "../../lib/blog";
@@ -26,8 +26,12 @@ async function loadFonts(): Promise<OgFonts> {
   if (!fonts.promise) {
     const paths = [
       require.resolve("@fontsource/vt323/files/vt323-latin-400-normal.woff"),
-      require.resolve("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff"),
-      require.resolve("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff"),
+      require.resolve(
+        "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff"
+      ),
+      require.resolve(
+        "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-700-normal.woff"
+      ),
     ];
     fonts.promise = (async () => {
       const [display, regular, bold] = await Promise.all(

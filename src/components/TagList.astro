@@ -1,7 +1,11 @@
 ---
 import { getTagSlug } from "../lib/blog";
 
-const { tags } = Astro.props as { tags: string[] };
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
 ---
 
 {tags.length > 0 && (
