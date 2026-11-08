@@ -49,3 +49,5 @@ playwright-report/
 
 # Cloudflare API token
 .env.cloudflare
+.claude/settings.json
+.claude/skills/
