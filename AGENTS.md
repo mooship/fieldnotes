@@ -65,7 +65,7 @@ Run the checks for what you changed, read the output, and say so if any failed o
 - Any code or config change: `npm run lint:check`, `npm run build` (it includes the typecheck) and `npm test`.
 - `src/lib` or shared types: also `npm run test:coverage`, which holds the 100% gate.
 - Pages, layouts, components and styles: also `npm run test:e2e` (desktop shell, plain view and axe scans), and compare the built HTML if you restructured a template.
-- Dependency or lockfile change: regenerate the lockfile with npm 10 (`npx -y npm@10 install --package-lock-only --ignore-scripts`) and check `npm ci --dry-run` under npm 10 and npm 11, because Cloudflare Workers Builds and the Node 22 CI leg run npm 10.
+- Dependency or lockfile change: lockfiles are written by npm 11, the version Dependabot, CI and Cloudflare Workers Builds all install with (`.node-version` pins Node 24, and the Node 22 CI leg installs npm 11), so check with a real `npm ci` under npm 11. An npm 10 install rejects lockfiles that npm 11 writes, which is why nothing here runs npm 10.
 
 ## Safety
 
@@ -111,7 +111,7 @@ Lefthook runs a pre-commit hook on the staged files: `biome check --write` (form
 
 ## CI
 
-The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 22. Keep browser regressions and axe scans green as well as the lint/build/unit gates.
+The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 24. Keep browser regressions and axe scans green as well as the lint/build/unit gates.
 
 `.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and a blocking Lighthouse run (`lighthouserc.json`, median of 3 runs per page, report uploaded as an artifact). The gate requires 100 for accessibility, best practices and SEO, which the site meets. Performance is a floor of 75 as a regression guard because the pages currently measure 83 to 88; the target is 95, so raise the floor as performance improves and never lower it to get green. `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover format and lint locally, not unit tests, the typecheck or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
