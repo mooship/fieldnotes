@@ -72,7 +72,7 @@ The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 22. Keep bro
 
 `.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover lint and format locally, not unit tests, `astro check` type-checking or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
-Dependabot (`.github/dependabot.yml`) groups each ecosystem's updates into one PR. Most npm and GitHub Actions dependencies check monthly (first Saturday); `astro` and `zod` are split into their own weekly-grouped PR instead.
+Dependabot (`.github/dependabot.yml`) has one npm entry, because Dependabot rejects the file if two entries share a directory. It checks weekly (Saturday) and opens at most two PRs: `astro` and `zod` in one group, everything else in another. GitHub Actions check monthly.
 
 ## Deployment
 
