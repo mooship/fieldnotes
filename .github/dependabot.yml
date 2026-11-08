@@ -17,6 +17,9 @@ updates:
       npm:
         patterns:
           - "*"
+    ignore:
+      # TypeScript is pinned to the 7.1 beta; without this Dependabot proposes nightly 7.1.0-dev builds. Remove once 7.1 is stable.
+      - dependency-name: "typescript"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
