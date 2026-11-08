@@ -1,7 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 
-interface Properties {
+interface Props {
   id: string;
   title: string;
   position?: string;
@@ -15,7 +15,7 @@ const {
   position = "reader",
   label = title,
   info,
-} = Astro.props as Properties;
+} = Astro.props;
 ---
 
 <section
@@ -51,6 +51,7 @@ const {
       >
         +
       </summary>
+      {/* biome-ignore lint/a11y/useSemanticElements: a fieldset would add its own border and legend styling to the move controls */}
       <div class="move-controls" role="group" aria-label={`Move ${title}`}>
         <button
           type="button"

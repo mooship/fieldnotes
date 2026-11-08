@@ -1,5 +1,5 @@
-import type { APIRoute } from "astro";
 import { env } from "cloudflare:workers";
+import type { APIRoute } from "astro";
 import { normalizeGuestbookInput } from "../../lib/guestbook";
 import {
   insertGuestbookEntry,
@@ -52,7 +52,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return jsonError("Verification failed. Please try again.", 400);
   }
 
-  let normalized;
+  let normalized: ReturnType<typeof normalizeGuestbookInput>;
   try {
     normalized = normalizeGuestbookInput(name, message);
   } catch (error) {

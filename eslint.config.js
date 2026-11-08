@@ -1,11 +1,9 @@
 import css from "@eslint/css";
 import markdown from "@eslint/markdown";
-import prettierConfig from "eslint-config-prettier";
-import astroPlugin from "eslint-plugin-astro";
-import unicorn from "eslint-plugin-unicorn";
-import tseslint from "typescript-eslint";
 
 /**
+Biome formats and lints the code. ESLint stays only for the two checks Biome
+cannot do: Baseline-only CSS and the Markdown rules.
 @type {import("eslint").Linter.Config[]}
 */
 export default [
@@ -17,21 +15,7 @@ export default [
       ".astro-cache/",
       ".github/",
       ".claude/",
-      "worker-configuration.d.ts",
     ],
-  },
-  ...tseslint.configs.recommended,
-  ...astroPlugin.configs.recommended,
-  ...astroPlugin.configs["jsx-a11y-recommended"],
-  {
-    ...unicorn.configs.recommended,
-    files: ["**/*.{js,mjs,ts,astro}"],
-    rules: {
-      ...unicorn.configs.recommended.rules,
-      "unicorn/filename-case": "off",
-      "unicorn/prevent-abbreviations": "off",
-      "unicorn/text-encoding-identifier-case": "off",
-    },
   },
   {
     files: ["**/*.css"],
@@ -53,5 +37,4 @@ export default [
     },
   },
   ...markdown.configs.recommended,
-  prettierConfig,
 ];
