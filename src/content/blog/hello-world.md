@@ -13,7 +13,7 @@ I've been writing software since 2018. Web development is where I spend most of 
 
 I live in the terminal: [Ghostty](https://ghostty.org), zsh, and [Starship](https://starship.rs) on macOS. I've tried heavier setups; this is the one that stuck.
 
-Outside work I tinker. I'm the author of [scriv](https://crates.io/crates/scriv), a terminal notes app. I play video games, mostly RTS and grand strategy, the kind where you lose four hours before you notice. I listen to audiobooks, mostly sci-fi and historical fiction; they make long walks feel short. I have a dog. He has no interest in any of this.
+Outside work I play video games, mostly RTS and grand strategy, the kind where you lose four hours before you notice. I listen to audiobooks, mostly sci-fi and historical fiction; they make long walks feel short. I have a dog. He has no interest in any of this.
 
 This blog is a place for me to write. About software, about tools I'm working on, about ideas I'm turning over. Nothing formal, just thinking out loud.
 
