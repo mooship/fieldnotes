@@ -1,7 +1,6 @@
 version: 2
 updates:
-  # Astro (the framework) and Zod (input validation) get a faster,
-  # separate weekly PR; everything else is bulk-grouped and monthly.
+  # One entry per ecosystem and directory: GitHub rejects the whole file otherwise, and Dependabot keeps using the last valid copy.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -9,29 +8,16 @@ updates:
       day: "saturday"
       time: "09:00"
       timezone: "Africa/Johannesburg"
+    open-pull-requests-limit: 2
     groups:
       npm-critical:
         patterns:
-          - "*"
-    allow:
-      - dependency-name: "astro"
-      - dependency-name: "zod"
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-      time: "09:00"
-      timezone: "Africa/Johannesburg"
-    groups:
+          - "astro"
+          - "zod"
       npm:
         patterns:
           - "*"
     ignore:
-      - dependency-name: "astro"
-      - dependency-name: "zod"
-      # @astrojs/check (Volar-based) can't run on TypeScript 7 until
-      # TS ships a stable replacement for the removed Strada API,
-      # expected in 7.1. Drop this once @astrojs/check supports it.
       - dependency-name: "typescript"
         versions: [">=7.0.0"]
   - package-ecosystem: "github-actions"
