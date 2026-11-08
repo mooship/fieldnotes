@@ -4,7 +4,7 @@ My personal site and blog, set out as a quiet retro desktop. It's built with Ast
 
 ## Running it
 
-You need Node 22 or later and npm.
+You need Node 24.22.1 or later and npm 11 or later (`.node-version` and `packageManager` pin the same family for CI and Cloudflare).
 
 ```sh
 git clone https://github.com/mooship/fieldnotes.git
