@@ -10,23 +10,66 @@ Timothy Brits is a personal site and blog built with Astro, hosted on Cloudflare
 
 ```bash
 npm run dev           # start dev server (wrangler types, then astro dev)
-npm run build         # wrangler types, type-check (astro check), then build
-npm run lint          # run ESLint across Astro, TS, CSS, and Markdown with auto-fix
-npm run lint:check    # same lint, no auto-fix: what CI runs
+npm run build         # wrangler types, typecheck, then astro build
+npm run typecheck     # astro sync, then tsc with the Astro content mapper (checks .astro files too)
+npm run lint          # biome check --write, then ESLint --fix for CSS and Markdown
+npm run lint:check    # the same checks without writing: what CI runs
+npm run format        # biome format --write (.astro files are not formatted, see Conventions)
 npm run preview       # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
 npm run deploy        # build, then `wrangler deploy`: never run without the user's explicit go-ahead, see Safety
-npm run format        # prettier with auto-fix (also sorts imports, formats package.json)
 npm test              # run Vitest unit tests
 npm run test:coverage # run Vitest with coverage: CI fails under 100% lines/branches/functions/statements in src/lib
 npm run test:e2e      # run Playwright against the built Worker (`npm run preview` on port 8788); also runs in CI
 npm run lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
 ```
 
-`npm run build` is the primary verification step: it regenerates Cloudflare binding types (`wrangler types --include-runtime=false`) and runs `astro check` (TypeScript + Astro type checking) before building. Run `npm test` to verify utility logic. Both must pass before committing. `wrangler types` is run with `--include-runtime=false`: the full runtime type set pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block in the project. With runtime types off, `Env` is still generated (used by the guestbook API route), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
+`npm run build` regenerates Cloudflare binding types (`wrangler types --include-runtime=false`), type-checks, then builds. The full runtime type set is switched off because it pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block. `Env` is still generated (the guestbook API route uses it), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
 
-Linting uses ESLint flat config with support for Astro, TypeScript, CSS, and Markdown.
+TypeScript is 7.1 beta, pinned to the exact version (a caret range resolves to nightly builds). `@astrojs/ts-content-mapper` is registered in `tsconfig.json` and `--runExternalCode` lets `tsc` run it, so frontmatter and template expressions in `.astro` files are type-checked without `astro check`. Move to the stable 7.1 release when it ships.
 
-Keep TypeScript on version 6 and retain `astro check`; the native TS 7 compiler does not replace Astro template checking or the JavaScript compiler API used by current lint/format tooling.
+## Engineering principles
+
+- **Test first for logic (TDD).** New logic in `src/lib/` ships with its test in the same commit, written first: watch it fail for the right reason, make it pass, then tidy. Every module there (`blog.ts`, `feed.ts`, `xml.ts`, `guestbook.ts` and the rest) has a matching `*.test.ts`; keep that 1:1 and keep coverage at 100% by writing the missing test, not by excluding code. Reproduce a bug in a test before fixing it, and never weaken or skip a test to get green. Components, pages and layouts have no unit test; the typecheck, build, Playwright and axe suites cover them.
+- **One job per module, extend by adding files (SOLID, open/closed above all).** A post is a file in `src/content/blog/`, a home or standalone section is a markdown file in `src/sections/`, and a standalone page is a thin wrapper around one; adding any of them edits nothing else. Each `src/lib/` module has one reason to change: `blog.ts` queries content, `feed.ts` builds feed items, `xml.ts` escapes, `guestbook.ts` validates, `turnstile.ts` verifies. Modules depend on narrow shapes instead of platform objects: `guestbook-database.ts` takes a structural `GuestbookDatabase`, so tests pass a fake in place of D1. Plain functions are enough; do not invent a class hierarchy or plugin system the site has no use for.
+- **One source for each fact (DRY).** `markdown-config.ts`, `blog.ts` and `feed.ts` exist so `astro.config.mjs`, the blog pages and the three feeds agree; the `draft` filter lives only in `getBlogPosts()`; a component declares its props once as `Props` and the typecheck enforces every call site. Add shared logic there instead of copying it inline, and do not merge code that only looks alike.
+- **Keep it simple and build only what is needed (KISS, YAGNI).** One author, one design, one deployment target: no options, props or abstraction layers for a second use case that does not exist yet.
+- **Stay on task.** Mention a nearby problem instead of fixing it unless it blocks the work.
+
+## Conventions
+
+### Commit messages
+
+Use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for every commit: `<type>[optional scope][!]: <description>`. Use lowercase types such as `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `build`, `ci` and `chore`. Mark breaking changes with `!` or a `BREAKING CHANGE:` footer and explain the impact.
+
+- Use `feat` for new features and `fix` for bug fixes. Other useful types are `docs`, `test`, `refactor`, `perf`, `build`, `ci`, `style` and `chore`.
+- Use lowercase types, an optional short scope such as `desktop` or `deps`, and a concise imperative description, for example `feat(desktop): add accessible reading windows` or `chore(deps): update compatible npm dependencies`.
+- Separate an optional body and footers from the subject with a blank line. Explain why a change was needed rather than listing every edited file.
+- Mark breaking changes with `!` before the colon or a `BREAKING CHANGE: <description>` footer; explain the impact. A visual redesign alone is not a breaking API change.
+- Keep commits focused when practical. Do not rewrite published history just to adopt this convention.
+
+### Code style
+
+- **Comment only a non-obvious why.** No trailing `//` comments on the same line as code; JSDoc block comments (`/** */`) are fine where genuinely useful. A short comment in a config file is fine when it explains a constraint someone would otherwise undo.
+- **British English spelling** in site copy and UI labels (section markdown, blog posts, nav/meta text), "colour", "optimise", "favourite", matching the author's other projects.
+- **Write like a person.** No em dashes in copy, docs or comments, and no `--` stand-ins in Markdown (smartypants turns them into em dashes); use a comma, colon, full stop or brackets. Avoid "not X but Y" contrasts, forced groups of three, punchy one-line closers, bold run-in labels on bullets, "Tool: tagline" lists, and stock words such as delve, seamless, robust, leverage or elevate. Blog posts are the author's own voice: fix punctuation, don't rewrite them.
+- **Biome formats and lints** TypeScript, CSS and JSON (`biome.json`): double quotes, semicolons, 80 columns, ES5 trailing commas, and imports sorted by its assist action, so there is no import-sorting plugin to keep working. It lints `.astro` files too, templates included (`useAltText`, `useButtonType`, `noStaticElementInteractions` and the other accessibility rules), using a suppression with a reason where a rule is wrong for the markup, as for the `role="group"` move controls in `DesktopWindow.astro`.
+- **Biome does not format `.astro` files or Markdown.** Its Astro formatter is experimental and added or removed spaces around inline elements (`<a>Skip</a>` became `<a> Skip </a>`, `</span> Back` became `</span>Back`), which changes what renders. Keep templates hand-formatted in the existing style, and if you restructure one, build before and after and diff `dist/client`. Blog posts and sections keep their own layout.
+- **ESLint is kept only for what Biome cannot do:** `@eslint/css` with `css/use-baseline` (new CSS properties and selectors must be Baseline "newly available"; `text-wrap` and `:selection` are allowlisted) and `@eslint/markdown`. typescript-eslint is gone because it cannot run on TypeScript 7.
+- **Declare component props as `interface Props`** and read them from `Astro.props` without a cast, so the content mapper checks every call site.
+- `.github/` and `.claude/` are excluded from linting.
+
+## Definition of done
+
+Run the checks for what you changed, read the output, and say so if any failed or were skipped.
+
+- Any code or config change: `npm run lint:check`, `npm run build` (it includes the typecheck) and `npm test`.
+- `src/lib` or shared types: also `npm run test:coverage`, which holds the 100% gate.
+- Pages, layouts, components and styles: also `npm run test:e2e` (desktop shell, plain view and axe scans), and compare the built HTML if you restructured a template.
+- Dependency or lockfile change: regenerate the lockfile with npm 10 (`npx -y npm@10 install --package-lock-only --ignore-scripts`) and check `npm ci --dry-run` under npm 10 and npm 11, because Cloudflare Workers Builds and the Node 22 CI leg run npm 10.
+
+## Safety
+
+- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation. This covers `wrangler deploy`/`npm run deploy`, **merging a PR into `main`** (Cloudflare Workers Builds auto-deploys on every push there; confirm this is still true before assuming otherwise), and anything else that changes the live Worker or its production data, including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
 
 ## Content authoring
 
@@ -64,13 +107,13 @@ Browser regressions live in `e2e/desktop.spec.ts`: keyboard move/close/reopen an
 
 ## Lefthook
 
-Lefthook runs a pre-commit hook on the staged files: Prettier with `--write` and ESLint with `--fix`. Configuration is in `lefthook.yml`. Files the formatter or linter change are re-staged automatically. Unit tests run separately and in CI. `npm install` installs the hooks (the `prepare` script runs `lefthook install --force`, which works even with a global `core.hooksPath`).
+Lefthook runs a pre-commit hook on the staged files: `biome check --write` (format, lint fixes and import sorting) and, for CSS and Markdown, `eslint --fix`. Configuration is in `lefthook.yml`. Files the hook changes are re-staged automatically. Unit tests never run in the hook; they run separately and in CI. `npm install` installs the hooks (the `prepare` script runs `lefthook install --force`, which works even with a global `core.hooksPath`).
 
 ## CI
 
 The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 22. Keep browser regressions and axe scans green as well as the lint/build/unit gates.
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover lint and format locally, not unit tests, `astro check` type-checking or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover format and lint locally, not unit tests, the typecheck or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) has one npm entry, because Dependabot rejects the file if two entries share a directory. npm checks weekly on Tuesdays and opens at most two PRs: `astro` and `zod` in one group, everything else in another. GitHub Actions check weekly on Fridays. Every repo has its own day and time so the PRs do not all arrive together.
 
@@ -92,10 +135,6 @@ Two adapter features are deliberately turned off in `astro.config.mjs` rather th
 **Observability:** `wrangler.jsonc` sets `observability.enabled: true` (Workers Logs, and live tailing via `wrangler tail` once deployed). There is no Smart Placement: the guestbook makes one or two D1 queries per request, and Cloudflare reported too few invocations for it to ever take effect.
 
 `public/_headers` is unchanged from the Pages days, Workers with static assets supports `_headers`/`_redirects` natively, same syntax. It sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource**, a script, font, image, or API call from a new origin: the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
-
-## Safety
-
-- **Never deploy to production without explicit permission from the user.** Always ask first and wait for confirmation. This covers `wrangler deploy`/`npm run deploy`, **merging a PR into `main`** (Cloudflare Workers Builds auto-deploys on every push there; confirm this is still true before assuming otherwise), and anything else that changes the live Worker or its production data, including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
 
 ## Architecture
 
@@ -159,30 +198,3 @@ Always use one `:global()` per selector when applying shared styles to multiple 
 **A client-side navigation can trip the CSP if any page has an inline module script.** `ClientRouter`'s soft-navigation code injects a `<script type="module" src="data:application/javascript,"/>` synchronization barrier whenever the page being navigated to has any `<script type="module">` with no `src` attribute, the barrier itself has no `src` this site's CSP allows, so it gets blocked and logs a CSP violation on every such navigation. `astro.config.mjs` sets `vite.build.assetsInlineLimit` to a function that returns `false` for `.js` files specifically to prevent that: it forces every component's compiled script to its own external, immutably-cached `/_astro/*.js` file (`src="..."` rather than inlined) so the trigger condition never occurs, rather than relaxing `script-src` to allow `data:`, the latter would work too, but `data:` in `script-src` is a known bypass vector for any future markup-injection bug, and the correct fix is to stop tripping the barrier, not to widen the CSP to tolerate it. If a new component's client script ever needs its own escape hatch from this, check that setting first.
 
 **Prerendering runs inside a `workerd` sandbox by default, not Node.** Since Astro 6 / `@astrojs/cloudflare` v13, prerendered (static) pages are built by actually executing the Worker inside a `workerd`/Miniflare sandbox to match production as closely as possible, not plain Node, even though the output is 100% static HTML. Any prerendered route that depends on a native addon (`sharp`) or other `workerd`-incompatible Node/npm code will fail the build with an unhelpful `No such module` or WASM-compile error, even though it worked fine before the adapter was added. `astro.config.mjs` sets `adapter: cloudflare({ prerenderEnvironment: "node" })` for exactly this reason, `/og/[slug].png.ts` uses `sharp`. On-demand routes (`prerender = false`, i.e. `/api/guestbook`) always run in `workerd` regardless of this setting, since that's the real production runtime for them.
-
-## Engineering principles
-
-- **Keep it boring and flat.** This is a personal static site with no class hierarchies, no dependency injection, and no plugin system: SOLID/OCP-style abstractions don't have anywhere to attach. Prefer a plain function in `src/lib/` over an interface or a class.
-- **Don't duplicate logic across the Astro and feed pipelines.** `src/lib/markdown-config.ts`, `src/lib/blog.ts`, and `src/lib/feed.ts` exist specifically so `astro.config.mjs`, the blog pages, and the three feed endpoints stay in sync: add new shared logic there, not copied inline at each call site.
-- **YAGNI over speculative flexibility.** Don't add config options, props, or abstraction layers for a second use case that doesn't exist yet: this site has one author, one design, and one deployment target.
-- **TDD: new logic in `src/lib/` ships with a test in the same commit, written first.** Every existing file there (`blog.ts`, `feed.ts`, `xml.ts`) has a matching `*.test.ts`: keep that 1:1, write the failing test before the implementation, and lean on the existing `astro:content` mock rather than inventing a new one.
-
-## Commit Messages
-
-Use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for every commit: `<type>[optional scope][!]: <description>`. Use lowercase types such as `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `build`, `ci` and `chore`. Mark breaking changes with `!` or a `BREAKING CHANGE:` footer and explain the impact.
-
-- Use `feat` for new features and `fix` for bug fixes. Other useful types are `docs`, `test`, `refactor`, `perf`, `build`, `ci`, `style` and `chore`.
-- Use lowercase types, an optional short scope such as `desktop` or `deps`, and a concise imperative description, for example `feat(desktop): add accessible reading windows` or `chore(deps): update compatible npm dependencies`.
-- Separate an optional body and footers from the subject with a blank line. Explain why a change was needed rather than listing every edited file.
-- Mark breaking changes with `!` before the colon or a `BREAKING CHANGE: <description>` footer; explain the impact. A visual redesign alone is not a breaking API change.
-- Keep commits focused when practical. Do not rewrite published history just to adopt this convention.
-
-## Code Style
-
-- **No inline comments**: never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
-- **British English spelling** in site copy and UI labels (section markdown, blog posts, nav/meta text), "colour", "optimise", "favourite", matching the author's other projects.
-- **Write like a person.** No em dashes in copy, docs or comments, and no `--` stand-ins in Markdown (smartypants turns them into em dashes); use a comma, colon, full stop or brackets. Avoid "not X but Y" contrasts, forced groups of three, punchy one-line closers, bold run-in labels on bullets, "Tool: tagline" lists, and stock words such as delve, seamless, robust, leverage or elevate. Blog posts are the author's own voice: fix punctuation, don't rewrite them.
-- Prettier enforces: double quotes, semicolons, 80-char width. It also runs `prettier-plugin-organize-imports` (auto-sorts imports) and `prettier-plugin-packagejson` (formats `package.json`) as part of `npm run format`.
-- ESLint uses flat config (`eslint.config.js`) with TypeScript, Astro (including `jsx-a11y-recommended`: accessibility lint rules apply to `.astro` templates), Unicorn, `@eslint/css`, and `@eslint/markdown`, plus `eslint-config-prettier` to defer all formatting decisions to Prettier. Three Unicorn rules are disabled repo-wide: `filename-case` (needed for `[slug].astro`-style bracket filenames and PascalCase components), `prevent-abbreviations`, and `text-encoding-identifier-case`.
-- CSS lint requires new properties/selectors to be **Baseline "newly available"** (`css/use-baseline`): a very recent CSS feature can get flagged even though it works in current browsers; `text-wrap` and `:selection` are explicitly allowlisted as exceptions.
-- `.github/` and `.claude/` are excluded from linting.

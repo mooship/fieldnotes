@@ -1,11 +1,11 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import DesktopWindow from "../components/DesktopWindow.astro";
-import { Content as IntroContent } from "../sections/intro.md";
-import { Content as PersonalContent } from "../sections/personal.md";
-import { Content as OpenSourceContent } from "../sections/opensource.md";
-import { Content as SupportContent } from "../sections/support.md";
+import Layout from "../layouts/Layout.astro";
 import { formatDate, getBlogPosts, getPostSlug, SITE_TITLE } from "../lib/blog";
+import { Content as IntroContent } from "../sections/intro.md";
+import { Content as OpenSourceContent } from "../sections/opensource.md";
+import { Content as PersonalContent } from "../sections/personal.md";
+import { Content as SupportContent } from "../sections/support.md";
 
 const posts = await getBlogPosts();
 const recentPosts = posts.slice(0, 4);

@@ -1,12 +1,12 @@
 ---
 import { SITE_AUTHOR } from "../lib/blog";
 
-export interface Properties {
+export interface Props {
   title?: string;
   description: string;
 }
 
-const { title, description } = Astro.props as Properties;
+const { title, description } = Astro.props;
 
 const NAV_ITEMS = [
   { id: "home", href: "/1999", label: "Home" },

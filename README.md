@@ -21,11 +21,11 @@ The dev server runs at http://localhost:4321.
 | ----------------------- | ------------------------------------------------------------------- |
 | `npm run dev`           | Local dev server                                                    |
 | `npm run build`         | Type check, then production build                                   |
-| `npm run lint`          | Lint and auto-fix every file type                                   |
+| `npm run lint`          | Biome and ESLint with auto-fix (code, CSS, Markdown)                |
 | `npm run lint:check`    | The same lint without auto-fix (what CI runs)                       |
 | `npm run preview`       | Build, then run it with `wrangler dev` and real Cloudflare bindings |
 | `npm run deploy`        | Build, then `wrangler deploy` to Cloudflare Workers                 |
-| `npm run format`        | Prettier and import sorting                                         |
+| `npm run format`        | Biome format (not `.astro` files)                                   |
 | `npm test`              | Vitest unit tests                                                   |
 | `npm run test:coverage` | Check 100% coverage in `src/lib`                                    |
 | `npm run test:e2e`      | Browser regressions and axe scans against the built Worker          |
@@ -77,11 +77,10 @@ Ink on paper is 12.03:1 and petrol on paper is 6.25:1. Petrol on the desktop col
 ## Stack
 
 - Astro with static output, plus one on-demand API route for the guestbook
-- TypeScript 6, with `astro check` for TypeScript and Astro templates
-- ESLint flat config for Astro, TS, CSS and Markdown
+- TypeScript 7.1 beta, with `@astrojs/ts-content-mapper` so `tsc` type-checks `.astro` files
+- Biome for formatting, linting and import sorting, plus ESLint for Baseline-only CSS and Markdown
 - Vitest with happy-dom
 - A Lefthook pre-commit hook that formats and lints staged files (`npm install` sets it up); unit tests run separately and in CI
-- Prettier with import sorting
 - `@astrojs/sitemap` and `astro-pagefind` for the sitemap and search
 - Share images drawn with `satori` and `sharp` in the site's own VT323 and IBM Plex Mono
 - RSS, Atom and JSON feeds
