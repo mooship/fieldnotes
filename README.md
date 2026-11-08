@@ -29,7 +29,7 @@ The dev server runs at http://localhost:4321.
 | `npm test`              | Vitest unit tests                                                   |
 | `npm run test:coverage` | Check 100% coverage in `src/lib`                                    |
 | `npm run test:e2e`      | Browser regressions and axe scans against the built Worker          |
-| `npm run lighthouse`    | Lighthouse CI against the built site                                |
+| `npm run lighthouse`    | Lighthouse CI against the built site (blocking in CI)               |
 
 ## Layout of the repo
 

@@ -20,7 +20,7 @@ npm run deploy        # build, then `wrangler deploy`: never run without the use
 npm test              # run Vitest unit tests
 npm run test:coverage # run Vitest with coverage: CI fails under 100% lines/branches/functions/statements in src/lib
 npm run test:e2e      # run Playwright against the built Worker (`npm run preview` on port 8788); also runs in CI
-npm run lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
+npm run lighthouse    # run Lighthouse CI against the built site (median of 3 runs; blocking in CI, see CI)
 ```
 
 `npm run build` regenerates Cloudflare binding types (`wrangler types --include-runtime=false`), type-checks, then builds. The full runtime type set is switched off because it pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block. `Env` is still generated (the guestbook API route uses it), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
@@ -113,7 +113,7 @@ Lefthook runs a pre-commit hook on the staged files: `biome check --write` (form
 
 The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 22. Keep browser regressions and axe scans green as well as the lint/build/unit gates.
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover format and lint locally, not unit tests, the typecheck or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and a blocking Lighthouse run (`lighthouserc.json`, median of 3 runs per page, report uploaded as an artifact). The gate requires 100 for accessibility, best practices and SEO, which the site meets. Performance is a floor of 75 as a regression guard because the pages currently measure 83 to 88; the target is 95, so raise the floor as performance improves and never lower it to get green. `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover format and lint locally, not unit tests, the typecheck or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) has one npm entry, because Dependabot rejects the file if two entries share a directory. npm checks weekly on Tuesdays and opens at most two PRs: `astro` and `zod` in one group, everything else in another. GitHub Actions check weekly on Fridays. Every repo has its own day and time so the PRs do not all arrive together.
 
