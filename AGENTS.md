@@ -60,9 +60,9 @@ Use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ### Dependencies and lockfiles
 
-- **One npm major everywhere.** `packageManager` pins npm 11 because Cloudflare Workers Builds runs npm 10.9.2 unless it is set (`engines.npm` does not change it), CI installs npm 11, and lockfiles are written by npm 11. When one npm accepts a lockfile and another rejects it, the environment is mismatched; the pull request is not at fault. The minimums are Node >=24.22.1, which Cloudflare preinstalls and defaults to, and npm >=11; Node 24 and 26 are supported, `.node-version` holds only `24`, and CI reads it.
-- **Run a real `npm install` after a `package.json` change** and commit the lockfile with it. Avoid `--package-lock-only`: it keeps stale nested entries when a range or override changes, which left an `invalid` minimatch here. If `npm ls` prints `invalid`, delete the stale nested lockfile entries and install again; never edit versions by hand.
-- **Check with a real `npm ci` in a clean clone**, not `--dry-run`: a dry run accepted a lockfile that a real install rejected.
+- **Two npm versions must accept every lockfile.** Cloudflare Workers Builds installs with npm 10.9.2 and that cannot be changed from here (a `packageManager` field and a `.node-version` of `24` both made this project's preview builds fail, while `engines.node` alone is fine), and CI and local development use npm 11. Check with a real `npm ci` under both. When npm 11 updates an existing lockfile, which is what Dependabot does, it drops nested `puppeteer-core` proxy-agent entries that npm 10 insists on; regenerate the lockfile with `npx -y npm@10 install --package-lock-only --ignore-scripts`, because an npm 10 lockfile also passes npm 11. The minimum is Node >=24.22.1 (`engines.node`; Cloudflare preinstalls and defaults to it), Node 24 and 26 are tested in CI.
+- **Run a real `npm install` after a `package.json` change** and commit the lockfile with it. Do not use `--package-lock-only` for that: it keeps stale nested entries when a range or override changes, which left an `invalid` minimatch here. The one place it is right is the npm 10 regeneration above. If `npm ls` prints `invalid`, delete the stale nested lockfile entries and install again; never edit versions by hand.
+- **Check with a real `npm ci` in a clean clone**, under npm 10 and npm 11, not `--dry-run`: a dry run accepted a lockfile that a real install rejected.
 - **Prerelease pins are exact.** `typescript` is `7.1.0-beta` because `^7.1.0-beta` resolves to nightly builds, and a prerelease does not satisfy a plain peer range such as `>=2.9`, which is why the old import-sorting plugin could not install.
 - **Dependabot writes its own lockfile changes.** Only fix what a real `npm ci` rejects, and do it on its branch.
 - **Run tools through `npm run` or `npx --no-install`.** A bare `npx biome` fetched an unrelated package called `biome` when the local binary was missing.
@@ -75,7 +75,7 @@ Run the checks for what you changed, read the output, and say so if any failed o
 - Any code or config change: `npm run lint:check`, `npm run build` (it includes the typecheck) and `npm test`.
 - `src/lib` or shared types: also `npm run test:coverage`, which holds the 100% gate.
 - Pages, layouts, components and styles: also `npm run test:e2e` (desktop shell, plain view and axe scans), and compare the built HTML if you restructured a template.
-- Dependency or lockfile change: follow Dependencies and lockfiles under Conventions, and finish with a real `npm ci` in a clean clone.
+- Dependency or lockfile change: follow Dependencies and lockfiles under Conventions, and finish with a real `npm ci` under npm 10 and npm 11 in a clean clone.
 
 ## Safety
 
