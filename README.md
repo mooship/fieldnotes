@@ -4,7 +4,7 @@ My personal site and blog, set out as a quiet retro desktop. It's built with Ast
 
 ## Running it
 
-You need Node 22 or later and npm.
+You need Node 24.22.1 or later (Node 24 and 26 are tested) and npm.
 
 ```sh
 git clone https://github.com/mooship/fieldnotes.git
@@ -29,7 +29,7 @@ The dev server runs at http://localhost:4321.
 | `npm test`              | Vitest unit tests                                                   |
 | `npm run test:coverage` | Check 100% coverage in `src/lib`                                    |
 | `npm run test:e2e`      | Browser regressions and axe scans against the built Worker          |
-| `npm run lighthouse`    | Lighthouse CI against the built site                                |
+| `npm run lighthouse`    | Lighthouse CI against the built site (blocking in CI)               |
 
 ## Layout of the repo
 

@@ -20,7 +20,7 @@ npm run deploy        # build, then `wrangler deploy`: never run without the use
 npm test              # run Vitest unit tests
 npm run test:coverage # run Vitest with coverage: CI fails under 100% lines/branches/functions/statements in src/lib
 npm run test:e2e      # run Playwright against the built Worker (`npm run preview` on port 8788); also runs in CI
-npm run lighthouse    # run Lighthouse CI against the built site (informational, no score gate)
+npm run lighthouse    # run Lighthouse CI against the built site (median of 3 runs; blocking in CI, see CI)
 ```
 
 `npm run build` regenerates Cloudflare binding types (`wrangler types --include-runtime=false`), type-checks, then builds. The full runtime type set is switched off because it pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block. `Env` is still generated (the guestbook API route uses it), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
@@ -58,6 +58,16 @@ Use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
 - **Declare component props as `interface Props`** and read them from `Astro.props` without a cast, so the content mapper checks every call site.
 - `.github/` and `.claude/` are excluded from linting.
 
+### Dependencies and lockfiles
+
+- **Two npm versions must accept every lockfile.** Cloudflare Workers Builds installs with npm 10.9.2 and that cannot be changed from here (a `packageManager` field and a `.node-version` of `24` both made this project's preview builds fail, while `engines.node` alone is fine), and CI and local development use npm 11. Check with a real `npm ci` under both. When npm 11 updates an existing lockfile, which is what Dependabot does, it drops nested `puppeteer-core` proxy-agent entries that npm 10 insists on; regenerate the lockfile with `npx -y npm@10 install --package-lock-only --ignore-scripts`, because an npm 10 lockfile also passes npm 11. The minimum is Node >=24.22.1 (`engines.node`; Cloudflare preinstalls and defaults to it), Node 24 and 26 are tested in CI.
+- **Run a real `npm install` after a `package.json` change** and commit the lockfile with it. Do not use `--package-lock-only` for that: it keeps stale nested entries when a range or override changes, which left an `invalid` minimatch here. The one place it is right is the npm 10 regeneration above. If `npm ls` prints `invalid`, delete the stale nested lockfile entries and install again; never edit versions by hand.
+- **Check with a real `npm ci` in a clean clone**, under npm 10 and npm 11, not `--dry-run`: a dry run accepted a lockfile that a real install rejected.
+- **Prerelease pins are exact.** `typescript` is `7.1.0-beta` because `^7.1.0-beta` resolves to nightly builds, and a prerelease does not satisfy a plain peer range such as `>=2.9`, which is why the old import-sorting plugin could not install.
+- **Dependabot writes its own lockfile changes.** Only fix what a real `npm ci` rejects, and do it on its branch.
+- **Run tools through `npm run` or `npx --no-install`.** A bare `npx biome` fetched an unrelated package called `biome` when the local binary was missing.
+- **Install only in a working tree you own;** use a throwaway clone when another process may be using this one.
+
 ## Definition of done
 
 Run the checks for what you changed, read the output, and say so if any failed or were skipped.
@@ -65,7 +75,7 @@ Run the checks for what you changed, read the output, and say so if any failed o
 - Any code or config change: `npm run lint:check`, `npm run build` (it includes the typecheck) and `npm test`.
 - `src/lib` or shared types: also `npm run test:coverage`, which holds the 100% gate.
 - Pages, layouts, components and styles: also `npm run test:e2e` (desktop shell, plain view and axe scans), and compare the built HTML if you restructured a template.
-- Dependency or lockfile change: regenerate the lockfile with npm 10 (`npx -y npm@10 install --package-lock-only --ignore-scripts`) and check `npm ci --dry-run` under npm 10 and npm 11, because Cloudflare Workers Builds and the Node 22 CI leg run npm 10.
+- Dependency or lockfile change: follow Dependencies and lockfiles under Conventions, and finish with a real `npm ci` under npm 10 and npm 11 in a clean clone.
 
 ## Safety
 
@@ -111,9 +121,9 @@ Lefthook runs a pre-commit hook on the staged files: `biome check --write` (form
 
 ## CI
 
-The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 22. Keep browser regressions and axe scans green as well as the lint/build/unit gates.
+The `e2e` job installs Chromium and runs `npm run test:e2e` on Node 24. Keep browser regressions and axe scans green as well as the lint/build/unit gates.
 
-`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test` on Node 22 and 24 (Node 22 runs `test:coverage` instead of plain `test`), and an informational Lighthouse run (`continue-on-error`, report uploaded as an artifact). `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover format and lint locally, not unit tests, the typecheck or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
+`.github/workflows/ci.yml` runs on every push and PR to `main`: `lint:check` (no autofix), `build` + `test:coverage` on Node 24 and 26, and a blocking Lighthouse run (`lighthouserc.json`, median of 3 runs per page, report uploaded as an artifact). The gate requires 100 for accessibility, best practices and SEO, which the site meets. Performance is a floor of 75 as a regression guard because the pages currently measure 83 to 88; the target is 95, so raise the floor as performance improves and never lower it to get green. `test:coverage` fails the job if coverage in `src/lib` drops below 100% on any metric: see Tests. Pre-commit hooks cover format and lint locally, not unit tests, the typecheck or coverage. Run `npm run build` and `npm run test:coverage` locally before pushing if you've touched types or `src/lib`, or a failure will only surface in CI.
 
 Dependabot (`.github/dependabot.yml`) has one npm entry, because Dependabot rejects the file if two entries share a directory. npm checks weekly on Tuesdays and opens at most two PRs: `astro` and `zod` in one group, everything else in another. GitHub Actions check weekly on Fridays. Every repo has its own day and time so the PRs do not all arrive together.
 
