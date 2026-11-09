@@ -4,7 +4,7 @@ My personal site and blog, set out as a quiet retro desktop. It's built with Ast
 
 ## Running it
 
-You need Node 24.22.1 or later (Node 24 is tested) and npm.
+You need Node 24 or later and npm 11 or later. `packageManager` pins npm 11.19.1 for Corepack and Cloudflare Workers Builds.
 
 ```sh
 git clone https://github.com/mooship/fieldnotes.git
