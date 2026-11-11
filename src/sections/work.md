@@ -2,14 +2,14 @@ I'm a Pretoria-based full-stack engineer with experience in financial services, 
 
 ## Experience
 
-### a software consultancy
+### Software consultancy
 
-I work through a software consultancy on contract with a property data and analytics company, contributing to its Property and Retail teams.
+I work for a software consultancy, on contract with a property data and analytics company, contributing to its property and retail teams.
 
 **Intermediate Software Engineer · November 2024 to present**
 
-- **Property valuation platform:** extended the multi-tenant valuation system to onboard a major South African retail bank and delivered New Developments functionality for a home-loans lender.
-- **Retail data platform:** worked on a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Excel and PDF reports, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
+- **Property valuation platform:** extended the multi-tenant valuation system to onboard a major South African retail bank and delivered new-developments functionality for a home-loans lender.
+- **Retail data platform:** worked on a legacy ASP.NET MVC 5 and WebForms stack. Upgraded .NET Framework, added Excel and PDF reporting, redesigned maps and introduced CI/CD to replace manual file-copy deployments.
 
 ### Entelect Software
 
