@@ -19,7 +19,7 @@ npm run preview       # build, then run the built Worker locally with `wrangler 
 npm run deploy        # build, then `wrangler deploy`: never run without the user's explicit go-ahead, see Safety
 npm test              # run Vitest unit tests
 npm run test:coverage # run Vitest with coverage: CI fails under 100% lines/branches/functions/statements in src/lib
-npm run test:e2e      # run Playwright against the built Worker (`npm run preview` on port 8788); also runs in CI
+npm run test:e2e      # run Playwright against the built Worker (`npm run preview` on port 8788, or `E2E_PORT`); also runs in CI
 npm run lighthouse    # run Lighthouse CI against the built site (median of 3 runs; blocking in CI, see CI)
 ```
 
@@ -59,6 +59,7 @@ Use [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
 ### Dependencies and lockfiles
 
 - **Never install or upgrade to a package version published less than 7 days ago.** `.npmrc` sets `min-release-age=7` and Dependabot has a 7-day cooldown; do not work around either. A fix that exists only in a newer release goes to the owner first.
+- A release under 7 days old (an urgent security fix, say) needs the owner's approval in the conversation first; an agent never decides this alone. With approval, install it with `npm install <package>@<version> --min-release-age=0`, or exempt one package with `--min-release-age-exclude=<package>`, and leave `.npmrc` alone.
 - **Use npm 11 throughout.** Node 24 and npm 11 are minimums. `packageManager` pins npm 11.19.1 for Corepack and Cloudflare Workers Builds, and CI installs that same version.
 - **Run a real `npm install` after a `package.json` change** and commit the lockfile with it. Do not use `--package-lock-only`: it can keep stale nested entries when a range or override changes. If `npm ls` prints `invalid`, delete the stale nested lockfile entries and install again; never edit versions by hand.
 - **Check with a real `npm ci` in a clean clone** under npm 11, not `--dry-run`: a dry run accepted a lockfile that a real install rejected.

@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 8788;
+const PORT = Number(process.env.E2E_PORT ?? 8788);
 const isCI = Boolean(process.env.CI);
 
 export default defineConfig({
@@ -13,7 +13,8 @@ export default defineConfig({
   webServer: {
     command: `npm run preview -- --port ${PORT} --ip 127.0.0.1`,
     url: `http://127.0.0.1:${PORT}/`,
-    reuseExistingServer: !isCI,
+    // A built server can be stale or belong to another run, so one already on the port is an error.
+    reuseExistingServer: false,
     timeout: 240_000,
   },
 });
