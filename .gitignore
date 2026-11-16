@@ -31,7 +31,8 @@ yarn-error.log*
 # claude code
 .claude/settings.local.json
 .claude/worktrees/
-.playwright-mcp/
+.playwright-cli/
+.tmp-visual/
 
 # eslint
 .eslintcache
