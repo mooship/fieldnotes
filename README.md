@@ -1,6 +1,6 @@
 # Timothy Brits
 
-My personal site and blog, set out as a quiet retro desktop. It's built with Astro, TypeScript 6 and plain CSS. Content sits in windows you can drag and focus, and a visible **Skip the OS** link switches to ordinary reading. There are tags, full-text search, three feeds and generated share images. The repository and the Cloudflare resources still use the old `fieldnotes` name.
+My personal site and blog, set out as a quiet retro desktop. It's built with Astro, TypeScript 7 and plain CSS. Content sits in windows you can drag and focus, and a visible **Skip the OS** link switches to ordinary reading. There are tags, full-text search, three feeds and generated share images. The repository and the Cloudflare resources still use the old `fieldnotes` name.
 
 ## Running it
 
@@ -98,7 +98,7 @@ npm run build
 npm run test:e2e
 ```
 
-The browser checks cover keyboard controls, main and skip-link focus, footer clearance, the plain-view preference, mobile reflow, reduced motion, content without JavaScript, and WCAG A and AA axe scans at phone and desktop widths in light and dark. They also run in CI with lint, builds and unit tests on Node 22 and 24. They don't prove full accessibility; screen-reader, zoom and touch checks still have to be done by hand.
+The browser checks cover keyboard controls, main and skip-link focus, footer clearance, the plain-view preference, mobile reflow, reduced motion, content without JavaScript, and WCAG A and AA axe scans at phone and desktop widths in light and dark. They also run in CI with lint, builds and unit tests on Node 24. They don't prove full accessibility; screen-reader, zoom and touch checks still have to be done by hand.
 
 Pushes to `main` deploy automatically through Cloudflare, so run these checks before you push. Don't run `npm run deploy` or any `--remote` wrangler command by hand without asking first.
 
