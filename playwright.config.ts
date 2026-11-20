@@ -11,7 +11,7 @@ export default defineConfig({
   use: { baseURL: `http://127.0.0.1:${PORT}`, trace: "retain-on-failure" },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: `npm run preview -- --port ${PORT} --ip 127.0.0.1`,
+    command: `npm run preview -- --port ${PORT} --host 127.0.0.1`,
     url: `http://127.0.0.1:${PORT}/`,
     // A built server can be stale or belong to another run, so one already on the port is an error.
     reuseExistingServer: false,

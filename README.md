@@ -17,19 +17,21 @@ The dev server runs at http://localhost:4321.
 
 ## Scripts
 
-| Script                  | What it does                                                        |
-| ----------------------- | ------------------------------------------------------------------- |
-| `npm run dev`           | Local dev server                                                    |
-| `npm run build`         | Type check, then production build                                   |
-| `npm run lint`          | Biome and ESLint with auto-fix (code, CSS, Markdown)                |
-| `npm run lint:check`    | The same lint without auto-fix (what CI runs)                       |
-| `npm run preview`       | Build, then run it with `wrangler dev` and real Cloudflare bindings |
-| `npm run deploy`        | Build, then `wrangler deploy` to Cloudflare Workers                 |
-| `npm run format`        | Biome format (not `.astro` files)                                   |
-| `npm test`              | Vitest unit tests                                                   |
-| `npm run test:coverage` | Check 100% coverage in `src/lib`                                    |
-| `npm run test:e2e`      | Browser regressions and axe scans against the built Worker          |
-| `npm run lighthouse`    | Lighthouse CI against the built site (blocking in CI)               |
+| Script                     | What it does                                                        |
+| -------------------------- | ------------------------------------------------------------------- |
+| `npm run dev`              | Local dev server                                                    |
+| `npm run build`            | Type check, then production build                                   |
+| `npm run lint`             | Biome and ESLint with auto-fix (code, CSS, Markdown)                |
+| `npm run lint:check`       | The same lint without auto-fix (what CI runs)                       |
+| `npm run preview`          | Build, then serve the build with `astro preview` and local bindings |
+| `npm run deploy`           | Build, then `cf deploy` to Cloudflare Workers                       |
+| `npm run deploy:ci`        | Apply the D1 migrations, then `cf deploy` (what Cloudflare runs)    |
+| `npm run db:migrate:local` | Apply `migrations/` to the local D1 database                        |
+| `npm run format`           | Biome format (not `.astro` files)                                   |
+| `npm test`                 | Vitest unit tests                                                   |
+| `npm run test:coverage`    | Check 100% coverage in `src/lib`                                    |
+| `npm run test:e2e`         | Browser regressions and axe scans against the built Worker          |
+| `npm run lighthouse`       | Lighthouse CI against the built site (blocking in CI)               |
 
 ## Layout of the repo
 
@@ -87,7 +89,7 @@ Ink on paper is 12.03:1 and petrol on paper is 6.25:1. Petrol on the desktop col
 - A guestbook at `/1999/guestbook`, stored in Cloudflare D1 and capped by Cloudflare's Rate Limiting binding
 - Cloudflare Workers through `@astrojs/cloudflare`. `public/_headers` sets a strict CSP and cache rules for that host, so any new external script, font, image or API call needs an entry there too.
 
-The build would run on most Astro hosts, but this repo is set up for Cloudflare Workers: `wrangler.jsonc` declares the D1 and Rate Limiting bindings the guestbook needs.
+The build would run on most Astro hosts, but this repo is set up for Cloudflare Workers: `cloudflare.config.ts` declares the D1, Rate Limiting and secret bindings the guestbook needs.
 
 ## Before a big push
 
@@ -100,7 +102,7 @@ npm run test:e2e
 
 The browser checks cover keyboard controls, main and skip-link focus, footer clearance, the plain-view preference, mobile reflow, reduced motion, content without JavaScript, and WCAG A and AA axe scans at phone and desktop widths in light and dark. They also run in CI with lint, builds and unit tests on Node 24. They don't prove full accessibility; screen-reader, zoom and touch checks still have to be done by hand.
 
-Pushes to `main` deploy automatically through Cloudflare, so run these checks before you push. Don't run `npm run deploy` or any `--remote` wrangler command by hand without asking first.
+Pushes to `main` deploy automatically through Cloudflare, so run these checks before you push. Don't run `npm run deploy`, `npm run deploy:ci` or any `cf` command that touches the production database or secrets by hand without asking first.
 
 ## Licence
 

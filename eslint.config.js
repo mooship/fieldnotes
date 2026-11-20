@@ -10,6 +10,7 @@ export default [
   {
     ignores: [
       "dist/",
+      ".cloudflare/",
       "coverage/",
       ".astro/",
       ".astro-cache/",

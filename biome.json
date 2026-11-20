@@ -12,7 +12,6 @@
       "!**/dist",
       "!**/node_modules",
       "!package-lock.json",
-      "!worker-configuration.d.ts",
       "!src/schemas/json",
       "!public/_headers",
       "!.claude",
@@ -25,7 +24,7 @@
     "indentWidth": 2,
     "lineWidth": 80,
     "lineEnding": "lf",
-    "includes": ["**", "!wrangler.jsonc"]
+    "includes": ["**"]
   },
   "javascript": {
     "formatter": {
