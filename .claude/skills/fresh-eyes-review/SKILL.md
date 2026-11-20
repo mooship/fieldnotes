@@ -19,7 +19,7 @@ Check these first; they are the usual misses.
 
 - A rule in `AGENTS.md` the change breaks (Engineering principles, Code style, Safety, Architecture, the design system and accessibility paragraphs).
 - A behaviour change with no test, a test that no longer fails without the change, a weakened assertion, a skip, a fixed wait, or a coverage ignore or exclusion in `src/lib`.
-- A change that needs a companion change it lacks: a CSP entry in `public/_headers` for a new external origin, a new route in `llms.txt` and the browser scan list, a README or `AGENTS.md` paragraph that describes the old behaviour, a migration, a `wrangler.jsonc` binding.
+- A change that needs a companion change it lacks: a CSP entry in `public/_headers` for a new external origin, a new route in `llms.txt` and the browser scan list, a README or `AGENTS.md` paragraph that describes the old behaviour, a migration, a `cloudflare.config.ts` binding.
 - A claim in copy or docs that the code does not back.
 - Prose that breaks the writing rules in "Code style": em dashes or `--` stand-ins, "not X but Y" contrasts, bold run-in labels on bullets, stock words. Blog posts are the author's own voice: punctuation only.
 - A new dependency, or a version under 7 days old (`.npmrc` sets the delay), or a `package.json` change without the lockfile.

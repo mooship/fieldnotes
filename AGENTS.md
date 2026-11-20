@@ -9,21 +9,23 @@ Timothy Brits is a personal site and blog built with Astro, hosted on Cloudflare
 ## Commands
 
 ```bash
-npm run dev           # start dev server (wrangler types, then astro dev)
-npm run build         # wrangler types, typecheck, then astro build
+npm run dev           # start dev server (cf workers types, then astro dev)
+npm run build         # cf workers types, typecheck, then astro build
 npm run typecheck     # astro sync, then tsc with the Astro content mapper (checks .astro files too)
 npm run lint          # biome check --write, then ESLint --fix for CSS and Markdown
 npm run lint:check    # the same checks without writing: what CI runs
 npm run format        # biome format --write (.astro files are not formatted, see Conventions)
-npm run preview       # build, then run the built Worker locally with `wrangler dev` (real bindings, not astro preview)
-npm run deploy        # build, then `wrangler deploy`: never run without the user's explicit go-ahead, see Safety
+npm run preview       # build, then `astro preview`: the built Worker and static assets in workerd, with local bindings
+npm run deploy        # build, then `cf deploy`: never run without the user's explicit go-ahead, see Safety
+npm run deploy:ci     # apply the D1 migrations, then `cf deploy`: what Workers Builds runs, see Deployment
+npm run db:migrate:local # apply migrations/ to the local D1 database (.cloudflare/state)
 npm test              # run Vitest unit tests
 npm run test:coverage # run Vitest with coverage: CI fails under 100% lines/branches/functions/statements in src/lib
 npm run test:e2e      # run Playwright against the built Worker (`npm run preview` on port 8788, or `E2E_PORT`); also runs in CI
 npm run lighthouse    # run Lighthouse CI against the built site (median of 3 runs; blocking in CI, see CI)
 ```
 
-`npm run build` regenerates Cloudflare binding types (`wrangler types --include-runtime=false`), type-checks, then builds. The full runtime type set is switched off because it pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block. `Env` is still generated (the guestbook API route uses it), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
+`npm run build` regenerates Cloudflare binding types (`cf workers types --include-runtime=false` into `.cloudflare/types/index.d.ts`), type-checks, then builds. The Cloudflare Vite plugin rewrites that file on every sync and build, so `astro.config.mjs` also passes `types: { includeRuntime: false }`. The full runtime type set is switched off because it pulls in Cloudflare's `HTMLRewriter` `Element` type, which collides with DOM's `Element.append` and breaks type-checking on every client-side `<script>` block. `Env` is still generated from `cloudflare.config.ts`, secrets included (the guestbook API route uses it), and `cloudflare:workers`'s minimal type is declared by hand in `src/environment.d.ts`.
 
 TypeScript is 7.1 beta, pinned to the exact version (a caret range resolves to nightly builds). `@astrojs/ts-content-mapper` is registered in `tsconfig.json` and `--runExternalCode` lets `tsc` run it, so frontmatter and template expressions in `.astro` files are type-checked without `astro check`. Do not bring back `astro check` or typescript-eslint. Move to the stable 7.1 release when it ships.
 
@@ -84,7 +86,7 @@ Finish with one report, each part filled or "none": **Checks** (each command and
 ## Safety
 
 - **Shipping.** Work goes straight to `main`: commit each finished task, and push once the checks in "Definition of done" pass; no pull request is needed. Use a branch and a pull request instead for a migration or anything you want a second look at before it is live. A push to `main` deploys to production through Cloudflare Workers Builds, so say afterwards what was pushed. The repository ruleset lets the owner's account bypass its pull request and status-check rules, so a direct push reports "Bypassed rule violations"; that is expected.
-- **Ask first, and wait for confirmation, before** running `wrangler deploy`/`npm run deploy`, merging someone else's PR, or doing anything else that changes the live Worker or its production data directly, including `wrangler d1 migrations apply --remote` and other `--remote`-flagged wrangler commands against the production D1 database.
+- **Ask first, and wait for confirmation, before** running `cf deploy`/`npm run deploy`/`npm run deploy:ci`, merging someone else's PR, or doing anything else that changes the live Worker or its production data directly, including `cf d1 migrations apply` without `--local` (it targets the production D1 database) and any `cf workers secrets` command.
 
 ## Sub-agents
 
@@ -93,12 +95,12 @@ Where the tool has sub-agents, use them for wide searches, independent changes i
 - Run at most three at the same time, and at most two that write; prefer one or two. Never start another while at the limit; queue the work.
 - Brief each agent like a colleague who has not seen the conversation: the goal, the files and sections of `AGENTS.md` to read, what is ruled out, what to report back (the "Hand-off" headings), and the rules that matter for the task (for prose, "Code style"). Never paste text from outside the project into a brief.
 - When a tool or the harness blocks or refuses a command, stop. Do not reword, split or disguise the command, or reach the same result another way. Report what was blocked and what you wanted to run under Deviations. Put this in every brief.
-- Every agent stops each dev server, `wrangler` instance, browser and other process it starts, and confirms with a port check that none is left before it reports. Use a different port for each server. Put this in every brief.
+- Every agent stops each dev server, `cf` process, browser and other process it starts, and confirms with a port check that none is left before it reports. Use a different port for each server. Put this in every brief.
 - Name the model tier for every agent; never inherit it silently. Use the cheapest tier that fits (small and fast for mechanical work that is easy to check, default for a well-specified task, most capable for work that is hard to get right) and escalate on failure.
 
 ## Tooling
 
-Use a command-line tool where one does the job, and commit no MCP server configuration: `gh` for GitHub, `npx --no-install wrangler` (local runs, logs, D1) or the `cf` CLI where it is installed (zones, DNS and other account resources; `cf cli search <words>` finds a command) for Cloudflare, and `npx --no-install playwright cli` for the browser (see the `playwright-tests` skill). No Cloudflare skills are vendored; `--help` and developers.cloudflare.com are the reference. Run project binaries through `npm run` or `npx --no-install`: a bare `npx biome` fetched an unrelated package called `biome` when the local binary was missing.
+Use a command-line tool where one does the job, and commit no MCP server configuration: `gh` for GitHub, `npx --no-install cf` (local runs, logs, D1, zones, DNS and other account resources; `cf cli search <words>` finds a command) for Cloudflare, and `npx --no-install playwright cli` for the browser (see the `playwright-tests` skill). No Cloudflare skills are vendored; `--help` and developers.cloudflare.com are the reference. Run project binaries through `npm run` or `npx --no-install`: a bare `npx biome` fetched an unrelated package called `biome` when the local binary was missing.
 
 ## Content authoring
 
@@ -130,20 +132,22 @@ Dependabot (`.github/dependabot.yml`) has one npm entry, because Dependabot reje
 
 ## Deployment
 
-The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, migrated off Cloudflare Pages). `wrangler.jsonc` at the project root is the source of truth. Deployment **is** Git-integrated via Cloudflare Workers Builds: **a push to `main` automatically builds and deploys to production**, and a push to any other branch (including a PR branch) gets its own isolated preview deployment at a `<hash>-fieldnotes.timothybrits.workers.dev` URL, posted as a PR comment by the `cloudflare-workers-and-pages` bot. `npm run deploy` (build, then `wrangler deploy`) still works as a manual CLI alternative, but **a push to `main` is itself a production deploy**: see Safety. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
+The site is hosted on **Cloudflare Workers** (`@astrojs/cloudflare` adapter, migrated off Cloudflare Pages). `cloudflare.config.ts` at the project root is the source of truth. Deployment **is** Git-integrated via Cloudflare Workers Builds: **a push to `main` automatically builds and deploys to production**, and a push to any other branch (including a PR branch) gets its own isolated preview deployment at a `<hash>-fieldnotes.timothybrits.workers.dev` URL, posted as a PR comment by the `cloudflare-workers-and-pages` bot. `npm run deploy` (build, then `cf deploy`) still works as a manual CLI alternative, but **a push to `main` is itself a production deploy**: see Safety. Production domain: `timothybrits.co.za` (`site` in `astro.config.mjs`).
 
-Astro's build produces `dist/client` (static assets) and `dist/server` (the Worker script). `wrangler.jsonc`'s `main` points at `@astrojs/cloudflare/entrypoints/server` and `assets.directory` at `./dist/client`: the adapter also writes its own `dist/server/wrangler.json` mirroring the root config with paths relativized to `dist/server`; that's a build artifact for the adapter's own tooling, not something to edit or deploy from directly.
+The `@astrojs/cloudflare` adapter (15, a beta, pinned exactly) hands the Worker entrypoint and the assets directory to the Cloudflare Vite plugin 2.0, which reads `cloudflare.config.ts`. `astro build` (and `cf build`, which runs it) writes Cloudflare Build Output to `.cloudflare/output/v1/workers/default/` (`assets/` holds the static files, `_headers` included, `bundle/` the Worker). That directory, not `dist/`, is what `cf deploy` uploads and what Lighthouse serves; it is git-ignored. Do not edit it by hand.
 
-**Bindings** (all declared in `wrangler.jsonc`, typed via `wrangler types` into `worker-configuration.d.ts`, accessed in server code via `import { env } from "cloudflare:workers"`):
+The Cloudflare dashboard (Workers & Pages, fieldnotes, Settings, Build) uses build command `npm run build`, deploy command `npm run deploy:ci` (applies the D1 migrations, then `cf deploy`) and preview command `npx --no-install cf previews deploy` for non-production branches.
 
-- `DB`, a D1 database (`fieldnotes-guestbook`, provisioned in the `weur` region) backing the guestbook. Schema lives in `migrations/`; apply with `wrangler d1 migrations apply fieldnotes-guestbook --local` (dev) or `--remote` (production, production data, treat like a deploy, see Safety).
+**Bindings** (all declared in `cloudflare.config.ts`, typed by `cf workers types` into `.cloudflare/types/index.d.ts`, accessed in server code via `import { env } from "cloudflare:workers"`):
+
+- `DB`, a D1 database (`fieldnotes-guestbook`, provisioned in the `weur` region) backing the guestbook. Schema lives in `migrations/`; apply with `npm run db:migrate:local` (dev) or, for production, `cf d1 migrations apply <DATABASE_ID> --dir migrations` (production data, treat like a deploy, see Safety; `npm run deploy:ci` runs it). `cf d1 migrations` takes the database ID from `cloudflare.config.ts`, not its name or binding.
 - `GUESTBOOK_RATE_LIMITER`: Cloudflare's native Rate Limiting binding, capping guestbook POSTs at 5 per client IP per 60-second window (the only supported period granularity is 10 or 60 seconds).
-- `ASSETS`: the static assets binding serving everything under `dist/client`.
-- `TURNSTILE_SECRET_KEY`: a Cloudflare Turnstile secret, used server-side to verify guestbook submissions aren't bots. Not in `wrangler.jsonc` (secrets never are): set locally in `.dev.vars` (gitignored), in production via `wrangler secret put TURNSTILE_SECRET_KEY`. The matching public site key is `PUBLIC_TURNSTILE_SITE_KEY`, a build-time Astro env var (`.env` / `.env.production`, both gitignored) rendered into the guestbook page's Turnstile widget.
+- `ASSETS`: the static assets binding serving everything under `.cloudflare/output/v1/workers/default/assets`.
+- `TURNSTILE_SECRET_KEY`: a Cloudflare Turnstile secret, used server-side to verify guestbook submissions aren't bots. Declared in `cloudflare.config.ts` with `bindings.secret()`, which holds no value: set it locally in `.dev.vars` (gitignored), in production via `cf workers secrets update TURNSTILE_SECRET_KEY`. The matching public site key is `PUBLIC_TURNSTILE_SITE_KEY`, a build-time Astro env var (`.env` / `.env.production`, both gitignored) rendered into the guestbook page's Turnstile widget.
 
 Two adapter features are deliberately turned off in `astro.config.mjs` rather than left at their defaults: `session: false` (the site has no per-user state, so there's no reason to provision a KV namespace for Astro's Sessions API) and `imageService: "passthrough"` (the site doesn't use `astro:assets`' `<Image>`/`getImage()`, only its `Font` API, so there's no reason to provision a Cloudflare Images binding). Both would otherwise be auto-provisioned on deploy.
 
-**Observability:** `wrangler.jsonc` sets `observability.enabled: true` (Workers Logs, and live tailing via `wrangler tail` once deployed). There is no Smart Placement: the guestbook makes one or two D1 queries per request, and Cloudflare reported too few invocations for it to ever take effect.
+**Observability:** `cloudflare.config.ts` sets `observability.enabled: true` (Workers Logs, and live tailing with `cf` once deployed). There is no Smart Placement: the guestbook makes one or two D1 queries per request, and Cloudflare reported too few invocations for it to ever take effect.
 
 `public/_headers` is unchanged from the Pages days, Workers with static assets supports `_headers`/`_redirects` natively, same syntax. It sets security headers (a strict CSP, HSTS, frame/referrer/permissions policy) and cache rules for every response, plus long cache lifetimes for `/_astro/*`, `/og/*`, and static image types. **If you add a new external resource**, a script, font, image, or API call from a new origin: the CSP's `default-src 'self'` will silently block it in production even though it works fine in `npm run dev`. Update the matching `-src` directive in `public/_headers` at the same time.
 
