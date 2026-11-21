@@ -1,5 +1,6 @@
 {
   "extends": "astro/tsconfigs/base",
+  "include": ["**/*", ".cloudflare/types/**/*"],
   "contentMappers": [
     {
       "package": "@astrojs/ts-content-mapper",

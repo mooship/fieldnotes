@@ -25,6 +25,13 @@ export default defineConfig({
     // used for Font, not <Image>), so skip provisioning a Cloudflare
     // Images binding the adapter would otherwise enable by default.
     imageService: "passthrough",
+    // Applies public/_headers and _redirects in `astro dev` too. The production
+    // build and `astro preview` stay the reference for headers.
+    experimental: { headersAndRedirectsDevModeSupport: true },
+    // The runtime types redeclare DOM globals (Element, Response) and break
+    // the typecheck of client-side <script> blocks. Passed straight through to
+    // the Cloudflare Vite plugin, which the adapter does not type.
+    types: { includeRuntime: false },
   }),
   fonts: [
     {

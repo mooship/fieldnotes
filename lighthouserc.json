@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": "./dist/client",
+      "staticDistDir": "./.cloudflare/output/v1/workers/default/assets",
       "url": [
         "http://localhost/",
         "http://localhost/blog/",

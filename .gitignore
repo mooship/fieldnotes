@@ -4,10 +4,6 @@ dist/
 # generated types
 .astro/
 .astro-cache/
-worker-configuration.d.ts
-
-# wrangler local state (local D1 database, dev cache)
-.wrangler/
 
 # dependencies
 node_modules/
@@ -31,7 +27,8 @@ yarn-error.log*
 # claude code
 .claude/settings.local.json
 .claude/worktrees/
-.playwright-mcp/
+.playwright-cli/
+.tmp-visual/
 
 # eslint
 .eslintcache
@@ -49,3 +46,6 @@ playwright-report/
 
 # Cloudflare API token
 .env.cloudflare
+
+# cf build output, generated types and local state
+.cloudflare/
